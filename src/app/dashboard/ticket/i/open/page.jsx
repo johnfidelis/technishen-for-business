@@ -47,7 +47,7 @@ export default function Page() {
   const setStatus = () => {}
   const showOutsourcedTickets = false
   const handleSwitchChange = () => {}
-  const page = 0
+  const Page = 0
   const rowsPerPage = 10
   const handleChangePage = () => {}
   const handleChangeRowsPerPage = () => {}

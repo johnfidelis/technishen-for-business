@@ -15,7 +15,7 @@ import {
 } from '@mui/material'
 // import { validate } from '@/component/utils/validate'
 
-const page = ({ handleNext, handleBack }) => {
+const Page = ({ handleNext, handleBack }) => {
   const [errors, setErrors] = useState({})
   const [formData, setFormData] = useState(() => {
     if (typeof window !== 'undefined') {
