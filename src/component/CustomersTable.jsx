@@ -139,9 +139,14 @@ const CustomersTable = () => {
               customers
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((customer) => (
-                  <TableRow key={customer.id} sx={{ cursor: 'pointer' }}  onClick={() =>
-                    router.push(`/dashboard/customer/${customer.id}`)
-                  } hover>
+                  <TableRow
+                    key={customer.id}
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() =>
+                      router.push(`/dashboard/customer/${customer.id}`)
+                    }
+                    hover
+                  >
                     <TableCell>
                       <Avatar
                         src={
@@ -149,7 +154,6 @@ const CustomersTable = () => {
                           customer.profile_picture
                         }
                         alt={customer.first_name}
-                        
                       />
                     </TableCell>
                     <TableCell

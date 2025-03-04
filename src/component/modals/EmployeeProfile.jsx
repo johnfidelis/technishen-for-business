@@ -20,10 +20,14 @@ import { MdLocationOn, MdPhone, MdMail, MdBlock } from 'react-icons/md'
 import PersonOffIcon from '@mui/icons-material/PersonOff'
 
 // Dynamically import tabs for better performance
-const CategoriesTab = dynamic(() => import("./component/CategoriesTab"), { ssr: false });
-const BookingsTab = dynamic(() => import("./component/BookingsTab"), { ssr: false });
-const ChatTab = dynamic(() => import("./component/ChatTab"), { ssr: false });
-const TicketDetails = dynamic(() => import("./TicketDetails"), { ssr: false });
+const CategoriesTab = dynamic(() => import('./component/CategoriesTab'), {
+  ssr: false,
+})
+const BookingsTab = dynamic(() => import('./component/BookingsTab'), {
+  ssr: false,
+})
+const ChatTab = dynamic(() => import('./component/ChatTab'), { ssr: false })
+const TicketDetails = dynamic(() => import('./TicketDetails'), { ssr: false })
 
 const EmployeeProfile = ({ open, onClose, user }) => {
   const [rightTabIndex, setRightTabIndex] = useState(0)
@@ -107,25 +111,22 @@ const EmployeeProfile = ({ open, onClose, user }) => {
                 mt: '0.5em',
               }}
             >
-              <MdLocationOn
-                style={{ color: theme.primary_color  }}
-              />{' '}
-              Current Location:{' '}
-              {user?.location || '35 Aromat Street, Hillbrow, Joburg'}
+              <MdLocationOn style={{ color: theme.primary_color }} /> Current
+              Location: {user?.location || '35 Aromat Street, Hillbrow, Joburg'}
             </Typography>
             <Typography
               variant="body2"
               sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
             >
-              <MdPhone style={{ color: theme.primary_color  }} />{' '}
-              Phone Number: {user?.phone || '+27 74 637 7232'}
+              <MdPhone style={{ color: theme.primary_color }} /> Phone Number:{' '}
+              {user?.phone || '+27 74 637 7232'}
             </Typography>
             <Typography
               variant="body2"
               sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
             >
-              <MdMail style={{ color: theme.primary_color  }} />{' '}
-              Email: {user?.email || 'vivica.samkelo@gmail.com'}
+              <MdMail style={{ color: theme.primary_color }} /> Email:{' '}
+              {user?.email || 'vivica.samkelo@gmail.com'}
             </Typography>
           </Box>
 
@@ -156,9 +157,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
             </Button>
           </Box>
 
-          <Divider
-            sx={{ backgroundColor: theme.primary_color, my: 2 }}
-          />
+          <Divider sx={{ backgroundColor: theme.primary_color, my: 2 }} />
 
           {/* Tabs */}
           <Tabs
@@ -173,7 +172,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
                 fontWeight: 400,
                 fontSize: '0.80em',
                 color: '#000',
-                '&.Mui-selected': { color: theme.primary_color  },
+                '&.Mui-selected': { color: theme.primary_color },
               },
             }}
           >
@@ -222,17 +221,14 @@ const EmployeeProfile = ({ open, onClose, user }) => {
                   />
                 </Box>
                 <Box display="flex" alignItems="center" gap="0.5em">
-                <TextField
-                  fullWidth
-                  label="Phone Number"
-                  variant="outlined"
-                  sx={{ mb: 3 }}
-                  value={user?.phone || '09026122244'}
-                />
-              
+                  <TextField
+                    fullWidth
+                    label="Phone Number"
+                    variant="outlined"
+                    sx={{ mb: 3 }}
+                    value={user?.phone || '09026122244'}
+                  />
                 </Box>
-
-                
               </Box>
             )}
             {rightTabIndex === 1 && <CategoriesTab />}
@@ -241,7 +237,10 @@ const EmployeeProfile = ({ open, onClose, user }) => {
           </Box>
         </Box>
 
-        <TicketDetails open={viewMoreOpen} onClose={() => setViewMoreOpen(false)} />
+        <TicketDetails
+          open={viewMoreOpen}
+          onClose={() => setViewMoreOpen(false)}
+        />
       </Box>
     </Modal>
   )

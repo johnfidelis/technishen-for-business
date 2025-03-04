@@ -23,7 +23,7 @@ const Page = () => {
             color: '#000000',
             fontSize: '1.25em',
             mb: 2,
-            fontFamily: "Inter, sans-serif",
+            fontFamily: 'Inter, sans-serif',
             fontWeight: '500',
           }}
         >
@@ -31,7 +31,7 @@ const Page = () => {
         </Typography>
         <hr />
       </Box>
-      <CatalogTable catalogType={"Customer"}/>
+      <CatalogTable catalogType={'Customer'} />
     </Box>
   )
 }

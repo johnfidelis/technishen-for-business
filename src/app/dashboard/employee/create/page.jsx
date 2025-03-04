@@ -87,7 +87,6 @@ const Page = () => {
   const handleSubmit = () => {
     setLoading(true)
 
-   
     const formDataObject = new FormData()
     Object.entries(formData).forEach(([key, value]) => {
       if (value !== null && value !== '') {

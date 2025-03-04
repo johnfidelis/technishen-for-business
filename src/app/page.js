@@ -43,20 +43,17 @@
 //   )
 // }
 
-
-
-
-"use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { CircularProgress } from "@mui/material";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import TechnisenLogo from "../assets/images/logoBlue.png";
+'use client'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { CircularProgress } from '@mui/material'
+import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
+import TechnisenLogo from '../assets/images/logoBlue.png'
 
 export default function Home() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const router = useRouter()
+  const [loading, setLoading] = useState(true)
 
   // useEffect(() => {
   //   setTimeout(() => {
@@ -68,37 +65,39 @@ export default function Home() {
   return (
     <div
       style={{
-        display: "flex",
-        height: "100vh",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
+        display: 'flex',
+        height: '100vh',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
       }}
     >
       <AnimatePresence>
-   
-          <motion.div
-            // initial={{ opacity: 0, scale: 0.5 }}
-            // animate={{ opacity: 1, scale: 1 }}
-            // transition={{ duration: 0.5, ease: "easeInOut" }}
-            // exit={{ opacity: 0, scale: 0.5 }}
+        <motion.div
+          // initial={{ opacity: 0, scale: 0.5 }}
+          // animate={{ opacity: 1, scale: 1 }}
+          // transition={{ duration: 0.5, ease: "easeInOut" }}
+          // exit={{ opacity: 0, scale: 0.5 }}
 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: [0.8, 1.2, 0.8], opacity: [0, 1, 1] }}
-            transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
-            style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-          >
-            <Image
-              src={TechnisenLogo}
-              width={100}
-              height={100}
-              alt="Technisen Logo"
-              style={{ width: "100%", margin: "auto", maxHeight: "50px" }}
-            />
-          </motion.div>
-            {/* <CircularProgress style={{ marginTop: "10px" }} /> */}
-   
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: [0.8, 1.2, 0.8], opacity: [0, 1, 1] }}
+          transition={{ duration: 1.5, ease: 'easeInOut', repeat: Infinity }}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Image
+            src={TechnisenLogo}
+            width={100}
+            height={100}
+            alt="Technisen Logo"
+            style={{ width: '100%', margin: 'auto', maxHeight: '50px' }}
+          />
+        </motion.div>
+        {/* <CircularProgress style={{ marginTop: "10px" }} /> */}
       </AnimatePresence>
     </div>
-  );
+  )
 }

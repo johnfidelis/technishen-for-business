@@ -73,7 +73,6 @@ const Page = ({ handleNext, handleBack }) => {
   }
 
   const handleSave = () => {
-
     const formDataObject = new FormData()
     Object.entries(formData).forEach(([key, value]) => {
       formDataObject.append(key, value)

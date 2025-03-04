@@ -18,7 +18,6 @@ import TicketDetails from '../TicketDetails'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 
-
 const BookingsTab = ({ customerId, ticketType, bookingType }) => {
   const { theme } = useContext(ThemeContext)
   console.log({ customerId, ticketType })
@@ -104,7 +103,11 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
             >
               <Typography
                 variant="subtitle1"
-                sx={{ fontWeight: 400, fontSize: '0.80em', textTransform: "capitalize" }}
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '0.80em',
+                  textTransform: 'capitalize',
+                }}
               >
                 {ticket?.sub_service || ' '}
               </Typography>
@@ -113,8 +116,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                   variant="body2"
                   sx={{ fontWeight: 400, fontSize: '0.75em' }}
                 >
-                  {ticket?.created_at ||
-                    ''}
+                  {ticket?.created_at || ''}
                 </Typography>
                 <Typography
                   variant="body2"
@@ -146,19 +148,18 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                     color: theme.primary_color || '#115093',
                     fontSize: '0.85em',
                     fontWeight: 600,
-                  cursor: "pointer"
+                    cursor: 'pointer',
                   }}
                 >
-                  {ticket?.assigned_to?.name || ''}{'N/A'}
-
+                  {ticket?.assigned_to?.name || ''}
+                  {'N/A'}
                 </Typography>
               </Typography>
               <Typography
                 variant="body2"
                 sx={{ fontWeight: 400, fontSize: '0.80em' }}
               >
-                Ticket Number:{' '}
-                {ticket?.ticket_number || ""}
+                Ticket Number: {ticket?.ticket_number || ''}
               </Typography>
             </Box>
 
@@ -185,9 +186,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                 variant="body2"
                 sx={{ fontWeight: 400, fontSize: '0.75em' }}
               >
-                {new Date(
-                  ticket?.created_at,
-                ).toLocaleDateString()}
+                {new Date(ticket?.created_at).toLocaleDateString()}
               </Typography>
             </Box>
             <Box
@@ -205,9 +204,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                 variant="body2"
                 sx={{ fontWeight: 400, fontSize: '0.75em' }}
               >
-                {new Date(
-                  ticket?.created_at,
-                ).toLocaleTimeString([], {
+                {new Date(ticket?.created_at).toLocaleTimeString([], {
                   hour: '2-digit',
                   minute: '2-digit',
                   hour12: true,
@@ -335,7 +332,11 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
       )}
 
       {/* Modal */}
-      <TicketDetails ticketData={selectedTicket} open={viewMoreOpen} onClose={handleClose} />
+      <TicketDetails
+        ticketData={selectedTicket}
+        open={viewMoreOpen}
+        onClose={handleClose}
+      />
     </Box>
   )
 }

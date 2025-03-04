@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material'
 import { MdInfoOutline } from 'react-icons/md'
-import AddIcon from "@mui/icons-material/Add";
+import AddIcon from '@mui/icons-material/Add'
 
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
@@ -41,7 +41,7 @@ export default function Page() {
               color: '#000000',
               fontSize: '1.25em',
               mb: 2,
-              fontFamily: "Inter, sans-serif",
+              fontFamily: 'Inter, sans-serif',
               fontWeight: '500',
             }}
           >
@@ -55,12 +55,10 @@ export default function Page() {
               </IconButton>
             </Tooltip>
           </Typography>
-
-      
         </Box>
         <hr />
       </Box>
-      <EmployeeTable role={"Fulfiller"}/>
+      <EmployeeTable role={'Fulfiller'} />
     </Box>
   )
 }

@@ -193,7 +193,6 @@ import InboxIcon from '@mui/icons-material/Inbox'
 import { ThemeContext } from '@/context/ThemeContext'
 import TicketTable from '@/component/TicketTable'
 
-
 export default function UnassignedTicketsPage() {
   const { theme } = useContext(ThemeContext)
 
@@ -214,7 +213,7 @@ export default function UnassignedTicketsPage() {
           variant="h5"
           sx={{ color: '#000000', fontSize: '1.5em', fontWeight: 500 }}
         >
-          Open - Unassigned Tickets 
+          Open - Unassigned Tickets
           <Tooltip
             title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
             arrow

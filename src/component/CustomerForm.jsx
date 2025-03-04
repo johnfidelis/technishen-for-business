@@ -58,7 +58,7 @@ const CustomerForm = () => {
 
   const handleCustomerTypeChange = (event) => {
     const { value } = event.target
-    setFormData((prevData) => ({ ...prevData, ["customer_type"]: value }))
+    setFormData((prevData) => ({ ...prevData, ['customer_type']: value }))
   }
 
   const handleInputChange = (event) => {

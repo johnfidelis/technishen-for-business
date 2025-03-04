@@ -24,13 +24,13 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
   const [rightTabIndex, setRightTabIndex] = useState(0)
   const { theme } = useContext(ThemeContext)
   // const isLoading = !ticket || ticket.length === 0
-  
-  
-  
-  const { data: ticket, isLoading } = useFetchData(GET_ENDPOINTS.VIEW_TICKETS(ticketData?.id))
+
+  const { data: ticket, isLoading } = useFetchData(
+    GET_ENDPOINTS.VIEW_TICKETS(ticketData?.id),
+  )
   const isNoTicketDetails = ticket?.employee_details !== null
 
-  console.log({ticket})
+  console.log({ ticket })
 
   const handleRightTabChange = (event, newIndex) => {
     setRightTabIndex(newIndex)
@@ -99,11 +99,9 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                 variant="h5"
                 sx={{ fontWeight: 400, fontSize: '1.125em', color: '#000' }}
               >
-          {ticket?.customer_details?.first_name}{" "}
-          {ticket?.customer_details?.last_name}
-            
+                {ticket?.customer_details?.first_name}{' '}
+                {ticket?.customer_details?.last_name}
               </Typography>
-            
             </Box>
           </Box>
           <Box>
@@ -132,7 +130,8 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   fontWeight: 400,
                 }}
               >
-                <MdLocationOn /> Ticket Address: {ticket?.ticket_details?.address || "N/A"}
+                <MdLocationOn /> Ticket Address:{' '}
+                {ticket?.ticket_details?.address || 'N/A'}
               </Typography>
               <Typography
                 variant="body2"
@@ -145,7 +144,8 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   fontWeight: 400,
                 }}
               >
-                <MdPhone /> Phone Number: {ticket?.customer_details?.phone_number || "N/A"}
+                <MdPhone /> Phone Number:{' '}
+                {ticket?.customer_details?.phone_number || 'N/A'}
               </Typography>
               <Typography
                 variant="body2"
@@ -162,19 +162,18 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
               </Typography>
             </Box>
           </Box>
-          
 
           <Typography
             variant="subtitle1"
-            sx={{ fontWeight: 500, fontSize: "1em", mt: "1em" }}
+            sx={{ fontWeight: 500, fontSize: '1em', mt: '1em' }}
           >
             Ticket Details
           </Typography>
 
           <Divider
             sx={{
-              my: "0.3em",
-              backgroundColor: theme.primary_color || "#115093",
+              my: '0.3em',
+              backgroundColor: theme.primary_color || '#115093',
             }}
           />
 
@@ -182,12 +181,12 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
             {!isNoTicketDetails ? (
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={9}>
-                  {" "}
+                  {' '}
                   {/* Take most of the space */}
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: "0.80em",
+                      fontSize: '0.80em',
                       fontWeight: 400,
                     }}
                   >
@@ -198,12 +197,12 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
             ) : (
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={9}>
-                  {" "}
+                  {' '}
                   {/* Take most of the space */}
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: "0.80em",
+                      fontSize: '0.80em',
                       fontWeight: 400,
                     }}
                   >
@@ -212,17 +211,17 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: "0.80em",
+                      fontSize: '0.80em',
                       fontWeight: 400,
                     }}
                   >
-                    Fulfiller Name: {ticket?.employee_details?.first_name}{" "}
+                    Fulfiller Name: {ticket?.employee_details?.first_name}{' '}
                     {ticket?.employee_details?.last_name}
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: "0.80em",
+                      fontSize: '0.80em',
                       fontWeight: 400,
                     }}
                   >
@@ -231,7 +230,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: "0.80em",
+                      fontSize: '0.80em',
                       fontWeight: 400,
                     }}
                   >
@@ -240,7 +239,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: "0.80em",
+                      fontSize: '0.80em',
                       fontWeight: 400,
                     }}
                   >
@@ -249,7 +248,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   <Typography
                     variant="body2"
                     sx={{
-                      fontSize: "0.80em",
+                      fontSize: '0.80em',
                       fontWeight: 400,
                     }}
                   >
@@ -258,12 +257,12 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                       variant="span"
                       sx={{
                         fontWeight: 400,
-                        color: "#4CAF50",
-                        border: "solid 1px #4CAF50",
-                        borderRadius: "0.25em",
-                        padding: "0.125rem 0.375em",
-                        fontSize: "0.75em",
-                        textAlign: "center",
+                        color: '#4CAF50',
+                        border: 'solid 1px #4CAF50',
+                        borderRadius: '0.25em',
+                        padding: '0.125rem 0.375em',
+                        fontSize: '0.75em',
+                        textAlign: 'center',
                       }}
                     >
                       Working
@@ -273,9 +272,9 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                 <Grid item xs={3} style={{}}>
                   <Avatar
                     sx={{
-                      width: "4.75em",
-                      height: "4.75em",
-                      border: `solid ${theme.secondary_color || "#00D284"}`,
+                      width: '4.75em',
+                      height: '4.75em',
+                      border: `solid ${theme.secondary_color || '#00D284'}`,
                     }}
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNiAaKk2O5kUsjqJP01k24EW93PnSHjuJLTA&s"
                   />
@@ -290,7 +289,6 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
             }}
           />
           {/* Tabs */}
-        
 
           <Tabs
             value={rightTabIndex}
@@ -321,7 +319,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
             {rightTabIndex === 0 && (
               <Box>
                 <Typography variant="body2" sx={{ mb: 2 }}>
-                {ticket?.ticket_details?.description}
+                  {ticket?.ticket_details?.description}
                 </Typography>
 
                 <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 1 }}>
@@ -329,45 +327,45 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                 </Typography>
                 <Box display="flex" flexWrap="wrap" gap={2}>
                   {isLoading
-                    ? ""
+                    ? ''
                     : ticket?.images?.map((image, index) => (
                         <Box
                           key={index}
                           sx={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "5px",
-                            overflow: "hidden",
-                            border: "1px solid #E0E0E0",
-                            position: "relative",
+                            width: '100px',
+                            height: '100px',
+                            borderRadius: '5px',
+                            overflow: 'hidden',
+                            border: '1px solid #E0E0E0',
+                            position: 'relative',
                           }}
                         >
                           <img
                             src={`https://technishenbackend.onrender.com${image?.url}`}
                             alt={`Attachment ${index + 1}`}
                             style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
                             }}
                           />
                           <Box
                             sx={{
-                              position: "absolute",
-                              bottom: "5px",
-                              right: "5px",
-                              backgroundColor: "#115093",
-                              borderRadius: "50%",
-                              width: "20px",
-                              height: "20px",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
+                              position: 'absolute',
+                              bottom: '5px',
+                              right: '5px',
+                              backgroundColor: '#115093',
+                              borderRadius: '50%',
+                              width: '20px',
+                              height: '20px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
                             }}
                           >
                             <Typography
                               variant="caption"
-                              sx={{ color: "#FFF", fontSize: "0.75em" }}
+                              sx={{ color: '#FFF', fontSize: '0.75em' }}
                             >
                               🔍
                             </Typography>
@@ -381,21 +379,21 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   Ticket Tracker
                 </Typography>
                 {isLoading
-                  ? ""
+                  ? ''
                   : lifecycle?.map((step, index) => {
                       // Check if the step is completed based on `actions`
                       const isCompleted = ticket?.actions.some(
                         (action) =>
                           action.action.toLowerCase() ===
-                          step.status.toLowerCase().replace(/\s+/g, "_")
-                      );
+                          step.status.toLowerCase().replace(/\s+/g, '_'),
+                      )
 
                       // Determine if it's the current active step
                       const isActive =
                         ticket?.actions[
                           ticket.actions.length - 1
                         ]?.action.toLowerCase() ===
-                        step.status.toLowerCase().replace(/\s+/g, "_");
+                        step.status.toLowerCase().replace(/\s+/g, '_')
 
                       return (
                         <Box
@@ -406,18 +404,18 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                           sx={{
                             mb: 2,
                             opacity: isCompleted || isActive ? 1 : 0.5, // Dim unfinished steps
-                            pointerEvents: isActive ? "auto" : "none", // Highlight active step
-                            "&::before": {
-                              display: "block",
-                              width: "10px",
-                              height: "10px",
-                              borderRadius: "50%",
+                            pointerEvents: isActive ? 'auto' : 'none', // Highlight active step
+                            '&::before': {
+                              display: 'block',
+                              width: '10px',
+                              height: '10px',
+                              borderRadius: '50%',
 
                               backgroundColor: isCompleted
-                                ? "#4CAF50" // Green for completed steps
+                                ? '#4CAF50' // Green for completed steps
                                 : isActive
-                                ? "#FFC107" // Yellow for current step
-                                : "#E0E0E0", // Grey for remaining steps
+                                  ? '#FFC107' // Yellow for current step
+                                  : '#E0E0E0', // Grey for remaining steps
                             },
                           }}
                         >
@@ -425,11 +423,11 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                           <CheckCircleIcon
                             sx={{
                               color: isCompleted
-                                ? "#4CAF50" // Green for completed
+                                ? '#4CAF50' // Green for completed
                                 : isActive
-                                ? "#FFC107" // Yellow for current
-                                : "#E0E0E0", // Grey for remaining
-                              fontSize: "1.5em",
+                                  ? '#FFC107' // Yellow for current
+                                  : '#E0E0E0', // Grey for remaining
+                              fontSize: '1.5em',
                             }}
                           />
                           {/* Step Status */}
@@ -437,7 +435,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                             variant="body2"
                             sx={{
                               fontWeight: isActive ? 500 : 400, // Bold active step
-                              fontSize: "0.80em",
+                              fontSize: '0.80em',
                               flexGrow: 1,
                             }}
                           >
@@ -446,7 +444,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                           {/* Step Timestamp */}
                           <Typography
                             variant="caption"
-                            sx={{ color: "#6C757D", fontSize: "0.75em" }}
+                            sx={{ color: '#6C757D', fontSize: '0.75em' }}
                           >
                             {isCompleted
                               ? new Date(
@@ -455,16 +453,16 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                                       action.action.toLowerCase() ===
                                       step.status
                                         .toLowerCase()
-                                        .replace(/\s+/g, "_")
-                                  )?.timestamp
-                                ).toLocaleString("en-US", {
-                                  dateStyle: "short",
-                                  timeStyle: "short",
+                                        .replace(/\s+/g, '_'),
+                                  )?.timestamp,
+                                ).toLocaleString('en-US', {
+                                  dateStyle: 'short',
+                                  timeStyle: 'short',
                                 })
-                              : "Pending"}
+                              : 'Pending'}
                           </Typography>
                         </Box>
-                      );
+                      )
                     })}
               </Box>
             )}

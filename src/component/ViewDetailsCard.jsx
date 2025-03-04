@@ -13,23 +13,22 @@ import {
 import ChatTab from './modals/component/ChatTab'
 import BookingsTab from './modals/component/BookingsTab'
 
-
 const ViewDetailsCard = ({ ticket, ticketId }) => {
   const { theme } = useContext(ThemeContext)
   const [isLoading, setIsLoading] = useState(true)
-  const [ticketas, setTickets] = useState("")
+  const [ticketas, setTickets] = useState('')
   const [rightTabIndex, setRightTabIndex] = useState(0)
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000) 
+    setTimeout(() => setIsLoading(false), 1000)
   }, [])
 
   const handleRightTabChange = (event, newIndex) => {
     setRightTabIndex(newIndex)
   }
 
-  const firstName = ticket?.customer_details?.first_name 
-  const lastName = ticket?.customer_details?.last_name 
+  const firstName = ticket?.customer_details?.first_name
+  const lastName = ticket?.customer_details?.last_name
 
   return (
     <Box
@@ -164,8 +163,20 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
       </Tabs>
 
       <Box mt="1em">
-        {rightTabIndex === 0 && <BookingsTab customerId={ticket?.customer_details?.id} ticketType={ticket?.ticket_details?.ticket_type} bookingType="all" />}
-        {rightTabIndex === 1 && <BookingsTab customerId={ticket?.customer_details?.id} ticketType={ticket?.ticket_details?.ticket_type}  bookingType="all" />}
+        {rightTabIndex === 0 && (
+          <BookingsTab
+            customerId={ticket?.customer_details?.id}
+            ticketType={ticket?.ticket_details?.ticket_type}
+            bookingType="all"
+          />
+        )}
+        {rightTabIndex === 1 && (
+          <BookingsTab
+            customerId={ticket?.customer_details?.id}
+            ticketType={ticket?.ticket_details?.ticket_type}
+            bookingType="all"
+          />
+        )}
         {rightTabIndex === 2 && <ChatTab />}
       </Box>
     </Box>

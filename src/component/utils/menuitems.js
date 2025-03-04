@@ -24,14 +24,14 @@ import {
   AddCircleOutlineRounded,
   ArrowOutward,
 } from '@mui/icons-material'
-import DescriptionIcon from "@mui/icons-material/Description";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import DescriptionIcon from '@mui/icons-material/Description'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 
 export const menuItems = [
   {
-    name: "Dashboard",
+    name: 'Dashboard',
     icon: <DashboardIcon />,
-    routeTo: "/dashboard",
+    routeTo: '/dashboard',
   },
   {
     mainCategory: 'Ticket',
@@ -39,32 +39,32 @@ export const menuItems = [
     subcategories: [
       {
         name: 'Create Ticket',
-        routeTo: "/dashboard/ticket/i/create",
+        routeTo: '/dashboard/ticket/i/create',
         icon: <AddCircleOutlineRounded />,
       },
       {
         name: 'Open - Unassigned',
-        routeTo:"/dashboard/ticket/i/open-unassigned",
+        routeTo: '/dashboard/ticket/i/open-unassigned',
         icon: <AssignmentIcon />,
       },
       {
         name: 'Assigned Tickets',
-        routeTo: "/dashboard/ticket/i/assigned",
+        routeTo: '/dashboard/ticket/i/assigned',
         icon: <PersonIcon />,
       },
       {
         name: 'Open Tickets',
-        routeTo:  "/dashboard/ticket/i/open",
+        routeTo: '/dashboard/ticket/i/open',
         icon: <ListIcon />,
       },
       {
         name: 'Resolved Tickets',
-        routeTo: "/dashboard/ticket/i/resolved",
+        routeTo: '/dashboard/ticket/i/resolved',
         icon: <CheckCircleIcon />,
       },
       {
         name: 'All Tickets',
-        routeTo:  "/dashboard/ticket/i/all",
+        routeTo: '/dashboard/ticket/i/all',
         icon: <AssignmentTurnedInIcon />,
       },
     ],
@@ -75,18 +75,22 @@ export const menuItems = [
     subcategories: [
       {
         name: 'Create Employees',
-        routeTo:  "/dashboard/employee/create",
+        routeTo: '/dashboard/employee/create',
         icon: <AddCircleOutlineRounded />,
       },
-      { name: 'View Employees', routeTo:  "/dashboard/employee/all", icon: <GroupIcon /> },
+      {
+        name: 'View Employees',
+        routeTo: '/dashboard/employee/all',
+        icon: <GroupIcon />,
+      },
       {
         name: 'View Fulfillers',
-        routeTo:  "/dashboard/employee/fulfilers",
+        routeTo: '/dashboard/employee/fulfilers',
         icon: <GroupIcon />,
       },
       {
         name: 'Fulfillers Group',
-        routeTo:  "/dashboard/employee/fulfilers/group",
+        routeTo: '/dashboard/employee/fulfilers/group',
         icon: <GroupIcon />,
       },
     ],
@@ -97,12 +101,12 @@ export const menuItems = [
     subcategories: [
       {
         name: 'Create Customer',
-        routeTo:  "/dashboard/customer/create",
+        routeTo: '/dashboard/customer/create',
         icon: <AddCircleOutlineRounded />,
       },
       {
         name: 'View Customers',
-        routeTo: "/dashboard/customer/all",
+        routeTo: '/dashboard/customer/all',
         icon: <GroupIcon />,
       },
     ],
@@ -113,17 +117,17 @@ export const menuItems = [
     subcategories: [
       {
         name: 'Create Catalogue',
-        routeTo:  "/dashboard/catalog/create",
+        routeTo: '/dashboard/catalog/create',
         icon: <AddCircleOutlineRounded />,
       },
       {
         name: 'Employee Catalogue',
-        routeTo:  "/dashboard/catalog/employee",
+        routeTo: '/dashboard/catalog/employee',
         icon: <PeopleIcon />,
       },
       {
         name: 'Customer Catalogue',
-        routeTo:  "/dashboard/catalog/customer",
+        routeTo: '/dashboard/catalog/customer',
         icon: <BusinessIcon />,
       },
     ],
@@ -134,57 +138,57 @@ export const menuItems = [
     subcategories: [
       {
         name: 'Dashboard',
-        routeTo: "/",
+        routeTo: '/',
         icon: <DashboardIcon />,
       },
       {
         name: 'Create Post',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <AddCircleOutlineRounded />,
       },
       {
         name: 'Open Posts',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <ListIcon />,
       },
       {
         name: 'Interviews',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <PlayCircleFilledWhiteIcon />,
       },
       {
         name: 'Offer to approve',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <PersonIcon />,
       },
       {
         name: 'Awaiting start date',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <DateRangeIcon />,
       },
       {
         name: 'Effective Assignments',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <AssignmentTurnedInIcon />,
       },
       {
         name: 'Timecard / Expense',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <ReceiptLongIcon />,
       },
       {
         name: 'Invoicing',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <InvoiceIcon />,
       },
       {
         name: 'Completed Assignments',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <DoneIcon />,
       },
       {
         name: 'Closed Posts',
-        routeTo:  "/",
+        routeTo: '/',
         icon: <CheckIcon />,
       },
     ],
@@ -192,21 +196,21 @@ export const menuItems = [
   {
     name: 'Settings',
     icon: <SettingsIcon />,
-    routeTo:  "/",
+    routeTo: '/',
   },
   {
     name: 'Billing',
     icon: <ReceiptIcon />,
-    routeTo:  "/",
+    routeTo: '/',
   },
   {
     name: 'Products Docs',
     icon: <DescriptionIcon />,
-    routeTo:  "/",
+    routeTo: '/',
   },
   {
     name: 'Support',
     icon: <HelpOutlineIcon />,
-    routeTo:  "/",
+    routeTo: '/',
   },
 ]

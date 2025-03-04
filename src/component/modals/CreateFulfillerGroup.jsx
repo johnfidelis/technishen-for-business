@@ -51,19 +51,19 @@ const CreateFulfillerGroup = ({ open, onClose }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Box
-       sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '450px',
-        bgcolor: 'white',
-        borderRadius: '12px',
-        boxShadow: 24,
-        p: 3,
-        maxHeight: '80vh',
-        overflowY: 'auto',
-      }}
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '450px',
+          bgcolor: 'white',
+          borderRadius: '12px',
+          boxShadow: 24,
+          p: 3,
+          maxHeight: '80vh',
+          overflowY: 'auto',
+        }}
       >
         {/* Header */}
         <Box display="flex" justifyContent="space-between" alignItems="center">

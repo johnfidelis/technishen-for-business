@@ -23,15 +23,15 @@ const Page = () => {
             color: '#000000',
             fontSize: '1.25em',
             mb: 2,
-            fontFamily: "Inter, sans-serif",
+            fontFamily: 'Inter, sans-serif',
             fontWeight: '500',
           }}
         >
-        All Customers
+          All Customers
         </Typography>
         <hr />
       </Box>
-      <CustomersTable/>
+      <CustomersTable />
     </Box>
   )
 }

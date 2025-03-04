@@ -1,15 +1,15 @@
-"use client"
-import React, { createContext, useState, useEffect } from "react";
+'use client'
+import React, { createContext, useState, useEffect } from 'react'
 // import axios from "axios";
 
-export const ThemeContext = createContext();
+export const ThemeContext = createContext()
 
 export const ThemeProvider = ({ children }) => {
   // Default theme
   const [theme, setTheme] = useState({
-    primary_color: "#115093",
-    secondary_color: "green",
-  });
+    primary_color: '#115093',
+    secondary_color: 'green',
+  })
 
   // useEffect(() => {
   //   // Fetch theme colors from API
@@ -35,5 +35,5 @@ export const ThemeProvider = ({ children }) => {
     <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
-  );
-};
+  )
+}

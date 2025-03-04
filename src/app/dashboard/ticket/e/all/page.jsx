@@ -15,8 +15,6 @@ import InboxIcon from '@mui/icons-material/Inbox'
 import { ThemeContext } from '@/context/ThemeContext'
 import TicketTable from '@/component/TicketTable'
 
-
-
 export default function Page() {
   const { theme } = useContext(ThemeContext)
   const unassignedTickets = [
@@ -35,7 +33,7 @@ export default function Page() {
       status: 'Open',
     },
   ]
-  
+
   const filteredTickets = unassignedTickets // In real case, you might filter it
   const loading = false
   const searchQuery = ''
@@ -53,10 +51,11 @@ export default function Page() {
   const rowsPerPage = 10
   const handleChangePage = () => {}
   const handleChangeRowsPerPage = () => {}
-  const handleTicketClick = (ticketId) => console.log(`Clicked ticket: ${ticketId}`)
+  const handleTicketClick = (ticketId) =>
+    console.log(`Clicked ticket: ${ticketId}`)
   const handleOutsourcedTicketClick = () => {}
   const formatDateTime = (dateString) => new Date(dateString).toLocaleString()
-  
+
   return (
     <Box
       sx={{
@@ -73,11 +72,10 @@ export default function Page() {
         <Typography
           variant="h5"
           sx={{
-             color: '#000000',
+            color: '#000000',
             fontSize: '1.5em',
             fontWeight: 500,
-            fontFamily: "Inter, sans-serif",
-         
+            fontFamily: 'Inter, sans-serif',
           }}
         >
           All Tickets{`(2)`}
@@ -119,7 +117,7 @@ export default function Page() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 p: 2,
-                backgroundColor: theme.primary_color ,
+                backgroundColor: theme.primary_color,
                 color: '#FFFFFF',
                 borderRadius: '8px',
                 minHeight: '40px',

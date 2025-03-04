@@ -56,9 +56,7 @@ const ChatTab = () => {
                 ml: msg.type === 'user' ? 1 : 0,
                 mr: msg.type !== 'user' ? 1 : 0,
                 backgroundColor:
-                  msg.type === 'user'
-                    ? theme.primary_color
-                    : '#E0E0E0',
+                  msg.type === 'user' ? theme.primary_color : '#E0E0E0',
                 color: msg.type === 'user' ? '#fff' : '#000',
                 borderRadius: 2,
                 p: 1.5,
@@ -159,7 +157,7 @@ const ChatTab = () => {
             backgroundColor: theme.primary_color,
             color: '#fff',
             ml: 1,
-            '&:hover': { backgroundColor: theme.primary_color  },
+            '&:hover': { backgroundColor: theme.primary_color },
           }}
         >
           <SendIcon />

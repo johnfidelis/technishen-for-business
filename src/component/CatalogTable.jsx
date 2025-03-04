@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useContext } from 'react'
 import {
   Table,
@@ -23,7 +22,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteWithConfirmation from './DeleteWithConfirmation'
-import InfoIcon from "@mui/icons-material/Info";
+import InfoIcon from '@mui/icons-material/Info'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { ThemeContext } from '@/context/ThemeContext'
@@ -33,7 +32,7 @@ import { ThemeContext } from '@/context/ThemeContext'
  * @param {"Customer" | "Employee"} props.catalogType - The type of catalog (customer or employee).
  */
 const CatalogTable = ({ catalogType }) => {
-   const { theme } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)
   const { data, isLoading } = useFetchData(
     GET_ENDPOINTS.ALL_CATEGORIES,
     'allCategories',
@@ -157,24 +156,24 @@ const CatalogTable = ({ catalogType }) => {
                     </TableCell>
                     <TableCell
                       sx={{
-                        fontSize: "0.75em",
+                        fontSize: '0.75em',
                         fontWeight: 500,
-                        fontFamily: "Inter, sans-serif",
+                        fontFamily: 'Inter, sans-serif',
                       }}
                     >
                       <Tooltip
                         title={
-                          <span style={{ fontSize: "0.85em", lineHeight: 1.5 }}>
+                          <span style={{ fontSize: '0.85em', lineHeight: 1.5 }}>
                             {category.description}
                           </span>
                         }
                         placement="top"
                         arrow
                         sx={{
-                          backgroundColor: theme.primary_color || "#115093",
-                          color: "#fff",
-                          fontFamily: "Inter, sans-serif",
-                          fontSize: "0.85em",
+                          backgroundColor: theme.primary_color || '#115093',
+                          color: '#fff',
+                          fontFamily: 'Inter, sans-serif',
+                          fontSize: '0.85em',
                         }}
                       >
                         <IconButton size="small">

@@ -23,8 +23,8 @@ import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { useFetchData } from '@/hooks/useApiService'
 import { useRouter } from 'next/navigation'
 
-const EmployeeTable = ({role}) => {
-   const router = useRouter()
+const EmployeeTable = ({ role }) => {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [sortOrder, setSortOrder] = useState('Newest')
   // const [roleFilter, setRoleFilter] = useState('')

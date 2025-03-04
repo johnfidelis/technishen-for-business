@@ -63,9 +63,8 @@ const Page = ({ handleNext, handleBack }) => {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
 
- 
   const handleSave = () => {
-    console.log({formData})
+    console.log({ formData })
     handleNext()
   }
 
@@ -260,7 +259,7 @@ const Page = ({ handleNext, handleBack }) => {
       </Grid>
 
       <Button variant="contained" onClick={handleSave} sx={{ mt: 3 }}>
-      Save & Continue
+        Save & Continue
       </Button>
     </Box>
   )

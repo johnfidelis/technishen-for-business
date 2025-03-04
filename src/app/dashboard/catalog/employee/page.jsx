@@ -23,15 +23,15 @@ const Page = () => {
             color: '#000000',
             fontSize: '1.25em',
             mb: 2,
-            fontFamily: "Inter, sans-serif",
+            fontFamily: 'Inter, sans-serif',
             fontWeight: '500',
           }}
         >
-       Manage Employee Catalog
+          Manage Employee Catalog
         </Typography>
         <hr />
       </Box>
-      <CatalogTable catalogType={"Employee"}/>
+      <CatalogTable catalogType={'Employee'} />
     </Box>
   )
 }

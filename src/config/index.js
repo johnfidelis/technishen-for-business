@@ -1,5 +1,3 @@
-
-
 // // import axios from 'axios'
 // // import { Cookies } from 'react-cookie'
 
@@ -34,9 +32,6 @@
 // //     },
 // //   )
 // // }
-
-
-
 
 // import axios from 'axios'
 // import { Cookies } from 'react-cookie'
@@ -73,8 +68,6 @@
 //   )
 // }
 
-
-
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
 
@@ -93,7 +86,11 @@ export default function init() {
 
   // Apply token globally except for login & register
   axios.interceptors.request.use((config) => {
-    if (accessValue && !config.url.includes('/login') && !config.url.includes('/register')) {
+    if (
+      accessValue &&
+      !config.url.includes('/login') &&
+      !config.url.includes('/register')
+    ) {
       config.headers.Authorization = `Bearer ${accessValue}`
     }
     return config

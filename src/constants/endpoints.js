@@ -53,5 +53,6 @@ export const GET_ENDPOINTS = {
   ALL_CUSTOMER: `/all-employees/${businessId}`,
   ALL_FULFILLER_GROUPS: `/all-fulfiller-groups/${businessId}`,
   GET_EMPLOYEE: (employeeId) => `/get-employee/${businessId}/${employeeId}/`,
-  GET_FULFILLER_GROUP: (groupId) => `get-fulfiller-group/${businessId}/${groupId}/`,
+  GET_FULFILLER_GROUP: (groupId) =>
+    `get-fulfiller-group/${businessId}/${groupId}/`,
 }

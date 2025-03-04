@@ -1,5 +1,5 @@
-"use client"
-import React, {useContext} from 'react'
+'use client'
+import React, { useContext } from 'react'
 import { Grid, Box, Typography } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
 import AllInboxIcon from '@mui/icons-material/AllInbox'
@@ -46,7 +46,7 @@ const DashboardCards = () => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor:  theme.primary_color,
+                backgroundColor: theme.primary_color,
                 color: '#fff',
                 padding: '10px',
                 borderRadius: '5px',

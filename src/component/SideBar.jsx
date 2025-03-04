@@ -1,14 +1,10 @@
 'use client'
 import React from 'react'
-import {
-  Drawer,
-  Box,
-} from '@mui/material'
+import { Drawer, Box } from '@mui/material'
 import Image from 'next/image'
 import TechnisenLogo from '../assets/images/logoBlue.png'
 import BusinessSelector from './BusinessSelector'
 import SidebarMenu from './SidebarMenu'
-
 
 const drawerWidth = 260
 

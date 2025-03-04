@@ -54,7 +54,7 @@ export default function Page() {
         </Box>
         <hr />
       </Box>
-      <EmployeeTable role={""} />
+      <EmployeeTable role={''} />
     </Box>
   )
 }

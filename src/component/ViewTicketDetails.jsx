@@ -16,14 +16,14 @@ import ViewDetailsCard from '@/component/ViewDetailsCard'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 
-
 const ViewTicketDetails = ({ ticketId }) => {
-
   // const { data: ticketNote, isLoading: isLoadingNote } = useFetchData(
   //   GET_ENDPOINTS.TICKET_NOTES(ticketId),
   // )
-  
-  const { data: ticket, isLoading } = useFetchData(GET_ENDPOINTS.VIEW_OUTSOURCED_TICKETS(ticketId))
+
+  const { data: ticket, isLoading } = useFetchData(
+    GET_ENDPOINTS.VIEW_OUTSOURCED_TICKETS(ticketId),
+  )
   const { theme } = useContext(ThemeContext)
   const [isOutsourced, setIsOutsourced] = useState(false)
   const [leftTabIndex, setLeftTabIndex] = useState(0)

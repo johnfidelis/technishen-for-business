@@ -334,13 +334,12 @@ const SidebarMenu = () => {
             </>
           )
         })}
-         <Box sx={{ textAlign: "center", mt: 2, mb: 2 }}>
-          <Typography variant="body2" sx={{ color: "#000000" }}>
+        <Box sx={{ textAlign: 'center', mt: 2, mb: 2 }}>
+          <Typography variant="body2" sx={{ color: '#000000' }}>
             © All Rights Reserved by TECHNISHEN™
           </Typography>
         </Box>
       </List>
-      
     </Box>
   )
 }

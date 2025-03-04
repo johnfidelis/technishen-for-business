@@ -119,7 +119,7 @@ const Page = () => {
               ].map((header) => (
                 <TableCell
                   key={header}
-                   sx={{
+                  sx={{
                     fontSize: '0.80em',
                     fontWeight: 500,
                     fontFamily: 'Inter, sans-serif',

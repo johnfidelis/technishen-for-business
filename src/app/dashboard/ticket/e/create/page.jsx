@@ -1,5 +1,5 @@
-"use client"
-import React, { useState, useEffect, useRef, useContext } from "react";
+'use client'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import {
   Box,
   Typography,
@@ -13,24 +13,23 @@ import {
   Autocomplete,
   CircularProgress,
   InputAdornment,
-} from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+} from '@mui/material'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 
 import { ThemeContext } from '@/context/ThemeContext'
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddressAutocomplete from "../../../../../component/utils/GoogleInputAddress"
-import { toast } from "react-toastify";
+import DeleteIcon from '@mui/icons-material/Delete'
+import AddressAutocomplete from '../../../../../component/utils/GoogleInputAddress'
+import { toast } from 'react-toastify'
 // import EmployeeProfile from "../../../../assets/components/EmployeeProfiles/EmployeeProfile";
 // import EmployeeProfile from "../../../../assets/components/EmployeeProfiles/EmployeeProfile";
-import EmployeeProfile from "@/component/modals/EmployeeProfile";
-
+import EmployeeProfile from '@/component/modals/EmployeeProfile'
 
 const Page = () => {
   const { theme } = useContext(ThemeContext)
-  const businessId = "dfdfd"
-  const [outsourced, setOutsourced] = useState(false);
-  const [outsourcedData, setOutsourcedData] = useState(false);
-  const clearAddressRef = useRef(null);
+  const businessId = 'dfdfd'
+  const [outsourced, setOutsourced] = useState(false)
+  const [outsourcedData, setOutsourcedData] = useState(false)
+  const clearAddressRef = useRef(null)
 
   // useEffect(() => {
   //   const fetchCategories = async () => {
@@ -50,38 +49,37 @@ const Page = () => {
   //   fetchCategories();
   // }, []);
 
-  const [assignmentGroups, setAssignmentGroups] = useState([]);
-  const [employees, setEmployees] = useState([]);
-  const [assignmentGroup, setAssignmentGroup] = useState("");
-  const [assignTo, setAssignTo] = useState("");
-  const [loadingGroups, setLoadingGroups] = useState(true);
-  const [loadingEmployees, setLoadingEmployees] = useState(false);
+  const [assignmentGroups, setAssignmentGroups] = useState([])
+  const [employees, setEmployees] = useState([])
+  const [assignmentGroup, setAssignmentGroup] = useState('')
+  const [assignTo, setAssignTo] = useState('')
+  const [loadingGroups, setLoadingGroups] = useState(true)
+  const [loadingEmployees, setLoadingEmployees] = useState(false)
 
-  const [callerType, setCallerType] = useState("employee");
-  const [userId, setUserId] = useState("");
-  const [impact, setImpact] = useState("");
-  const [urgency, setUrgency] = useState("");
-  const [images, setImages] = useState([]);
-  const [description, setDescription] = useState("");
-  const [address, setAddress] = useState("");
-  const [long, setLong] = useState(0.0);
-  const [lat, setLat] = useState(0.0);
-  const [caller, setCaller] = useState("");
-  const [category, setCategory] = useState("");
-  const [subCategory, setSubCategory] = useState("");
-  const [ticketPriority, setTicketPriority] = useState("");
-  const [scheduleDateAndTime, setScheduleDateAndTime] = useState("");
-  const [options, setOptions] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [subCategories, setSubCategories] = useState([]);
-  const [submitLoading, setSubmitLoading] = useState(false);
-  const [callerModalOpen, setCallerModalOpen] = useState(false);
-  const [assignModalOpen, setAssignToModalOpen] = useState(false);
+  const [callerType, setCallerType] = useState('employee')
+  const [userId, setUserId] = useState('')
+  const [impact, setImpact] = useState('')
+  const [urgency, setUrgency] = useState('')
+  const [images, setImages] = useState([])
+  const [description, setDescription] = useState('')
+  const [address, setAddress] = useState('')
+  const [long, setLong] = useState(0.0)
+  const [lat, setLat] = useState(0.0)
+  const [caller, setCaller] = useState('')
+  const [category, setCategory] = useState('')
+  const [subCategory, setSubCategory] = useState('')
+  const [ticketPriority, setTicketPriority] = useState('')
+  const [scheduleDateAndTime, setScheduleDateAndTime] = useState('')
+  const [options, setOptions] = useState([])
+  const [categories, setCategories] = useState([])
+  const [subCategories, setSubCategories] = useState([])
+  const [submitLoading, setSubmitLoading] = useState(false)
+  const [callerModalOpen, setCallerModalOpen] = useState(false)
+  const [assignModalOpen, setAssignToModalOpen] = useState(false)
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-  const [channel, setChannel] = useState("");
-
+  const [channel, setChannel] = useState('')
 
   // useEffect(() => {
   //   // Fetch categories and subcategories
@@ -136,22 +134,20 @@ const Page = () => {
   // }, [businessId]);
 
   const handleGroupChange = (groupId) => {
-    setAssignmentGroup(groupId);
-    const selectedGroup = assignmentGroups.find(
-      (group) => group.id === groupId
-    );
+    setAssignmentGroup(groupId)
+    const selectedGroup = assignmentGroups.find((group) => group.id === groupId)
     if (selectedGroup) {
-      setEmployees(selectedGroup.employees || []);
+      setEmployees(selectedGroup.employees || [])
     }
-    setAssignTo("");
-  };
+    setAssignTo('')
+  }
 
   const handleEmployeeSearch = (query) => {
-    setLoadingEmployees(true);
+    setLoadingEmployees(true)
     const selectedGroup = assignmentGroups.find(
-      (group) => group.id === assignmentGroup
-    );
-    if (!selectedGroup) return;
+      (group) => group.id === assignmentGroup,
+    )
+    if (!selectedGroup) return
 
     // axiosInstanceWithAuth
     //   .get(`search-employees/?group_id=${assignmentGroup}&query=${query || ""}`)
@@ -166,16 +162,16 @@ const Page = () => {
     //   })
     //   .catch((error) => console.error("Error fetching employees:", error))
     //   .finally(() => setLoadingEmployees(false));
-  };
+  }
 
   const handleCategoryChange = (selectedCategoryId) => {
-    setCategory(selectedCategoryId);
+    setCategory(selectedCategoryId)
     const selectedCategory = categories.find(
-      (cat) => cat.id === selectedCategoryId
-    );
-    setSubCategories(selectedCategory?.sub_services || []);
-    setSubCategory(selectedCategory?.sub_services?.[0]?.id || ""); // Reset to first sub-category
-  };
+      (cat) => cat.id === selectedCategoryId,
+    )
+    setSubCategories(selectedCategory?.sub_services || [])
+    setSubCategory(selectedCategory?.sub_services?.[0]?.id || '') // Reset to first sub-category
+  }
 
   // const fetchCallers = async (query) => {
   //   setLoading(true);
@@ -194,133 +190,133 @@ const Page = () => {
 
   const handleInputChange = (event, value) => {
     if (value.length >= 2) {
-      fetchCallers(value);
+      fetchCallers(value)
     } else {
-      setOptions([]);
+      setOptions([])
     }
-  };
+  }
 
   const calculatePriority = () => {
-    if (impact === "High" && urgency === "High") {
-      return { level: "Very High", color: "#FF3300" }; // Very High
+    if (impact === 'High' && urgency === 'High') {
+      return { level: 'Very High', color: '#FF3300' } // Very High
     }
     if (
-      (impact === "High" && urgency === "Medium") ||
-      (impact === "Medium" && urgency === "High")
+      (impact === 'High' && urgency === 'Medium') ||
+      (impact === 'Medium' && urgency === 'High')
     ) {
-      return { level: "High", color: "#FF3300" }; // High
+      return { level: 'High', color: '#FF3300' } // High
     }
     if (
-      (impact === "High" && urgency === "Low") ||
-      (impact === "Medium" && urgency === "Medium") ||
-      (impact === "Medium" && urgency === "Low") ||
-      (impact === "Low" && urgency === "High") ||
-      (impact === "Low" && urgency === "Medium")
+      (impact === 'High' && urgency === 'Low') ||
+      (impact === 'Medium' && urgency === 'Medium') ||
+      (impact === 'Medium' && urgency === 'Low') ||
+      (impact === 'Low' && urgency === 'High') ||
+      (impact === 'Low' && urgency === 'Medium')
     ) {
-      return { level: "Medium", color: "#CC00FF" }; // Medium
+      return { level: 'Medium', color: '#CC00FF' } // Medium
     }
-    if (impact === "Low" && urgency === "Low") {
-      return { level: "Low", color: "#00FF00" }; // Low
+    if (impact === 'Low' && urgency === 'Low') {
+      return { level: 'Low', color: '#00FF00' } // Low
     } else {
-      return { level: "", color: "black" };
+      return { level: '', color: 'black' }
     }
-  };
+  }
 
-  const priority = calculatePriority();
+  const priority = calculatePriority()
 
   const handleOutsourcedToggle = () => {
-    setOutsourced(!outsourced);
+    setOutsourced(!outsourced)
     if (!outsourced) {
-      setAssignmentGroup("");
-      setAssignTo("");
+      setAssignmentGroup('')
+      setAssignTo('')
     }
-  };
+  }
 
   const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
+    const files = Array.from(event.target.files)
     const previewImages = files.map((file) => {
       return {
         id: URL.createObjectURL(file), // Temporary ID for preview
         file,
-      };
-    });
-    setImages((prev) => [...prev, ...previewImages]);
-  };
+      }
+    })
+    setImages((prev) => [...prev, ...previewImages])
+  }
 
   const removeImage = (id) => {
-    setImages((prev) => prev.filter((image) => image.id !== id));
-  };
+    setImages((prev) => prev.filter((image) => image.id !== id))
+  }
 
   const validateInputs = () => {
-    if (!outsourced && !caller) return "Caller is required.";
-    if (!businessId) return "Business ID is required.";
-    if (!description) return "Description is required.";
-    if (!category) return "Service category is required.";
-    if (!subCategory) return "Sub-service is required.";
-    if (!address) return "Address is required.";
-    if (!urgency) return "Urgency level is required.";
+    if (!outsourced && !caller) return 'Caller is required.'
+    if (!businessId) return 'Business ID is required.'
+    if (!description) return 'Description is required.'
+    if (!category) return 'Service category is required.'
+    if (!subCategory) return 'Sub-service is required.'
+    if (!address) return 'Address is required.'
+    if (!urgency) return 'Urgency level is required.'
 
-    if (!impact) return "Impact level is required.";
-    if (!outsourced && !channel) return "Contact channel is required.";
-    if (!scheduleDateAndTime) return "Scheduled date and time are required.";
-    return null; // No validation errors
-  };
+    if (!impact) return 'Impact level is required.'
+    if (!outsourced && !channel) return 'Contact channel is required.'
+    if (!scheduleDateAndTime) return 'Scheduled date and time are required.'
+    return null // No validation errors
+  }
 
   const handleSubmit = async () => {
-    const found = options.find((option) => option.id === caller);
+    const found = options.find((option) => option.id === caller)
 
-    const validationError = validateInputs();
+    const validationError = validateInputs()
     if (validationError) {
       toast.error(validationError, {
         autoClose: 5000,
         hideProgressBar: true,
-      });
-      return;
+      })
+      return
     }
 
-    const formData = new FormData();
+    const formData = new FormData()
 
-    formData.append("business", businessId);
-    formData.append("description", description);
-    formData.append("service", category);
-    formData.append("sub_service", subCategory);
-    formData.append("address", address);
-    formData.append("longitude", long);
-    formData.append("latitude", lat);
-    formData.append("urgency", urgency);
-    formData.append("priority_level", priority.level);
-    formData.append("impact", impact);
-    formData.append("caller_type", callerType);
+    formData.append('business', businessId)
+    formData.append('description', description)
+    formData.append('service', category)
+    formData.append('sub_service', subCategory)
+    formData.append('address', address)
+    formData.append('longitude', long)
+    formData.append('latitude', lat)
+    formData.append('urgency', urgency)
+    formData.append('priority_level', priority.level)
+    formData.append('impact', impact)
+    formData.append('caller_type', callerType)
 
-    formData.append("scheduled_datetime", scheduleDateAndTime);
+    formData.append('scheduled_datetime', scheduleDateAndTime)
 
     images.forEach((image) => {
-      formData.append("images", image.file);
-    });
+      formData.append('images', image.file)
+    })
 
     if (outsourced) {
-      console.log({ category });
-      console.log({ subCategory });
-      formData.append("caller_id", caller);
+      console.log({ category })
+      console.log({ subCategory })
+      formData.append('caller_id', caller)
 
       if (found) {
-        const { first_name, last_name } = found;
-        formData.append("caller_name", `${first_name} ${last_name}`);
+        const { first_name, last_name } = found
+        formData.append('caller_name', `${first_name} ${last_name}`)
       }
     } else {
-      formData.append("caller_channel", channel);
+      formData.append('caller_channel', channel)
 
-      formData.append("caller", caller);
-      if (assignmentGroup !== "") {
-        formData.append("fulfiller_group", assignmentGroup);
+      formData.append('caller', caller)
+      if (assignmentGroup !== '') {
+        formData.append('fulfiller_group', assignmentGroup)
       }
-      if (assignTo !== "") {
-        formData.append("assigned_to", assignTo.id);
+      if (assignTo !== '') {
+        formData.append('assigned_to', assignTo.id)
       }
     }
     //
 
-    setSubmitLoading(true);
+    setSubmitLoading(true)
     // axiosInstanceWithAuth
     //   // .post("/create-web-ticket/", formData, {
     //   .post(
@@ -361,69 +357,69 @@ const Page = () => {
     //         autoClose: 5000,
     //         hideProgressBar: true,
     //       });
-        // }
-      // })
-      // .catch((error) => {
-      //   console.error("Error creating ticket:", error);
-      //   toast.error("An error occurred while creating the ticket.", {
-      //     autoClose: 5000,
-      //     hideProgressBar: true,
-      //   });
-      // })
-      // .finally(() => {
-      //   setSubmitLoading(false);
-      // });
-  };
+    // }
+    // })
+    // .catch((error) => {
+    //   console.error("Error creating ticket:", error);
+    //   toast.error("An error occurred while creating the ticket.", {
+    //     autoClose: 5000,
+    //     hideProgressBar: true,
+    //   });
+    // })
+    // .finally(() => {
+    //   setSubmitLoading(false);
+    // });
+  }
 
   const handleAddressUpdate = (parsedAddress) => {
-    console.log(parsedAddress);
+    console.log(parsedAddress)
     setAddress(
       parsedAddress?.city +
-        " " +
+        ' ' +
         parsedAddress?.state +
-        " " +
-        parsedAddress?.country
-    );
-    setLong(parsedAddress?.longitude);
-    setLat(parsedAddress?.latitude);
-  };
+        ' ' +
+        parsedAddress?.country,
+    )
+    setLong(parsedAddress?.longitude)
+    setLat(parsedAddress?.latitude)
+  }
 
   const handleOpenCallerModal = (userId) => {
     // console.log({userId})
-    setUserId(userId);
-    setCallerModalOpen(true);
-  };
+    setUserId(userId)
+    setCallerModalOpen(true)
+  }
 
   const handleOpenAssignToModal = (userId) => {
-    console.log({ userId });
-    setUserId(userId?.id);
-    setAssignToModalOpen(true);
-  };
+    console.log({ userId })
+    setUserId(userId?.id)
+    setAssignToModalOpen(true)
+  }
 
   const handleClosCallereModal = () => {
-    setCallerModalOpen(false);
-  };
+    setCallerModalOpen(false)
+  }
 
   return (
     <Box
       sx={{
-        width: "98%",
-        p: "2em",
-        backgroundColor: "#FFFFFF",
-        borderRadius: "0.625em",
-        minHeight: "60vh",
-        margin: "auto",
-           fontFamily: "Inter, sans-serif",
+        width: '98%',
+        p: '2em',
+        backgroundColor: '#FFFFFF',
+        borderRadius: '0.625em',
+        minHeight: '60vh',
+        margin: 'auto',
+        fontFamily: 'Inter, sans-serif',
       }}
     >
-      <Box sx={{ mb: "2em", textAlign: "left" }}>
+      <Box sx={{ mb: '2em', textAlign: 'left' }}>
         <Typography
           variant="h5"
           sx={{
-            color: "#000000",
-            fontSize: "1.5em",
-            mb: "1em",
-            fontFamily: "Inter, sans-serif",
+            color: '#000000',
+            fontSize: '1.5em',
+            mb: '1em',
+            fontFamily: 'Inter, sans-serif',
             fontWeight: 500,
           }}
         >
@@ -436,14 +432,14 @@ const Page = () => {
             label="Outsource this Ticket"
             componentsProps={{
               typography: {
-                sx: { fontSize: "0.75em" },
+                sx: { fontSize: '0.75em' },
               },
             }}
           />
           {outsourced ? (
             <Typography
               color="error"
-              sx={{ marginBottom: "20px", fontSize: "0.6em" }}
+              sx={{ marginBottom: '20px', fontSize: '0.6em' }}
             >
               This ticket will be outsourced to Technishen Experts. This will
               result in additional costs.
@@ -451,7 +447,7 @@ const Page = () => {
           ) : (
             <Typography
               color="error"
-              sx={{ marginBottom: "20px", fontSize: "0.6em" }}
+              sx={{ marginBottom: '20px', fontSize: '0.6em' }}
             >
               Toggle this ticket to outsource them to Technishen Experts.
             </Typography>
@@ -462,10 +458,6 @@ const Page = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} gap={2}>
-      
-          
-   
-
           <TextField
             label="Caller Type"
             select
@@ -473,8 +465,8 @@ const Page = () => {
             variant="outlined"
             InputLabelProps={{
               style: {
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             value={callerType}
@@ -488,12 +480,12 @@ const Page = () => {
             freeSolo
             options={options}
             getOptionLabel={(option) =>
-              option.first_name + " " + option.last_name || ""
+              option.first_name + ' ' + option.last_name || ''
             }
             loading={loading}
             noOptionsText="No caller found"
             onInputChange={handleInputChange}
-            onChange={(event, newValue) => setCaller(newValue?.id || "")}
+            onChange={(event, newValue) => setCaller(newValue?.id || '')}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -502,12 +494,12 @@ const Page = () => {
                 variant="outlined"
                 InputLabelProps={{
                   style: {
-                    fontSize: "0.80em",
-                       fontFamily: "Inter, sans-serif",
+                    fontSize: '0.80em',
+                    fontFamily: 'Inter, sans-serif',
                   },
                 }}
                 style={{
-                  marginTop: "1em",
+                  marginTop: '1em',
                 }}
                 InputProps={{
                   ...params.InputProps,
@@ -519,9 +511,9 @@ const Page = () => {
                       {params.InputProps.endAdornment}
 
                       <InputAdornment position="end">
-                        {caller == "" ? null : (
+                        {caller == '' ? null : (
                           <VisibilityIcon
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: 'pointer' }}
                             onClick={() => handleOpenCallerModal(caller)}
                           />
                         )}
@@ -535,7 +527,7 @@ const Page = () => {
 
           <Box
             style={{
-              marginTop: "1em",
+              marginTop: '1em',
             }}
           >
             <TextField
@@ -545,8 +537,8 @@ const Page = () => {
               variant="outlined"
               InputLabelProps={{
                 style: {
-                  fontSize: "0.80em",
-                     fontFamily: "Inter, sans-serif",
+                  fontSize: '0.80em',
+                  fontFamily: 'Inter, sans-serif',
                 },
               }}
               value={category}
@@ -571,12 +563,12 @@ const Page = () => {
             fullWidth
             variant="outlined"
             style={{
-              marginTop: "0.7em",
+              marginTop: '0.7em',
             }}
             InputLabelProps={{
               style: {
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             value={subCategory}
@@ -606,8 +598,8 @@ const Page = () => {
             select
             InputLabelProps={{
               style: {
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             fullWidth
@@ -615,8 +607,8 @@ const Page = () => {
             value={channel}
             onChange={(e) => setChannel(e.target.value)}
             style={{
-              display: outsourced !== true ? "block" : "none",
-              marginTop: "1em",
+              display: outsourced !== true ? 'block' : 'none',
+              marginTop: '1em',
             }}
           >
             <MenuItem value="Phone">Phone</MenuItem>
@@ -626,17 +618,17 @@ const Page = () => {
 
           <Box
             style={{
-              marginTop: "1em",
+              marginTop: '1em',
             }}
           >
             <AddressAutocomplete
               label="Address"
               fullWidth
-              componentRestrictions={{ country: "za" }}
+              componentRestrictions={{ country: 'za' }}
               InputLabelProps={{
                 style: {
-                  fontSize: "0.80em",
-                     fontFamily: "Inter, sans-serif",
+                  fontSize: '0.80em',
+                  fontFamily: 'Inter, sans-serif',
                 },
               }}
               variant="outlined"
@@ -655,8 +647,8 @@ const Page = () => {
             variant="outlined"
             InputLabelProps={{
               style: {
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             value={impact}
@@ -673,14 +665,14 @@ const Page = () => {
             fullWidth
             InputLabelProps={{
               style: {
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             variant="outlined"
             value={urgency}
             style={{
-              marginTop: "1em",
+              marginTop: '1em',
             }}
             onChange={(e) => setUrgency(e.target.value)}
           >
@@ -693,14 +685,14 @@ const Page = () => {
             fullWidth
             variant="outlined"
             style={{
-              marginTop: "1em",
+              marginTop: '1em',
             }}
             InputProps={{
               style: {
-                backgroundColor: "#E7EBF0",
+                backgroundColor: '#E7EBF0',
                 color: priority.color,
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             value={`Priority Level = ${priority.level}`}
@@ -716,13 +708,13 @@ const Page = () => {
             onChange={(e) => handleGroupChange(e.target.value)}
             InputLabelProps={{
               style: {
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             style={{
-              display: outsourced !== true ? "block" : "none",
-              marginTop: "1em",
+              display: outsourced !== true ? 'block' : 'none',
+              marginTop: '1em',
             }}
           >
             {loadingGroups ? (
@@ -744,30 +736,30 @@ const Page = () => {
             freeSolo
             options={employees}
             getOptionLabel={(option) =>
-              `${option.first_name} ${option.last_name}` || ""
+              `${option.first_name} ${option.last_name}` || ''
             }
             loading={loadingEmployees}
             noOptionsText="No employee found"
             onInputChange={(event, value) => {
               if (value) {
-                handleEmployeeSearch(value);
+                handleEmployeeSearch(value)
               }
             }}
-            onChange={(event, newValue) => setAssignTo(newValue || "")}
+            onChange={(event, newValue) => setAssignTo(newValue || '')}
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="Assign to"
                 fullWidth
                 style={{
-                  display: outsourced !== true ? "block" : "none",
-                  marginTop: "1em",
+                  display: outsourced !== true ? 'block' : 'none',
+                  marginTop: '1em',
                 }}
                 variant="outlined"
                 InputLabelProps={{
                   style: {
-                    fontSize: "0.80em",
-                       fontFamily: "Inter, sans-serif",
+                    fontSize: '0.80em',
+                    fontFamily: 'Inter, sans-serif',
                   },
                 }}
                 InputProps={{
@@ -779,9 +771,9 @@ const Page = () => {
                       ) : null}
                       {params.InputProps.endAdornment}
                       <InputAdornment position="end">
-                        {assignTo === "" ? null : (
+                        {assignTo === '' ? null : (
                           <VisibilityIcon
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: 'pointer' }}
                             onClick={() => handleOpenAssignToModal(assignTo)}
                           />
                         )}
@@ -798,15 +790,15 @@ const Page = () => {
             select
             InputLabelProps={{
               style: {
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             fullWidth
             variant="outlined"
             style={{
-              display: outsourced == true ? "block" : "none",
-              marginTop: "1em",
+              display: outsourced == true ? 'block' : 'none',
+              marginTop: '1em',
             }}
             // value={channel}
             onChange={(e) => setChannel(e.target.value)}
@@ -819,17 +811,17 @@ const Page = () => {
             label="Ticket Date and Time"
             fullWidth
             style={{
-              marginTop: "1em",
+              marginTop: '1em',
             }}
             InputLabelProps={{
               style: {
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             variant="outlined"
             type="datetime-local"
-            value={scheduleDateAndTime || " "}
+            value={scheduleDateAndTime || ' '}
             onChange={(e) => setScheduleDateAndTime(e.target.value)}
           />
         </Grid>
@@ -842,8 +834,8 @@ const Page = () => {
             fullWidth
             InputLabelProps={{
               style: {
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               },
             }}
             variant="outlined"
@@ -857,7 +849,7 @@ const Page = () => {
             variant="h6"
             sx={{
               mb: 2,
-                 fontFamily: "Inter, sans-serif",
+              fontFamily: 'Inter, sans-serif',
               fontWeight: 500,
             }}
           >
@@ -879,27 +871,27 @@ const Page = () => {
               <Grid item key={image.id} xs={12} sm={3} md={2}>
                 <Box
                   sx={{
-                    position: "relative",
-                    display: "inline-block",
+                    position: 'relative',
+                    display: 'inline-block',
                   }}
                 >
                   <img
                     src={image.id}
                     alt="Preview"
                     style={{
-                      width: "100%",
-                      height: "150px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
+                      width: '100%',
+                      height: '150px',
+                      objectFit: 'cover',
+                      borderRadius: '8px',
                     }}
                   />
                   <IconButton
                     size="small"
                     sx={{
-                      position: "absolute",
+                      position: 'absolute',
                       top: 8,
                       right: 8,
-                      backgroundColor: "rgba(255, 255, 255, 0.8)",
+                      backgroundColor: 'rgba(255, 255, 255, 0.8)',
                     }}
                     onClick={() => removeImage(image.id)}
                   >
@@ -910,16 +902,16 @@ const Page = () => {
             ))}
           </Grid>
 
-          <Grid item xs={12} sx={{ textAlign: "center" }}>
+          <Grid item xs={12} sx={{ textAlign: 'center' }}>
             <Button
               variant="contained"
               sx={{
-                backgroundColor: theme.primary_color ,
-                color: "#FFFFFF",
-                fontWeight: "bold",
-                padding: "0.625rem 1.25em",
-                fontSize: "0.80em",
-                   fontFamily: "Inter, sans-serif",
+                backgroundColor: theme.primary_color,
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                padding: '0.625rem 1.25em',
+                fontSize: '0.80em',
+                fontFamily: 'Inter, sans-serif',
               }}
               disabled={submitLoading}
               onClick={handleSubmit}
@@ -927,37 +919,37 @@ const Page = () => {
               {submitLoading ? (
                 <CircularProgress size={24} color="inherit" />
               ) : (
-                "CREATE TICKET"
+                'CREATE TICKET'
               )}
             </Button>
           </Grid>
         </Grid>
       </Grid>
 
-      {callerType === "customer" ? (
+      {callerType === 'customer' ? (
         // <EmployeeProfile
         <EmployeeProfile
           open={callerModalOpen}
           onClose={() => setCallerModalOpen(false)}
           user={caller}
-          type={"customer"}
+          type={'customer'}
         />
       ) : (
         <EmployeeProfile
           open={callerModalOpen}
           onClose={() => setCallerModalOpen(false)}
           user={userId}
-          type={"employee"}
+          type={'employee'}
         />
       )}
       <EmployeeProfile
         open={assignModalOpen}
         onClose={() => setAssignToModalOpen(false)}
         user={userId}
-        type={"employee"}
+        type={'employee'}
       />
     </Box>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

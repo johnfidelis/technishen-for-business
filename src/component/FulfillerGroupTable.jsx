@@ -92,7 +92,7 @@ const FulfillerGroupTable = () => {
               ].map((head) => (
                 <TableCell
                   key={head}
-                   sx={{
+                  sx={{
                     fontSize: '0.80em',
                     fontWeight: 500,
                     fontFamily: 'Inter, sans-serif',

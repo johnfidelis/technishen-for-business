@@ -127,7 +127,6 @@ const InternalTicketForm = () => {
   }
 
   const handleImageUpload = (e) => {
-   
     const files = e.target.files
     const fileArray = Array.from(files)?.map((file) => ({
       id: URL.createObjectURL(file),

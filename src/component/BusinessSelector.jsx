@@ -1,83 +1,100 @@
-'use client';
+'use client'
 
-import React, { useContext, useEffect, useState } from 'react';
-import { Box, Typography, Select, MenuItem, Button, Skeleton } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import { GET_ENDPOINTS } from '@/constants/endpoints';
-import { useRouter } from 'next/navigation';
-import { ThemeContext } from '@/context/ThemeContext';
-import { useFetchData } from '@/hooks/useApiService';
-import { Cookies } from 'react-cookie';
+import React, { useContext, useEffect, useState } from 'react'
+import {
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+  Button,
+  Skeleton,
+} from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useRouter } from 'next/navigation'
+import { ThemeContext } from '@/context/ThemeContext'
+import { useFetchData } from '@/hooks/useApiService'
+import { Cookies } from 'react-cookie'
 
 const BusinessSelector = () => {
-  const cookies = new Cookies();
-  const { data, isLoading } = useFetchData(GET_ENDPOINTS.BUSINESSES, 'fetchBusinesses');
-  const [selectedBusiness, setSelectedBusiness] = useState('');
-  const { theme } = useContext(ThemeContext);
-  const router = useRouter();
+  const cookies = new Cookies()
+  const { data, isLoading } = useFetchData(
+    GET_ENDPOINTS.BUSINESSES,
+    'fetchBusinesses',
+  )
+  const [selectedBusiness, setSelectedBusiness] = useState('')
+  const { theme } = useContext(ThemeContext)
+  const router = useRouter()
 
   // Validate cookie against fetched data and set default selected business
   useEffect(() => {
-    if (!isLoading && Array.isArray(data?.businesses) && data.businesses.length > 0) {
-      const cookieBusinessId = cookies.get('selectedBusinessId');
+    if (
+      !isLoading &&
+      Array.isArray(data?.businesses) &&
+      data.businesses.length > 0
+    ) {
+      const cookieBusinessId = cookies.get('selectedBusinessId')
       const matchingBusiness = data.businesses.find(
-        (business) => business.id === cookieBusinessId
-      );
+        (business) => business.id === cookieBusinessId,
+      )
 
       if (cookieBusinessId && matchingBusiness) {
-        setSelectedBusiness(cookieBusinessId);
+        setSelectedBusiness(cookieBusinessId)
       } else {
-        cookies.remove('selectedBusinessId');
-        const firstBusinessId = data.businesses[0].id;
-        setSelectedBusiness(firstBusinessId);
+        cookies.remove('selectedBusinessId')
+        const firstBusinessId = data.businesses[0].id
+        setSelectedBusiness(firstBusinessId)
         cookies.set('selectedBusinessId', firstBusinessId, {
           path: '/',
           secure: true,
           sameSite: 'Strict',
-        });
+        })
       }
     }
-  }, [data, isLoading, cookies]);
+  }, [data, isLoading, cookies])
 
   const updateSelectedBusiness = (businessId) => {
-    setSelectedBusiness(businessId);
+    setSelectedBusiness(businessId)
     cookies.set('selectedBusinessId', businessId, {
       path: '/',
       secure: true,
       sameSite: 'Strict',
-    });
-    window.location.reload(); // Refresh to propagate the selected business across endpoints
-  };
+    })
+    window.location.reload() // Refresh to propagate the selected business across endpoints
+  }
 
   const handleAddBusiness = () => {
-    router.push('/onboard');
-  };
+    router.push('/onboard')
+  }
 
   if (isLoading) {
     return (
       <Box sx={{ mb: 2, textAlign: 'start' }}>
         <Skeleton variant="text" width={150} height={20} />
-        <Skeleton variant="rectangular" width="100%" height={20} sx={{ mb: 1 }} />
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={20}
+          sx={{ mb: 1 }}
+        />
         <Button
-        variant="outlined"
-        startIcon={<AddIcon />}
-        sx={{
-          width: '100%',
-          backgroundColor: theme.primary_color ,
-          borderColor: theme.primary_color ,
-          color: 'white',
-          '&:hover': {
-            backgroundColor: theme.primary_color ,
-            borderColor: theme.primary_color ,
-          },
-        }}
-  
-      >
-        Add Business
-      </Button>
-     
+          variant="outlined"
+          startIcon={<AddIcon />}
+          sx={{
+            width: '100%',
+            backgroundColor: theme.primary_color,
+            borderColor: theme.primary_color,
+            color: 'white',
+            '&:hover': {
+              backgroundColor: theme.primary_color,
+              borderColor: theme.primary_color,
+            },
+          }}
+        >
+          Add Business
+        </Button>
       </Box>
-    );
+    )
   }
 
   return (
@@ -95,9 +112,9 @@ const BusinessSelector = () => {
           border: 'none',
           borderRadius: '4px',
           mb: 1,
-          color: theme.primary_color ,
+          color: theme.primary_color,
           fontWeight: 500,
-          fontFamily: "Inter, sans-serif",
+          fontFamily: 'Inter, sans-serif',
         }}
         MenuProps={{
           PaperProps: {
@@ -118,12 +135,12 @@ const BusinessSelector = () => {
         startIcon={<AddIcon />}
         sx={{
           width: '100%',
-          backgroundColor: theme.primary_color ,
-          borderColor: theme.primary_color ,
+          backgroundColor: theme.primary_color,
+          borderColor: theme.primary_color,
           color: 'white',
           '&:hover': {
-            backgroundColor: theme.primary_color ,
-            borderColor: theme.primary_color ,
+            backgroundColor: theme.primary_color,
+            borderColor: theme.primary_color,
           },
         }}
         onClick={handleAddBusiness}
@@ -131,7 +148,7 @@ const BusinessSelector = () => {
         Add Business
       </Button>
     </Box>
-  );
-};
+  )
+}
 
-export default BusinessSelector;
+export default BusinessSelector

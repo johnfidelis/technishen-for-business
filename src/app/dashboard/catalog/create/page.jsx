@@ -23,15 +23,15 @@ const Page = () => {
             color: '#000000',
             fontSize: '1.25em',
             mb: 2,
-            fontFamily: "Inter, sans-serif",
+            fontFamily: 'Inter, sans-serif',
             fontWeight: '500',
           }}
         >
-        Create Service Catalog
+          Create Service Catalog
         </Typography>
         <hr />
       </Box>
-      <ServiceCatalog/>
+      <ServiceCatalog />
     </Box>
   )
 }

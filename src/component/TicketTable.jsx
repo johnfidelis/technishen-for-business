@@ -1,4 +1,3 @@
-
 'use client'
 
 import React, { useState } from 'react'
@@ -187,7 +186,7 @@ const TicketTable = ({ filterType }) => {
                 {[
                   'Ticket Number',
                   'Caller',
-    
+
                   'Category',
                   'Sub-Category',
                   'Date and Time',
@@ -246,10 +245,8 @@ const TicketTable = ({ filterType }) => {
                       hover
                     >
                       <TableCell>{ticket.ticket_number}</TableCell>
-                      <TableCell>
-                      {ticket?.caller_name}
-                      </TableCell>
-                     
+                      <TableCell>{ticket?.caller_name}</TableCell>
+
                       <TableCell>{ticket.service_name}</TableCell>
                       <TableCell>{ticket.sub_service_name}</TableCell>
                       <TableCell>{formatDateTime(ticket.created_at)}</TableCell>

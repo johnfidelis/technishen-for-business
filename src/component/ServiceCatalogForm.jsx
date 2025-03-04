@@ -40,7 +40,7 @@ const ServiceCatalog = () => {
     price_type: '',
     price_visibility: '',
     status: '',
-    sub_service_image: null
+    sub_service_image: null,
   })
   const [uploadedImage2, setUploadedImage2] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -101,7 +101,10 @@ const ServiceCatalog = () => {
       'sub_service[price_visibility]',
       subCategory?.price_visibility,
     )
-    categoryFormData.append('sub_service[sub_service_images]', subCategory?.sub_service_image)
+    categoryFormData.append(
+      'sub_service[sub_service_images]',
+      subCategory?.sub_service_image,
+    )
     if (categoryIcon) categoryFormData.append('service_images', categoryIcon)
 
     createCategoryAndSubCategory.mutate(categoryFormData, {
