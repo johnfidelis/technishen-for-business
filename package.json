@@ -1,0 +1,56 @@
+{
+  "name": "technishen-for- business",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "prettier-check": "prettier --check .",
+    "prettier-format": "prettier --write .",
+    "start": "next start",
+    "lint": "eslint .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss,md,json}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.5",
+    "@mui/material": "^6.4.5",
+    "@react-google-maps/api": "^2.20.6",
+    "@tanstack/react-query": "^5.66.7",
+    "axios": "^1.7.9",
+    "framer-motion": "^12.4.10",
+    "next": "15.1.7",
+    "react": "^19.0.0",
+    "react-cookie": "^7.2.2",
+    "react-date-range": "^2.0.1",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-phone-number-input": "^3.4.12",
+    "react-toastify": "^11.0.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@eslint/eslintrc": "^3",
+    "eslint": "^9.20.1",
+    "eslint-config-next": "15.1.7",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "git-format-staged": "^3.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "postcss": "^8",
+    "prettier": "^3.5.1",
+    "tailwindcss": "^3.4.1"
+  }
+}
