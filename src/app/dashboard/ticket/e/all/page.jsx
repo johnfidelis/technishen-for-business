@@ -149,30 +149,7 @@ export default function Page() {
           </Grid>
         ))}
       </Grid>
-
-      <TicketTable
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        sortOrder={sortOrder}
-        setSortOrder={setSortOrder}
-        startDate={startDate}
-        endDate={endDate}
-        handleDateChange={handleDateChange}
-        status={status}
-        setStatus={setStatus}
-        showOutsourcedTickets={showOutsourcedTickets}
-        handleSwitchChange={handleSwitchChange}
-        unassignedTickets={unassignedTickets}
-        filteredTickets={filteredTickets}
-        loading={loading}
-        page={page}
-        rowsPerPage={rowsPerPage}
-        handleChangePage={handleChangePage}
-        handleChangeRowsPerPage={handleChangeRowsPerPage}
-        handleTicketClick={handleTicketClick}
-        handleOutsourcedTicketClick={handleOutsourcedTicketClick}
-        formatDateTime={formatDateTime}
-      />
+      <TicketTable filterType="all" />
     </Box>
   )
 }
