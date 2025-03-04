@@ -14,29 +14,54 @@ const Page = ({ handleNext, handleBack }) => {
     POST_ENDPOINTS.BUSINESS_PROFILE,
     'businessProfile',
   )
-  const [formData, setFormData] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return (
-        JSON.parse(localStorage.getItem('step2Data')) || {
-          trading_address: '',
-          city: '',
-          state_or_region: '',
-          country: '',
-          building_name: '',
-          unit_number: '',
-          business_type: '',
-          longitude: '',
-          latitude: '',
-          country_building: '',
-          // sole_prop_docs: '',
-        }
-      )
-    }
-    return {}
+  // const [formData, setFormData] = useState(() => {
+  //   if (typeof window !== 'undefined') {
+  //     return (
+  //       JSON.parse(localStorage.getItem('step2Data')) || {
+  //         trading_address: '',
+  //         city: '',
+  //         state_or_region: '',
+  //         country: '',
+  //         building_name: '',
+  //         unit_number: '',
+  //         business_type: '',
+  //         longitude: '',
+  //         latitude: '',
+  //         country_building: '',
+  //         // sole_prop_docs: '',
+  //       }
+  //     )
+  //   }
+  //   return {}
+  // })
+  // if (formData.business_type === 'Sole Proprietorship') {
+  //   formData.sole_prop_docs = ''
+  // }
+
+  const [formData, setFormData] = useState({
+    trading_address: '',
+    city: '',
+    state_or_region: '',
+    country: '',
+    building_name: '',
+    unit_number: '',
+    longitude: '',
+    latitude: '',
+    country_building: '',
   })
-  if (formData.business_type === 'Sole Proprietorship') {
-    formData.sole_prop_docs = ''
-  }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedData = JSON.parse(localStorage.getItem('step2Data')) || {}
+      setFormData((prev) => ({ ...prev, ...savedData }))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (formData.business_type === 'Sole Proprietorship') {
+      setFormData((prev) => ({ ...prev, sole_prop_docs: '' }))
+    }
+  }, [formData.business_type])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -52,7 +77,8 @@ const Page = ({ handleNext, handleBack }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]
-    setFormData((prev) => ({ ...prev, ['sole_prop_docs']: file }))
+    // setFormData((prev) => ({ ...prev, ['sole_prop_docs']: file }))
+    setFormData((prev) => ({ ...prev, sole_prop_docs: file }))
   }
 
   const handleAddressUpdate = (address, placeDetails) => {
@@ -73,13 +99,33 @@ const Page = ({ handleNext, handleBack }) => {
   }
 
   const handleSave = () => {
+    let newErrors = {};
+    if (!formData.trading_address) newErrors.trading_address = 'Trading address is required';
+    if (!formData.city) newErrors.city = 'City is required';
+    if (!formData.state_or_region) newErrors.state_or_region = 'State/Region is required';
+    if (!formData.country) newErrors.country = 'Country is required';
+    if (formData.business_type === 'Sole Proprietorship' && !formData.sole_prop_docs) {
+      newErrors.sole_prop_docs = 'Business document is required';
+    }
+
+    
+
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    toast.error('Please fix the errors before submitting.');
+    return;
+  }
+
+
+
     const formDataObject = new FormData()
     Object.entries(formData).forEach(([key, value]) => {
       formDataObject.append(key, value)
     })
     createBusiness.mutate(formDataObject, {
       onSuccess: async () => {
-        handleNext()
+        // handleNext()
+        window.location.href = '/dashboard'
       },
       onError: () => toast.error('check inputs.'),
     })

@@ -51,11 +51,7 @@ const SideBar = ({ activePage, setActivePage }) => {
           borderBottomLeftRadius: '20px',
         }}
       >
-        <BusinessSelector
-        //   businesses={businesses}
-        //   selectedBusiness={selectedBusiness}
-        //   setSelectedBusiness={setSelectedBusiness}
-        />
+        <BusinessSelector />
       </Box>
 
       <SidebarMenu />

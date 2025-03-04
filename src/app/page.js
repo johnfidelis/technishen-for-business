@@ -55,12 +55,12 @@ export default function Home() {
   const router = useRouter()
 
 
-  // useEffect(() => {
-  //   setTimeout(() => {
+  useEffect(() => {
+    setTimeout(() => {
   
-  //     router.push("/dashboard");
-  //   }, 5000); 
-  // }, []);
+      router.push("/dashboard");
+    }, 3000); 
+  }, []);
 
   return (
     <div

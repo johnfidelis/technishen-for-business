@@ -194,6 +194,140 @@ export const menuItems = [
     ],
   },
   {
+    mainCategory: "Asset Management",
+    icon: <CategoryIcon />,
+    subcategories: [
+      {
+        name: "Dashboard",
+        routeTo: "/",
+        icon: <DashboardIcon />,
+      },
+      {
+        name: "Create Asset",
+        routeTo: "/",
+        icon: <AddCircleOutlineRounded />,
+      },
+      {
+        name: "View Asset",
+        routeTo: "/",
+        icon: <AssignmentIcon />,
+      },
+      {
+        name: "Insurance",
+        routeTo:  "/",
+        icon: <ReceiptLongIcon />,
+      },
+      {
+        name: "Assets For Sale",
+        routeTo:  "/",
+        icon: <StorefrontIcon />,
+      },
+      {
+        name: "Marketplace",
+        routeTo:  "/",
+        icon: <CategoryIcon />,
+      },
+      {
+        name: "Search Asset",
+        routeTo:  "/",
+        icon: <ReceiptIcon />,
+      },
+    ],
+  },
+  {
+    mainCategory: "External Ticket",
+    icon: <CategoryIcon />,
+    subcategories: [
+      {
+        name: "Dashboard",
+        routeTo: "/",
+        icon: <DashboardIcon />,
+      },
+      {
+        name: "Transactions",
+        routeTo: "/",
+        icon: <ReceiptLongIcon />,
+      },
+      {
+        name: "Unassigned",
+        routeTo: "/",
+        icon: <AssignmentIcon />,
+      },
+      {
+        name: "Open Tickets",
+        routeTo: "/",
+        icon: <ListIcon />,
+      },
+    
+      {
+        name: "Resolved Tickets",
+        routeTo: "/",
+        icon: <CheckCircleIcon />,
+      },
+      {
+        name: "Canceled",
+        routeTo: "/",
+        icon: <DoneIcon />,
+      },
+    ],
+  },
+  {
+    mainCategory: "Job Opportunity",
+    icon: <WorkIcon />,
+    subcategories: [
+      {
+        name: "Dashboard",
+        routeTo: "/",
+        icon: <DashboardIcon />,
+      },
+      {
+        name: "Available Jobs",
+        routeTo: "/",
+        icon: <ListIcon />,
+      },
+      {
+        name: "Applied Jobs",
+        routeTo: "/",
+        icon: <AssignmentIcon />,
+      },
+      {
+        name: "Interviews",
+        routeTo: "/",
+        icon: <PlayCircleFilledWhiteIcon />,
+      },
+      {
+        name: "Offer to approve",
+        routeTo: "/",
+        icon: <PersonIcon />,
+      },
+      {
+        name: "Awaiting start date",
+        routeTo:"/",
+        icon: <DateRangeIcon />,
+      },
+      {
+        name: "Effective Assignments",
+        routeTo: "/",
+        icon: <AssignmentTurnedInIcon />,
+      },
+      {
+        name: "Timecard / Expense",
+        routeTo: "/",
+        icon: <ReceiptLongIcon />,
+      },
+      {
+        name: "Invoicing",
+        routeTo: "/",
+        icon: <InvoiceIcon />,
+      },
+      {
+        name: "Completed Assignments",
+        routeTo: "/",
+        icon: <DoneIcon />,
+      },
+    ],
+  },
+  {
     name: 'Settings',
     icon: <SettingsIcon />,
     routeTo: '/',

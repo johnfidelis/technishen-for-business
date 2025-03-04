@@ -2,6 +2,7 @@
 
 import React, { useState, useContext } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import {
   AppBar,
   Toolbar,
@@ -25,6 +26,7 @@ const TopBar = () => {
   const { theme } = useContext(ThemeContext)
   const [ownerName, setOwnerName] = useState('')
   const [anchorEl, setAnchorEl] = useState(null)
+  const router = useRouter()
 
   const getTimeBasedGreeting = () => {
     const hour = new Date().getHours()
@@ -35,6 +37,17 @@ const TopBar = () => {
         : 'Good Evening'
   }
 
+  const handleLogout = () => {
+    // Clear all cookies
+    document.cookie.split(';').forEach((cookie) => {
+      document.cookie = cookie
+        .replace(/^ +/, '')
+        .replace(/=.*/, `=;expires=${new Date(0).toUTCString()};path=/`)
+    })
+
+    // Redirect to login
+    router.push('/login')
+  }
   return (
     <AppBar
       position="fixed"
@@ -75,7 +88,7 @@ const TopBar = () => {
               </ListItemIcon>
               <ListItemText>Dashboard</ListItemText>
             </MenuItem>
-            <MenuItem onClick={() => console.log('Logout')}>
+            <MenuItem  onClick={handleLogout}>
               <ListItemIcon>
                 <ExitToAppIcon fontSize="small" />
               </ListItemIcon>

@@ -13,9 +13,10 @@ import {
   Button,
   FormControl,
 } from '@mui/material'
-// import { validate } from '@/component/utils/validate'
+import isEmail from 'validator/lib/isEmail'
+import isURL from 'validator/lib/isURL'
 
-const Page = ({ handleNext, handleBack }) => {
+const Page = ({ handleNext }) => {
   const [errors, setErrors] = useState({})
   const [formData, setFormData] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -45,6 +46,33 @@ const Page = ({ handleNext, handleBack }) => {
     }
   }, [formData])
 
+  const validateForm = () => {
+    let newErrors = {}
+
+    if (!formData.business_type)
+      newErrors.business_type = 'Business type is required'
+    if (!formData.business_name)
+      newErrors.business_name = 'Business name is required'
+    if (!formData.business_email || !isEmail(formData.business_email))
+      newErrors.business_email = 'Valid business email is required'
+    if (!formData.support_email || !isEmail(formData.support_email))
+      newErrors.support_email = 'Valid support email is required'
+    if (!formData.trading_name)
+      newErrors.trading_name = 'Trading name is required'
+    if (!formData.registration_number)
+      newErrors.registration_number = 'Registration number is required'
+    if (!formData.industry) newErrors.industry = 'Industry is required'
+    if (!formData.company_size)
+      newErrors.company_size = 'Company size is required'
+    if (!formData.office_phone || formData.office_phone.length < 10)
+      newErrors.office_phone = 'Valid office phone number is required'
+    if (formData.website && !isURL(formData.website))
+      newErrors.website = 'Enter a valid URL'
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
 
@@ -64,8 +92,10 @@ const Page = ({ handleNext, handleBack }) => {
   }
 
   const handleSave = () => {
-    console.log({ formData })
-    handleNext()
+    if (validateForm()) {
+      // console.log({ formData }) // uncomment to see form data
+      handleNext()
+    }
   }
 
   return (
@@ -187,6 +217,8 @@ const Page = ({ handleNext, handleBack }) => {
             name="website"
             placeholder="e.g., example.com"
             value={formData.website || ''}
+            error={!!errors.website}
+            helperText={errors.website}
             onChange={handleChange}
           />
         </Grid>

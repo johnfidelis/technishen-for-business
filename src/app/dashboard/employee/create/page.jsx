@@ -166,23 +166,28 @@ const Page = () => {
                 </Select>
               </FormControl>
 
-              <FormControl fullWidth>
-                <PhoneInput
-                  international
-                  defaultCountry="ZA"
-                  value={formData.phone_number || ''}
-                  onChange={(value) =>
-                    setFormData((prev) => ({ ...prev, phone_number: value }))
-                  }
-                  style={{
-                    width: '100%',
-                    padding: '16.5px 14px',
-                    border: '1px solid rgba(0, 0, 0, 0.23)',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                  }}
-                />
-              </FormControl>
+              {/* <FormControl fullWidth> */}
+              <PhoneInput
+                international
+                defaultCountry="ZA"
+                value={formData.phone_number || ''}
+                onChange={(value) =>
+                  setFormData((prev) => ({ ...prev, phone_number: value }))
+                }
+                inputProps={{
+                  required: true,
+                  className:
+                    'bg-opacity-50 text-gray-950 mt-2 block border rounded-md border-gray-700 h-[48px] w-[450px] pl-[45px] pr-[12px] justify-between shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200',
+                }}
+                style={{
+                  width: '100%',
+                  padding: '16.5px 14px',
+                  border: '1px solid rgba(0, 0, 0, 0.23)',
+                  borderRadius: '4px',
+                  fontSize: '16px',
+                }}
+              />
+              {/* </FormControl> */}
 
               <Box sx={{ mt: 2 }}>
                 <AddressAutocomplete
