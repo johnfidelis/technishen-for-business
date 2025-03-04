@@ -25,7 +25,7 @@ import { toast } from "react-toastify";
 import EmployeeProfile from "@/component/modals/EmployeeProfile";
 
 
-const page = () => {
+const Page = () => {
   const { theme } = useContext(ThemeContext)
   const businessId = "dfdfd"
   const [outsourced, setOutsourced] = useState(false);
@@ -960,4 +960,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

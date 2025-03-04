@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Box, TextField, Typography, Grid, Button, Link } from '@mui/material';
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const inputRefs = useRef([]);
   const [otp, setOtp] = useState(['', '', '', '', '']);
@@ -104,4 +104,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

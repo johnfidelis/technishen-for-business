@@ -25,7 +25,7 @@ import Image from 'next/image'
 import { useCreateData } from '@/hooks/useApiService'
 import { POST_ENDPOINTS } from '@/constants/endpoints'
 
-const page = () => {
+const Page = () => {
   const { theme } = useContext(ThemeContext)
   const [formData, setFormData] = useState({
     first_name: '',
@@ -349,4 +349,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -1,9 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import { debounce } from '../../../../component/utils/debounce'
-import { toast } from 'react-toastify'
+import { useState, useEffect } from 'react'
 import PhoneInput from 'react-phone-number-input'
 
 import {
@@ -16,10 +13,9 @@ import {
   Button,
   FormControl,
 } from '@mui/material'
-import { validate } from '@/component/utils/validate'
+// import { validate } from '@/component/utils/validate'
 
 const page = ({ handleNext, handleBack }) => {
-  const router = useRouter()
   const [errors, setErrors] = useState({})
   const [formData, setFormData] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -270,4 +266,4 @@ const page = ({ handleNext, handleBack }) => {
   )
 }
 
-export default page
+export default Page

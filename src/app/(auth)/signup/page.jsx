@@ -21,7 +21,7 @@ import logo from '@/assets/images/Technisen.png'
 import { validate } from '@/component/utils/validate'
 import { Cookies } from 'react-cookie'
 
-export default function page() {
+export default function Page() {
   const cookies = new Cookies()
   const router = useRouter()
   const signup = useCreateData(AUTH_ENDPOINTS.SIGNUP, 'signup')

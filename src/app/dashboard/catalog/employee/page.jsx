@@ -4,7 +4,7 @@ import React from 'react'
 import { Box, Typography } from '@mui/material'
 import CatalogTable from '@/component/CatalogTable'
 
-const page = () => {
+const Page = () => {
   return (
     <Box
       sx={{
@@ -36,4 +36,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

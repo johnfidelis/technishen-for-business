@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { ThemeContext } from '@/context/ThemeContext'
 import EmployeeTable from '@/component/EmployeeTable'
 
-export default function page() {
+export default function Page() {
   const { theme } = useContext(ThemeContext)
 
   return (

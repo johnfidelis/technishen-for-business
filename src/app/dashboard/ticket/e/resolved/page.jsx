@@ -17,7 +17,7 @@ import TicketTable from '@/component/TicketTable'
 
 
 
-export default function page() {
+export default function Page() {
   const { theme } = useContext(ThemeContext)
   const unassignedTickets = [
     {
