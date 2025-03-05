@@ -69,8 +69,6 @@ const EditCategoryModal = ({ open, onClose, category }) => {
       formData.append('service_type', serviceType)
       if (image) formData.append('service_images', image)
 
-        
-
       await updateCategory(formData)
       toast.success('Category updated successfully!')
       onClose()

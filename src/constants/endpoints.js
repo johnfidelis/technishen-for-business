@@ -13,18 +13,14 @@ export const POST_ENDPOINTS = {
   CREATE_CATEGORY_AND_SUB_CATEGORY: `/create-category-and-sub-category/`,
   ADD_EMPLOYEE_TO_FULFILER_GROUP: (groupId) =>
     `/add-employees-to-fulfiller-group/${groupId}/`,
-  CREATE_SUB_CATALOG: (serviceId) =>
-    `/create-sub-category/${serviceId}/`,
+  CREATE_SUB_CATALOG: (serviceId) => `/create-sub-category/${serviceId}/`,
 }
 export const PATCH_ENDPOINTS = {
   BUSINESS_OWNER_PROFILE: '/business-owner-profile/',
   UPDATE_EMPLOYEE_ROLE: (employeeId) =>
     `/update-employee-role/${businessId}/${employeeId}/`,
-  UPDATE_CATALOG: (serviceId) =>
-    `/update-category/${serviceId}/`,
-  UPDATE_SUB_CATALOG: (serviceId) =>
-    `/update-sub-category/${serviceId}/`,
-  
+  UPDATE_CATALOG: (serviceId) => `/update-category/${serviceId}/`,
+  UPDATE_SUB_CATALOG: (serviceId) => `/update-sub-category/${serviceId}/`,
 }
 
 export const AUTH_ENDPOINTS = {
@@ -32,8 +28,7 @@ export const AUTH_ENDPOINTS = {
   SIGNUP: '/register/',
 }
 export const DELETE_ENDPOINTS = {
-  DELETE_CATALOG: (serviceId) =>
-    `/delete-category/${serviceId}/`,
+  DELETE_CATALOG: (serviceId) => `/delete-category/${serviceId}/`,
 }
 
 export const GET_ENDPOINTS = {

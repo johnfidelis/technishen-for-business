@@ -255,12 +255,7 @@ const CreateSubCategory = ({ open, onClose, serviceId }) => {
           />
 
           <Box textAlign="center" mt={4}>
-            <Button
-              variant="contained"
-              onClick={handleSave}
-              
-              disabled={loading}
-            >
+            <Button variant="contained" onClick={handleSave} disabled={loading}>
               {loading ? (
                 <>
                   <CircularProgress />

@@ -22,7 +22,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 
 const SIDEBAR_WIDTH = 250 // Adjust this to your sidebar width
 
-const TopBar = ({ownerName}) => {
+const TopBar = ({ ownerName }) => {
   const { theme } = useContext(ThemeContext)
 
   const [anchorEl, setAnchorEl] = useState(null)

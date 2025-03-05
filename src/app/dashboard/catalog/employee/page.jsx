@@ -1,6 +1,3 @@
-
-
-
 'use client'
 import React, { useContext } from 'react'
 import CatalogTable from '@/component/CatalogTable'

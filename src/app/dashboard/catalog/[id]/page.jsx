@@ -1,6 +1,3 @@
-
-
-
 'use client'
 
 import React, { useContext, useState } from 'react'
@@ -72,7 +69,11 @@ const Page = ({ onBack }) => {
       <OpenSubcategories categoryId={id} onServiceNameChange={setServiceName} />
 
       {/* Create SubCategory Modal */}
-      <CreateSubCategory open={openModal} onClose={() => setOpenModal(false)} serviceId={id} />
+      <CreateSubCategory
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        serviceId={id}
+      />
     </Box>
   )
 }

@@ -11,13 +11,12 @@ import { GET_ENDPOINTS } from '@/constants/endpoints'
 export default function Layout({ children }) {
   const router = useRouter()
 
-
   const { data, isLoading } = useFetchData(
     GET_ENDPOINTS.BUSINESSES,
     'fetchBusinesses',
   )
 
-  console.log({data})
+  console.log({ data })
   console.log(data?.businesses?.[0]?.owner?.first_name)
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function Layout({ children }) {
       <div className="flex flex-grow w-full">
         <SideBar />
         <div className="grow-1 w-full bg-white min-h-screen">
-          <TopBar ownerName={data?.businesses?.[0]?.owner?.first_name }/>
+          <TopBar ownerName={data?.businesses?.[0]?.owner?.first_name} />
           <div style={{ marginTop: '100px' }}>{children}</div>
         </div>
       </div>

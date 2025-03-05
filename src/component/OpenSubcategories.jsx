@@ -75,7 +75,7 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange }) => {
       ) : (
         <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
           <Table>
-            <TableHead sx={{ backgroundColor: '#f5f5f5' }}> 
+            <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
               <TableRow>
                 {[
                   'Display',
