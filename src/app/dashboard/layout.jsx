@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Cookies } from 'react-cookie'
 import SideBar from '@/component/SideBar'
 import TopBar from '@/component/TopBar'
 import { ThemeProvider } from '../../context/ThemeContext'
@@ -11,12 +10,15 @@ import { GET_ENDPOINTS } from '@/constants/endpoints'
 
 export default function Layout({ children }) {
   const router = useRouter()
-  const cookies = new Cookies()
+
 
   const { data, isLoading } = useFetchData(
     GET_ENDPOINTS.BUSINESSES,
     'fetchBusinesses',
   )
+
+  console.log({data})
+  console.log(data?.businesses?.[0]?.owner?.first_name)
 
   useEffect(() => {
     if (!isLoading) {
@@ -33,7 +35,7 @@ export default function Layout({ children }) {
       <div className="flex flex-grow w-full">
         <SideBar />
         <div className="grow-1 w-full bg-white min-h-screen">
-          <TopBar />
+          <TopBar ownerName={data?.businesses?.[0]?.owner?.first_name }/>
           <div style={{ marginTop: '100px' }}>{children}</div>
         </div>
       </div>

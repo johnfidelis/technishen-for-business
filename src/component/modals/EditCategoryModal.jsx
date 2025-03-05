@@ -1,6 +1,5 @@
 'use client'
-
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext, useMemo } from 'react'
 import {
   Modal,
   Box,
@@ -9,33 +8,36 @@ import {
   TextField,
   Button,
   Divider,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { useThemeContext } from '@/api/context/ThemeContext'
-import { axiosInstanceWithAuth } from '@/api/_config'
+import { ThemeContext } from '@/context/ThemeContext'
 import { toast } from 'react-toastify'
+import { Cookies } from 'react-cookie'
+import { PATCH_ENDPOINTS } from '@/constants/endpoints'
+import { usePatchData } from '@/hooks/useApiService'
 
-const EditCategoryModal = ({
-  open,
-  onClose,
-  onSave,
-  category,
-  businessId,
-  serviceId,
-}) => {
-  const { theme } = useThemeContext()
+const EditCategoryModal = ({ open, onClose, category }) => {
+  const cookies = new Cookies()
+  const businessId = cookies.get('selectedBusinessId')
+  const { theme } = useContext(ThemeContext)
+
+  const patchUpdateCatalogRoleEndpoint = useMemo(() => {
+    return PATCH_ENDPOINTS.UPDATE_CATALOG(category?.id)
+  }, [category])
+
   const [serviceName, setServiceName] = useState('')
   const [description, setDescription] = useState('')
   const [serviceType, setServiceType] = useState('Customer')
   const [image, setImage] = useState(null)
   const [uploadedImage, setUploadedImage] = useState(null)
 
+  const { mutateAsync: updateCategory } = usePatchData(
+    patchUpdateCatalogRoleEndpoint,
+  )
+
   useEffect(() => {
     if (category) {
+      console.log({ category })
       setServiceName(category.service_name || '')
       setDescription(category.description || '')
       setServiceType(category.service_type || '')
@@ -67,17 +69,13 @@ const EditCategoryModal = ({
       formData.append('service_type', serviceType)
       if (image) formData.append('service_images', image)
 
-      await axiosInstanceWithAuth.patch(
-        `/update-category/${serviceId}/`,
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        },
-      )
+        
 
-      toast.success('Successful')
+      await updateCategory(formData)
+      toast.success('Category updated successfully!')
       onClose()
     } catch (error) {
+      console.error('Error updating category:', error)
       toast.error('Error. Please try again.')
     }
   }

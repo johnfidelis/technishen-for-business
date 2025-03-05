@@ -22,9 +22,9 @@ import { ThemeContext } from '@/context/ThemeContext'
 
 const SIDEBAR_WIDTH = 250 // Adjust this to your sidebar width
 
-const TopBar = () => {
+const TopBar = ({ownerName}) => {
   const { theme } = useContext(ThemeContext)
-  const [ownerName, setOwnerName] = useState('')
+
   const [anchorEl, setAnchorEl] = useState(null)
   const router = useRouter()
 
@@ -60,7 +60,7 @@ const TopBar = () => {
     >
       <Toolbar sx={{ justifyContent: 'space-between', px: 3 }}>
         <Typography variant="h6" sx={{ color: 'white', fontWeight: 500 }}>
-          {getTimeBasedGreeting()}, {ownerName || ''}
+          {getTimeBasedGreeting()}, {ownerName || 'Technishen'}
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>

@@ -23,24 +23,34 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteWithConfirmation from './DeleteWithConfirmation'
 import InfoIcon from '@mui/icons-material/Info'
-import { useFetchData } from '@/hooks/useApiService'
-import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useFetchData, useDeleteData } from '@/hooks/useApiService'
+import { GET_ENDPOINTS, DELETE_ENDPOINTS } from '@/constants/endpoints'
 import { ThemeContext } from '@/context/ThemeContext'
+import { useRouter } from 'next/navigation'
+import EditCategoryModal from './modals/EditCategoryModal'
 
 /**
  * @param {Object} props
  * @param {"Customer" | "Employee"} props.catalogType - The type of catalog (customer or employee).
  */
 const CatalogTable = ({ catalogType }) => {
+  const router = useRouter()
   const { theme } = useContext(ThemeContext)
   const { data, isLoading } = useFetchData(
     GET_ENDPOINTS.ALL_CATEGORIES,
     'allCategories',
   )
+  // const { delete: deleteCategory } = useDeleteData(
+  //   DELETE_ENDPOINTS.DELETE_CATALOG,
+  //   'deleteCategory',
+  // )
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [filter, setFilter] = useState('')
   const [sortOrder, setSortOrder] = useState('Newest')
+
+  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState(null)
 
   const handleChangePage = (event, newPage) => setPage(newPage)
   const handleChangeRowsPerPage = (event) => {
@@ -49,12 +59,22 @@ const CatalogTable = ({ catalogType }) => {
   }
   const handleSortChange = (event) => setSortOrder(event.target.value)
 
+  // const handleEdit = useCallback((category) => {
+  //   console.log('Editing:', category)
+  // }, [])
   const handleEdit = useCallback((category) => {
-    console.log('Editing:', category)
+    setSelectedCategory(category)
+    setEditModalOpen(true)
   }, [])
 
+  const handleCloseModal = () => {
+    setEditModalOpen(false)
+    setSelectedCategory(null)
+  }
+
   const handleDelete = useCallback((id) => {
-    console.log('Deleting category with ID:', id)
+    // console.log('Deleting category with ID:', id)
+    deleteCategory(id)
   }, [])
 
   const filteredData = data
@@ -184,7 +204,11 @@ const CatalogTable = ({ catalogType }) => {
                     <TableCell>
                       <Tooltip title="View Details" arrow>
                         <IconButton>
-                          <VisibilityIcon />
+                          <VisibilityIcon
+                            onClick={() =>
+                              router.push(`/dashboard/catalog/${category?.id}`)
+                            }
+                          />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Edit" arrow>
@@ -201,16 +225,22 @@ const CatalogTable = ({ catalogType }) => {
                 ))}
             </TableBody>
           </Table>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 15]}
+            component="div"
+            count={filteredData?.length || 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </TableContainer>
       )}
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 15]}
-        component="div"
-        count={filteredData?.length || 0}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+
+      <EditCategoryModal
+        open={editModalOpen}
+        onClose={handleCloseModal}
+        category={selectedCategory}
       />
     </Box>
   )
