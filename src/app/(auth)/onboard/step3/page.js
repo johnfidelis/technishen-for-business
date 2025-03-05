@@ -99,24 +99,25 @@ const Page = ({ handleNext, handleBack }) => {
   }
 
   const handleSave = () => {
-    let newErrors = {};
-    if (!formData.trading_address) newErrors.trading_address = 'Trading address is required';
-    if (!formData.city) newErrors.city = 'City is required';
-    if (!formData.state_or_region) newErrors.state_or_region = 'State/Region is required';
-    if (!formData.country) newErrors.country = 'Country is required';
-    if (formData.business_type === 'Sole Proprietorship' && !formData.sole_prop_docs) {
-      newErrors.sole_prop_docs = 'Business document is required';
+    let newErrors = {}
+    if (!formData.trading_address)
+      newErrors.trading_address = 'Trading address is required'
+    if (!formData.city) newErrors.city = 'City is required'
+    if (!formData.state_or_region)
+      newErrors.state_or_region = 'State/Region is required'
+    if (!formData.country) newErrors.country = 'Country is required'
+    if (
+      formData.business_type === 'Sole Proprietorship' &&
+      !formData.sole_prop_docs
+    ) {
+      newErrors.sole_prop_docs = 'Business document is required'
     }
 
-    
-
-  if (Object.keys(newErrors).length > 0) {
-    setErrors(newErrors);
-    toast.error('Please fix the errors before submitting.');
-    return;
-  }
-
-
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      toast.error('Please fix the errors before submitting.')
+      return
+    }
 
     const formDataObject = new FormData()
     Object.entries(formData).forEach(([key, value]) => {

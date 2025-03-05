@@ -88,7 +88,7 @@ const TopBar = () => {
               </ListItemIcon>
               <ListItemText>Dashboard</ListItemText>
             </MenuItem>
-            <MenuItem  onClick={handleLogout}>
+            <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <ExitToAppIcon fontSize="small" />
               </ListItemIcon>

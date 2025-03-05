@@ -54,13 +54,11 @@ import TechnisenLogo from '../assets/images/logoBlue.png'
 export default function Home() {
   const router = useRouter()
 
-
   useEffect(() => {
     setTimeout(() => {
-  
-      router.push("/dashboard");
-    }, 3000); 
-  }, []);
+      router.push('/dashboard')
+    }, 3000)
+  }, [])
 
   return (
     <div
@@ -91,8 +89,6 @@ export default function Home() {
             style={{ width: '100%', margin: 'auto', maxHeight: '50px' }}
           />
         </motion.div>
-      
-
       </AnimatePresence>
     </div>
   )
