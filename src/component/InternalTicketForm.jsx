@@ -20,13 +20,15 @@ import { useFetchData, useCreateData } from '@/hooks/useApiService'
 import { POST_ENDPOINTS } from '@/constants/endpoints'
 import { buildEndpoint } from '@/lib/apiHelpers'
 import PriorityCalculator from './PriorityCalculator'
+import { Cookies } from 'react-cookie'
+import { toast } from 'react-toastify'
 
 const InternalTicketForm = () => {
-  /*** Constants & Initial Setup ***/
-  // Replace with your actual business id source
-  const businessId = '155f5f2b-b0e7-4364-a91c-80b0f75128db'
+  const cookies = new Cookies()
+  const businessId = cookies.get('selectedBusinessId')
   const createInternalTicket = useCreateData(
     POST_ENDPOINTS.CREATE_INTERNAL_TICKET,
+
     'createInternalTicket',
   )
   /*** State Declarations ***/
@@ -58,9 +60,52 @@ const InternalTicketForm = () => {
   const [images, setImages] = useState([])
   const [submitLoading, setSubmitLoading] = useState(false)
 
+  const resetForm = () => {
+    setCallerType('employee')
+    setCaller('')
+    setCallerQuery('')
+    setCategory('')
+    setOutsourced(false)
+    setOutsourcedData([])
+    setCategories([])
+    setSubCategory('')
+    setSubCategories([])
+    setChannel('')
+    setAddress('')
+    setImpact('')
+    setUrgency('')
+    setPriority({ level: 'Low', color: '#000' })
+    setAssignmentGroup('')
+    setLoadingGroups(false)
+    setAssignmentGroups([])
+    setEmployees([])
+    setLoadingEmployees(false)
+    setAssignTo('')
+    setScheduleDateAndTime('')
+    setDescription('')
+    setImages([])
+  }
+  
+
   // non displayed data
   const [long, setLong] = useState(0.0)
   const [lat, setLat] = useState(0.0)
+  const [errors, setErrors] = useState({})
+
+  /*** Validation ***/
+  const validate = () => {
+    let tempErrors = {}
+    if (!caller) tempErrors.caller = 'Caller is required'
+    if (!category) tempErrors.category = 'Category is required'
+    if (!subCategory) tempErrors.subCategory = 'Sub-category is required'
+    if (!channel) tempErrors.channel = 'Contact channel is required'
+    if (!address) tempErrors.address = 'Address is required'
+    if (!urgency) tempErrors.urgency = 'Urgency level is required'
+    if (!impact) tempErrors.impact = 'Impact level is required'
+    if (!description) tempErrors.description = 'Description is required'
+    setErrors(tempErrors)
+    return Object.keys(tempErrors).length === 0
+  }
 
   /*** URL Building using buildEndpoint ***/
   const callerUrl = buildEndpoint('CALLER', {
@@ -188,6 +233,7 @@ const InternalTicketForm = () => {
   }
 
   const handleSubmit = () => {
+    if (!validate()) return
     setSubmitLoading(true)
     const formData = new FormData()
 
@@ -221,9 +267,11 @@ const InternalTicketForm = () => {
     createInternalTicket.mutate(formData, {
       onSuccess: async () => {
         setSubmitLoading(false)
+        toast.success("Successfully created ticket.")
+        resetForm()
       },
       onError: () => {
-        toast.error('check inputs.')
+             toast.error("Error creating ticket")
         setSubmitLoading(false)
       },
     })
@@ -270,6 +318,7 @@ const InternalTicketForm = () => {
                 {...params}
                 label="Caller"
                 fullWidth
+                error={!!errors.caller} helperText={errors.caller}
                 variant="outlined"
                 InputLabelProps={{
                   style: {
@@ -312,6 +361,7 @@ const InternalTicketForm = () => {
                 style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
               }}
               value={category}
+              error={!!errors.category} helperText={errors.category}
               onChange={(e) => handleCategoryChange(e.target.value)}
             >
               {categories?.map((cat) => (
@@ -329,6 +379,7 @@ const InternalTicketForm = () => {
             fullWidth
             variant="outlined"
             sx={{ mt: '0.7em' }}
+            error={!!errors.subCategory} helperText={errors.subCategory}
             InputLabelProps={{
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
             }}
@@ -356,6 +407,7 @@ const InternalTicketForm = () => {
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
             }}
             value={channel}
+            error={!!errors.channel} helperText={errors.channel}
             onChange={(e) => setChannel(e.target.value)}
             sx={{ display: outsourced !== true ? 'block' : 'none', mt: '1em' }}
           >
@@ -375,6 +427,7 @@ const InternalTicketForm = () => {
               }}
               variant="outlined"
               value={address}
+              error={!!errors.address} helperText={errors.address}
               handleAddressUpdate={handleAddressUpdate}
               clearInput={clearAddressRef}
             />
@@ -395,6 +448,7 @@ const InternalTicketForm = () => {
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
             }}
             value={impact}
+            error={!!errors.impact} helperText={errors.impact}
             onChange={(e) => setImpact(e.target.value)}
           >
             <MenuItem value="High">High</MenuItem>
@@ -413,6 +467,7 @@ const InternalTicketForm = () => {
             }}
             sx={{ mt: '1em' }}
             value={urgency}
+            error={!!errors.urgency} helperText={errors.urgency}
             onChange={(e) => setUrgency(e.target.value)}
           >
             <MenuItem value="High">High</MenuItem>
@@ -430,6 +485,7 @@ const InternalTicketForm = () => {
             fullWidth
             variant="outlined"
             value={assignmentGroup}
+            error={!!errors.assignmentGroup} helperText={errors.assignmentGroup}
             onChange={(e) => handleGroupChange(e.target.value)}
             InputLabelProps={{
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
@@ -546,6 +602,7 @@ const InternalTicketForm = () => {
             style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
           }}
           value={description}
+          error={!!errors.description} helperText={errors.description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </Grid>
@@ -610,7 +667,7 @@ const InternalTicketForm = () => {
               fontSize: '0.80em',
               fontFamily: 'Inter, sans-serif',
             }}
-            // disabled={submitLoading}
+            disabled={submitLoading}
             onClick={handleSubmit}
           >
             {submitLoading ? (

@@ -51,7 +51,7 @@ export default function FulfillerGroupPage() {
           startIcon={<AddIcon />}
           onClick={() => setOpenModal(true)} // Open modal on button click
         >
-          Create Employee
+          Create Fulfiller Group
         </Button>
       </Box>
 

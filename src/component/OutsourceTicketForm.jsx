@@ -20,6 +20,7 @@ import { useFetchData, useCreateData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS, POST_ENDPOINTS } from '@/constants/endpoints'
 import { buildEndpoint } from '@/lib/apiHelpers'
 import PriorityCalculator from './PriorityCalculator'
+import { toast } from 'react-toastify'
 
 const InternalTicketForm = () => {
   /*** Constants & Initial Setup ***/
@@ -139,7 +140,45 @@ const InternalTicketForm = () => {
     setImages((prev) => prev.filter((img) => img.id !== id))
   }
 
+  const validateForm = () => {
+    if (!caller) {
+      toast.error('Caller is required.')
+      return false
+    }
+    if (!category) {
+      toast.error('Category is required.')
+      return false
+    }
+    if (!subCategory) {
+      toast.error('Sub-Category is required.')
+      return false
+    }
+    if (!address) {
+      toast.error('Address is required.')
+      return false
+    }
+    if (!impact) {
+      toast.error('Impact is required.')
+      return false
+    }
+    if (!urgency) {
+      toast.error('Urgency is required.')
+      return false
+    }
+    if (!scheduleDateAndTime) {
+      toast.error('Schedule Date and Time is required.')
+      return false
+    }
+    if (!description) {
+      toast.error('Description is required.')
+      return false
+    }
+    return true
+  }
+
   const handleSubmit = () => {
+    if (!validateForm()) return
+
     const found = callerOptions.find((option) => option.id === caller)
     const formData = new FormData()
 
@@ -177,9 +216,21 @@ const InternalTicketForm = () => {
     createExternalTicket.mutate(formData, {
       onSuccess: async () => {
         setSubmitLoading(false)
+        toast.success('Ticket created successfully.')
+        setDescription('')
+        setCategory('')
+        setSubCategory('')
+        setAddress('')
+        setLong('')
+        setLat('')
+        setUrgency('')
+        setPriority({ level: '' })
+        setImpact('')
+        setCallerType('')
+        setCaller('')
       },
       onError: () => {
-        toast.error('check inputs.')
+        toast.error("Couldn't create ticket. Please try again.")
         setSubmitLoading(false)
       },
     })

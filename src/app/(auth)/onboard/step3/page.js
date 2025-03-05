@@ -126,6 +126,7 @@ const Page = ({ handleNext, handleBack }) => {
     createBusiness.mutate(formDataObject, {
       onSuccess: async () => {
         // handleNext()
+        localStorage.clear('step2Data')
         window.location.href = '/dashboard'
       },
       onError: () => toast.error('check inputs.'),

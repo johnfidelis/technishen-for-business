@@ -14,9 +14,7 @@ import {
   CircularProgress,
 } from '@mui/material'
 import PhoneInput from 'react-phone-number-input'
-
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import { MdInfoOutline } from 'react-icons/md'
 import countryList from '../../../../component/utils/countryList'
 import AddressAutocomplete from '../../../../component/utils/GoogleInputAddress'
 import { ThemeContext } from '@/context/ThemeContext'
@@ -24,6 +22,7 @@ import profileAddIcon from '../../../../assets/images/profileAddIcon.svg'
 import Image from 'next/image'
 import { useCreateData } from '@/hooks/useApiService'
 import { POST_ENDPOINTS } from '@/constants/endpoints'
+import { toast } from 'react-toastify'
 
 const Page = () => {
   const { theme } = useContext(ThemeContext)
@@ -43,15 +42,35 @@ const Page = () => {
     password: '00000000',
     profile_picture: null,
   })
-  const [long, setLong] = useState(0.0)
-  const [lat, setLat] = useState(0.0)
+  const [long, setLong] = useState(null)
+  const [lat, setLat] = useState(null)
   const [imagePreview, setImagePreview] = useState(profileAddIcon)
   const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState({})
 
   const createEmployee = useCreateData(
     POST_ENDPOINTS.CREATE_EMPLOYEE,
     'createEmployee',
   )
+
+  const validateInputs = () => {
+    let tempErrors = {}
+    if (!formData.first_name) tempErrors.first_name = 'First Name is required'
+    if (!formData.last_name) tempErrors.last_name = 'Last Name is required'
+    if (!formData.email) tempErrors.email = 'Email is required'
+    if (!formData.gender) tempErrors.gender = 'Gender is required'
+    if (!formData.nationality) tempErrors.nationality = 'Nationality is required'
+    if (!long) tempErrors.address = 'Input a valid address'
+    if (!formData.phone_number)
+      tempErrors.phone_number = 'Phone number is required'
+    if (!formData.date_of_birth)
+      tempErrors.date_of_birth = 'Date of birth is required'
+    if (!formData.hire_date) tempErrors.hire_date = 'Hire date is required'
+    if (!formData.id_number) tempErrors.id_number = 'ID Number is required'
+    if (!formData.position) tempErrors.position = 'Position is required'
+    setErrors(tempErrors)
+    return Object.keys(tempErrors).length === 0
+  }
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -85,6 +104,7 @@ const Page = () => {
   }
 
   const handleSubmit = () => {
+    if (!validateInputs()) return
     setLoading(true)
 
     const formDataObject = new FormData()
@@ -96,9 +116,29 @@ const Page = () => {
     createEmployee.mutate(formDataObject, {
       onSuccess: async () => {
         setLoading(false)
+        setFormData({
+          first_name: '',
+          last_name: '',
+          gender: '',
+          phone_number: '',
+          address: '',
+          email: '',
+          date_of_birth: '',
+          hire_date: '',
+          nationality: '',
+          identity_type: 'ID Number',
+          id_number: '',
+          position: '',
+          password: '00000000',
+          profile_picture: null,
+        })
+        setImagePreview(profileAddIcon)
+        setLong(null)
+        toast.success("Employee created successfully")
       },
       onError: () => {
         setLoading(false)
+        toast.error("Error Creating Employee")
       },
     })
   }
@@ -143,6 +183,8 @@ const Page = () => {
                 value={formData.first_name}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
+                error={!!errors.first_name}
+                helperText={errors.first_name}
               />
               <TextField
                 fullWidth
@@ -151,19 +193,33 @@ const Page = () => {
                 required
                 name="last_name"
                 value={formData.last_name}
+                error={!!errors.last_name}
+                helperText={errors.last_name}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />
               <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Gender</InputLabel>
-                <Select
+                {/* <InputLabel>Gender</InputLabel> */}
+                <TextField
                   name="gender"
+                  label="Gender"
                   value={formData.gender}
+                  select
+                  fullWidth
+                  variant="outlined"
+                  InputLabelProps={{
+                    style: {
+                      fontSize: '0.80em',
+                      fontFamily: 'Inter, sans-serif',
+                    },
+                  }}
                   onChange={handleInputChange}
+                  error={!!errors.gender}
+                  helperText={errors.gender}
                 >
                   <MenuItem value="Male">Male</MenuItem>
                   <MenuItem value="Female">Female</MenuItem>
-                </Select>
+                </TextField>
               </FormControl>
 
               {/* <FormControl fullWidth> */}
@@ -171,6 +227,7 @@ const Page = () => {
                 international
                 defaultCountry="ZA"
                 value={formData.phone_number || ''}
+                error={!!errors.phone_number} helperText={errors.phone_number}
                 onChange={(value) =>
                   setFormData((prev) => ({ ...prev, phone_number: value }))
                 }
@@ -194,6 +251,7 @@ const Page = () => {
                   label="Address"
                   fullWidth
                   value={formData.address}
+                  error={!!errors.address} helperText={errors.address}
                   handleAddressUpdate={handleAddressUpdate}
                 />
               </Box>
@@ -205,6 +263,8 @@ const Page = () => {
                 required
                 name="email"
                 value={formData.email}
+                error={!!errors.email}
+                helperText={errors.email}
                 onChange={handleInputChange}
                 sx={{ mt: 2 }}
               />
@@ -220,6 +280,8 @@ const Page = () => {
                 type="date"
                 InputLabelProps={{ shrink: true }}
                 value={formData.date_of_birth}
+                error={!!errors.date_of_birth}
+                helperText={errors.date_of_birth}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />
@@ -232,15 +294,29 @@ const Page = () => {
                 type="date"
                 InputLabelProps={{ shrink: true }}
                 value={formData.hire_date}
+                error={!!errors.hire_date}
+                helperText={errors.hire_date}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />
 
               <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Nationality</InputLabel>
-                <Select
+                {/* <InputLabel>Nationality</InputLabel> */}
+                <TextField
+                  label="Nationality"
                   name="nationality"
+                  select
+                  fullWidth
+                  variant="outlined"
+                  InputLabelProps={{
+                    style: {
+                      fontSize: '0.80em',
+                      fontFamily: 'Inter, sans-serif',
+                    },
+                  }}
                   value={formData.nationality}
+                  error={!!errors.nationality}
+                  helperText={errors.nationality}
                   onChange={handleInputChange}
                 >
                   {countryList.map((country) => (
@@ -248,19 +324,31 @@ const Page = () => {
                       {country.name}
                     </MenuItem>
                   ))}
-                </Select>
+                </TextField>
               </FormControl>
 
               <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Identity Type</InputLabel>
-                <Select
+                {/* <InputLabel>Identity Type</InputLabel> */}
+                <TextField
+                  label="Identity Type"
                   name="identity_type"
+                  select
+                  fullWidth
+                  variant="outlined"
+                  InputLabelProps={{
+                    style: {
+                      fontSize: '0.80em',
+                      fontFamily: 'Inter, sans-serif',
+                    },
+                  }}
                   value={formData.identity_type}
+                  error={!!errors.identity_type}
+                  helperText={errors.identity_type}
                   onChange={handleInputChange}
                 >
                   <MenuItem value="ID Number">ID Number</MenuItem>
                   <MenuItem value="Passport Number">Passport Number</MenuItem>
-                </Select>
+                </TextField>
               </FormControl>
 
               <TextField
@@ -270,6 +358,8 @@ const Page = () => {
                 required
                 name="id_number"
                 value={formData.id_number}
+                error={!!errors.id_number}
+                helperText={errors.id_number}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />
@@ -281,6 +371,8 @@ const Page = () => {
                 required
                 name="position"
                 value={formData.position}
+                error={!!errors.position}
+                helperText={errors.position}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />

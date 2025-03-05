@@ -9,6 +9,7 @@ import {
   Button,
   Typography,
   Box,
+  CircularProgress,
 } from '@mui/material'
 
 import PhoneInput from 'react-phone-number-input'
@@ -30,6 +31,7 @@ const CustomerForm = () => {
     'createCustomer',
   )
   // const [customer_type, setCustomerType] = useState('Personal')
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -43,7 +45,7 @@ const CustomerForm = () => {
     id_number: '',
     email: '',
     businessName: '',
-    businessAddress: '',
+  
     officeNumber: '',
     industry: '',
     companyRegNumber: '',
@@ -106,7 +108,7 @@ const CustomerForm = () => {
   const handleBusinessAddressUpdate = (parsedAddress) => {
     setFormData((prevData) => ({
       ...prevData,
-      business_address:
+      address:
         parsedAddress?.city +
         ' ' +
         parsedAddress?.state +
@@ -118,8 +120,28 @@ const CustomerForm = () => {
     setLat(parsedAddress?.latitude)
   }
 
+  const validateInputs = () => {
+    const requiredFields = formData.customer_type === 'Personal'
+      ? ['first_name', 'last_name', 'date_of_birth', 'address', 'gender', 'nationality', 'phone_number', 'identity_type', 'id_number', 'email']
+      : ['first_name', 'last_name', 'businessName', 'address', 'gender', 'nationality', 'phone_number', 'identity_type', 'id_number', 'email', 'industry', 'companyRegNumber', 'staffSize', 'vatNumber', 'website', 'supportEmail']
+
+    for (const field of requiredFields) {
+      if (!formData[field]) {
+        toast.error(`Please fill out the ${field.replace('_', ' ')} field`, {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+        })
+        return false
+      }
+    }
+    return true
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
+    if (!validateInputs()) return
+    setLoading(true)
     const formDataObject = new FormData()
     Object.entries(formData).forEach(([key, value]) => {
       if (value !== null && value !== '') {
@@ -133,6 +155,31 @@ const CustomerForm = () => {
           autoClose: 3000,
           hideProgressBar: true,
         })
+        setFormData({
+          first_name: '',
+          last_name: '',
+          customer_type: 'Personal',
+          date_of_birth: '',
+          address: '',
+          gender: '',
+          nationality: '',
+          phone_number: '',
+          identity_type: '',
+          id_number: '',
+          email: '',
+          businessName: '',
+     
+          officeNumber: '',
+          industry: '',
+          companyRegNumber: '',
+          staffSize: '',
+          vatNumber: '',
+          website: '',
+          supportEmail: '',
+          password: '00000000',
+          profile_picture: null,
+        })
+        setLoading(false)
       },
       onError: () => {
         toast.error('An error occurred while creating customer', {
@@ -140,12 +187,13 @@ const CustomerForm = () => {
           autoClose: 3000,
           hideProgressBar: true,
         })
+        setLoading(false)
       },
     })
   }
 
   return (
-    <Box>
+    <Box component="form" onSubmit={handleSubmit}>
       <Grid container spacing={4}>
         <Grid item xs={12} md={8}>
           <Grid container spacing={2}>
@@ -334,7 +382,7 @@ const CustomerForm = () => {
                   <AddressAutocomplete
                     label="Business Address"
                     fullWidth
-                    name="businessAddress"
+                    name="address"
                     InputLabelProps={{
                       style: {
                         fontSize: '0.80em',
@@ -342,7 +390,7 @@ const CustomerForm = () => {
                       },
                     }}
                     variant="outlined"
-                    value={formData.business_address}
+                    value={formData.address}
                     style={{ mb: '200px' }}
                     handleAddressUpdate={handleBusinessAddressUpdate}
                   />
@@ -642,11 +690,12 @@ const CustomerForm = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={handleSubmit}
-          //   disabled={loading}
+          type="submit"
           style={{ backgroundColor: theme.primary_color }}
+          disabled={loading}
         >
-          Create Customer
+        
+           {loading ? <CircularProgress size={24} /> : '   Create Customer'}
         </Button>
       </Box>
     </Box>

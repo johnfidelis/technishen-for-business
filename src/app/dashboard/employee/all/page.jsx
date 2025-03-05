@@ -5,6 +5,7 @@ import { MdInfoOutline } from 'react-icons/md'
 import AddIcon from '@mui/icons-material/Add'
 import { ThemeContext } from '@/context/ThemeContext'
 import EmployeeTable from '@/component/EmployeeTable'
+import Link from 'next/link'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
@@ -43,14 +44,15 @@ export default function Page() {
               </IconButton>
             </Tooltip>
           </Typography>
-
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: theme.primary_color }}
-            startIcon={<AddIcon />}
-          >
-            Create Employee
-          </Button>
+          <Link href="/dashboard/employee/create">
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: theme.primary_color }}
+              startIcon={<AddIcon />}
+            >
+              Create Employee
+            </Button>
+          </Link>
         </Box>
         <hr />
       </Box>
