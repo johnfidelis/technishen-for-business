@@ -45,7 +45,7 @@ const CustomerForm = () => {
     id_number: '',
     email: '',
     businessName: '',
-  
+
     officeNumber: '',
     industry: '',
     companyRegNumber: '',
@@ -121,9 +121,38 @@ const CustomerForm = () => {
   }
 
   const validateInputs = () => {
-    const requiredFields = formData.customer_type === 'Personal'
-      ? ['first_name', 'last_name', 'date_of_birth', 'address', 'gender', 'nationality', 'phone_number', 'identity_type', 'id_number', 'email']
-      : ['first_name', 'last_name', 'businessName', 'address', 'gender', 'nationality', 'phone_number', 'identity_type', 'id_number', 'email', 'industry', 'companyRegNumber', 'staffSize', 'vatNumber', 'website', 'supportEmail']
+    const requiredFields =
+      formData.customer_type === 'Personal'
+        ? [
+            'first_name',
+            'last_name',
+            'date_of_birth',
+            'address',
+            'gender',
+            'nationality',
+            'phone_number',
+            'identity_type',
+            'id_number',
+            'email',
+          ]
+        : [
+            'first_name',
+            'last_name',
+            'businessName',
+            'address',
+            'gender',
+            'nationality',
+            'phone_number',
+            'identity_type',
+            'id_number',
+            'email',
+            'industry',
+            'companyRegNumber',
+            'staffSize',
+            'vatNumber',
+            'website',
+            'supportEmail',
+          ]
 
     for (const field of requiredFields) {
       if (!formData[field]) {
@@ -168,7 +197,7 @@ const CustomerForm = () => {
           id_number: '',
           email: '',
           businessName: '',
-     
+
           officeNumber: '',
           industry: '',
           companyRegNumber: '',
@@ -694,8 +723,7 @@ const CustomerForm = () => {
           style={{ backgroundColor: theme.primary_color }}
           disabled={loading}
         >
-        
-           {loading ? <CircularProgress size={24} /> : '   Create Customer'}
+          {loading ? <CircularProgress size={24} /> : '   Create Customer'}
         </Button>
       </Box>
     </Box>

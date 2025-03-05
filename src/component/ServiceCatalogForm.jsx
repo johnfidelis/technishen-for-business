@@ -88,9 +88,16 @@ const ServiceCatalog = () => {
       })
       return
     }
-  
+
     if (subCategory) {
-      if (!subCategory.sub_service_name || !subCategory.cost || !subCategory.allow_remote_work || !subCategory.status || !subCategory.price_type || !subCategory.price_visibility) {
+      if (
+        !subCategory.sub_service_name ||
+        !subCategory.cost ||
+        !subCategory.allow_remote_work ||
+        !subCategory.status ||
+        !subCategory.price_type ||
+        !subCategory.price_visibility
+      ) {
         toast.error('Sub-service name and cost are required.', {
           autoClose: 5000,
           hideProgressBar: true,
@@ -98,37 +105,55 @@ const ServiceCatalog = () => {
         return
       }
     }
-  
+
     const categoryFormData = new FormData()
     categoryFormData.append('business', businessId)
     categoryFormData.append('service_name', serviceName)
     categoryFormData.append('description', description)
     categoryFormData.append('service_type', categoryType)
-  
+
     if (subCategory) {
-      categoryFormData.append('sub_service[sub_service_name]', subCategory.sub_service_name)
+      categoryFormData.append(
+        'sub_service[sub_service_name]',
+        subCategory.sub_service_name,
+      )
       categoryFormData.append('sub_service[cost]', subCategory.cost)
-      categoryFormData.append('sub_service[allow_remote_work]', subCategory.allow_remote_work || 'false')
-      categoryFormData.append('sub_service[status]', subCategory.status || 'inactive')
-      categoryFormData.append('sub_service[price_type]', subCategory.price_type || 'fixed')
-      categoryFormData.append('sub_service[price_visibility]', subCategory.price_visibility || 'public')
-  
+      categoryFormData.append(
+        'sub_service[allow_remote_work]',
+        subCategory.allow_remote_work || 'false',
+      )
+      categoryFormData.append(
+        'sub_service[status]',
+        subCategory.status || 'inactive',
+      )
+      categoryFormData.append(
+        'sub_service[price_type]',
+        subCategory.price_type || 'fixed',
+      )
+      categoryFormData.append(
+        'sub_service[price_visibility]',
+        subCategory.price_visibility || 'public',
+      )
+
       if (subCategory.sub_service_image) {
-        categoryFormData.append('sub_service[sub_service_images]', subCategory.sub_service_image)
+        categoryFormData.append(
+          'sub_service[sub_service_images]',
+          subCategory.sub_service_image,
+        )
       }
     }
-  
+
     if (categoryIcon) {
       categoryFormData.append('service_images', categoryIcon)
     }
-  
+
     createCategoryAndSubCategory.mutate(categoryFormData, {
       onSuccess: async () => {
         toast.success('Created successfully.', {
           autoClose: 5000,
           hideProgressBar: true,
         })
-   
+
         setServiceName('')
         setDescription('')
         setCategoryType('')
@@ -152,10 +177,9 @@ const ServiceCatalog = () => {
       },
     })
   }
-  
 
   // const handleSubmit = () => {
-  
+
   //   const categoryFormData = new FormData()
   //   categoryFormData.append('business', businessId)
   //   categoryFormData.append('service_name', serviceName)

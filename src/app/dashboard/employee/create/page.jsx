@@ -59,7 +59,8 @@ const Page = () => {
     if (!formData.last_name) tempErrors.last_name = 'Last Name is required'
     if (!formData.email) tempErrors.email = 'Email is required'
     if (!formData.gender) tempErrors.gender = 'Gender is required'
-    if (!formData.nationality) tempErrors.nationality = 'Nationality is required'
+    if (!formData.nationality)
+      tempErrors.nationality = 'Nationality is required'
     if (!long) tempErrors.address = 'Input a valid address'
     if (!formData.phone_number)
       tempErrors.phone_number = 'Phone number is required'
@@ -134,11 +135,11 @@ const Page = () => {
         })
         setImagePreview(profileAddIcon)
         setLong(null)
-        toast.success("Employee created successfully")
+        toast.success('Employee created successfully')
       },
       onError: () => {
         setLoading(false)
-        toast.error("Error Creating Employee")
+        toast.error('Error Creating Employee')
       },
     })
   }
@@ -227,7 +228,8 @@ const Page = () => {
                 international
                 defaultCountry="ZA"
                 value={formData.phone_number || ''}
-                error={!!errors.phone_number} helperText={errors.phone_number}
+                error={!!errors.phone_number}
+                helperText={errors.phone_number}
                 onChange={(value) =>
                   setFormData((prev) => ({ ...prev, phone_number: value }))
                 }
@@ -251,7 +253,8 @@ const Page = () => {
                   label="Address"
                   fullWidth
                   value={formData.address}
-                  error={!!errors.address} helperText={errors.address}
+                  error={!!errors.address}
+                  helperText={errors.address}
                   handleAddressUpdate={handleAddressUpdate}
                 />
               </Box>

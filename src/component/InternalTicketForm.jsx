@@ -85,7 +85,6 @@ const InternalTicketForm = () => {
     setDescription('')
     setImages([])
   }
-  
 
   // non displayed data
   const [long, setLong] = useState(0.0)
@@ -267,11 +266,11 @@ const InternalTicketForm = () => {
     createInternalTicket.mutate(formData, {
       onSuccess: async () => {
         setSubmitLoading(false)
-        toast.success("Successfully created ticket.")
+        toast.success('Successfully created ticket.')
         resetForm()
       },
       onError: () => {
-             toast.error("Error creating ticket")
+        toast.error('Error creating ticket')
         setSubmitLoading(false)
       },
     })
@@ -318,7 +317,8 @@ const InternalTicketForm = () => {
                 {...params}
                 label="Caller"
                 fullWidth
-                error={!!errors.caller} helperText={errors.caller}
+                error={!!errors.caller}
+                helperText={errors.caller}
                 variant="outlined"
                 InputLabelProps={{
                   style: {
@@ -361,7 +361,8 @@ const InternalTicketForm = () => {
                 style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
               }}
               value={category}
-              error={!!errors.category} helperText={errors.category}
+              error={!!errors.category}
+              helperText={errors.category}
               onChange={(e) => handleCategoryChange(e.target.value)}
             >
               {categories?.map((cat) => (
@@ -379,7 +380,8 @@ const InternalTicketForm = () => {
             fullWidth
             variant="outlined"
             sx={{ mt: '0.7em' }}
-            error={!!errors.subCategory} helperText={errors.subCategory}
+            error={!!errors.subCategory}
+            helperText={errors.subCategory}
             InputLabelProps={{
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
             }}
@@ -407,7 +409,8 @@ const InternalTicketForm = () => {
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
             }}
             value={channel}
-            error={!!errors.channel} helperText={errors.channel}
+            error={!!errors.channel}
+            helperText={errors.channel}
             onChange={(e) => setChannel(e.target.value)}
             sx={{ display: outsourced !== true ? 'block' : 'none', mt: '1em' }}
           >
@@ -427,7 +430,8 @@ const InternalTicketForm = () => {
               }}
               variant="outlined"
               value={address}
-              error={!!errors.address} helperText={errors.address}
+              error={!!errors.address}
+              helperText={errors.address}
               handleAddressUpdate={handleAddressUpdate}
               clearInput={clearAddressRef}
             />
@@ -448,7 +452,8 @@ const InternalTicketForm = () => {
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
             }}
             value={impact}
-            error={!!errors.impact} helperText={errors.impact}
+            error={!!errors.impact}
+            helperText={errors.impact}
             onChange={(e) => setImpact(e.target.value)}
           >
             <MenuItem value="High">High</MenuItem>
@@ -467,7 +472,8 @@ const InternalTicketForm = () => {
             }}
             sx={{ mt: '1em' }}
             value={urgency}
-            error={!!errors.urgency} helperText={errors.urgency}
+            error={!!errors.urgency}
+            helperText={errors.urgency}
             onChange={(e) => setUrgency(e.target.value)}
           >
             <MenuItem value="High">High</MenuItem>
@@ -485,7 +491,8 @@ const InternalTicketForm = () => {
             fullWidth
             variant="outlined"
             value={assignmentGroup}
-            error={!!errors.assignmentGroup} helperText={errors.assignmentGroup}
+            error={!!errors.assignmentGroup}
+            helperText={errors.assignmentGroup}
             onChange={(e) => handleGroupChange(e.target.value)}
             InputLabelProps={{
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
@@ -602,7 +609,8 @@ const InternalTicketForm = () => {
             style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
           }}
           value={description}
-          error={!!errors.description} helperText={errors.description}
+          error={!!errors.description}
+          helperText={errors.description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </Grid>
