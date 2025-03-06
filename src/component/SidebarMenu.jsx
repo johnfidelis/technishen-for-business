@@ -205,7 +205,7 @@ const SidebarMenu = () => {
           )
         })}
 
-        <Box sx={{ textAlign: 'center', mb: 2 }}>
+        <Box sx={{ textAlign: 'center', mb: 2, pl: 1, pr: 1 }}>
           <Typography variant="body2" sx={{ color: '#000000' }}>
             © All Rights Reserved by TECHNISHEN™
           </Typography>

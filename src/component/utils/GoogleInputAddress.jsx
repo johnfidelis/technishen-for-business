@@ -52,7 +52,8 @@ const AddressAutocomplete = ({
   clearInput,
 }) => {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyBmHrhlBJGhkyL3HOjM1N-CO1i35hTroa0', // Replace with your API key
+    // googleMapsApiKey: 'AIzaSyB4FqfyksmVWw4Ihuzfyd57qds8S1zTDOc', // Replace with your API key
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY, // Replace with your API key
     libraries: ['places'], // Ensure 'places' library is included
   })
 
