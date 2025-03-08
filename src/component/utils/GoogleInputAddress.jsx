@@ -7,6 +7,7 @@ const parseAddress = (place) => {
   const components = place?.address_components || []
   const location = place?.geometry?.location || {}
 
+  
   const parsedAddress = {
     street: '',
     city: '',
