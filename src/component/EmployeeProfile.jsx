@@ -337,7 +337,7 @@ const EmployeeProfile = ({ employeeId }) => {
               <Grid item xs={12} sm={6} container justifyContent="center">
                 <Box sx={{ textAlign: 'center', width: '90%' }}>
                   <LoadScript
-                    // googleMapsApiKey="AIzaSyB4FqfyksmVWw4Ihuzfyd57qds8S1zTDOc"
+                    // googleMapsApiKey="api123"
                     googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}
                   >
                     <GoogleMap
