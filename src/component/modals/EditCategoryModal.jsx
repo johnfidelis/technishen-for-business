@@ -97,7 +97,7 @@ const EditCategoryModal = ({ open, onClose, category }) => {
           display="flex"
           justifyContent="right"
           alignItems="center"
-          sx={{ backgroundColor: theme.primary_color  }}
+          sx={{ backgroundColor: theme.primary_color }}
         >
           <IconButton onClick={onClose} sx={{ color: 'white' }}>
             <CloseIcon />
@@ -105,9 +105,7 @@ const EditCategoryModal = ({ open, onClose, category }) => {
         </Box>
         <Box sx={{ p: '1em' }}>
           <Typography variant="h6">Edit Category</Typography>
-          <Divider
-            sx={{ backgroundColor: theme.primary_color , mt: 1 }}
-          />
+          <Divider sx={{ backgroundColor: theme.primary_color, mt: 1 }} />
         </Box>
         <Box sx={{ flexGrow: 1, p: '1em', overflowY: 'auto' }}>
           <TextField
@@ -134,7 +132,7 @@ const EditCategoryModal = ({ open, onClose, category }) => {
                 width: 100,
                 height: 100,
                 borderRadius: '5px',
-                backgroundColor: theme.primary_color ,
+                backgroundColor: theme.primary_color,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

@@ -14,8 +14,6 @@ export default function Layout({ children }) {
   const { data, isLoading } = useFetchData(
     GET_ENDPOINTS.BUSINESSES,
     'fetchBusinesses',
-
-    
   )
 
   console.log({ data })

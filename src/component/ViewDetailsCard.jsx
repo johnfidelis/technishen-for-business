@@ -18,7 +18,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [ticketas, setTickets] = useState('')
   const [rightTabIndex, setRightTabIndex] = useState(0)
-console.log("dsd", {ticket})
+  console.log('dsd', { ticket })
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1000)
   }, [])

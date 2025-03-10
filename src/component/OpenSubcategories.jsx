@@ -22,7 +22,7 @@ import EditSubCategoryModal from './modals/EditSubCategoryModal'
 import { ThemeContext } from '@/context/ThemeContext'
 
 const OpenSubcategories = ({ categoryId, onServiceNameChange }) => {
-    const { theme } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)
   const { data: subCategories, isLoading } = useFetchData(
     GET_ENDPOINTS.SUB_CATEGORY(categoryId),
   )
@@ -35,7 +35,6 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange }) => {
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
-
 
   const [selectedSubCategory, setSelectedSubCategory] = useState(null)
   const [isEditModalOpen, setEditModalOpen] = useState(false)
@@ -158,7 +157,6 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange }) => {
                     <TableCell>
                       <IconButton
                         onClick={() => handleEditSubCategory(subCategory)}
-                       
                       >
                         <EditIcon />
                       </IconButton>

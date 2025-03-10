@@ -165,7 +165,6 @@ const TicketTable = ({ filterType }) => {
       <FormControlLabel
         control={
           <Switch
-           
             checked={showOutsourced}
             onChange={() => setShowOutsourced((prev) => !prev)}
           />

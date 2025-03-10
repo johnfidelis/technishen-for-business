@@ -61,7 +61,7 @@ const Page = ({ onBack }) => {
           onClick={handleCreateSubCategory}
           variant="contained"
           startIcon={<AddIcon />}
-          style={{ backgroundColor: theme.primary_color  }}
+          style={{ backgroundColor: theme.primary_color }}
         >
           New Sub-category
         </Button>

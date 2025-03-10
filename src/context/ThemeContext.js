@@ -17,12 +17,12 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     if (!isLoading) {
       setTheme({
-        primary_color: data?.primary_color ,
-        secondary_color: data?.secondary_color ,
-        logo: data?.logo ,
-      })}
+        primary_color: data?.primary_color,
+        secondary_color: data?.secondary_color,
+        logo: data?.logo,
+      })
+    }
   }, [data])
-  
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

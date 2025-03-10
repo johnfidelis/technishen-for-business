@@ -6,9 +6,8 @@ import BusinessProfile from './business-profile/page'
 import BusinessCustomization from './business-customization/page'
 import { ThemeContext } from '@/context/ThemeContext'
 
-
 const SettingsLayout = ({ activeSection = 0 }) => {
-    const { theme } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)
   const [activeTab, setActiveTab] = useState(activeSection)
 
   const menuItems = [
@@ -24,9 +23,7 @@ const SettingsLayout = ({ activeSection = 0 }) => {
       case 1:
         return <BusinessProfile />
       case 2:
-        return (
-          <BusinessCustomization />
-        )
+        return <BusinessCustomization />
       default:
         return <PersonalDetails />
     }

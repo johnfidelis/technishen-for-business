@@ -11,7 +11,6 @@ const Page = ({ onBack }) => {
   const router = useRouter()
   const { id } = useParams()
 
-
   return (
     <Box
       sx={{

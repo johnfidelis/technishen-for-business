@@ -40,7 +40,7 @@ const ViewTicketDetails = ({ ticketId }) => {
     setLoadNote(true)
     setTimeout(() => setLoadNote(false), 1000)
   }
-  console.log("dssddsds",{ ticket })
+  console.log('dssddsds', { ticket })
 
   return (
     <Box display="flex" gap={2}>
@@ -117,11 +117,7 @@ const ViewTicketDetails = ({ ticketId }) => {
         </Box>
         <FormControlLabel
           control={
-            <Switch
-              checked={isOutsourced}
-              onChange={handleOutsourcedToggle}
-             
-            />
+            <Switch checked={isOutsourced} onChange={handleOutsourcedToggle} />
           }
           label="Ticket type: Outsourced"
           sx={{ mt: '1em' }}
@@ -189,11 +185,10 @@ const ViewTicketDetails = ({ ticketId }) => {
                   variant="contained"
                   onClick={handleAddOrUpdateNote}
                   disabled={loadNote}
-                 
                   sx={{
                     mt: '1.5em',
                     width: '100%',
-                    backgroundColor: theme.primary_color ,
+                    backgroundColor: theme.primary_color,
                   }}
                 >
                   {loadNote ? 'Saving...' : 'Save Note'}

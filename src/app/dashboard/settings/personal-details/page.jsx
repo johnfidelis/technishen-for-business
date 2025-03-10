@@ -134,10 +134,9 @@ const PersonalDetails = () => {
       <Box sx={{ mt: 4, textAlign: 'center' }}>
         <Button
           variant="contained"
-       
           onClick={handleSave}
           sx={{
-            backgroundColor: theme.primary_color ,
+            backgroundColor: theme.primary_color,
             color: 'white',
           }}
         >

@@ -465,7 +465,7 @@ const InternalTicketForm = () => {
         >
           Upload Images
         </Typography>
-        <Button variant="outlined" component="label" sx={{ mb: 2, }}>
+        <Button variant="outlined" component="label" sx={{ mb: 2 }}>
           Choose Files
           <input
             type="file"
