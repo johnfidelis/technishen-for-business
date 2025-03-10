@@ -151,7 +151,7 @@ const CatalogTable = ({ catalogType }) => {
                           justifyContent: 'center',
                           fontWeight: 'bold',
                           color: 'white',
-                          background: category.service_images ? '' : '#115093',
+                          background: category.service_images ? '' : theme.primary_color,
                         }}
                       >
                         {category.service_images ? (
@@ -190,7 +190,7 @@ const CatalogTable = ({ catalogType }) => {
                         placement="top"
                         arrow
                         sx={{
-                          backgroundColor: theme.primary_color || '#115093',
+                          backgroundColor: theme.primary_color ,
                           color: '#fff',
                           fontFamily: 'Inter, sans-serif',
                           fontSize: '0.85em',

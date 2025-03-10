@@ -8,6 +8,7 @@ export const POST_ENDPOINTS = {
   CREATE_EXTERNAL_TICKET: `/b2c/business/${businessId}/create-ticket/`,
   CREATE_EMPLOYEE: `/create-employee/${businessId}/`,
   CREATE_CUSTOMER: `/create-customer/${businessId}/`,
+
   RESEND_ACCESS_CODE: '/resend-access-code/',
   CREATE_FULFILLER_GROUP: `/create-fulfiller-group/${businessId}/`,
   CREATE_CATEGORY_AND_SUB_CATEGORY: `/create-category-and-sub-category/`,
@@ -21,6 +22,7 @@ export const PATCH_ENDPOINTS = {
     `/update-employee-role/${businessId}/${employeeId}/`,
   UPDATE_CATALOG: (serviceId) => `/update-category/${serviceId}/`,
   UPDATE_SUB_CATALOG: (serviceId) => `/update-sub-category/${serviceId}/`,
+  CUSTOMIZE_UI: `/customize-UI/${businessId}/`,
 }
 
 export const AUTH_ENDPOINTS = {
@@ -37,7 +39,8 @@ export const GET_ENDPOINTS = {
   CALLER: '/search-caller/',
   TICKET_CATEGORY_TO_BOOK: '/ticket-category-to-book/',
   FULFILLER_GROUP_TO_BOOK: '/fulfiller-group-to-book/',
-  ALL_TICKETS: `/all-tickets/${businessId}`,
+  ALL_TICKETS: `/all-tickets/${businessId}/`,
+  COLORS: `/get-colors/${businessId}/`,
   ALL_CATEGORIES: `/all-categories/${businessId}/`,
   ALL_OUTSOURCED_TICKETS: `/b2c/get-outsourced-tickets/${businessId}`,
   TECHNISHEN_BOOKABLE_SERVICES: '/b2c/bookable-services/',

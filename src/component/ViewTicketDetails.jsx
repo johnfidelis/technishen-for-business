@@ -22,8 +22,11 @@ const ViewTicketDetails = ({ ticketId }) => {
   // )
 
   const { data: ticket, isLoading } = useFetchData(
-    GET_ENDPOINTS.VIEW_OUTSOURCED_TICKETS(ticketId),
+    GET_ENDPOINTS.VIEW_TICKETS(ticketId),
   )
+  // const { data: ticket, isLoading } = useFetchData(
+  //   GET_ENDPOINTS.VIEW_OUTSOURCED_TICKETS(ticketId),
+  // )
   const { theme } = useContext(ThemeContext)
   const [isOutsourced, setIsOutsourced] = useState(false)
   const [leftTabIndex, setLeftTabIndex] = useState(0)
@@ -37,7 +40,7 @@ const ViewTicketDetails = ({ ticketId }) => {
     setLoadNote(true)
     setTimeout(() => setLoadNote(false), 1000)
   }
-  console.log({ ticketId })
+  console.log("dssddsds",{ ticket })
 
   return (
     <Box display="flex" gap={2}>
@@ -117,7 +120,7 @@ const ViewTicketDetails = ({ ticketId }) => {
             <Switch
               checked={isOutsourced}
               onChange={handleOutsourcedToggle}
-              color="primary"
+             
             />
           }
           label="Ticket type: Outsourced"
@@ -186,11 +189,11 @@ const ViewTicketDetails = ({ ticketId }) => {
                   variant="contained"
                   onClick={handleAddOrUpdateNote}
                   disabled={loadNote}
-                  color="primary"
+                 
                   sx={{
                     mt: '1.5em',
                     width: '100%',
-                    backgroundColor: theme.primary_color || '#115093',
+                    backgroundColor: theme.primary_color ,
                   }}
                 >
                   {loadNote ? 'Saving...' : 'Save Note'}

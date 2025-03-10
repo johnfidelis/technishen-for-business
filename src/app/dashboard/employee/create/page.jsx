@@ -440,7 +440,7 @@ const Page = () => {
       </Grid>
 
       <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <Button variant="contained" onClick={handleSubmit} disabled={loading}>
+        <Button variant="contained" onClick={handleSubmit} disabled={loading}   sx={{ backgroundColor: theme.primary_color }}>
           {loading ? <CircularProgress size={24} /> : 'Create Employee'}
         </Button>
       </Box>

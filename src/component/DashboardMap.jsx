@@ -181,7 +181,7 @@ const DashboardMap = () => {
                 {/* 🔥 Button to open modal */}
                 <Button
                   variant="contained"
-                  color="primary"
+                 
                   size="small"
                   onClick={handleOpenClick}
                 >
@@ -204,7 +204,7 @@ const DashboardMap = () => {
                 <Checkbox
                   checked={showTickets}
                   onChange={() => setShowTickets(!showTickets)}
-                  color="primary"
+                 
                 />
               }
               label={
@@ -222,7 +222,7 @@ const DashboardMap = () => {
                 <Checkbox
                   checked={showTechnisen}
                   onChange={() => setShowTechnisen(!showTechnisen)}
-                  color="primary"
+                 
                 />
               }
               label={

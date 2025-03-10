@@ -330,7 +330,7 @@ export const menuItems = [
   {
     name: 'Settings',
     icon: <SettingsIcon />,
-    routeTo: '/',
+    routeTo: '/dashboard/settings',
   },
   {
     name: 'Billing',

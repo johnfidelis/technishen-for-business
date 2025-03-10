@@ -1,35 +1,28 @@
 'use client'
+import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useFetchData } from '@/hooks/useApiService'
 import React, { createContext, useState, useEffect } from 'react'
-// import axios from "axios";
 
 export const ThemeContext = createContext()
 
 export const ThemeProvider = ({ children }) => {
+  const { data, isLoading } = useFetchData(GET_ENDPOINTS.COLORS, 'colors')
   // Default theme
   const [theme, setTheme] = useState({
     primary_color: '#115093',
-    secondary_color: 'green',
+    secondary_color: '#0e850e',
+    logo: null,
   })
 
-  // useEffect(() => {
-  //   // Fetch theme colors from API
-  //   const fetchThemeColors = async () => {
-  //     try {
-  //       const response = await axios.get("/get/color");
-  //       if (response.data) {
-  //         setTheme((prevTheme) => ({
-  //           ...prevTheme,
-  //           primary: response.data.primary || prev theme.primary_color,
-  //           secondary: response.data.secondary || prevtheme.secondary_color,
-  //         }));
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to fetch theme colors:", error);
-  //     }
-  //   };
-
-  //   fetchThemeColors();
-  // }, []);
+  useEffect(() => {
+    if (!isLoading) {
+      setTheme({
+        primary_color: data?.primary_color ,
+        secondary_color: data?.secondary_color ,
+        logo: data?.logo ,
+      })}
+  }, [data])
+  
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

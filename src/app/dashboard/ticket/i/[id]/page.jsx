@@ -10,7 +10,7 @@ const Page = ({ onBack }) => {
   const { theme } = useContext(ThemeContext)
   const router = useRouter()
   const { id } = useParams()
-
+  console.log("ddd",{ id })
   return (
     <Box
       sx={{

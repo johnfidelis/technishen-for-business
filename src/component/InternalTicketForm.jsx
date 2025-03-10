@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {
   Grid,
   TextField,
@@ -22,8 +22,10 @@ import { buildEndpoint } from '@/lib/apiHelpers'
 import PriorityCalculator from './PriorityCalculator'
 import { Cookies } from 'react-cookie'
 import { toast } from 'react-toastify'
+import { ThemeContext } from '@/context/ThemeContext'
 
 const InternalTicketForm = () => {
+  const { theme } = useContext(ThemeContext)
   const cookies = new Cookies()
   const businessId = cookies.get('selectedBusinessId')
   const createInternalTicket = useCreateData(
@@ -667,7 +669,7 @@ const InternalTicketForm = () => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: '#115093',
+              backgroundColor: theme.primary_color,
               color: '#FFFFFF',
               fontWeight: 'bold',
               py: '0.625rem',

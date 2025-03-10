@@ -93,7 +93,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               borderRadius: '0.625em',
               p: '1em',
               mb: '1em',
-              boxShadow: `0px 4px 0px ${theme.primary_color || '#115093'}`,
+              boxShadow: `0px 4px 0px ${theme.primary_color }`,
             }}
           >
             <Box
@@ -145,7 +145,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                 <Typography
                   component="span"
                   sx={{
-                    color: theme.primary_color || '#115093',
+                    color: theme.primary_color ,
                     fontSize: '0.85em',
                     fontWeight: 600,
                     cursor: 'pointer',
@@ -166,7 +166,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
             <Divider
               sx={{
                 my: '1em',
-                backgroundColor: theme.primary_color || '#115093',
+                backgroundColor: theme.primary_color ,
               }}
             />
 
@@ -215,7 +215,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
             <Divider
               sx={{
                 my: '1em',
-                backgroundColor: theme.primary_color || '#115093',
+                backgroundColor: theme.primary_color ,
               }}
             />
 
@@ -287,7 +287,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: theme.primary_color || '#115093',
+                  backgroundColor: theme.primary_color ,
                   color: '#FFF',
                   textTransform: 'none',
                   fontSize: '0.7em',
@@ -313,7 +313,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                 variant="text"
                 onClick={() => handleViewMore(ticket)}
                 sx={{
-                  color: theme.primary_color || '#115093',
+                  color: theme.primary_color ,
                   fontWeight: 400,
                   textTransform: 'none',
                   fontSize: '0.80em',

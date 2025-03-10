@@ -77,7 +77,7 @@
 //             fontFamily: "Inter, sans-serif",
 //           }}
 //         >
-//           Open - Unassigned Tickets{`(2)`}
+//           Open - Unassigned Tickets{``}
 //           <Tooltip
 //             title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
 //             arrow

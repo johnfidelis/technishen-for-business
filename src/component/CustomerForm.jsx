@@ -718,7 +718,7 @@ const CustomerForm = () => {
       <Box textAlign="center" sx={{ mt: 4 }}>
         <Button
           variant="contained"
-          color="primary"
+         
           type="submit"
           style={{ backgroundColor: theme.primary_color }}
           disabled={loading}

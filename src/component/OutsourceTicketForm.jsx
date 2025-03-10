@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Grid,
   TextField,
@@ -21,8 +21,10 @@ import { GET_ENDPOINTS, POST_ENDPOINTS } from '@/constants/endpoints'
 import { buildEndpoint } from '@/lib/apiHelpers'
 import PriorityCalculator from './PriorityCalculator'
 import { toast } from 'react-toastify'
+import { ThemeContext } from '@/context/ThemeContext'
 
 const InternalTicketForm = () => {
+  const { theme } = useContext(ThemeContext)
   /*** Constants & Initial Setup ***/
   // Replace with your actual business id source
   const businessId = '155f5f2b-b0e7-4364-a91c-80b0f75128db'
@@ -346,7 +348,7 @@ const InternalTicketForm = () => {
               ?.find((cat) => cat.id === category)
               ?.associated_sub_services?.map((sub) => (
                 <MenuItem key={sub.id} value={sub.id}>
-                  {sub.sub_service_name} - ${parseFloat(sub.cost).toFixed(2)}
+                  {sub.sub_service_name} - ${parseFloat(sub.cost).toFixed}
                 </MenuItem>
               ))}
           </TextField>
@@ -463,7 +465,7 @@ const InternalTicketForm = () => {
         >
           Upload Images
         </Typography>
-        <Button variant="outlined" component="label" sx={{ mb: 2 }}>
+        <Button variant="outlined" component="label" sx={{ mb: 2, }}>
           Choose Files
           <input
             type="file"
@@ -507,7 +509,7 @@ const InternalTicketForm = () => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: '#115093',
+              backgroundColor: theme.primary_color,
               color: '#FFFFFF',
               fontWeight: 'bold',
               py: '0.625rem',

@@ -328,7 +328,7 @@ const EmployeeProfile = ({ employeeId }) => {
                 <Button
                   variant="contained"
                   onClick={() => handleUpdate()}
-                  sx={{ mt: 2, background: theme.primary_color || '#115093' }}
+                  sx={{ mt: 2, background: theme.primary_color  }}
                 >
                   Save Changes
                 </Button>
@@ -474,7 +474,7 @@ const EmployeeProfile = ({ employeeId }) => {
                       onClick={() => handleResendInvite()}
                       sx={{
                         mt: 2,
-                        background: theme.primary_color || '#115093',
+                        background: theme.primary_color ,
                       }}
                     >
                       Resend Invite

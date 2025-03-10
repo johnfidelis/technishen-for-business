@@ -44,7 +44,7 @@ const DeleteWithConfirmation = ({ id, handleDeleteCategory }) => {
         //     justifyContent: "center",
         //   }}
         >
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose}>
             No
           </Button>
           <Button

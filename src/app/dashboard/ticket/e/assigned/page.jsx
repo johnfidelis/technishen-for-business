@@ -78,7 +78,7 @@ export default function Page() {
             fontFamily: 'Inter, sans-serif',
           }}
         >
-          Assigned Tickets{`(2)`}
+          Assigned Tickets{``}
           <Tooltip
             title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
             arrow

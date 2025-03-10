@@ -123,7 +123,7 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
           display="flex"
           justifyContent="right"
           alignItems="center"
-          sx={{ backgroundColor: theme.primary_color || '#115093' }}
+          sx={{ backgroundColor: theme.primary_color  }}
         >
           <IconButton onClick={onClose} sx={{ color: 'white' }}>
             <CloseIcon />
@@ -132,7 +132,7 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
         <Box sx={{ p: '1em' }}>
           <Typography variant="h6">Edit Sub-Category</Typography>
           <Divider
-            sx={{ backgroundColor: theme.primary_color || '#115093', mt: 1 }}
+            sx={{ backgroundColor: theme.primary_color , mt: 1 }}
           />
         </Box>
         <Box sx={{ flexGrow: 1, p: '1em', overflowY: 'auto' }}>
