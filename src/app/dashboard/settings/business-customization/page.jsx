@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { useState, useContext, useEffect } from 'react'
 import { Box, Grid, Typography, Button, Avatar, TextField } from '@mui/material'
 import { SketchPicker } from 'react-color'
