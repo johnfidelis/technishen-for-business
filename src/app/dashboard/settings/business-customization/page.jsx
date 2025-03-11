@@ -21,7 +21,9 @@ const BusinessCustomization = () => {
     theme?.secondary_color || '#009688',
   )
   const [logoFile, setLogoFile] = useState(null)
-  const [logoPreview, setLogoPreview] = useState(null)
+  const [logoPreview, setLogoPreview] = useState(
+    `https://technishenbackend.onrender.com${theme.logo}` || null,
+  )
   const [primaryPickerVisible, setPrimaryPickerVisible] = useState(false)
   const [secondaryPickerVisible, setSecondaryPickerVisible] = useState(false)
 

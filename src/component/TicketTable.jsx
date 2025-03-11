@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Box,
   TableContainer,
@@ -26,9 +26,11 @@ import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import DateRangeInput from './DateRangeInput'
 import { useRouter } from 'next/navigation'
+import { ThemeContext } from '@/context/ThemeContext'
 
 const TicketTable = ({ filterType }) => {
   const router = useRouter()
+  const { theme } = useContext(ThemeContext)
   const [showOutsourced, setShowOutsourced] = useState(false)
 
   // Fetch tickets based on the toggle state
@@ -167,6 +169,14 @@ const TicketTable = ({ filterType }) => {
           <Switch
             checked={showOutsourced}
             onChange={() => setShowOutsourced((prev) => !prev)}
+            sx={{
+              '& .MuiSwitch-switchBase.Mui-checked': {
+                color: theme?.primary_color,
+              },
+              // '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+              //   backgroundColor: 'yellow',
+              // },
+            }}
           />
         }
         label={

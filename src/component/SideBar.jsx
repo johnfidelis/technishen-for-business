@@ -1,14 +1,17 @@
 'use client'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Drawer, Box } from '@mui/material'
 import Image from 'next/image'
 import TechnisenLogo from '../assets/images/logoBlue.png'
 import BusinessSelector from './BusinessSelector'
 import SidebarMenu from './SidebarMenu'
+import { ThemeContext } from '@/context/ThemeContext'
 
 const drawerWidth = 260
 
 const SideBar = ({ activePage, setActivePage }) => {
+  const { theme } = useContext(ThemeContext)
+
   return (
     <Drawer
       variant="permanent"
@@ -34,13 +37,23 @@ const SideBar = ({ activePage, setActivePage }) => {
           boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
         }}
       >
-        <Image
-          src={TechnisenLogo}
-          width={100}
-          height={100}
-          alt="Technishen Logo"
-          style={{ width: '80%', margin: 'auto', maxHeight: '50px' }}
-        />
+        {theme?.logo ? (
+          <img
+            src={`https://technishenbackend.onrender.com${theme.logo}`}
+            width={100}
+            height={100}
+            alt="Technishen Logo"
+            style={{ width: '80%', margin: 'auto', maxHeight: '50px' }}
+          />
+        ) : (
+          <Image
+            src={TechnisenLogo}
+            width={100}
+            height={100}
+            alt="Technishen Logo"
+            style={{ width: '80%', margin: 'auto', maxHeight: '50px' }}
+          />
+        )}
       </Box>
 
       <Box

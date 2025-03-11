@@ -230,7 +230,7 @@ const Page = ({ handleNext }) => {
     }
     setIsLoading(true)
     try {
-      await patchData.mutateAsync(formData)
+      awaitwww
       handleNext()
     } catch (error) {
       toast.error('Failed to save data. Please try again.', {

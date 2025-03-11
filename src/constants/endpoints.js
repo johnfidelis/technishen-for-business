@@ -25,6 +25,7 @@ export const PATCH_ENDPOINTS = {
   UPDATE_CATALOG: (serviceId) => `/update-category/${serviceId}/`,
   UPDATE_SUB_CATALOG: (serviceId) => `/update-sub-category/${serviceId}/`,
   CUSTOMIZE_UI: `/customize-UI/${getBusinessId()}/`,
+  UPDATE_BUSINESS: `/update-business/${getBusinessId()}/`,
 }
 
 export const AUTH_ENDPOINTS = {
