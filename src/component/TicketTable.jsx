@@ -113,7 +113,7 @@ const TicketTable = ({ filterType }) => {
   return (
     <Box>
       {/* Filters */}
-      <Box
+      {/* <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -127,6 +127,8 @@ const TicketTable = ({ filterType }) => {
           variant="outlined"
           fullWidth
           value={searchQuery}
+          InputLabelProps={{ shrink: true }}
+          placeholder='Search'
           onChange={(e) => setSearchQuery(e.target.value)}
           sx={{ flex: 1, minWidth: '200px', fontSize: '0.80em' }}
         />
@@ -134,11 +136,14 @@ const TicketTable = ({ filterType }) => {
           fullWidth
           variant="outlined"
           sx={{ flex: 1, minWidth: '150px' }}
+          
         >
           <InputLabel>Sort</InputLabel>
           <Select
             value={sortOrder}
+            
             onChange={(e) => setSortOrder(e.target.value)}
+            
           >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
@@ -161,6 +166,62 @@ const TicketTable = ({ filterType }) => {
             <MenuItem value="Closed">Closed</MenuItem>
           </Select>
         </FormControl>
+      </Box> */}
+
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '1em',
+          mb: '2em',
+          flexWrap: 'wrap',
+        }}
+      >
+        <TextField
+          label="Search"
+          variant="outlined"
+          fullWidth
+          value={searchQuery}
+          placeholder="Search"
+          onChange={(e) => setSearchQuery(e.target.value)}
+   
+          sx={{ flex: 1, minWidth: '200px', fontSize: '0.80em' }}
+        />
+
+        <TextField
+          label="Sort"
+          variant="outlined"
+          fullWidth
+          select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+    
+          sx={{ flex: 1, minWidth: '150px' }}
+        >
+          <MenuItem value="Newest">Newest</MenuItem>
+          <MenuItem value="Oldest">Oldest</MenuItem>
+        </TextField>
+
+        <DateRangeInput
+          startDate={startDate}
+          endDate={endDate}
+          onDateChange={handleDateChange}
+        />
+
+        <TextField
+          label="Status"
+          variant="outlined"
+          fullWidth
+          select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+      
+          sx={{ flex: 1, minWidth: '150px' }}
+        >
+          <MenuItem value="">All</MenuItem>
+          <MenuItem value="Open">Open</MenuItem>
+          <MenuItem value="Closed">Closed</MenuItem>
+        </TextField>
       </Box>
 
       {/* Toggle for Outsourced Tickets */}
