@@ -184,7 +184,6 @@ const TicketTable = ({ filterType }) => {
           value={searchQuery}
           placeholder="Search"
           onChange={(e) => setSearchQuery(e.target.value)}
-   
           sx={{ flex: 1, minWidth: '200px', fontSize: '0.80em' }}
         />
 
@@ -195,7 +194,6 @@ const TicketTable = ({ filterType }) => {
           select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
-    
           sx={{ flex: 1, minWidth: '150px' }}
         >
           <MenuItem value="Newest">Newest</MenuItem>
@@ -215,7 +213,6 @@ const TicketTable = ({ filterType }) => {
           select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-      
           sx={{ flex: 1, minWidth: '150px' }}
         >
           <MenuItem value="">All</MenuItem>

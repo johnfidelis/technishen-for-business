@@ -265,7 +265,7 @@ const BusinessSelector = () => {
   }
 
   return (
-    <Box sx={{  textAlign: 'start' }}>
+    <Box sx={{ textAlign: 'start' }}>
       <Typography variant="subtitle2" sx={{ color: '#000000' }}>
         <span style={{ fontWeight: 500 }}>TOTAL BUSINESSES: </span>
         {Array.isArray(data?.businesses) ? data.businesses.length : 0}
@@ -321,7 +321,7 @@ const BusinessSelector = () => {
           fontSize: '0.85rem',
           fontWeight: 600,
           cursor: 'pointer',
-          marginTop: "5px",
+          marginTop: '5px',
           display: 'flex',
           alignItems: 'center', // Align icon and text
           gap: '5px', // Add spacing between icon and text
