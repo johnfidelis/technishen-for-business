@@ -215,7 +215,7 @@ const Page = ({ handleNext }) => {
             fullWidth
             label="Website (optional)"
             name="website"
-            placeholder="e.g., example.com"
+            placeholder="e.g., https://www.example.com"
             value={formData.website || ''}
             error={!!errors.website}
             helperText={errors.website}
