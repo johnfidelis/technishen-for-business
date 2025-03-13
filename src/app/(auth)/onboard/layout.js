@@ -59,12 +59,21 @@ const Layout = () => {
   return (
     <BackgroundBox>
       <Container maxWidth="lg">
-        <Paper elevation={3} sx={{ borderRadius: 5, overflow: 'hidden' }}>
+        <Paper
+          elevation={3}
+          sx={{
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+            overflow: 'hidden',
+          }}
+        >
           {/* Header */}
           <Box
             sx={{
               backgroundColor: '#B4E4FF',
               padding: '16px 24px',
+              borderTopLeftRadius: 5,
+              borderTopRightRadius: 5,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -73,10 +82,7 @@ const Layout = () => {
             <AssignmentIcon
               sx={{ color: '#115093', fontSize: '32px', mr: 1 }}
             />
-            <Typography
-              variant="h4"
-              sx={{ color: '#115093', fontWeight: 'bold' }}
-            >
+            <Typography variant="h4" sx={{ color: '#115093', fontWeight: 400 }}>
               REGISTRATION
             </Typography>
           </Box>

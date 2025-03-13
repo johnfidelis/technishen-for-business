@@ -67,7 +67,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ backgroundColor: theme.primary_color, p: '1em' }}
+          sx={{ backgroundColor: theme.primary_color }}
         >
           <IconButton
             onClick={onClose}
@@ -165,7 +165,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
 
           <Typography
             variant="subtitle1"
-            sx={{ fontWeight: 500, fontSize: '1em', mt: '1em' }}
+            sx={{ fontWeight: 400, fontSize: '1em', mt: '1em' }}
           >
             Ticket Details
           </Typography>

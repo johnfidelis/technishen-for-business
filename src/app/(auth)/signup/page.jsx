@@ -157,7 +157,7 @@ export default function Page() {
           sx={{
             backgroundColor: '#3BAB46',
             color: 'white',
-            fontWeight: 'bold',
+            fontWeight: 400,
             borderRadius: '8px',
             padding: '12px',
             fontSize: '0.80em',
@@ -175,7 +175,7 @@ export default function Page() {
           sx={{ mt: 2 }}
         >
           Already have an account?{' '}
-          <Link href="/login" style={{ color: 'white', fontWeight: 'bold' }}>
+          <Link href="/login" style={{ color: 'white', fontWeight: 400 }}>
             Login
           </Link>
         </Typography>

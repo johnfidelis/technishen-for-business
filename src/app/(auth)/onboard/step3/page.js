@@ -222,6 +222,7 @@ const Page = ({ handleNext, handleBack }) => {
               {formData.sole_prop_docs && (
                 <p>Selected File: {formData.sole_prop_docs.name}</p>
               )}
+              <br />
               <small>Proof of Address (required)</small>
             </Grid>
           </>
@@ -230,10 +231,18 @@ const Page = ({ handleNext, handleBack }) => {
         )}
       </Grid>
 
-      <Button variant="contained" onClick={() => handleBack()} sx={{ mt: 3 }}>
+      <Button
+        variant="contained"
+        onClick={() => handleBack()}
+        sx={{ mt: 3, backgroundColor: '#115093' }}
+      >
         Previous Step
       </Button>
-      <Button variant="contained" onClick={handleSave} sx={{ mt: 3, ml: 1 }}>
+      <Button
+        variant="contained"
+        onClick={handleSave}
+        sx={{ mt: 3, ml: 1, backgroundColor: '#115093' }}
+      >
         Submit
       </Button>
     </Box>

@@ -1,0 +1,42 @@
+/* global.css */
+
+/* Base Typography */
+.MuiTypography-root {
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Headings */
+
+.MuiTypography-h5 {
+  font-size: 1.5em !important;
+  font-weight: 400 !important;
+}
+
+/* Global styles for MUI TextField */
+
+/* Base TextField */
+.MuiTextField-root {
+  flex: 1 !important;
+  min-width: 200px !important;
+  font-size: 1em !important;
+}
+
+/* Input inside the TextField */
+.MuiInputBase-input {
+  font-size: 0.9em !important;
+  min-height: 30px !important;
+  /* max-height: 20px !important; */
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Label styling */
+.MuiInputLabel-root {
+  font-size: 0.8em !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Helper text */
+.MuiFormHelperText-root {
+  font-size: 0.75em !important;
+  font-family: 'Inter', sans-serif !important;
+}

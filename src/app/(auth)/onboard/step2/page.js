@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import PhoneInput from 'react-phone-number-input'
-
+import 'react-phone-number-input/style.css'
 import {
   Box,
   TextField,
@@ -15,6 +15,7 @@ import {
 } from '@mui/material'
 import isEmail from 'validator/lib/isEmail'
 import isURL from 'validator/lib/isURL'
+import { Height } from '@mui/icons-material'
 
 const Page = ({ handleNext }) => {
   const [errors, setErrors] = useState({})
@@ -49,6 +50,26 @@ const Page = ({ handleNext }) => {
   const validateForm = () => {
     let newErrors = {}
 
+    // if (!formData.business_type)
+    //   newErrors.business_type = 'Business type is required'
+    // if (!formData.business_name)
+    //   newErrors.business_name = 'Business name is required'
+    // if (!formData.business_email || !isEmail(formData.business_email))
+    //   newErrors.business_email = 'Valid business email is required'
+    // if (!formData.support_email || !isEmail(formData.support_email))
+    //   newErrors.support_email = 'Valid support email is required'
+    // if (!formData.trading_name)
+    //   newErrors.trading_name = 'Trading name is required'
+    // if (!formData.registration_number)
+    //   newErrors.registration_number = 'Registration number is required'
+    // if (!formData.industry) newErrors.industry = 'Industry is required'
+    // if (!formData.company_size)
+    //   newErrors.company_size = 'Company size is required'
+    // if (!formData.office_phone || formData.office_phone.length < 10)
+    //   newErrors.office_phone = 'Valid office phone number is required'
+    // if (formData.website && !isURL(formData.website))
+    //   newErrors.website = 'Enter a valid URL'
+
     if (!formData.business_type)
       newErrors.business_type = 'Business type is required'
     if (!formData.business_name)
@@ -59,8 +80,6 @@ const Page = ({ handleNext }) => {
       newErrors.support_email = 'Valid support email is required'
     if (!formData.trading_name)
       newErrors.trading_name = 'Trading name is required'
-    if (!formData.registration_number)
-      newErrors.registration_number = 'Registration number is required'
     if (!formData.industry) newErrors.industry = 'Industry is required'
     if (!formData.company_size)
       newErrors.company_size = 'Company size is required'
@@ -68,6 +87,14 @@ const Page = ({ handleNext }) => {
       newErrors.office_phone = 'Valid office phone number is required'
     if (formData.website && !isURL(formData.website))
       newErrors.website = 'Enter a valid URL'
+
+    // Only require registration number if business type is NOT Sole Proprietorship
+    if (
+      formData.business_type !== 'Sole Proprietorship' &&
+      !formData.registration_number
+    ) {
+      newErrors.registration_number = 'Registration number is required'
+    }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -115,11 +142,22 @@ const Page = ({ handleNext }) => {
           >
             <MenuItem value="Sole Proprietorship">Sole Proprietorship</MenuItem>
             <MenuItem value="Registered Business">Registered Business</MenuItem>
+            <MenuItem value="Partnership">Partnership</MenuItem>
+            <MenuItem value="NGOs/NPC">NGOs/NPC</MenuItem>
           </TextField>
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth>
+          <FormControl
+            fullWidth
+            style={{
+              width: '100%',
+              padding: '15px 14px',
+              border: '1px solid rgba(0, 0, 0, 0.23)',
+              borderRadius: '4px',
+              fontSize: '16px',
+            }}
+          >
             <PhoneInput
               international
               defaultCountry="ZA"
@@ -127,19 +165,15 @@ const Page = ({ handleNext }) => {
               onChange={(value) =>
                 setFormData((prev) => ({ ...prev, office_phone: value }))
               }
-              style={{
-                width: '100%',
-                padding: '16.5px 14px',
-                border: '1px solid rgba(0, 0, 0, 0.23)',
-                borderRadius: '4px',
-                fontSize: '16px',
+              className="phone-input"
+              sx={{
+                '& .PhoneInputInput': {
+                  outline: 'none',
+                  border: 'none',
+                  boxShadow: 'none',
+                },
               }}
             />
-            {errors.office_phone && (
-              <p style={{ color: 'red', margin: '4px 0 0' }}>
-                {errors.office_phone}
-              </p>
-            )}
           </FormControl>
         </Grid>
 
@@ -215,8 +249,9 @@ const Page = ({ handleNext }) => {
             fullWidth
             label="Website (optional)"
             name="website"
-            placeholder="e.g., https://www.example.com"
-            value={formData.website || ''}
+            placeholder="e.g., example.com"
+            // value={formData.website || ''}
+            value={formData.website?.replace('https://www.', '') || ''}
             error={!!errors.website}
             helperText={errors.website}
             onChange={handleChange}
@@ -232,6 +267,7 @@ const Page = ({ handleNext }) => {
             onChange={handleChange}
             error={!!errors.registration_number}
             helperText={errors.registration_number}
+            disabled={formData.business_type === 'Sole Proprietorship'}
             required
           />
         </Grid>
@@ -290,7 +326,11 @@ const Page = ({ handleNext }) => {
         </Grid>
       </Grid>
 
-      <Button variant="contained" onClick={handleSave} sx={{ mt: 3 }}>
+      <Button
+        variant="contained"
+        onClick={handleSave}
+        sx={{ mt: 3, backgroundColor: '#115093' }}
+      >
         Save & Continue
       </Button>
     </Box>

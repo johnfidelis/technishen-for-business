@@ -149,7 +149,7 @@ const CatalogTable = ({ catalogType }) => {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontWeight: 'bold',
+                          fontWeight: 400,
                           color: 'white',
                           background: category.service_images
                             ? ''
@@ -179,7 +179,7 @@ const CatalogTable = ({ catalogType }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 500,
+                        fontWeight: 400,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >

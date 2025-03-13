@@ -38,7 +38,7 @@ export default function Page() {
           <Typography
             variant="h5"
             sx={{
-              color: '#000000',
+              color: '#333',
               fontSize: '1.25em',
               mb: 2,
               fontFamily: 'Inter, sans-serif',

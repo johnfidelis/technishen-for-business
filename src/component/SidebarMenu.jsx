@@ -56,7 +56,7 @@ const SidebarMenu = () => {
                   onChange={handleAccordionChange(category.mainCategory)}
                   sx={{
                     backgroundColor: 'white',
-                    color: '#000000',
+                    color: '#333',
                     boxShadow: 'none',
                     border: 'none',
                     '&:before': { display: 'none' },
@@ -68,9 +68,9 @@ const SidebarMenu = () => {
                   }}
                 >
                   <AccordionSummary
-                    expandIcon={<ExpandMoreIcon sx={{ color: '#000000' }} />}
+                    expandIcon={<ExpandMoreIcon sx={{ color: '#333' }} />}
                   >
-                    <ListItemIcon sx={{ color: '#000000' }}>
+                    <ListItemIcon sx={{ color: '#333' }}>
                       {category.icon}
                     </ListItemIcon>
                     <Typography sx={{ fontSize: '0.80em' }}>
@@ -114,7 +114,9 @@ const SidebarMenu = () => {
                                 color:
                                   pathname === sub.routeTo
                                     ? theme.secondary_color
-                                    : '#000000',
+                                    : '#333',
+                                minWidth: '45px',
+                                marginRight: '-5px',
                               }}
                             >
                               {sub.icon}
@@ -122,7 +124,14 @@ const SidebarMenu = () => {
                             <ListItemText
                               primary={sub.name}
                               primaryTypographyProps={{
-                                sx: { fontSize: '0.8em', pl: 1 },
+                                sx: {
+                                  fontSize: '0.8em',
+                                  // pl: 0,
+                                  color:
+                                    pathname === sub.routeTo
+                                      ? theme.secondary_color
+                                      : '#333',
+                                },
                               }}
                             />
                           </ListItem>
@@ -142,15 +151,34 @@ const SidebarMenu = () => {
                     sx={{
                       backgroundColor:
                         pathname === category.routeTo ? '#f5f5f5' : 'inherit',
+                      position: 'relative',
+                      '&:before': {
+                        content: '""',
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: pathname === category.routeTo ? '8px' : '0',
+                        backgroundColor:
+                          pathname === category.routeTo
+                            ? theme.secondary_color
+                            : 'transparent',
+                        transition: 'width 0.3s ease',
+                      },
                       ':hover': { backgroundColor: '#f5f5f5' },
                     }}
+                    // sx={{
+                    //   backgroundColor:
+                    //     pathname === category.routeTo ? '#f5f5f5' : 'inherit',
+                    //   ':hover': { backgroundColor: '#f5f5f5' },
+                    // }}
                   >
                     <ListItemIcon
                       sx={{
                         color:
                           pathname === category.routeTo
                             ? theme.secondary_color
-                            : '#000000',
+                            : '#333',
                       }}
                     >
                       {category.icon}
@@ -171,14 +199,20 @@ const SidebarMenu = () => {
                             <ArrowOutward
                               sx={{
                                 fontSize: '1.5em',
-                                color: '#000000',
+                                color: '#333',
                               }}
                             />
                           )}
                         </span>
                       }
                       primaryTypographyProps={{
-                        sx: { fontSize: '0.8em' },
+                        sx: {
+                          fontSize: '0.8em',
+                          color:
+                            pathname === category.routeTo
+                              ? theme.secondary_color
+                              : '#333',
+                        },
                       }}
                     />
                   </ListItem>
@@ -193,20 +227,16 @@ const SidebarMenu = () => {
               {isAssetManagment && <Divider />}
               {isExternalTicket && <Divider />}
               {isJobOpportunity && (
-                <Divider sx={{ backgroundColor: '#000000', my: 1 }} />
+                <Divider sx={{ backgroundColor: '#333', my: 1 }} />
               )}
-              {isBilling && (
-                <Divider sx={{ backgroundColor: '#000000', my: 1 }} />
-              )}
-              {isSupport && (
-                <Divider sx={{ backgroundColor: '#000000', my: 1 }} />
-              )}
+              {isBilling && <Divider sx={{ backgroundColor: '#333', my: 1 }} />}
+              {isSupport && <Divider sx={{ backgroundColor: '#333', my: 4 }} />}
             </>
           )
         })}
 
         <Box sx={{ textAlign: 'center', mb: 2, pl: 1, pr: 1 }}>
-          <Typography variant="body2" sx={{ color: '#000000' }}>
+          <Typography variant="body2" sx={{ color: '#333' }}>
             © All Rights Reserved by TECHNISHEN™
           </Typography>
         </Box>

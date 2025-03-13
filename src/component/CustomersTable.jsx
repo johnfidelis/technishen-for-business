@@ -94,7 +94,7 @@ const CustomersTable = () => {
                   key={header}
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 500,
+                    fontWeight: 400,
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >
@@ -157,24 +157,24 @@ const CustomersTable = () => {
                       />
                     </TableCell>
                     <TableCell
-                      sx={{ fontSize: '0.75em', fontWeight: 500 }}
+                      sx={{ fontSize: '0.75em', fontWeight: 400 }}
                     >{`${customer.first_name} ${customer.last_name}`}</TableCell>
-                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 500 }}>
+                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 400 }}>
                       {customer.email}
                     </TableCell>
                     <TableCell>
                       {customer.business_name || 'Not a business'}
                     </TableCell>
-                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 500 }}>
+                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 400 }}>
                       {customer.phone_number}
                     </TableCell>
-                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 500 }}>
+                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 400 }}>
                       {customer.address}
                     </TableCell>
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 500,
+                        fontWeight: 400,
                         color:
                           customer.status === 'Accepted'
                             ? '#1BA847'

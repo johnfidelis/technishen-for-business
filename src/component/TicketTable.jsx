@@ -238,7 +238,9 @@ const TicketTable = ({ filterType }) => {
           />
         }
         label={
-          <Typography sx={{ fontSize: '0.8em', fontFamily: 'Inter' }}>
+          <Typography
+            sx={{ fontSize: '0.8em', fontFamily: 'Inter, sans-serif' }}
+          >
             Show Outsourced Tickets
           </Typography>
         }
@@ -265,7 +267,7 @@ const TicketTable = ({ filterType }) => {
                     key={header}
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 500,
+                      fontWeight: 300,
                       fontFamily: 'Inter, sans-serif',
                     }}
                   >
@@ -309,6 +311,7 @@ const TicketTable = ({ filterType }) => {
                       // onClick={() =>
                       //   router.push(`/dashboard/ticket/i/${ticket.id}`)
                       // }
+
                       hover
                     >
                       <TableCell>{ticket.ticket_number}</TableCell>
@@ -357,7 +360,7 @@ const TicketTable = ({ filterType }) => {
                     key={header}
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 500,
+                      fontWeight: 400,
                       fontFamily: 'Inter, sans-serif',
                     }}
                   >

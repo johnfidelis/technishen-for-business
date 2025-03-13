@@ -117,7 +117,7 @@ const EmployeeTable = ({ role }) => {
                   key={header}
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 500,
+                    fontWeight: 400,
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >
@@ -169,14 +169,14 @@ const EmployeeTable = ({ role }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 500,
+                        fontWeight: 400,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >{`${employee.first_name} ${employee.last_name}`}</TableCell>
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 500,
+                        fontWeight: 400,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
@@ -185,7 +185,7 @@ const EmployeeTable = ({ role }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 500,
+                        fontWeight: 400,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
@@ -194,7 +194,7 @@ const EmployeeTable = ({ role }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 500,
+                        fontWeight: 400,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
@@ -203,7 +203,7 @@ const EmployeeTable = ({ role }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 500,
+                        fontWeight: 400,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >

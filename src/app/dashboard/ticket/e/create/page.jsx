@@ -28,11 +28,11 @@ const CreateTicket = () => {
         <Typography
           variant="h5"
           sx={{
-            color: '#000000',
+            color: '#333',
             fontSize: '1.5em',
-            mb: '1em',
+
             fontFamily: 'Inter, sans-serif',
-            fontWeight: 500,
+            fontWeight: 400,
           }}
         >
           Create Ticket

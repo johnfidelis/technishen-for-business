@@ -13,27 +13,43 @@ const DashboardCards = () => {
   const { theme } = useContext(ThemeContext)
 
   const cardData = [
-    { label: 'All Tickets', count: 10, path: '/', icon: <AllInboxIcon /> },
-    { label: 'Open Tickets', count: 10, path: '/', icon: <HelpOutlineIcon /> },
+    {
+      label: 'All Tickets',
+      count: 10,
+      path: '/dashboard/ticket/i/all',
+      icon: <AllInboxIcon />,
+    },
+    {
+      label: 'Open Tickets',
+      count: 10,
+      path: '/dashboard/ticket/i/open',
+      icon: <HelpOutlineIcon />,
+    },
     {
       label: 'Assigned Tickets',
       count: 10,
-      path: '/',
+      path: '/dashboard/ticket/i/assigned',
+
       icon: <AssignmentIcon />,
     },
     {
       label: 'Unassigned Ticket',
       count: 0,
-      path: '/',
+      path: '/dashboard/ticket/i/open-unassigned',
       icon: <HelpOutlineIcon />,
     },
     {
       label: 'Resolved Tickets',
       count: 10,
-      path: '/',
+      path: '/dashboard/ticket/i/resolved',
       icon: <CheckCircleIcon />,
     },
-    { label: 'Total Users', count: 4, path: '/', icon: <GroupIcon /> },
+    {
+      label: 'Total Users',
+      count: 4,
+      path: '/dashboard/customer/all',
+      icon: <GroupIcon />,
+    },
   ]
 
   return (
@@ -57,7 +73,7 @@ const DashboardCards = () => {
                 variant="h6"
                 sx={{
                   fontSize: '0.8em',
-                  fontWeight: 600,
+                  fontWeight: 400,
                   padding: '0.6vh 0vh',
                 }}
               >

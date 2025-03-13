@@ -8,6 +8,8 @@ import {
   InfoWindow,
 } from '@react-google-maps/api'
 import EmployeeProfile from './modals/EmployeeProfile'
+import CustomerProfile from './modals/CustomerProfile'
+
 // import CustomerProfile from './modals/CustomerProfile'
 import Image from 'next/image'
 import Img1 from '../assets/images/jay1.jpeg'
@@ -18,6 +20,7 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
+  Skeleton,
 } from '@mui/material'
 
 const DashboardMap = () => {
@@ -99,7 +102,25 @@ const DashboardMap = () => {
   }, [showTickets, showTechnisen, locations])
 
   // ❌ Prevent access to `window.google.maps` if not loaded
-  if (!isLoaded) return <p>Loading Map...</p>
+  if (!isLoaded)
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: '500px',
+          borderRadius: '15px',
+          border: '2px solid black',
+        }}
+      >
+        <Skeleton variant="rectangular" width="100%" height={'500px'} />
+        {/* <Skeleton variant="text" width="60%" sx={{ mt: 2 }} /> */}
+      </Box>
+    )
 
   // 🔥 Handle Open Click
   const handleOpenClick = () => {
@@ -123,7 +144,7 @@ const DashboardMap = () => {
           borderRadius: '15px',
           border: '2px solid black',
         }}
-        onLoad={() => console.log('Google Map Loaded...')}
+        // onLoad={() => console.log('Google Map Loaded...')}
       >
         {/* ✅ Ensure `window.google.maps` is defined before using */}
         {isLoaded && window.google && (
@@ -149,46 +170,97 @@ const DashboardMap = () => {
             onCloseClick={() => setSelectedMarker(null)}
           >
             <Box
+              onClick={handleOpenClick}
               sx={{
                 textAlign: 'center',
                 borderRadius: '15px',
                 backgroundColor: '#FFFFFF',
-                color: '#000000',
+                color: '#333',
                 display: 'flex',
                 gap: 1,
-                padding: 1,
+                cursor: 'pointer',
               }}
             >
               <Image
                 src={selectedMarker.image}
                 alt={selectedMarker.name}
-                height={100}
-                width={100}
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  border: '2px solid white',
+                }}
               />
               <div>
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: 'bold', textAlign: 'start' }}
+                  sx={{
+                    fontWeight: 500,
+                    color: '#333',
+                    textAlign: 'start',
+                  }}
                 >
                   {selectedMarker.name}
                 </Typography>
-                <Typography variant="body2" sx={{ textAlign: 'start' }}>
+                <Typography
+                  variant="body2"
+                  sx={{ color: '#333', textAlign: 'start' }}
+                >
                   {selectedMarker.role}
                 </Typography>
-                <Typography variant="body2" sx={{ textAlign: 'start' }}>
-                  Company: {selectedMarker.company}
-                </Typography>
-                {/* 🔥 Button to open modal */}
-                <Button
-                  variant="contained"
-                  size="small"
-                  onClick={handleOpenClick}
+                <Typography
+                  variant="body2"
+                  sx={{ color: '#115093', textAlign: 'start' }}
                 >
-                  Open
-                </Button>
+                  {selectedMarker.category} Details
+                </Typography>
               </div>
             </Box>
           </InfoWindow>
+          // <InfoWindow
+          //   position={selectedMarker.position}
+          //   onCloseClick={() => setSelectedMarker(null)}
+          // >
+          //   <Box
+          //     sx={{
+          //       textAlign: 'center',
+          //       borderRadius: '15px',
+          //       backgroundColor: '#FFFFFF',
+          //       color: '#333',
+          //       display: 'flex',
+          //       gap: 1,
+          //       padding: 1,
+          //     }}
+          //   >
+          //     <Image
+          //       src={selectedMarker.image}
+          //       alt={selectedMarker.name}
+          //       height={100}
+          //       width={100}
+          //     />
+          //     <div>
+          //       <Typography
+          //         variant="h6"
+          //         sx={{ fontWeight: 400, textAlign: 'start' }}
+          //       >
+          //         {selectedMarker.name}
+          //       </Typography>
+          //       <Typography variant="body2" sx={{ textAlign: 'start' }}>
+          //         {selectedMarker.role}
+          //       </Typography>
+          //       <Typography variant="body2" sx={{ textAlign: 'start' }}>
+          //         Company: {selectedMarker.company}
+          //       </Typography>
+          //       {/* 🔥 Button to open modal */}
+          //       <Button
+          //         // variant="contained"
+          //         // size="small"
+          //         onClick={handleOpenClick}
+          //       >
+          //         Open
+          //       </Button>
+          //     </div>
+          //   </Box>
+          // </InfoWindow>
         )}
       </GoogleMap>
 
@@ -206,7 +278,7 @@ const DashboardMap = () => {
                 />
               }
               label={
-                <Typography sx={{ fontWeight: 500, fontSize: '0.8em' }}>
+                <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
                   Show Available Tickets
                 </Typography>
               }
@@ -223,7 +295,7 @@ const DashboardMap = () => {
                 />
               }
               label={
-                <Typography sx={{ fontWeight: 500, fontSize: '0.8em' }}>
+                <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
                   Show Technisen Tickets
                 </Typography>
               }
@@ -235,13 +307,13 @@ const DashboardMap = () => {
       {/* 🎭 Modals */}
       {/* {customerModalOpen && <CustomerProfile open={customerModalOpen} onClose={() => setCustomerModalOpen(false)} />} */}
       {customerModalOpen && (
-        <EmployeeProfile
+        <CustomerProfile
           open={customerModalOpen}
           onClose={() => setCustomerModalOpen(false)}
         />
       )}
       {employeeModalOpen && (
-        <EmployeeProfile
+        <CustomerProfile
           open={employeeModalOpen}
           onClose={() => setEmployeeModalOpen(false)}
         />

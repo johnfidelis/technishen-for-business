@@ -17,12 +17,15 @@ import {
 } from '@mui/material'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import PersonIcon from '@mui/icons-material/Person'
+import BusinessIcon from '@mui/icons-material/Business'
+import SettingsIcon from '@mui/icons-material/Settings'
+import CreditCardIcon from '@mui/icons-material/CreditCard'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import { ThemeContext } from '@/context/ThemeContext'
 
 const SIDEBAR_WIDTH = 250 // Adjust this to your sidebar width
 
-const TopBar = ({ ownerName }) => {
+const TopBar = ({ ownerName, ownerImage }) => {
   const { theme } = useContext(ThemeContext)
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -59,20 +62,31 @@ const TopBar = ({ ownerName }) => {
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', px: 3 }}>
-        <Typography variant="h6" sx={{ color: 'white', fontWeight: 500 }}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontSize: '18px',
+            color: 'white',
+            fontWeight: 400,
+            pl: 4,
+          }}
+        >
           {getTimeBasedGreeting()}, {ownerName || 'Technishen'}
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar
-            src="https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
+            src={
+              ownerImage ||
+              'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='
+            }
             alt="Profile Picture"
-            sx={{ width: 32, height: 32, mr: 1 }}
+            sx={{ width: 32, height: 32 }}
           />
           <Button
             onClick={(e) => setAnchorEl(e.currentTarget)}
             endIcon={<ArrowDropDownIcon />}
-            sx={{ color: 'white', fontWeight: 500, textTransform: 'none' }}
+            sx={{ color: 'white', fontWeight: 400, textTransform: 'none' }}
           >
             {ownerName || 'Menu'}
           </Button>
@@ -82,12 +96,31 @@ const TopBar = ({ ownerName }) => {
             onClose={() => setAnchorEl(null)}
             sx={{ mt: 2 }}
           >
-            <MenuItem component={Link} href="/dashboard">
+            <MenuItem component={Link} href="/dashboard/settings?tab=0">
               <ListItemIcon>
                 <PersonIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText>Dashboard</ListItemText>
+              <ListItemText>Profile</ListItemText>
             </MenuItem>
+            <MenuItem component={Link} href="/dashboard/settings?tab=1">
+              <ListItemIcon>
+                <BusinessIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Business Settings</ListItemText>
+            </MenuItem>
+            <MenuItem component={Link} href="/dashboard/settings?tab=2">
+              <ListItemIcon>
+                <SettingsIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Business Customization</ListItemText>
+            </MenuItem>
+            <MenuItem component={Link} href="">
+              <ListItemIcon>
+                <CreditCardIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Manage Billing</ListItemText>
+            </MenuItem>
+
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <ExitToAppIcon fontSize="small" />

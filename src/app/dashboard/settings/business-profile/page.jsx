@@ -82,7 +82,7 @@
 
 //   return (
 //     <Box>
-//       <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 4 }}>
+//       <Typography variant="h5" sx={{ fontWeight: 400, mb: 4 }}>
 //         Business Profile
 //       </Typography>
 //       <Box display="flex" alignItems="center" sx={{ mb: 4 }}>
@@ -92,7 +92,7 @@
 //           sx={{ width: 80, height: 80, mr: 3 }}
 //         />
 //         <Box>
-//           <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+//           <Typography variant="h6" sx={{ fontWeight: 400 }}>
 //             {profile.businessName || 'Business Name'}
 //           </Typography>
 //           <IconButton component="label">
@@ -266,7 +266,7 @@ const BusinessProfileSettings = () => {
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 4 }}>
+      <Typography variant="h5" sx={{ fontWeight: 400, mb: 4 }}>
         Business Profile
       </Typography>
       <Box display="flex" alignItems="center" sx={{ mb: 4 }}>
@@ -276,7 +276,7 @@ const BusinessProfileSettings = () => {
           sx={{ width: 80, height: 80, mr: 3 }}
         />
         <Box>
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h6" sx={{ fontWeight: 400 }}>
             {profile.businessName || 'Business Name'}
           </Typography>
           <IconButton component="label">

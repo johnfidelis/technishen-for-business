@@ -147,7 +147,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                   sx={{
                     color: theme.primary_color,
                     fontSize: '0.85em',
-                    fontWeight: 600,
+                    fontWeight: 400,
                     cursor: 'pointer',
                   }}
                 >

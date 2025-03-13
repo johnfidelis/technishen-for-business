@@ -64,16 +64,16 @@
 //         borderRadius: '0.625em',
 //         minHeight: '60vh',
 //         margin: 'auto',
-//         fontFamily: 'Inter, sans-serif',
+//         fontFamily: "Inter, sans-serif",
 //       }}
 //     >
 //       <Box sx={{ mb: '2em', textAlign: 'left' }}>
 //         <Typography
 //           variant="h5"
 //           sx={{
-//              color: '#000000',
+//              color: '#333',
 //             fontSize: '1.5em',
-//             fontWeight: 500,
+//             fontWeight: 400,
 //             fontFamily: "Inter, sans-serif",
 //           }}
 //         >
@@ -132,13 +132,13 @@
 //               >
 //                 <Typography
 //                   variant="h6"
-//                   sx={{ fontSize: '14px', fontWeight: 600 }}
+//                   sx={{ fontSize: '14px', fontWeight: 400 }}
 //                 >
 //                   {summary.title}
 //                 </Typography>
 //                 <Typography
 //                   variant="h4"
-//                   sx={{ fontSize: '14px', fontWeight: 600 }}
+//                   sx={{ fontSize: '14px', fontWeight: 400 }}
 //                 >
 //                   {summary.value}
 //                 </Typography>
@@ -211,7 +211,7 @@ export default function UnassignedTicketsPage() {
       <Box sx={{ mb: '2em', textAlign: 'left' }}>
         <Typography
           variant="h5"
-          sx={{ color: '#000000', fontSize: '1.5em', fontWeight: 500 }}
+          sx={{ color: '#333', fontSize: '1.5em', fontWeight: 400 }}
         >
           Open - Unassigned Tickets
           <Tooltip
@@ -268,13 +268,13 @@ export default function UnassignedTicketsPage() {
               >
                 <Typography
                   variant="h6"
-                  sx={{ fontSize: '14px', fontWeight: 600 }}
+                  sx={{ fontSize: '14px', fontWeight: 400 }}
                 >
                   {summary.title}
                 </Typography>
                 <Typography
                   variant="h4"
-                  sx={{ fontSize: '14px', fontWeight: 600 }}
+                  sx={{ fontSize: '14px', fontWeight: 400 }}
                 >
                   {summary.value}
                 </Typography>

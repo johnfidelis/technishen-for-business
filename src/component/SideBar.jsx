@@ -9,7 +9,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 
 const drawerWidth = 260
 
-const SideBar = ({ activePage, setActivePage }) => {
+const SideBar = () => {
   const { theme } = useContext(ThemeContext)
 
   return (
@@ -22,7 +22,7 @@ const SideBar = ({ activePage, setActivePage }) => {
           width: drawerWidth,
           boxSizing: 'border-box',
           backgroundColor: 'white',
-          color: '#000000',
+          color: '#333',
         },
       }}
     >

@@ -163,8 +163,8 @@ const CreateSubCategory = ({ open, onClose, serviceId }) => {
               onChange={handleChange}
               sx={{
                 mb: 2,
-                input: { color: '#000000' },
-                label: { color: '#000000' },
+                input: { color: '#333' },
+                label: { color: '#333' },
               }}
             />
           ))}
@@ -202,8 +202,8 @@ const CreateSubCategory = ({ open, onClose, serviceId }) => {
               onChange={handleChange}
               sx={{
                 mb: 2,
-                input: { color: '#000000' },
-                label: { color: '#000000' },
+                input: { color: '#333' },
+                label: { color: '#333' },
               }}
             >
               {options.map((option) => (
@@ -223,7 +223,7 @@ const CreateSubCategory = ({ open, onClose, serviceId }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontWeight: 'bold',
+              fontWeight: 400,
               fontSize: '1rem',
               color: 'white',
               overflow: 'hidden',

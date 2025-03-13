@@ -119,7 +119,7 @@ export default function LoginPage() {
           sx={{
             backgroundColor: '#3BAB46',
             color: 'white',
-            fontWeight: 'bold',
+            fontWeight: 400,
             borderRadius: '8px',
             padding: '12px',
             fontSize: '0.80em',
@@ -137,7 +137,7 @@ export default function LoginPage() {
           sx={{ mt: 2 }}
         >
           New User?{' '}
-          <Link href="/signup" style={{ color: 'white', fontWeight: 'bold' }}>
+          <Link href="/signup" style={{ color: 'white', fontWeight: 400 }}>
             Signup
           </Link>
         </Typography>

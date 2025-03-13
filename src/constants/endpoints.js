@@ -34,6 +34,7 @@ export const AUTH_ENDPOINTS = {
 }
 export const DELETE_ENDPOINTS = {
   DELETE_CATALOG: (serviceId) => `/delete-category/${serviceId}/`,
+  RESET_THEME: `/customize-UI/${getBusinessId()}/`,
 }
 
 export const GET_ENDPOINTS = {

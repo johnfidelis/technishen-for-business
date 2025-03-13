@@ -98,6 +98,12 @@ const ViewTicketDetails = ({ ticketId }) => {
           />
           <TextField
             fullWidth
+            label="Ticket Date and Time"
+            value={ticket?.ticket_details?.scheduled_datetime || ' '}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
             label="Urgency"
             value={ticket?.ticket_details?.urgency || ' '}
             variant="outlined"
@@ -144,7 +150,7 @@ const ViewTicketDetails = ({ ticketId }) => {
             '& .MuiTab-root': {
               textTransform: 'none',
               fontSize: '0.80em',
-              fontWeight: 500,
+              fontWeight: 400,
               fontFamily: 'Inter, sans-serif',
               color: '#000',
               '&.Mui-selected': {

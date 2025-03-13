@@ -94,7 +94,7 @@ const FulfillerGroupTable = () => {
                   key={head}
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 500,
+                    fontWeight: 400,
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >

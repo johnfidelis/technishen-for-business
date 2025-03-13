@@ -56,7 +56,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
           display="flex"
           justifyContent="right"
           alignItems="center"
-          sx={{ backgroundColor: theme.primary_color, p: '1em' }}
+          sx={{ backgroundColor: theme.primary_color }}
         >
           <IconButton
             onClick={onClose}

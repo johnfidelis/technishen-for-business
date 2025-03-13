@@ -56,7 +56,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
           <Typography
             variant="h6"
             sx={{
-              fontWeight: 500,
+              fontWeight: 400,
               color: '#000',
               fontSize: '1.125em',
               textTransform: 'capitalize',
@@ -83,7 +83,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
         </Box>
       </Box>
 
-      <Typography variant="subtitle1" sx={{ fontWeight: 500, fontSize: '1em' }}>
+      <Typography variant="subtitle1" sx={{ fontWeight: 400, fontSize: '1em' }}>
         Customer Details
       </Typography>
       <Divider
@@ -148,7 +148,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
           },
           '& .MuiTab-root': {
             textTransform: 'none',
-            fontWeight: 500,
+            fontWeight: 400,
             color: '#000',
             fontSize: '0.80em',
             '&.Mui-selected': {

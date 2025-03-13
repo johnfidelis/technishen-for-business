@@ -34,7 +34,13 @@ export default function Layout({ children }) {
       <div className="flex flex-grow w-full">
         <SideBar />
         <div className="grow-1 w-full bg-white min-h-screen">
-          <TopBar ownerName={data?.businesses?.[0]?.owner?.first_name} />
+          <TopBar
+            ownerName={data?.businesses?.[0]?.owner?.first_name}
+            ownerImage={
+              'https://technishenbackend.onrender.com' +
+              data?.businesses?.[0]?.owner?.owner_image
+            }
+          />
           <div style={{ marginTop: '100px' }}>{children}</div>
         </div>
       </div>

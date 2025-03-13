@@ -78,7 +78,7 @@ const Page = () => {
           <Typography
             variant="h5"
             sx={{
-              color: '#000000',
+              color: '#333',
               fontSize: '1.25em',
               mb: 2,
               fontFamily: 'Inter, sans-serif',
@@ -121,7 +121,7 @@ const Page = () => {
                   key={header}
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 500,
+                    fontWeight: 400,
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >

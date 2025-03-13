@@ -41,12 +41,12 @@ const Page = ({ onBack }) => {
         <Typography
           variant="h6"
           sx={{
-            color: '#000000',
+            color: '#333',
             fontSize: '1.5em',
             mb: 3,
             mt: 3,
             textAlign: 'left',
-            fontWeight: 500,
+            fontWeight: 400,
             height: '20px',
           }}
         >

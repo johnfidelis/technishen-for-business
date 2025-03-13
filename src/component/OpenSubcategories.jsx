@@ -118,7 +118,7 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange }) => {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontWeight: 'bold',
+                          fontWeight: 400,
                           fontSize: '1rem',
                           color: 'white',
                           overflow: 'hidden',

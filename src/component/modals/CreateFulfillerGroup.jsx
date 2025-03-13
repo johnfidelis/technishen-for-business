@@ -84,8 +84,8 @@ const CreateFulfillerGroup = ({ open, onClose }) => {
           onChange={(e) => setGroupName(e.target.value)}
           sx={{
             mb: 2,
-            input: { color: '#000000' },
-            label: { color: '#000000' },
+            input: { color: '#333' },
+            label: { color: '#333' },
             backgroundColor: '#eeeeee',
           }}
         />

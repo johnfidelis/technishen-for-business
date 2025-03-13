@@ -72,9 +72,9 @@ export default function Page() {
         <Typography
           variant="h5"
           sx={{
-            color: '#000000',
+            color: '#333',
             fontSize: '1.5em',
-            fontWeight: 500,
+            fontWeight: 400,
             fontFamily: 'Inter, sans-serif',
           }}
         >
@@ -133,13 +133,13 @@ export default function Page() {
               >
                 <Typography
                   variant="h6"
-                  sx={{ fontSize: '14px', fontWeight: 600 }}
+                  sx={{ fontSize: '14px', fontWeight: 400 }}
                 >
                   {summary.title}
                 </Typography>
                 <Typography
                   variant="h4"
-                  sx={{ fontSize: '14px', fontWeight: 600 }}
+                  sx={{ fontSize: '14px', fontWeight: 400 }}
                 >
                   {summary.value}
                 </Typography>

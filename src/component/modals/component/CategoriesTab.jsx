@@ -61,7 +61,7 @@ const CategoriesTab = () => {
               label={category}
               onDelete={() => handleDelete(category)}
               sx={{
-                backgroundColor: '#000000',
+                backgroundColor: '#333',
                 color: '#FFFFFF',
                 '& .MuiChip-deleteIcon': { color: '#FFFFFF' },
               }}

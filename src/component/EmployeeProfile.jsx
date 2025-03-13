@@ -126,7 +126,7 @@ const EmployeeProfile = ({ employeeId }) => {
               style={{ display: 'none' }}
               onChange={handleFileChange}
             />
-            <Typography variant="h6" sx={{ fontWeight: 500, mt: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 400, mt: 2 }}>
               {employeeData.first_name} {employeeData.last_name}
             </Typography>
           </Box>

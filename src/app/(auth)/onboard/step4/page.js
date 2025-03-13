@@ -57,7 +57,7 @@ const Page = () => {
     >
       <Typography
         variant="h5"
-        sx={{ color: '#115093', fontWeight: 'bold', mb: 4 }}
+        sx={{ color: '#115093', fontWeight: 400, mb: 4 }}
       >
         Verify your Phone Number
       </Typography>
@@ -65,7 +65,7 @@ const Page = () => {
         variant="body2"
         sx={{
           color: '#115093',
-          fontWeight: 'bold',
+          fontWeight: 400,
           mb: 4,
           maxWidth: '600px',
           textAlign: 'center',
@@ -111,7 +111,7 @@ const Page = () => {
         <Link
           href="#"
           sx={{
-            fontWeight: 'bold',
+            fontWeight: 400,
             textDecoration: 'none',
             color: '#032AB4',
             '&:hover': { textDecoration: 'underline' },
@@ -130,7 +130,7 @@ const Page = () => {
             width: '100px',
             height: '40px',
             fontSize: '16px',
-            fontWeight: 'bold',
+            fontWeight: 400,
             border: 'solid #115093 ',
             '&:hover': { backgroundColor: 'white' },
           }}
