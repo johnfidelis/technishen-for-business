@@ -209,9 +209,13 @@ const DashboardMap = () => {
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{ color: '#115093', textAlign: 'start' }}
+                  sx={{
+                    color: '#115093',
+                    textAlign: 'start',
+                    textTransform: 'capitalize',
+                  }}
                 >
-                  {selectedMarker.category} Details
+                  {selectedMarker.user} Details
                 </Typography>
               </div>
             </Box>
@@ -313,7 +317,7 @@ const DashboardMap = () => {
         />
       )}
       {employeeModalOpen && (
-        <CustomerProfile
+        <EmployeeProfile
           open={employeeModalOpen}
           onClose={() => setEmployeeModalOpen(false)}
         />
