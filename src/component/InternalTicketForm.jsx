@@ -23,6 +23,8 @@ import PriorityCalculator from './PriorityCalculator'
 import { Cookies } from 'react-cookie'
 import { toast } from 'react-toastify'
 import { ThemeContext } from '@/context/ThemeContext'
+import CustomerProfile from './modals/CustomerProfile'
+import EmployeeProfile from './modals/EmployeeProfile'
 
 const InternalTicketForm = () => {
   const { theme } = useContext(ThemeContext)
@@ -178,9 +180,9 @@ const InternalTicketForm = () => {
     setCallerQuery(value)
   }
 
-  const handleOpenCallerModal = (callerId) => {
-    // Open modal with caller details
-  }
+  // const handleOpenCallerModal = (callerId) => {
+  //   // Open modal with caller details
+  // }
 
   const handleCategoryChange = (value) => {
     setCategory(value)
@@ -216,9 +218,9 @@ const InternalTicketForm = () => {
     // Implement your employee search logic here
   }
 
-  const handleOpenAssignToModal = (assignId) => {
-    // Open modal with assign-to details
-  }
+  // const handleOpenAssignToModal = (assignId) => {
+  //   // Open modal with assign-to details
+  // }
 
   const handleImageUpload = (e) => {
     const files = e.target.files
@@ -276,6 +278,23 @@ const InternalTicketForm = () => {
         setSubmitLoading(false)
       },
     })
+  }
+
+  const [callerModalOpen, setCallerModalOpen] = useState(false)
+  const [assignModalOpen, setAssignModalOpen] = useState(false)
+
+  const handleOpenCallerModal = (callerId) => {
+    if (callerId) {
+      setCaller(callerId)
+      setCallerModalOpen(true)
+    }
+  }
+
+  const handleOpenAssignToModal = (assignToId) => {
+    if (assignToId) {
+      setAssignTo(assignToId)
+      setAssignModalOpen(true)
+    }
   }
 
   /*** Render ***/
@@ -687,6 +706,17 @@ const InternalTicketForm = () => {
           </Button>
         </Grid>
       </Grid>
+
+      <CustomerProfile
+        open={callerModalOpen}
+        onClose={() => setCallerModalOpen(false)}
+        user={caller}
+      />
+      <EmployeeProfile
+        open={assignModalOpen}
+        onClose={() => setAssignModalOpen(false)}
+        user={assignTo}
+      />
     </Grid>
   )
 }

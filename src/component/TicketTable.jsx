@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Box,
   TableContainer,
@@ -34,11 +34,38 @@ const TicketTable = ({ filterType }) => {
   const { theme } = useContext(ThemeContext)
   const [showOutsourced, setShowOutsourced] = useState(false)
 
+  const [ticketCounts, setTicketCounts] = useState({
+    unassigned: 0,
+    assigned: 0,
+    open: 0,
+    resolved: 0,
+    all: 0,
+  })
+
   // Fetch tickets based on the toggle state
   const { data: ticketsData, isLoading } = useFetchData(
     GET_ENDPOINTS.ALL_TICKETS,
     'allTickets',
   )
+
+  useEffect(() => {
+    if (ticketsData) {
+      setTicketCounts({
+        unassigned: ticketsData.unassigned_tickets?.length || 0,
+        assigned: ticketsData.assigned_tickets?.length || 0,
+        open: (ticketsData.assigned_tickets || []).filter(
+          (ticket) => ticket.status === 'Open',
+        ).length,
+        resolved: (ticketsData.assigned_tickets || []).filter(
+          (ticket) => ticket.status === 'Resolved',
+        ).length,
+        all:
+          (ticketsData.unassigned_tickets?.length || 0) +
+          (ticketsData.assigned_tickets?.length || 0),
+      })
+    }
+  }, [ticketsData])
+
   const { data: outsourcedTicketsData, isLoading: outsourcedLoading } =
     useFetchData(
       GET_ENDPOINTS.ALL_OUTSOURCED_TICKETS,
@@ -205,7 +232,7 @@ const TicketTable = ({ filterType }) => {
               fontWeight: 300,
             }}
           >
-            Show Outsourced Tickets
+            Show Outsourced Tickets{`(${ticketCounts?.[filterType]})`}
           </Typography>
         }
       />
