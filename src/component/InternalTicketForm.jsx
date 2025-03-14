@@ -283,7 +283,7 @@ const InternalTicketForm = () => {
     <Grid container spacing={2}>
       {/* Left Column */}
       <Grid item xs={12} sm={6}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           {/* Caller Type */}
           <TextField
             label="Caller Type"
@@ -443,7 +443,7 @@ const InternalTicketForm = () => {
 
       {/* Right Column */}
       <Grid item xs={12} sm={6}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           {/* Impact */}
           <TextField
             label="Impact"

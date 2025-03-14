@@ -90,13 +90,13 @@ export default function UnassignedTicketsPage() {
               >
                 <Typography
                   variant="h6"
-                  sx={{ fontSize: '14px', fontWeight: 400 }}
+                  sx={{ fontSize: '14px', fontWeight: 500 }}
                 >
                   {summary.title}
                 </Typography>
                 <Typography
                   variant="h4"
-                  sx={{ fontSize: '14px', fontWeight: 400 }}
+                  sx={{ fontSize: '14px', fontWeight: 500 }}
                 >
                   {summary.value}
                 </Typography>

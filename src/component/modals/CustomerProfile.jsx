@@ -291,13 +291,19 @@ const CustomerProfile = ({ open, onClose, user }) => {
             onClick={onClose}
             sx={{ color: 'white', fontSize: '1em' }}
           >
+            {''}
+          </IconButton>
+          <IconButton
+            onClick={onClose}
+            sx={{ color: 'white', fontSize: '1em' }}
+          >
             Close
             <CloseIcon />
           </IconButton>
         </Box>
         {/* Header */}
         <Box sx={headerStyle}>
-          <Box display="flex" alignItems="center" gap="1em" mb="1em">
+          <Box display="flex" alignItems="center" gap="1em">
             <Avatar
               sx={{
                 width: '3.75em',
@@ -380,7 +386,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
         <Box sx={bodyStyle}>
           <Typography
             variant="subtitle1"
-            sx={{ fontWeight: 500, fontSize: '1em' }}
+            // sx={{ fontWeight: 00, fontSize: '1em' }}
           >
             Customer Details
           </Typography>
@@ -413,7 +419,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
               fontWeight: 400,
             }}
           >
-            📞 Phone Number: +27 74 637 7232
+            📞 Emergency Number: +27 74 637 7232
           </Typography>
           <Typography
             variant="body2"
@@ -521,7 +527,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     borderRadius: '0.625em',
                     p: '1em',
                     mb: '1em',
-                    boxShadow: `0px 4px 0px ${theme.primary_color || '#115093'}`,
+                    boxShadow: `0px 4px 0px  ${theme.primary_color || '#115093'}`,
                   }}
                 >
                   <Box

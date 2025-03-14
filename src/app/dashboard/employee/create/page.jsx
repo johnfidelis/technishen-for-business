@@ -23,6 +23,7 @@ import Image from 'next/image'
 import { useCreateData } from '@/hooks/useApiService'
 import { POST_ENDPOINTS } from '@/constants/endpoints'
 import { toast } from 'react-toastify'
+import { MdInfoOutline } from 'react-icons/md'
 
 const Page = () => {
   const { theme } = useContext(ThemeContext)
@@ -77,15 +78,34 @@ const Page = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files?.[0]
+  //   if (file) {
+  //     setFormData({ ...formData, ['profile_picture']: file })
+  //     const reader = new FileReader()
+  //     reader.onloadend = () => {
+  //       setImagePreview(reader.result)
+  //     }
+  //     reader.readAsDataURL(file)
+  //   }
+  // }
+
   const handleImageUpload = (e) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files[0]
     if (file) {
-      setFormData({ ...formData, ['profile_picture']: file })
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setImagePreview(reader.result)
-      }
-      reader.readAsDataURL(file)
+      setFormData((prevData) => ({ ...prevData, profile_picture: file }))
+
+      // // Use createObjectURL for preview
+      // const imageUrl = URL.createObjectURL(file)
+      // setImagePreview(imageUrl)
+      setImagePreview(URL.createObjectURL(file))
+
+      // Optional: Use FileReader as an alternative
+      // const reader = new FileReader()
+      // reader.onloadend = () => {
+      //   setImagePreview(reader.result)
+      // }
+      // reader.readAsDataURL(file)
     }
   }
 
@@ -224,7 +244,7 @@ const Page = () => {
               </FormControl>
 
               {/* <FormControl fullWidth> */}
-              <PhoneInput
+              {/* <PhoneInput
                 international
                 defaultCountry="ZA"
                 value={formData.phone_number || ''}
@@ -245,8 +265,38 @@ const Page = () => {
                   borderRadius: '4px',
                   fontSize: '16px',
                 }}
-              />
+              /> */}
               {/* </FormControl> */}
+
+              <FormControl
+                fullWidth
+                style={{
+                  width: '100%',
+                  padding: '15px 14px',
+                  border: '1px solid rgba(0, 0, 0, 0.23)',
+                  borderRadius: '4px',
+                  fontSize: '16px',
+                }}
+              >
+                <PhoneInput
+                  international
+                  defaultCountry="ZA"
+                  value={formData.phone_number || ''}
+                  error={!!errors.phone_number}
+                  helperText={errors.phone_number}
+                  onChange={(value) =>
+                    setFormData((prev) => ({ ...prev, phone_number: value }))
+                  }
+                  className="phone-input"
+                  sx={{
+                    '& .PhoneInputInput': {
+                      outline: 'none',
+                      border: 'none',
+                      boxShadow: 'none',
+                    },
+                  }}
+                />
+              </FormControl>
 
               <Box sx={{ mt: 2 }}>
                 <AddressAutocomplete
@@ -273,7 +323,7 @@ const Page = () => {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6} container justifyContent="center">
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Date of Birth"
@@ -435,6 +485,41 @@ const Page = () => {
                 />
               </Button>
             </Box>
+            <Typography sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+              <MdInfoOutline
+                style={{
+                  fontSize: '2em',
+                  color: theme.primary_color || '#115093',
+                  marginRight: '8px',
+                }}
+              />
+              <span
+                style={{
+                  fontSize: '0.8em',
+                }}
+              >
+                Please note that the user will be sent a <br /> verification
+                code via Email.
+              </span>
+            </Typography>
+            <Typography style={{ display: 'flex', alignItems: 'center' }}>
+              <MdInfoOutline
+                style={{
+                  fontSize: '2em',
+                  color: theme.primary_color || '#115093',
+                  marginRight: '8px',
+                }}
+              />
+              <span
+                style={{
+                  fontSize: '0.8em',
+                }}
+              >
+                The code can be used within the <br /> Technishen Mobile
+                Application to activate and <br /> link user's account to the
+                Business.
+              </span>
+            </Typography>
           </Box>
         </Grid>
       </Grid>

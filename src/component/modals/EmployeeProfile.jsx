@@ -23,7 +23,7 @@ import PersonOffIcon from '@mui/icons-material/PersonOff'
 const CategoriesTab = dynamic(() => import('./component/CategoriesTab'), {
   ssr: false,
 })
-const BookingsTab = dynamic(() => import('./component/BookingsTab'), {
+const StaticBookingTab = dynamic(() => import('./component/StaticBookingTab'), {
   ssr: false,
 })
 const ChatTab = dynamic(() => import('./component/ChatTab'), { ssr: false })
@@ -232,7 +232,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               </Box>
             )}
             {rightTabIndex === 1 && <CategoriesTab />}
-            {rightTabIndex === 2 && <BookingsTab />}
+            {rightTabIndex === 2 && <StaticBookingTab />}
             {rightTabIndex === 3 && <ChatTab />}
           </Box>
         </Box>
