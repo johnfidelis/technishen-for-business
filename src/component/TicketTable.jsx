@@ -144,33 +144,14 @@ const TicketTable = ({ filterType, setNumber }) => {
   //   setNumber(fetchedNumber);
   // }, [setNumber]);
 
-  // useEffect(() => {
-  //   if (setNumber && typeof setNumber === 'function') {
-  //     // Ensure outsourcedTicketsData and ticketCounts exist before calculation
-  //     const fetchedNumber =
-  //       (outsourcedTicketsData?.length || 0) + (ticketCounts?.[filterType] || 0)
-  //     setNumber(fetchedNumber)
-  //   }
-  // }, [outsourcedTicketsData, ticketCounts])
-
   useEffect(() => {
     if (setNumber && typeof setNumber === 'function') {
       // Ensure outsourcedTicketsData and ticketCounts exist before calculation
-      let fetchedNumber =
+      const fetchedNumber =
         (outsourcedTicketsData?.length || 0) + (ticketCounts?.[filterType] || 0)
-
-      // If fetchedNumber is undefined, explicitly set it to 0
-      if (fetchedNumber === undefined) {
-        fetchedNumber = 0
-        setNumber(0)
-      }
-      if (fetchedNumber !== undefined) {
-        fetchedNumber = 0
-
-        setNumber(fetchedNumber)
-      }
+      setNumber(fetchedNumber)
     }
-  }, [outsourcedTicketsData, ticketCounts, filterType, setNumber])
+  }, [outsourcedTicketsData, ticketCounts])
 
   return (
     <Box>
