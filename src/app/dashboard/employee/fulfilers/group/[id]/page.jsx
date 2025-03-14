@@ -95,13 +95,13 @@ const Page = () => {
               </IconButton>
             </Tooltip>
           </Typography>
-          <Button
+          {/* <Button
             variant="contained"
             sx={{ backgroundColor: theme.primary_color }}
             startIcon={<AddIcon />}
           >
             Add Employee to Fulfiller Group
-          </Button>
+          </Button> */}
         </Box>
       </Box>
       <hr style={{ margin: '0.625rem 0' }} />
