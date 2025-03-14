@@ -77,10 +77,10 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               <Typography sx={{ fontWeight: 400, fontSize: '1.125em' }}>
                 {user?.name || 'David Willie'}
               </Typography>
-              <Typography sx={{ fontWeight: 300, fontSize: '0.9em' }}>
+              <Typography sx={{ fontWeight: 400, fontSize: '0.9em' }}>
                 {user?.role || 'FullStack Engineer'}
               </Typography>
-              <Typography sx={{ fontWeight: 300, fontSize: '0.9em' }}>
+              <Typography sx={{ fontWeight: 400, fontSize: '0.9em' }}>
                 {user?.company || 'Tsogolo Technologies'}
               </Typography>
             </Box>
@@ -177,7 +177,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               },
               '& .MuiTab-root': {
                 textTransform: 'none',
-                fontWeight: 300,
+                fontWeight: 400,
                 fontSize: '0.80em',
                 color: '#000',
                 '&.Mui-selected': { color: theme.primary_color },
