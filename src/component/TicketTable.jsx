@@ -29,7 +29,7 @@ import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
 import { formatDateTime } from './utils/formatDateTime'
 
-const TicketTable = ({ filterType }) => {
+const TicketTable = ({ filterType, setNumber }) => {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
   const [showOutsourced, setShowOutsourced] = useState(false)
@@ -136,6 +136,42 @@ const TicketTable = ({ filterType }) => {
     setPage(0)
   }
 
+  // useEffect(() => {
+  //   // Fetch data or calculate value
+  //   const fetchedNumber = outsourcedTicketsData?.length + ticketCounts?.[filterType];
+
+  //   // Send value to the parent
+  //   setNumber(fetchedNumber);
+  // }, [setNumber]);
+
+  // useEffect(() => {
+  //   if (setNumber && typeof setNumber === 'function') {
+  //     // Ensure outsourcedTicketsData and ticketCounts exist before calculation
+  //     const fetchedNumber =
+  //       (outsourcedTicketsData?.length || 0) + (ticketCounts?.[filterType] || 0)
+  //     setNumber(fetchedNumber)
+  //   }
+  // }, [outsourcedTicketsData, ticketCounts])
+
+  useEffect(() => {
+    if (setNumber && typeof setNumber === 'function') {
+      // Ensure outsourcedTicketsData and ticketCounts exist before calculation
+      let fetchedNumber =
+        (outsourcedTicketsData?.length || 0) + (ticketCounts?.[filterType] || 0)
+
+      // If fetchedNumber is undefined, explicitly set it to 0
+      if (fetchedNumber === undefined) {
+        fetchedNumber = 0
+        setNumber(0)
+      }
+      if (fetchedNumber !== undefined) {
+        fetchedNumber = 0
+
+        setNumber(fetchedNumber)
+      }
+    }
+  }, [outsourcedTicketsData, ticketCounts, filterType, setNumber])
+
   return (
     <Box>
       {/* Filters */}
@@ -236,7 +272,6 @@ const TicketTable = ({ filterType }) => {
             {showOutsourced
               ? `(${outsourcedTicketsData?.length})`
               : `(${ticketCounts?.[filterType]})`}
-            {}
           </Typography>
         }
       />

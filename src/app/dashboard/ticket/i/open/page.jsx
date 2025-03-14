@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Box,
   Grid,
@@ -17,6 +17,7 @@ import TicketTable from '@/component/TicketTable'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
+  const [number, setNumber] = useState(0)
   const unassignedTickets = [
     {
       id: 'TCK-001',
@@ -78,7 +79,7 @@ export default function Page() {
             fontFamily: 'Inter, sans-serif',
           }}
         >
-          Open Tickets{``}
+          Open Tickets {`(${number})`}
           <Tooltip
             title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
             arrow
@@ -150,7 +151,7 @@ export default function Page() {
         ))}
       </Grid>
 
-      <TicketTable filterType="open" />
+      <TicketTable filterType="open" setNumber={setNumber} />
     </Box>
   )
 }

@@ -17,6 +17,7 @@ import TicketTable from '@/component/TicketTable'
 
 export default function UnassignedTicketsPage() {
   const { theme } = useContext(ThemeContext)
+  const [number, setNumber] = useState(0)
 
   return (
     <Box
@@ -35,7 +36,7 @@ export default function UnassignedTicketsPage() {
           variant="h5"
           sx={{ color: '#333', fontSize: '1.5em', fontWeight: 300 }}
         >
-          Open - Unassigned Tickets
+          Open - Unassigned Tickets {`(${number})`}
           <Tooltip
             title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
             arrow
@@ -107,7 +108,7 @@ export default function UnassignedTicketsPage() {
         ))}
       </Grid>
 
-      <TicketTable filterType="unassigned" />
+      <TicketTable filterType="unassigned" setNumber={setNumber} />
     </Box>
   )
 }
