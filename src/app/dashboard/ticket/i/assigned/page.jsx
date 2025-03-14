@@ -74,7 +74,7 @@ export default function Page() {
           sx={{
             color: '#333',
             fontSize: '1.5em',
-            fontWeight: 400,
+            fontWeight: 300,
             fontFamily: 'Inter, sans-serif',
           }}
         >

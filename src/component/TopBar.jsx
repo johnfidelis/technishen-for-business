@@ -67,8 +67,8 @@ const TopBar = ({ ownerName, ownerImage }) => {
           sx={{
             fontSize: '18px',
             color: 'white',
-            fontWeight: 400,
-            pl: 4,
+            fontWeight: 300,
+            pl: 5,
           }}
         >
           {getTimeBasedGreeting()}, {ownerName || 'Technishen'}
@@ -76,17 +76,14 @@ const TopBar = ({ ownerName, ownerImage }) => {
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar
-            src={
-              ownerImage ||
-              'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI='
-            }
+            src={ownerImage}
             alt="Profile Picture"
-            sx={{ width: 32, height: 32 }}
+            sx={{ width: 32, height: 32, marginRight: 1 }}
           />
           <Button
             onClick={(e) => setAnchorEl(e.currentTarget)}
             endIcon={<ArrowDropDownIcon />}
-            sx={{ color: 'white', fontWeight: 400, textTransform: 'none' }}
+            sx={{ color: 'white', fontWeight: 300, textTransform: 'none' }}
           >
             {ownerName || 'Menu'}
           </Button>

@@ -110,7 +110,7 @@ const BusinessSelector = () => {
 
   return (
     <Box sx={{ textAlign: 'start' }}>
-      <Typography variant="subtitle2" sx={{ fontWeight: 400 }}>
+      <Typography variant="h4" sx={{ fontWeight: 600 }}>
         <span>TOTAL BUSINESSES: </span>
         {Array.isArray(data?.businesses) ? data.businesses.length : 0}
       </Typography>
@@ -124,7 +124,7 @@ const BusinessSelector = () => {
           borderRadius: '4px',
           mb: 1,
           color: theme.primary_color,
-          fontWeight: 400,
+          fontWeight: 300,
           fontFamily: 'Inter, sans-serif',
         }}
         MenuProps={{
@@ -163,7 +163,7 @@ const BusinessSelector = () => {
       <Typography
         sx={{
           fontSize: '0.75rem',
-          fontWeight: 400,
+          fontWeight: 300,
           cursor: 'pointer',
           marginTop: '5px',
           display: 'flex',

@@ -223,7 +223,7 @@ const CreateSubCategory = ({ open, onClose, serviceId }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontWeight: 400,
+              fontWeight: 300,
               fontSize: '1rem',
               color: 'white',
               overflow: 'hidden',

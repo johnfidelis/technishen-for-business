@@ -38,7 +38,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f9f9f9; /* Set a default background */
-  color: #333; /* Default text color */
+  color: #000000; /* Default text color */
 }
 
 /* Apply default MUI-like styles for typography */
@@ -90,12 +90,13 @@ tr:hover {
 .MuiTableCell-root {
   font-family: 'Inter', sans-serif !important;
   font-size: 12px !important; /* Adjust as needed */
-  color: #333 !important; /* Adjust as needed */
+  color: #000000 !important; /* Adjust as needed */
 }
 
 /* Table Head Cells */
 .MuiTableHead-root .MuiTableCell-root {
-  font-weight: 500 !important; /* Bold for headers */
+  font-weight: 300 !important; /* Bold for headers */
+  font-size: 0.8em !important;
 }
 
 /* Table Body Cells */

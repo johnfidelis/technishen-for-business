@@ -123,9 +123,9 @@
 
 //           {isLoading ? (
 //             <>
-//               <Skeleton width={300} />
-//               <Skeleton width={300} />
-//               <Skeleton width={300} />
+//               <Skeleton width={400} />
+//               <Skeleton width={400} />
+//               <Skeleton width={400} />
 //             </>
 //           ) : (
 //             <Box>
@@ -257,7 +257,8 @@ const CustomerProfile = ({ open, onClose, user }) => {
   const bodyStyle = {
     overflowY: 'auto',
     flexGrow: 1,
-    p: '1em',
+    pl: '1em',
+    pr: '1em',
   }
   const tabStyle = {
     '& .MuiTabs-indicator': {
@@ -313,9 +314,9 @@ const CustomerProfile = ({ open, onClose, user }) => {
             />
             <Box>
               <Typography
-                variant="h6"
+                // variant="h6"
                 sx={{
-                  fontWeight: 500,
+                  fontWeight: 400,
                   color: '#000',
                   fontSize: '1.125em',
                 }}
@@ -711,21 +712,22 @@ const CustomerProfile = ({ open, onClose, user }) => {
                       Update Ticket
                     </Button>
                   </Box>
-
-                  <Button
-                    variant="text"
-                    onClick={() => setViewMoreOpen(true)}
-                    sx={{
-                      color: theme.primary_color || '#115093',
-                      fontWeight: 400,
-                      textTransform: 'none',
-                      mt: '1em',
-                      fontSize: '0.80em',
-                      margin: 'auto',
-                    }}
-                  >
-                    View More Details ➔
-                  </Button>
+                  <Box style={{ textAlign: 'center' }}>
+                    <Button
+                      variant="text"
+                      onClick={() => setViewMoreOpen(true)}
+                      sx={{
+                        color: theme.primary_color || '#115093',
+                        fontWeight: 400,
+                        textTransform: 'none',
+                        mt: '1em',
+                        fontSize: '0.80em',
+                        margin: 'auto',
+                      }}
+                    >
+                      View More Details ➔
+                    </Button>
+                  </Box>
                 </Box>
               </Box>
             )}
@@ -976,20 +978,22 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     </Button>
                   </Box>
 
-                  <Button
-                    variant="text"
-                    onClick={() => setViewMoreOpen(true)}
-                    sx={{
-                      color: theme.primary_color || '#115093',
-                      fontWeight: 400,
-                      textTransform: 'none',
-                      mt: '1em',
-                      fontSize: '0.80em',
-                      margin: 'auto',
-                    }}
-                  >
-                    View More Details ➔
-                  </Button>
+                  <Box style={{ textAlign: 'center' }}>
+                    <Button
+                      variant="text"
+                      onClick={() => setViewMoreOpen(true)}
+                      sx={{
+                        color: theme.primary_color || '#115093',
+                        fontWeight: 400,
+                        textTransform: 'none',
+                        mt: '1em',
+                        fontSize: '0.80em',
+                        margin: 'auto',
+                      }}
+                    >
+                      View More Details ➔
+                    </Button>
+                  </Box>
                 </Box>
               </Box>
             )}

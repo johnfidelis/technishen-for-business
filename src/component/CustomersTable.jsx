@@ -68,7 +68,15 @@ const CustomersTable = () => {
           onChange={handleSearchChange}
           sx={{ flex: 1, minWidth: '200px' }}
         />
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+        <FormControl
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            maxWidth: '330px',
+            fontSize: '0.80em',
+          }}
+        >
           <InputLabel>Sort</InputLabel>
           <Select value={sortOrder} onChange={handleSortChange} label="Sort">
             <MenuItem value="Newest">Newest</MenuItem>
@@ -94,7 +102,7 @@ const CustomersTable = () => {
                   key={header}
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >
@@ -128,7 +136,7 @@ const CustomersTable = () => {
                     />
                     <Typography
                       variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '1em', color: 'gray' }}
+                      sx={{ fontWeight: 300, fontSize: '1em', color: 'gray' }}
                     >
                       No Customers found
                     </Typography>
@@ -157,24 +165,24 @@ const CustomersTable = () => {
                       />
                     </TableCell>
                     <TableCell
-                      sx={{ fontSize: '0.75em', fontWeight: 400 }}
+                      sx={{ fontSize: '0.75em', fontWeight: 300 }}
                     >{`${customer.first_name} ${customer.last_name}`}</TableCell>
-                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 400 }}>
+                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 300 }}>
                       {customer.email}
                     </TableCell>
                     <TableCell>
                       {customer.business_name || 'Not a business'}
                     </TableCell>
-                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 400 }}>
+                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 300 }}>
                       {customer.phone_number}
                     </TableCell>
-                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 400 }}>
+                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 300 }}>
                       {customer.address}
                     </TableCell>
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 400,
+                        fontWeight: 300,
                         color:
                           customer.status === 'Accepted'
                             ? '#1BA847'

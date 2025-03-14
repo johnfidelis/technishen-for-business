@@ -29,7 +29,14 @@ const DateRangeInput = ({ startDate, endDate, onDateChange }) => {
   }
 
   return (
-    <Box sx={{ position: 'relative', width: 'fit-content' }}>
+    <Box
+      sx={{
+        position: 'relative',
+        width: '100%',
+        minWidth: '330px',
+        maxWidth: '330px',
+      }}
+    >
       <TextField
         label="Select Date Range"
         value={formatDateRange()}
@@ -45,7 +52,12 @@ const DateRangeInput = ({ startDate, endDate, onDateChange }) => {
             </InputAdornment>
           ),
         }}
-        sx={{ minWidth: '300px' }}
+        sx={{
+          position: 'relative',
+          width: '100%',
+          minWidth: '330px',
+          maxWidth: '330px',
+        }}
       />
 
       {/* Date Range Picker */}
@@ -58,6 +70,7 @@ const DateRangeInput = ({ startDate, endDate, onDateChange }) => {
             border: '1px solid #ccc',
             borderRadius: '8px',
           }}
+          // style={{ flex: 1, minWidth: '330px', maxWidth: '330px', fontSize: '0.80em' }}
         >
           <DateRangePicker
             ranges={[

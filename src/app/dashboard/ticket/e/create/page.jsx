@@ -32,7 +32,7 @@ const CreateTicket = () => {
             fontSize: '1.5em',
 
             fontFamily: 'Inter, sans-serif',
-            fontWeight: 400,
+            fontWeight: 300,
           }}
         >
           Create Ticket

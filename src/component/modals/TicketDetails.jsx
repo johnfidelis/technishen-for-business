@@ -97,7 +97,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
             <Box>
               <Typography
                 variant="h5"
-                sx={{ fontWeight: 400, fontSize: '1.125em', color: '#000' }}
+                sx={{ fontWeight: 300, fontSize: '1.125em', color: '#000' }}
               >
                 {ticket?.customer_details?.first_name}{' '}
                 {ticket?.customer_details?.last_name}
@@ -108,7 +108,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
             {/* Customer Details */}
             <Typography
               variant="subtitle1"
-              sx={{ fontWeight: 400, fontSize: '1em', mt: '1em' }}
+              sx={{ fontWeight: 300, fontSize: '1em', mt: '1em' }}
             >
               Customer Details
             </Typography>
@@ -127,7 +127,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   gap: '0.5em',
                   mt: '0.2em',
                   fontSize: '0.80em',
-                  fontWeight: 400,
+                  fontWeight: 300,
                 }}
               >
                 <MdLocationOn /> Ticket Address:{' '}
@@ -141,7 +141,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   gap: '0.5em',
                   mt: '0.2em',
                   fontSize: '0.80em',
-                  fontWeight: 400,
+                  fontWeight: 300,
                 }}
               >
                 <MdPhone /> Phone Number:{' '}
@@ -155,7 +155,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   gap: '0.5em',
                   mt: '0.2em',
                   fontSize: '0.80em',
-                  fontWeight: 400,
+                  fontWeight: 300,
                 }}
               >
                 <MdMail /> Email: {ticket?.customer_details?.email}
@@ -165,7 +165,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
 
           <Typography
             variant="subtitle1"
-            sx={{ fontWeight: 400, fontSize: '1em', mt: '1em' }}
+            sx={{ fontWeight: 300, fontSize: '1em', mt: '1em' }}
           >
             Ticket Details
           </Typography>
@@ -187,7 +187,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                     variant="body2"
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 400,
+                      fontWeight: 300,
                     }}
                   >
                     Ticket Not assigned Yet
@@ -203,7 +203,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                     variant="body2"
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 400,
+                      fontWeight: 300,
                     }}
                   >
                     {ticket?.service_details?.sub_service_name}
@@ -212,7 +212,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                     variant="body2"
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 400,
+                      fontWeight: 300,
                     }}
                   >
                     Fulfiller Name: {ticket?.employee_details?.first_name}{' '}
@@ -222,7 +222,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                     variant="body2"
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 400,
+                      fontWeight: 300,
                     }}
                   >
                     Ticket Number: {ticket?.ticket_details?.ticket_number}
@@ -231,7 +231,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                     variant="body2"
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 400,
+                      fontWeight: 300,
                     }}
                   >
                     Booking Date: (PLEASE WILL THIS BE NEEDED)
@@ -240,7 +240,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                     variant="body2"
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 400,
+                      fontWeight: 300,
                     }}
                   >
                     Booking Time: (PLEASE WILL THIS BE NEEDED)
@@ -249,14 +249,14 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                     variant="body2"
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 400,
+                      fontWeight: 300,
                     }}
                   >
                     Status:
                     <Typography
                       variant="span"
                       sx={{
-                        fontWeight: 400,
+                        fontWeight: 300,
                         color: '#4CAF50',
                         border: 'solid 1px #4CAF50',
                         borderRadius: '0.25em',
@@ -299,7 +299,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
               },
               '& .MuiTab-root': {
                 textTransform: 'none',
-                fontWeight: 400,
+                fontWeight: 300,
                 color: '#000',
                 fontSize: '0.8em',
                 '&.Mui-selected': {
@@ -322,7 +322,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   {ticket?.ticket_details?.description}
                 </Typography>
 
-                <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 1 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 300, mb: 1 }}>
                   Images
                 </Typography>
                 <Box display="flex" flexWrap="wrap" gap={2}>
@@ -375,7 +375,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                 </Box>
 
                 {/* Ticket Tracker */}
-                <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 1 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 300, mb: 1 }}>
                   Ticket Tracker
                 </Typography>
                 {isLoading

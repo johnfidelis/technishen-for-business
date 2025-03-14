@@ -30,11 +30,22 @@ const DashboardMap = () => {
   const mapCenter = useMemo(() => ({ lat: -26.2041, lng: 28.0473 }), [])
 
   // 🎯 Google Map Options
+  // const mapOptions = useMemo(
+  //   () => ({
+  //     disableDefaultUI: true,
+  //     clickableIcons: true,
+  //     scrollwheel: true,
+  //   }),
+  //   [],
+  // )
+
   const mapOptions = useMemo(
     () => ({
-      disableDefaultUI: true,
+      disableDefaultUI: false, // Enable default UI for full-screen button
       clickableIcons: true,
       scrollwheel: true,
+      mapTypeControl: true, // Allow switching between Map & Satellite view
+      fullscreenControl: true, // Enable Full-screen button
     }),
     [],
   )
@@ -132,7 +143,7 @@ const DashboardMap = () => {
   }
 
   return (
-    <Box style={{ marginTop: '30px' }}>
+    <Box style={{ marginTop: '24px' }}>
       {/* 🗺️ Google Map */}
       <GoogleMap
         options={mapOptions}
@@ -175,10 +186,9 @@ const DashboardMap = () => {
                 textAlign: 'center',
                 borderRadius: '15px',
                 backgroundColor: '#FFFFFF',
-                color: '#333',
+                color: '#000000',
                 display: 'flex',
                 gap: 1,
-                cursor: 'pointer',
               }}
             >
               <Image
@@ -195,7 +205,7 @@ const DashboardMap = () => {
                   variant="h6"
                   sx={{
                     fontWeight: 500,
-                    color: '#333',
+                    // color: '#333',
                     textAlign: 'start',
                   }}
                 >
@@ -220,58 +230,13 @@ const DashboardMap = () => {
               </div>
             </Box>
           </InfoWindow>
-          // <InfoWindow
-          //   position={selectedMarker.position}
-          //   onCloseClick={() => setSelectedMarker(null)}
-          // >
-          //   <Box
-          //     sx={{
-          //       textAlign: 'center',
-          //       borderRadius: '15px',
-          //       backgroundColor: '#FFFFFF',
-          //       color: '#333',
-          //       display: 'flex',
-          //       gap: 1,
-          //       padding: 1,
-          //     }}
-          //   >
-          //     <Image
-          //       src={selectedMarker.image}
-          //       alt={selectedMarker.name}
-          //       height={100}
-          //       width={100}
-          //     />
-          //     <div>
-          //       <Typography
-          //         variant="h6"
-          //         sx={{ fontWeight: 400, textAlign: 'start' }}
-          //       >
-          //         {selectedMarker.name}
-          //       </Typography>
-          //       <Typography variant="body2" sx={{ textAlign: 'start' }}>
-          //         {selectedMarker.role}
-          //       </Typography>
-          //       <Typography variant="body2" sx={{ textAlign: 'start' }}>
-          //         Company: {selectedMarker.company}
-          //       </Typography>
-          //       {/* 🔥 Button to open modal */}
-          //       <Button
-          //         // variant="contained"
-          //         // size="small"
-          //         onClick={handleOpenClick}
-          //       >
-          //         Open
-          //       </Button>
-          //     </div>
-          //   </Box>
-          // </InfoWindow>
         )}
       </GoogleMap>
 
       {/* 🎯 Map Legend & Filters */}
       <Box sx={{ mt: 2, textAlign: 'start' }}>
         <Typography sx={{ fontWeight: 400 }}>Map Legend</Typography>
-        <Grid container spacing={1} justifyContent="start">
+        <Grid container justifyContent="start">
           {/* ✅ Show Available Tickets Checkbox */}
           <Grid item>
             <FormControlLabel
@@ -300,7 +265,7 @@ const DashboardMap = () => {
               }
               label={
                 <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
-                  Show Technisen Tickets
+                  Technisen
                 </Typography>
               }
             />

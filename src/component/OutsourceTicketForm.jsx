@@ -461,7 +461,7 @@ const InternalTicketForm = () => {
       <Grid item xs={12}>
         <Typography
           variant="h6"
-          sx={{ mb: 2, fontFamily: 'Inter, sans-serif', fontWeight: 400 }}
+          sx={{ mb: 2, fontFamily: 'Inter, sans-serif', fontWeight: 300 }}
         >
           Upload Images
         </Typography>
@@ -511,7 +511,7 @@ const InternalTicketForm = () => {
             sx={{
               backgroundColor: theme.primary_color,
               color: '#FFFFFF',
-              fontWeight: 400,
+              fontWeight: 300,
               py: '0.625rem',
               px: '1.25em',
               fontSize: '0.80em',

@@ -27,6 +27,7 @@ import { GET_ENDPOINTS } from '@/constants/endpoints'
 import DateRangeInput from './DateRangeInput'
 import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
+import { formatDateTime } from './utils/formatDateTime'
 
 const TicketTable = ({ filterType }) => {
   const router = useRouter()
@@ -46,7 +47,7 @@ const TicketTable = ({ filterType }) => {
     )
 
   const [searchQuery, setSearchQuery] = useState('')
-  const [sortOrder, setSortOrder] = useState('Newest')
+  const [sortOrder, setSortOrder] = useState('')
   const [status, setStatus] = useState('')
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
@@ -108,65 +109,9 @@ const TicketTable = ({ filterType }) => {
     setPage(0)
   }
 
-  const formatDateTime = (dateString) => new Date(dateString).toLocaleString()
-
   return (
     <Box>
       {/* Filters */}
-      {/* <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: '1em',
-          mb: '2em',
-          flexWrap: 'wrap',
-        }}
-      >
-        <TextField
-          label="Search"
-          variant="outlined"
-          fullWidth
-          value={searchQuery}
-          InputLabelProps={{ shrink: true }}
-          placeholder='Search'
-          onChange={(e) => setSearchQuery(e.target.value)}
-          sx={{ flex: 1, minWidth: '200px', fontSize: '0.80em' }}
-        />
-        <FormControl
-          fullWidth
-          variant="outlined"
-          sx={{ flex: 1, minWidth: '150px' }}
-          
-        >
-          <InputLabel>Sort</InputLabel>
-          <Select
-            value={sortOrder}
-            
-            onChange={(e) => setSortOrder(e.target.value)}
-            
-          >
-            <MenuItem value="Newest">Newest</MenuItem>
-            <MenuItem value="Oldest">Oldest</MenuItem>
-          </Select>
-        </FormControl>
-        <DateRangeInput
-          startDate={startDate}
-          endDate={endDate}
-          onDateChange={handleDateChange}
-        />
-        <FormControl
-          fullWidth
-          variant="outlined"
-          sx={{ flex: 1, minWidth: '150px' }}
-        >
-          <InputLabel>Status</InputLabel>
-          <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <MenuItem value="">All</MenuItem>
-            <MenuItem value="Open">Open</MenuItem>
-            <MenuItem value="Closed">Closed</MenuItem>
-          </Select>
-        </FormControl>
-      </Box> */}
 
       <Box
         sx={{
@@ -184,7 +129,12 @@ const TicketTable = ({ filterType }) => {
           value={searchQuery}
           placeholder="Search"
           onChange={(e) => setSearchQuery(e.target.value)}
-          sx={{ flex: 1, minWidth: '200px', fontSize: '0.80em' }}
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            maxWidth: '330px',
+            fontSize: '0.80em',
+          }}
         />
 
         <TextField
@@ -194,7 +144,12 @@ const TicketTable = ({ filterType }) => {
           select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
-          sx={{ flex: 1, minWidth: '150px' }}
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            maxWidth: '330px',
+            fontSize: '0.80em',
+          }}
         >
           <MenuItem value="Newest">Newest</MenuItem>
           <MenuItem value="Oldest">Oldest</MenuItem>
@@ -213,7 +168,12 @@ const TicketTable = ({ filterType }) => {
           select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          sx={{ flex: 1, minWidth: '150px' }}
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            maxWidth: '330px',
+            fontSize: '0.80em',
+          }}
         >
           <MenuItem value="">All</MenuItem>
           <MenuItem value="Open">Open</MenuItem>
@@ -239,7 +199,11 @@ const TicketTable = ({ filterType }) => {
         }
         label={
           <Typography
-            sx={{ fontSize: '0.8em', fontFamily: 'Inter, sans-serif' }}
+            sx={{
+              fontSize: '0.8em',
+              fontFamily: 'Inter, sans-serif',
+              fontWeight: 300,
+            }}
           >
             Show Outsourced Tickets
           </Typography>
@@ -248,7 +212,7 @@ const TicketTable = ({ filterType }) => {
 
       {/* Table */}
       {showOutsourced && (
-        <TableContainer component={Paper} sx={{ borderRadius: '0.5em', mt: 2 }}>
+        <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
           <Table>
             <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
               <TableRow>
@@ -341,7 +305,7 @@ const TicketTable = ({ filterType }) => {
       )}
 
       {!showOutsourced && (
-        <TableContainer component={Paper} sx={{ borderRadius: '0.5em', mt: 2 }}>
+        <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
           <Table>
             <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
               <TableRow>
@@ -360,7 +324,7 @@ const TicketTable = ({ filterType }) => {
                     key={header}
                     sx={{
                       fontSize: '0.80em',
-                      fontWeight: 400,
+                      fontWeight: 300,
                       fontFamily: 'Inter, sans-serif',
                     }}
                   >

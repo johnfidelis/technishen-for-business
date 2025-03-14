@@ -58,7 +58,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
     },
     '& .MuiTab-root': {
       textTransform: 'none',
-      fontWeight: 400,
+      fontWeight: 300,
       fontSize: '0.80em',
       color: '#000', // Inactive tab text color
       '&.Mui-selected': {
@@ -108,9 +108,9 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
             />
             <Box>
               <Typography
-                variant="h5"
+                // variant="h5"
                 sx={{
-                  fontWeight: 500,
+                  fontWeight: 400,
                   color: '#000',
                   fontSize: '1.125em',
                 }}
@@ -137,7 +137,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
         <Box sx={bodyStyle}>
           <Typography
             variant="subtitle1"
-            sx={{ fontWeight: 500, fontSize: '1em' }}
+            sx={{ fontWeight: 400, fontSize: '1em' }}
           >
             Customer Details
           </Typography>
@@ -157,7 +157,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                 gap: '0.5em',
                 mt: '0.5em',
                 fontSize: '0.80em',
-                fontWeight: 400,
+                fontWeight: 300,
               }}
             >
               <MdLocationOn /> Ticket Address: 35 Aromat Street, Hillbrow,
@@ -170,7 +170,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                 alignItems: 'center',
                 gap: '0.5em',
                 fontSize: '0.80em',
-                fontWeight: 400,
+                fontWeight: 300,
               }}
             >
               <MdPhone /> Phone Number: +27 74 637 7232
@@ -182,7 +182,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                 alignItems: 'center',
                 gap: '0.5em',
                 fontSize: '0.80em',
-                fontWeight: 400,
+                fontWeight: 300,
               }}
             >
               <MdMail /> Email: vivica.samkelo@gmail.com
@@ -191,7 +191,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
 
           <Typography
             variant="subtitle1"
-            sx={{ fontWeight: 500, fontSize: '1em', mt: '1em' }}
+            sx={{ fontWeight: 400, fontSize: '1em', mt: '1em' }}
           >
             Ticket Details
           </Typography>
@@ -212,7 +212,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                   variant="body2"
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                   }}
                 >
                   IT Support
@@ -221,7 +221,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                   variant="body2"
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                   }}
                 >
                   Fulfiller Name: David Willie
@@ -230,7 +230,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                   variant="body2"
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                   }}
                 >
                   Ticket Number: TECH-10036LA
@@ -239,7 +239,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                   variant="body2"
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                   }}
                 >
                   Booking Date: 25 May 2023
@@ -248,7 +248,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                   variant="body2"
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                   }}
                 >
                   Booking Time: 15:30 PM
@@ -257,14 +257,14 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                   variant="body2"
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                   }}
                 >
                   Status:
                   <Typography
                     variant="span"
                     sx={{
-                      fontWeight: 400,
+                      fontWeight: 300,
                       color: '#4CAF50',
                       border: 'solid 1px #4CAF50',
                       borderRadius: '0.25em',
@@ -306,7 +306,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
               },
               '& .MuiTab-root': {
                 textTransform: 'none',
-                fontWeight: 400,
+                fontWeight: 300,
                 color: '#000',
                 fontSize: '0.8em',
                 '&.Mui-selected': {
@@ -325,14 +325,12 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
             {rightTabIndex === 0 && (
               <Box>
                 {/* Ticket Description Content */}
-                <Typography variant="body2" sx={{ mb: 2 }}>
+                <Typography sx={{ mb: 2, fontSize: '0.8em', fontWeight: 300 }}>
                   I have a couple of hard drives that I need to be fixed. I have
                   attached some images about the items that need to be fixed.
                 </Typography>
 
-                <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 1 }}>
-                  Images
-                </Typography>
+                <Typography sx={{ fontWeight: 400, mb: 1 }}>Images</Typography>
                 <Box display="flex" flexWrap="wrap" gap={2}>
                   {[...Array(6)].map((_, index) => (
                     <Box
@@ -385,7 +383,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                 <Divider sx={{ my: 3 }} />
 
                 {/* Ticket Tracker */}
-                <Typography variant="subtitle1" sx={{ fontWeight: 400, mb: 1 }}>
+                <Typography sx={{ fontWeight: 400, mb: 1 }}>
                   Ticket Tracker
                 </Typography>
                 <Box sx={{ mt: 1 }}>
@@ -439,7 +437,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
                       <Typography
                         variant="body2"
                         sx={{
-                          fontWeight: 400,
+                          fontWeight: 300,
                           fontSize: '0.80em',
                           flexGrow: 1,
                         }}

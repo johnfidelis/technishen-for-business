@@ -8,7 +8,11 @@
 /* Headings */
 
 .MuiTypography-h5 {
-  font-size: 1.5em !important;
+  font-size: 1.1em !important;
+  font-weight: 400 !important;
+}
+.MuiTypography-h4 {
+  font-size: 0.85em !important;
   font-weight: 400 !important;
 }
 
@@ -24,7 +28,7 @@
 /* Input inside the TextField */
 .MuiInputBase-input {
   font-size: 0.9em !important;
-  min-height: 30px !important;
+  min-height: 25px !important;
   /* max-height: 20px !important; */
   font-family: 'Inter', sans-serif !important;
 }

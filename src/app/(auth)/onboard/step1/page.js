@@ -82,7 +82,7 @@ const Page = ({ handleNext }) => {
 
   return (
     <Box sx={{ padding: '20px' }}>
-      <Typography variant="h6" sx={{ fontWeight: 400, mb: 2 }}>
+      <Typography variant="h6" sx={{ fontWeight: 300, mb: 2 }}>
         Personal Details
       </Typography>
       <Grid container spacing={2}>

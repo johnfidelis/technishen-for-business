@@ -77,7 +77,15 @@ const BookingsTable = () => {
         />
 
         {/* Sort */}
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+        <FormControl
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            maxWidth: '330px',
+            fontSize: '0.80em',
+          }}
+        >
           <InputLabel>Sort</InputLabel>
           <Select defaultValue="Newest" label="Sort">
             <MenuItem value="Newest">Newest</MenuItem>
@@ -95,7 +103,15 @@ const BookingsTable = () => {
         />
 
         {/* Status */}
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+        <FormControl
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            maxWidth: '330px',
+            fontSize: '0.80em',
+          }}
+        >
           <InputLabel>Status</InputLabel>
           <Select defaultValue="Open" label="Status">
             <MenuItem value="Open">Open</MenuItem>
@@ -105,7 +121,7 @@ const BookingsTable = () => {
       </Box>
 
       {/* Bookings Table */}
-      <TableContainer component={Paper} sx={{ borderRadius: '0.5em', mt: 2 }}>
+      <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
         <Table>
           <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
             <TableRow>

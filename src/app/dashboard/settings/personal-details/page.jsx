@@ -50,7 +50,7 @@
 // //   return (
 // //     <Box>
 // //       {/* <Paper elevation={3} sx={{ p: 4, borderRadius: "12px" }}> */}
-// //       <Typography variant="h5" sx={{ fontWeight: 400, mb: 4 }}>
+// //       <Typography variant="h5" sx={{ fontWeight: 300, mb: 4 }}>
 // //         {menuItems[activeTab]}
 // //       </Typography>
 
@@ -66,7 +66,7 @@
 // //               sx={{ width: 80, height: 80, mr: 3 }}
 // //             />
 // //             <Box>
-// //               <Typography variant="h6" sx={{ fontWeight: 400 }}>
+// //               <Typography variant="h6" sx={{ fontWeight: 300 }}>
 // //                 {profile?.first_name} {profile?.last_name}
 // //               </Typography>
 // //               <input
@@ -218,7 +218,7 @@
 
 //   return (
 //     <Box>
-//       <Typography variant="h5" sx={{ fontWeight: 400, mb: 4 }}>
+//       <Typography variant="h5" sx={{ fontWeight: 300, mb: 4 }}>
 //         {menuItems[activeTab]}
 //       </Typography>
 
@@ -231,7 +231,7 @@
 //               sx={{ width: 80, height: 80, mr: 3 }}
 //             />
 //             <Box>
-//               <Typography variant="h6" sx={{ fontWeight: 400 }}>
+//               <Typography variant="h6" sx={{ fontWeight: 300 }}>
 //                 {profile?.first_name} {profile?.last_name}
 //               </Typography>
 //               <input
@@ -389,7 +389,7 @@ const PersonalDetails = () => {
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ fontWeight: 400, mb: 4 }}>
+      <Typography variant="h5" sx={{ fontWeight: 300, mb: 4 }}>
         {menuItems[activeTab]}
       </Typography>
 
@@ -405,7 +405,7 @@ const PersonalDetails = () => {
               sx={{ width: 80, height: 80, mr: 3 }}
             />
             <Box>
-              <Typography variant="h6" sx={{ fontWeight: 400 }}>
+              <Typography variant="h6" sx={{ fontWeight: 300 }}>
                 {profile?.first_name} {profile?.last_name}
               </Typography>
               <input

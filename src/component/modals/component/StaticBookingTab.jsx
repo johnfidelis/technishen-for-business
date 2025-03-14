@@ -33,7 +33,7 @@ const StaticBookingTab = () => {
         <Box display="flex" flexDirection="column" gap="0.5em">
           <Typography
             variant="body2"
-            sx={{ fontWeight: 400, fontSize: '0.80em' }}
+            sx={{ fontWeight: 300, fontSize: '0.80em' }}
           >
             Sort By
           </Typography>
@@ -57,7 +57,7 @@ const StaticBookingTab = () => {
         <Box display="flex" flexDirection="column" gap="0.5em">
           <Typography
             variant="body2"
-            sx={{ fontWeight: 400, fontSize: '0.80em' }}
+            sx={{ fontWeight: 300, fontSize: '0.80em' }}
           >
             Search
           </Typography>
@@ -88,7 +88,7 @@ const StaticBookingTab = () => {
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography
             variant="subtitle1"
-            sx={{ fontWeight: 400, fontSize: '0.80em' }}
+            sx={{ fontWeight: 300, fontSize: '0.80em' }}
           >
             IT Support
           </Typography>
@@ -97,7 +97,7 @@ const StaticBookingTab = () => {
             <Typography
               variant="body2"
               sx={{
-                fontWeight: 400,
+                fontWeight: 300,
 
                 fontSize: '0.75em',
               }}
@@ -107,7 +107,7 @@ const StaticBookingTab = () => {
             <Typography
               variant="body2"
               sx={{
-                fontWeight: 400,
+                fontWeight: 300,
                 color: '#4CAF50',
                 border: 'solid 1px #4CAF50',
                 borderRadius: '0.25em',
@@ -175,7 +175,7 @@ const StaticBookingTab = () => {
             sx={{
               backgroundColor: theme.primary_color || '#115093',
               color: 'white',
-              fontWeight: 400,
+              fontWeight: 300,
               textTransform: 'none',
               mt: '1em',
               fontSize: '0.80em',

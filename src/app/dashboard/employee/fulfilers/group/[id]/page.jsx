@@ -68,7 +68,7 @@ const Page = () => {
             color: '#FFF',
             textTransform: 'none',
             fontSize: '0.7em',
-            fontWeight: 400,
+            fontWeight: 300,
             padding: '0.375rem 0.75em',
           }}
         >
@@ -121,7 +121,7 @@ const Page = () => {
                   key={header}
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >
@@ -157,7 +157,7 @@ const Page = () => {
                     />
                     <Typography
                       variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '1em', color: 'gray' }}
+                      sx={{ fontWeight: 300, fontSize: '1em', color: 'gray' }}
                     >
                       No employees found
                     </Typography>

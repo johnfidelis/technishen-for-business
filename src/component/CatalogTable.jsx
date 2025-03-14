@@ -106,7 +106,15 @@ const CatalogTable = ({ catalogType }) => {
           onChange={(e) => setFilter(e.target.value)}
           sx={{ flex: 1, minWidth: '200px' }}
         />
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+        <FormControl
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            maxWidth: '330px',
+            fontSize: '0.80em',
+          }}
+        >
           <InputLabel>Sort</InputLabel>
           <Select value={sortOrder} onChange={handleSortChange} label="Sort">
             <MenuItem value="Newest">Newest</MenuItem>
@@ -149,7 +157,7 @@ const CatalogTable = ({ catalogType }) => {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontWeight: 400,
+                          fontWeight: 300,
                           color: 'white',
                           background: category.service_images
                             ? ''
@@ -179,7 +187,7 @@ const CatalogTable = ({ catalogType }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 400,
+                        fontWeight: 300,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >

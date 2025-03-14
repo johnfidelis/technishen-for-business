@@ -150,7 +150,7 @@ const ViewTicketDetails = ({ ticketId }) => {
             '& .MuiTab-root': {
               textTransform: 'none',
               fontSize: '0.80em',
-              fontWeight: 400,
+              fontWeight: 300,
               fontFamily: 'Inter, sans-serif',
               color: '#000',
               '&.Mui-selected': {

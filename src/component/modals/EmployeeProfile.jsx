@@ -74,14 +74,15 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               src={user?.avatar || 'https://via.placeholder.com/150'}
             />
             <Box>
-              <Typography
-                variant="h5"
-                sx={{ fontWeight: 500, fontSize: '1.125em' }}
-              >
+              <Typography sx={{ fontWeight: 400, fontSize: '1.125em' }}>
                 {user?.name || 'David Willie'}
               </Typography>
-              <Typography>{user?.role || 'FullStack Engineer'}</Typography>
-              <Typography>{user?.company || 'Tsogolo Technologies'}</Typography>
+              <Typography sx={{ fontWeight: 300, fontSize: '0.9em' }}>
+                {user?.role || 'FullStack Engineer'}
+              </Typography>
+              <Typography sx={{ fontWeight: 300, fontSize: '0.9em' }}>
+                {user?.company || 'Tsogolo Technologies'}
+              </Typography>
             </Box>
           </Box>
         </Box>
@@ -90,7 +91,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
         <Box sx={{ overflowY: 'auto', flexGrow: 1, p: '1em' }}>
           <Typography
             variant="subtitle1"
-            sx={{ fontWeight: 500, fontSize: '1em' }}
+            sx={{ fontWeight: 400, fontSize: '1em' }}
           >
             Fulfiller Control Centre
           </Typography>
@@ -103,7 +104,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
 
           <Box>
             <Typography
-              variant="body2"
+              variant="h4"
               sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -115,14 +116,14 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               Location: {user?.location || '35 Aromat Street, Hillbrow, Joburg'}
             </Typography>
             <Typography
-              variant="body2"
+              variant="h4"
               sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
             >
               <MdPhone style={{ color: theme.primary_color }} /> Phone Number:{' '}
               {user?.phone || '+27 74 637 7232'}
             </Typography>
             <Typography
-              variant="body2"
+              variant="h4"
               sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
             >
               <MdMail style={{ color: theme.primary_color }} /> Email:{' '}
@@ -135,8 +136,9 @@ const EmployeeProfile = ({ open, onClose, user }) => {
             <Button
               sx={{
                 color: theme.primary_color,
-                fontSize: '0.775em',
-                fontWeight: 500,
+                fontSize: '0.7em',
+                fontWeight: 400,
+                gap: 0.6,
               }}
             >
               <MdMail /> Send Email
@@ -144,20 +146,26 @@ const EmployeeProfile = ({ open, onClose, user }) => {
             <Button
               sx={{
                 color: theme.primary_color,
-                fontSize: '0.775em',
-                fontWeight: 500,
+                fontSize: '0.7em',
+                fontWeight: 400,
+                gap: 0.6,
               }}
             >
               <MdBlock /> Block
             </Button>
             <Button
-              sx={{ color: '#FF4C3B', fontSize: '0.775em', fontWeight: 500 }}
+              sx={{
+                color: '#FF4C3B',
+                fontSize: '0.7em',
+                fontWeight: 400,
+                gap: 0.6,
+              }}
             >
               <PersonOffIcon /> Disable Account
             </Button>
           </Box>
 
-          <Divider sx={{ backgroundColor: theme.primary_color, my: 2 }} />
+          <Divider sx={{ backgroundColor: theme.primary_color }} />
 
           {/* Tabs */}
           <Tabs
@@ -169,7 +177,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               },
               '& .MuiTab-root': {
                 textTransform: 'none',
-                fontWeight: 400,
+                fontWeight: 300,
                 fontSize: '0.80em',
                 color: '#000',
                 '&.Mui-selected': { color: theme.primary_color },

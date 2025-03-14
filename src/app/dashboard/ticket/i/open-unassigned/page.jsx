@@ -33,7 +33,7 @@ export default function UnassignedTicketsPage() {
       <Box sx={{ mb: '2em', textAlign: 'left' }}>
         <Typography
           variant="h5"
-          sx={{ color: '#333', fontSize: '1.5em', fontWeight: 400 }}
+          sx={{ color: '#333', fontSize: '1.5em', fontWeight: 300 }}
         >
           Open - Unassigned Tickets
           <Tooltip

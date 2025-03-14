@@ -77,14 +77,22 @@ const EmployeeTable = ({ role }) => {
           onChange={handleSearchChange}
           sx={{ flex: 1, minWidth: '200px' }}
         />
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+        <FormControl
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            maxWidth: '330px',
+            fontSize: '0.80em',
+          }}
+        >
           <InputLabel>Sort</InputLabel>
           <Select value={sortOrder} onChange={handleSortChange} label="Sort">
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
           </Select>
         </FormControl>
-        {/* <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+        {/* <FormControl variant="outlined"   sx={{ flex: 1, minWidth: '200px', maxWidth: '330px', fontSize: '0.80em' }}>
           <InputLabel>Role</InputLabel>
           <Select
             value={roleFilter}
@@ -117,7 +125,7 @@ const EmployeeTable = ({ role }) => {
                   key={header}
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >
@@ -169,14 +177,14 @@ const EmployeeTable = ({ role }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 400,
+                        fontWeight: 300,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >{`${employee.first_name} ${employee.last_name}`}</TableCell>
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 400,
+                        fontWeight: 300,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
@@ -185,7 +193,7 @@ const EmployeeTable = ({ role }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 400,
+                        fontWeight: 300,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
@@ -194,7 +202,7 @@ const EmployeeTable = ({ role }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 400,
+                        fontWeight: 300,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
@@ -203,7 +211,7 @@ const EmployeeTable = ({ role }) => {
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
-                        fontWeight: 400,
+                        fontWeight: 300,
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >

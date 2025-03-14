@@ -104,7 +104,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               <Typography
                 variant="subtitle1"
                 sx={{
-                  fontWeight: 400,
+                  fontWeight: 300,
                   fontSize: '0.80em',
                   textTransform: 'capitalize',
                 }}
@@ -114,14 +114,14 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               <Box>
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: 400, fontSize: '0.75em' }}
+                  sx={{ fontWeight: 300, fontSize: '0.75em' }}
                 >
                   {ticket?.created_at || ''}
                 </Typography>
                 <Typography
                   variant="body2"
                   sx={{
-                    fontWeight: 400,
+                    fontWeight: 300,
                     color: '#4CAF50',
                     border: 'solid 1px #4CAF50',
                     borderRadius: '0.25em',
@@ -139,7 +139,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
             <Box>
               <Typography
                 variant="body2"
-                sx={{ fontWeight: 400, fontSize: '0.80em' }}
+                sx={{ fontWeight: 300, fontSize: '0.80em' }}
               >
                 Fulfiller Name:{' '}
                 <Typography
@@ -147,7 +147,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                   sx={{
                     color: theme.primary_color,
                     fontSize: '0.85em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                     cursor: 'pointer',
                   }}
                 >
@@ -157,7 +157,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ fontWeight: 400, fontSize: '0.80em' }}
+                sx={{ fontWeight: 300, fontSize: '0.80em' }}
               >
                 Ticket Number: {ticket?.ticket_number || ''}
               </Typography>
@@ -178,13 +178,13 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
             >
               <Typography
                 variant="subtitle1"
-                sx={{ fontWeight: 400, fontSize: '0.80em' }}
+                sx={{ fontWeight: 300, fontSize: '0.80em' }}
               >
                 Date
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ fontWeight: 400, fontSize: '0.75em' }}
+                sx={{ fontWeight: 300, fontSize: '0.75em' }}
               >
                 {new Date(ticket?.created_at).toLocaleDateString()}
               </Typography>
@@ -196,13 +196,13 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
             >
               <Typography
                 variant="subtitle1"
-                sx={{ fontWeight: 400, fontSize: '0.80em' }}
+                sx={{ fontWeight: 300, fontSize: '0.80em' }}
               >
                 Time
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ fontWeight: 400, fontSize: '0.75em' }}
+                sx={{ fontWeight: 300, fontSize: '0.75em' }}
               >
                 {new Date(ticket?.created_at).toLocaleTimeString([], {
                   hour: '2-digit',
@@ -291,7 +291,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                   color: '#FFF',
                   textTransform: 'none',
                   fontSize: '0.7em',
-                  fontWeight: 400,
+                  fontWeight: 300,
                   padding: '0.75rem 0.75em',
                   width: '30%',
                 }}
@@ -314,7 +314,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                 onClick={() => handleViewMore(ticket)}
                 sx={{
                   color: theme.primary_color,
-                  fontWeight: 400,
+                  fontWeight: 300,
                   textTransform: 'none',
                   fontSize: '0.80em',
                   margin: 'auto',

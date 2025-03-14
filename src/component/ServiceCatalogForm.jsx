@@ -271,7 +271,7 @@ const ServiceCatalog = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontWeight: 400,
+              fontWeight: 300,
               fontSize: '1rem',
               color: 'white',
               background: theme.primary_color,
@@ -389,7 +389,7 @@ const ServiceCatalog = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontWeight: 400,
+              fontWeight: 300,
               fontSize: '1rem',
               color: 'white',
               background: theme.primary_color,
@@ -515,7 +515,7 @@ const ServiceCatalog = () => {
                   style={{
                     color: '#6F7071',
                     fontSize: '0.8rem',
-                    fontWeight: 400,
+                    fontWeight: 300,
                   }}
                 >
                   You are about to create a new category within the system.

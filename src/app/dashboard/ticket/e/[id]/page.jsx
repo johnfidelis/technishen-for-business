@@ -32,7 +32,7 @@ const Page = ({ onBack }) => {
             color: '#FFF',
             textTransform: 'none',
             fontSize: '0.7em',
-            fontWeight: 400,
+            fontWeight: 300,
             padding: '0.375rem 0.75em',
           }}
         >
@@ -46,7 +46,7 @@ const Page = ({ onBack }) => {
             mb: 3,
             mt: 3,
             textAlign: 'left',
-            fontWeight: 400,
+            fontWeight: 300,
             height: '20px',
           }}
         >

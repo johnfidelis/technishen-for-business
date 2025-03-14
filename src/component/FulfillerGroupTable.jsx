@@ -69,7 +69,15 @@ const FulfillerGroupTable = () => {
           onChange={handleSearchChange}
           sx={{ flex: 1, minWidth: '200px' }}
         />
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+        <FormControl
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            maxWidth: '330px',
+            fontSize: '0.80em',
+          }}
+        >
           <InputLabel>Sort</InputLabel>
           <Select value={sortOrder} onChange={handleSortChange} label="Sort">
             <MenuItem value="Newest">Newest</MenuItem>
@@ -94,7 +102,7 @@ const FulfillerGroupTable = () => {
                   key={head}
                   sx={{
                     fontSize: '0.80em',
-                    fontWeight: 400,
+                    fontWeight: 300,
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >
@@ -130,7 +138,7 @@ const FulfillerGroupTable = () => {
                     />
                     <Typography
                       variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '1em', color: 'gray' }}
+                      sx={{ fontWeight: 300, fontSize: '1em', color: 'gray' }}
                     >
                       No groups found
                     </Typography>
