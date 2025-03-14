@@ -270,8 +270,8 @@ const TicketTable = ({ filterType, setNumber }) => {
           >
             Show Outsourced Tickets
             {showOutsourced
-              ? `(${outsourcedTicketsData?.length})`
-              : `(${ticketCounts?.[filterType]})`}
+              ? `(${outsourcedTicketsData?.length || 0})`
+              : `(${ticketCounts?.[filterType] || 0})`}
           </Typography>
         }
       />
