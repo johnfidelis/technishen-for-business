@@ -232,7 +232,11 @@ const TicketTable = ({ filterType }) => {
               fontWeight: 300,
             }}
           >
-            Show Outsourced Tickets{`(${ticketCounts?.[filterType]})`}
+            Show Outsourced Tickets
+            {showOutsourced
+              ? `(${outsourcedTicketsData?.length})`
+              : `(${ticketCounts?.[filterType]})`}
+            {}
           </Typography>
         }
       />
