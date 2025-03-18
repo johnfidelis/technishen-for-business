@@ -174,6 +174,11 @@ const Page = ({ handleNext }) => {
                 },
               }}
             />
+            {errors.office_phone && (
+              <span style={{ color: 'red', fontSize: '12px' }}>
+                {errors.office_phone}
+              </span>
+            )}
           </FormControl>
         </Grid>
 
@@ -213,6 +218,7 @@ const Page = ({ handleNext }) => {
                 onChange={handleChange}
               />
             }
+            style={{ color: '#6F7071' }}
             label="Tick if the business name is the same as the trading name."
           />
         </Grid>
@@ -245,7 +251,7 @@ const Page = ({ handleNext }) => {
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <TextField
+          {/* <TextField
             fullWidth
             label="Website (optional)"
             name="website"
@@ -255,17 +261,48 @@ const Page = ({ handleNext }) => {
             error={!!errors.website}
             helperText={errors.website}
             onChange={handleChange}
+          /> */}
+          <TextField
+            fullWidth
+            label="Website (optional)"
+            name="website"
+            placeholder="e.g., example.com"
+            value={formData.website || ''}
+            error={!!errors.website}
+            helperText={errors.website}
+            onChange={(e) => {
+              let rawValue = e.target.value.trim()
+
+              // Remove unwanted prefixes if present
+              rawValue = rawValue.replace(/^(https?:\/\/)?(www\.)?/, '')
+
+              // Ensure it always has "https://www." in front
+              const formattedValue = rawValue ? `https://www.${rawValue}` : ''
+
+              setFormData((prev) => ({ ...prev, website: formattedValue }))
+            }}
           />
         </Grid>
 
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Business Registration Number (required)"
+            label={
+              formData.business_type === 'Sole Proprietorship'
+                ? 'Business Registration Number(not required)'
+                : 'Business Registration Number (required)'
+            }
             name="registration_number"
             value={formData.registration_number || ''}
             onChange={handleChange}
             error={!!errors.registration_number}
+            style={{
+              background:
+                formData.business_type === 'Sole Proprietorship'
+                  ? '#e0e0e0'
+                  : 'white',
+              borderRadius: '4px',
+            }}
             helperText={errors.registration_number}
             disabled={formData.business_type === 'Sole Proprietorship'}
             required
@@ -294,7 +331,7 @@ const Page = ({ handleNext }) => {
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="VAT Number (required)"
+            label="VAT Number (optional)"
             name="tax_number"
             value={formData.tax_number || ''}
             error={!!errors.tax_number}

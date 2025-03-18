@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 import { MdInfoOutline } from 'react-icons/md'
 import AddIcon from '@mui/icons-material/Add'
@@ -9,6 +9,7 @@ import Link from 'next/link'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
+    const [number, setNumber] = useState(0)
 
   return (
     <Box
@@ -34,7 +35,7 @@ export default function Page() {
               fontWeight: '500',
             }}
           >
-            All Employees
+            All Employees {`(${number})`}
             <Tooltip
               title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
               arrow
@@ -56,7 +57,7 @@ export default function Page() {
         </Box>
         <hr />
       </Box>
-      <EmployeeTable role={''} />
+      <EmployeeTable role={''}  setNumber={setNumber}/>
     </Box>
   )
 }

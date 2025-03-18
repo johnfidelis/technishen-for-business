@@ -86,11 +86,11 @@ const BookingsTable = () => {
             fontSize: '0.80em',
           }}
         >
-          <InputLabel>Sort</InputLabel>
-          <Select defaultValue="Newest" label="Sort">
+          {/* <InputLabel>Sort</InputLabel> */}
+          <TextField label="Sort " select>
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
-          </Select>
+          </TextField>
         </FormControl>
 
         {/* Search by dates */}

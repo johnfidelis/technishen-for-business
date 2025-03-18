@@ -124,7 +124,7 @@ const ServiceCatalog = () => {
       )
       categoryFormData.append(
         'sub_service[status]',
-        subCategory.status || 'inactive',
+        subCategory.status || 'in-active',
       )
       categoryFormData.append(
         'sub_service[price_type]',
@@ -167,6 +167,9 @@ const ServiceCatalog = () => {
           sub_service_image: null,
         })
         setCategoryIcon(null)
+        setUploadedImage(null)
+        setUploadedImage2(null)
+
         onClose()
       },
       onError: () => {
@@ -178,52 +181,6 @@ const ServiceCatalog = () => {
     })
   }
 
-  // const handleSubmit = () => {
-
-  //   const categoryFormData = new FormData()
-  //   categoryFormData.append('business', businessId)
-  //   categoryFormData.append('service_name', serviceName)
-  //   categoryFormData.append('description', description)
-  //   categoryFormData.append('service_type', categoryType)
-  //   categoryFormData.append(
-  //     'sub_service[sub_service_name]',
-  //     subCategory?.sub_service_name,
-  //   )
-  //   categoryFormData.append('sub_service[cost]', subCategory?.cost)
-  //   categoryFormData.append(
-  //     'sub_service[allow_remote_work]',
-  //     subCategory?.allow_remote_work,
-  //   )
-  //   categoryFormData.append('sub_service[status]', subCategory?.status)
-  //   categoryFormData.append('sub_service[price_type]', subCategory?.price_type)
-  //   categoryFormData.append(
-  //     'sub_service[price_visibility]',
-  //     subCategory?.price_visibility,
-  //   )
-  //   categoryFormData.append(
-  //     'sub_service[sub_service_images]',
-  //     subCategory?.sub_service_image,
-  //   )
-  //   if (categoryIcon) categoryFormData.append('service_images', categoryIcon)
-
-  //   createCategoryAndSubCategory.mutate(categoryFormData, {
-  //     onSuccess: async () => {
-  //       toast.success('Created.', {
-  //         autoClose: 5000,
-  //         hideProgressBar: true,
-  //       })
-  //       onClose()
-  //     },
-  //     onError: () => {
-  //       toast.error('Error.', {
-  //         autoClose: 5000,
-  //         hideProgressBar: true,
-  //       })
-  //     },
-  //   })
-  //   // console.log({ categoryFormData, subCategory })
-  // }
-
   return (
     <>
       <Grid container spacing={4}>
@@ -234,11 +191,15 @@ const ServiceCatalog = () => {
           </Typography>
 
           <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel>Service Type*</InputLabel>
-            <Select value={categoryType} onChange={handleCategoryTypeChange}>
+            <TextField
+              select
+              value={categoryType}
+              onChange={handleCategoryTypeChange}
+              label="Service Type*"
+            >
               <MenuItem value="Employee">Employee</MenuItem>
               <MenuItem value="Customer">Customer</MenuItem>
-            </Select>
+            </TextField>
           </FormControl>
 
           <TextField
@@ -478,7 +439,7 @@ const ServiceCatalog = () => {
             sx={{ mb: 2 }}
           >
             <MenuItem value="Active">Active</MenuItem>
-            <MenuItem value="Inactive">Inactive</MenuItem>
+            <MenuItem value="In-active">In-active</MenuItem>
           </TextField>
           <Box
             sx={{

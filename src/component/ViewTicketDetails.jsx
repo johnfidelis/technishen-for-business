@@ -171,7 +171,7 @@ const ViewTicketDetails = ({ ticketId }) => {
               label="Description of Ticket"
               multiline
               rows={3}
-              value={description}
+              value={ticket?.ticket_details?.description}
               onChange={(e) => setDescription(e.target.value)}
               variant="outlined"
             />

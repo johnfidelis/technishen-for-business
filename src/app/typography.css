@@ -1,11 +1,11 @@
-/* global.css */
+/* global.css
 
-/* Base Typography */
+Base Typography
 .MuiTypography-root {
   font-family: 'Inter', sans-serif !important;
 }
 
-/* Headings */
+Headings
 
 .MuiTypography-h5 {
   font-size: 1.1em !important;
@@ -16,31 +16,183 @@
   font-weight: 400 !important;
 }
 
-/* Global styles for MUI TextField */
+Global styles for MUI TextField
 
-/* Base TextField */
+Base TextField
 .MuiTextField-root {
   flex: 1 !important;
   min-width: 200px !important;
   font-size: 1em !important;
 }
 
-/* Input inside the TextField */
+Input inside the TextField
 .MuiInputBase-input {
   font-size: 0.9em !important;
   min-height: 25px !important;
-  /* max-height: 20px !important; */
+
   font-family: 'Inter', sans-serif !important;
 }
 
-/* Label styling */
+Label styling
 .MuiInputLabel-root {
   font-size: 0.8em !important;
   font-family: 'Inter', sans-serif !important;
 }
 
-/* Helper text */
+Helper text
 .MuiFormHelperText-root {
   font-size: 0.75em !important;
   font-family: 'Inter', sans-serif !important;
+} */
+
+/* global.css */
+
+/* Base Typography */
+.MuiTypography-root {
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Headings */
+.MuiTypography-h1 {
+  font-size: 2.5rem !important;
+  font-weight: 600 !important;
+}
+.MuiTypography-h2 {
+  font-size: 2rem !important;
+  font-weight: 500 !important;
+}
+.MuiTypography-h3 {
+  font-size: 1.75rem !important;
+  font-weight: 500 !important;
+}
+.MuiTypography-h4 {
+  font-size: 1.5rem !important;
+  font-weight: 400 !important;
+}
+.MuiTypography-h5 {
+  font-size: 1.25rem !important;
+  font-weight: 400 !important;
+}
+.MuiTypography-h6 {
+  font-size: 1.1rem !important;
+  font-weight: 400 !important;
+}
+
+/* Paragraphs and body text */
+.MuiTypography-body1 {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+.MuiTypography-body2 {
+  /* font-size: 0.875rem !important; */
+  font-size: 0.80rem !important;
+  font-weight: 400 !important;
+}
+
+/* Subtitle */
+.MuiTypography-subtitle1 {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+}
+.MuiTypography-subtitle2 {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+/* Caption & Overline */
+.MuiTypography-caption {
+  font-size: 0.75rem !important;
+  font-weight: 400 !important;
+}
+.MuiTypography-overline {
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+}
+
+/* Standard Variant */
+.MuiTypography-standard {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
+/* Outlined Variant */
+.MuiTypography-outlined {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+}
+
+/* Buttons */
+.MuiButton-root {
+  font-family: 'Inter', sans-serif !important;
+  text-transform: none !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+}
+/* Button Text */
+.MuiTypography-button {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+}
+
+/* Global styles for MUI TextField */
+.MuiTextField-root {
+  flex: 1 !important;
+  min-width: 200px !important;
+  font-size: 1rem !important;
+}
+
+/* Input inside the TextField */
+.MuiInputBase-input {
+  font-size: 0.9rem !important;
+  min-height: 25px !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Label styling */
+.MuiInputLabel-root {
+  font-size: 0.875rem !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Helper text */
+.MuiFormHelperText-root {
+  font-size: 0.75rem !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Outlined and filled input fields */
+.MuiOutlinedInput-root {
+  border-radius: 8px !important;
+}
+.MuiFilledInput-root {
+  border-radius: 8px !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Checkbox and Radio */
+.MuiCheckbox-root,
+.MuiRadio-root {
+  color: inherit !important;
+}
+
+/* Switch */
+.MuiSwitch-root {
+  /* width: 60px !important; */
+  /* height: 50px !important; */
+}
+
+/* Variant = Contained */
+.MuiButton-contained {
+  color: #fff !important;
+  font-weight: 300 !important;
+  padding: 5px 20px !important;
+  border-radius: 8px !important;
+}
+
+.MuiButton-contained:disabled {
+  background-color: #b0bec5 !important;
 }

@@ -9,34 +9,12 @@ import { useCreateData } from '@/hooks/useApiService'
 import { POST_ENDPOINTS } from '@/constants/endpoints'
 
 const Page = ({ handleNext, handleBack }) => {
+  const [reloadKey, setReloadKey] = useState(Date.now())
   const [errors, setErrors] = useState({})
   const createBusiness = useCreateData(
     POST_ENDPOINTS.BUSINESS_PROFILE,
     'businessProfile',
   )
-  // const [formData, setFormData] = useState(() => {
-  //   if (typeof window !== 'undefined') {
-  //     return (
-  //       JSON.parse(localStorage.getItem('step2Data')) || {
-  //         trading_address: '',
-  //         city: '',
-  //         state_or_region: '',
-  //         country: '',
-  //         building_name: '',
-  //         unit_number: '',
-  //         business_type: '',
-  //         longitude: '',
-  //         latitude: '',
-  //         country_building: '',
-  //         // sole_prop_docs: '',
-  //       }
-  //     )
-  //   }
-  //   return {}
-  // })
-  // if (formData.business_type === 'Sole Proprietorship') {
-  //   formData.sole_prop_docs = ''
-  // }
 
   const [formData, setFormData] = useState({
     trading_address: '',
@@ -54,6 +32,7 @@ const Page = ({ handleNext, handleBack }) => {
     if (typeof window !== 'undefined') {
       const savedData = JSON.parse(localStorage.getItem('step2Data')) || {}
       setFormData((prev) => ({ ...prev, ...savedData }))
+      console.log({ savedData })
     }
   }, [])
 
@@ -126,6 +105,7 @@ const Page = ({ handleNext, handleBack }) => {
     createBusiness.mutate(formDataObject, {
       onSuccess: async () => {
         // handleNext()
+        setReloadKey(Date.now())
         localStorage.clear('step2Data')
         window.location.href = '/dashboard'
       },
@@ -138,6 +118,7 @@ const Page = ({ handleNext, handleBack }) => {
       <Grid container spacing={4}>
         <Grid item xs={12} sm={6}>
           <AddressAutocomplete
+            key={reloadKey}
             label="Trading Address (required)"
             value={formData.trading_address || ''}
             handleAddressUpdate={handleAddressUpdate}

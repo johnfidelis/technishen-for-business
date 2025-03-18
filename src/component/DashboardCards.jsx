@@ -70,10 +70,9 @@ const DashboardCards = () => {
               }}
             >
               <Typography
-                variant="h6"
+                variant="body2"
                 sx={{
-                  fontSize: '0.8em',
-                  fontWeight: 400,
+            
                   padding: '0.6vh 0vh',
                 }}
               >

@@ -26,6 +26,7 @@ import { toast } from 'react-toastify'
 
 const CustomerForm = () => {
   const { theme } = useContext(ThemeContext)
+  const [reloadKey, setReloadKey] = useState(Date.now())
   const createCustomer = useCreateData(
     POST_ENDPOINTS.CREATE_CUSTOMER,
     'createCustomer',
@@ -179,6 +180,7 @@ const CustomerForm = () => {
     })
     createCustomer.mutate(formDataObject, {
       onSuccess: async () => {
+        setReloadKey(Date.now())
         toast.success('Customer created successfully', {
           position: 'top-right',
           autoClose: 3000,
@@ -228,14 +230,16 @@ const CustomerForm = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel>Customer Type *</InputLabel>
-                <Select
+                {/* <InputLabel >Customer Type *</InputLabel> */}
+                <TextField
+                  label="Customer Type "
+                  select
                   value={formData?.customer_type}
                   onChange={handleCustomerTypeChange}
                 >
                   <MenuItem value="Personal">Personal Customer</MenuItem>
                   <MenuItem value="Business">Business Customer</MenuItem>
-                </Select>
+                </TextField>
               </FormControl>
             </Grid>
 
@@ -274,6 +278,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <AddressAutocomplete
                     label="Address"
+                    key={reloadKey}
                     fullWidth
                     InputLabelProps={{
                       style: {
@@ -350,8 +355,9 @@ const CustomerForm = () => {
                     value={formData.identity_type}
                     onChange={handleInputChange}
                   >
-                    <MenuItem value="ID Number">ID Number</MenuItem>
-                    <MenuItem value="Passport Number">Passport Number</MenuItem>
+                <MenuItem value="Passport">Passport</MenuItem>
+                                <MenuItem value="National ID Card">National ID Card</MenuItem>
+                                <MenuItem value="Driver's License">Driver's License</MenuItem>
                   </TextField>
                 </Grid>
 
@@ -411,6 +417,7 @@ const CustomerForm = () => {
                   <AddressAutocomplete
                     label="Business Address"
                     fullWidth
+                    key={reloadKey}
                     name="address"
                     InputLabelProps={{
                       style: {
@@ -530,8 +537,9 @@ const CustomerForm = () => {
                     value={formData.identity_type}
                     onChange={handleInputChange}
                   >
-                    <MenuItem value="ID Number">ID Number</MenuItem>
-                    <MenuItem value="Passport Number">Passport Number</MenuItem>
+                  <MenuItem value="Passport">Passport</MenuItem>
+                                  <MenuItem value="National ID Card">National ID Card</MenuItem>
+                                  <MenuItem value="Driver's License">Driver's License</MenuItem>
                   </TextField>
                 </Grid>
                 <Grid item xs={12} sm={6}>

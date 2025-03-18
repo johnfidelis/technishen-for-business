@@ -73,7 +73,7 @@ const SidebarMenu = () => {
                     <ListItemIcon sx={{ color: '#333' }}>
                       {category.icon}
                     </ListItemIcon>
-                    <Typography sx={{ fontSize: '0.80em' }}>
+                    <Typography variant="body2" sx={{ fontSize: '0.80em' }}>
                       {category.mainCategory}
                     </Typography>
                   </AccordionSummary>
@@ -124,6 +124,7 @@ const SidebarMenu = () => {
                             <ListItemText
                               primary={sub.name}
                               primaryTypographyProps={{
+                                variant: "caption",
                                 sx: {
                                   fontSize: '0.8em',
                                   // pl: 0,
@@ -131,6 +132,8 @@ const SidebarMenu = () => {
                                     pathname === sub.routeTo
                                       ? theme.secondary_color
                                       : '#333',
+                                      
+                                      
                                 },
                               }}
                             />
@@ -190,6 +193,8 @@ const SidebarMenu = () => {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '5px',
+                            fontSize: "0.80em",
+
                           }}
                         >
                           {category.name}

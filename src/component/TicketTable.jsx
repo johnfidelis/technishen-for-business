@@ -242,13 +242,7 @@ const TicketTable = ({ filterType, setNumber }) => {
           />
         }
         label={
-          <Typography
-            sx={{
-              fontSize: '0.8em',
-              fontFamily: 'Inter, sans-serif',
-              fontWeight: 300,
-            }}
-          >
+          <Typography variant="caption">
             Show Outsourced Tickets
             {showOutsourced
               ? `(${outsourcedTicketsData?.length || 0})`

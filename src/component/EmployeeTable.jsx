@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Avatar,
   Box,
@@ -23,7 +23,7 @@ import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { useFetchData } from '@/hooks/useApiService'
 import { useRouter } from 'next/navigation'
 
-const EmployeeTable = ({ role }) => {
+const EmployeeTable = ({ role, setNumber }) => {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [sortOrder, setSortOrder] = useState('Newest')
@@ -35,6 +35,27 @@ const EmployeeTable = ({ role }) => {
     GET_ENDPOINTS.ALL_EMPLOYEE,
     'allEmployee',
   )
+
+  // useEffect(() => {
+  //   if (setNumber && typeof setNumber === 'function') {
+  //     // Ensure outsourcedTicketsData and ticketCounts exist before calculation
+  //     const fetchedNumber =
+  //       (allEmployee?.length || 0)
+  //     setNumber(fetchedNumber)
+  //   }
+  // }, [allEmployee])
+
+  useEffect(() => {
+    if (setNumber && typeof setNumber === 'function') {
+      const fetchedNumber = allEmployee
+        ? allEmployee.filter((employee) =>
+            role ? employee.role === role : true,
+          ).length
+        : 0
+
+      setNumber(fetchedNumber)
+    }
+  }, [allEmployee, role])
 
   const handleSearchChange = (event) => setSearchTerm(event.target.value)
   const handleSortChange = (event) => setSortOrder(event.target.value)
@@ -86,11 +107,16 @@ const EmployeeTable = ({ role }) => {
             fontSize: '0.80em',
           }}
         >
-          <InputLabel>Sort</InputLabel>
-          <Select value={sortOrder} onChange={handleSortChange} label="Sort">
+          {/* <InputLabel>Sort</InputLabel> */}
+          <TextField
+            select
+            value={sortOrder}
+            onChange={handleSortChange}
+            label="Sort"
+          >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
-          </Select>
+          </TextField>
         </FormControl>
         {/* <FormControl variant="outlined"   sx={{ flex: 1, minWidth: '200px', maxWidth: '330px', fontSize: '0.80em' }}>
           <InputLabel>Role</InputLabel>
@@ -231,7 +257,7 @@ const EmployeeTable = ({ role }) => {
                     >
                       {employee.status === 'Accepted'
                         ? 'Account Linked'
-                        : 'Invitation Sent'}
+                        : 'Invitation Sendt'}
                     </TableCell>
                   </TableRow>
                 ))

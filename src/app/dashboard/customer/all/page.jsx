@@ -1,10 +1,11 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import CustomersTable from '@/component/CustomersTable'
 
 const Page = () => {
+    const [number, setNumber] = useState(0)
   return (
     <Box
       sx={{
@@ -27,11 +28,11 @@ const Page = () => {
             fontWeight: '500',
           }}
         >
-          All Customers
+          All Customers {`(${number})`}
         </Typography>
         <hr />
       </Box>
-      <CustomersTable />
+      <CustomersTable setNumber={setNumber}/>
     </Box>
   )
 }

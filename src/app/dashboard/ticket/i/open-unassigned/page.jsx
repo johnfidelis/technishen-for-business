@@ -72,13 +72,13 @@ export default function UnassignedTicketsPage() {
             <Paper
               sx={{
                 display: 'flex',
-                alignItems: 'center',
                 justifyContent: 'space-between',
-                p: 2,
+                alignItems: 'center',
                 backgroundColor: theme.primary_color,
-                color: '#FFFFFF',
-                borderRadius: '8px',
-                minHeight: '40px',
+                color: '#fff',
+                padding: '10px',
+                borderRadius: '5px',
+                cursor: 'pointer',
               }}
             >
               <Box
@@ -89,18 +89,8 @@ export default function UnassignedTicketsPage() {
                   padding: '0.6vh 0vh',
                 }}
               >
-                <Typography
-                  variant="h6"
-                  sx={{ fontSize: '14px', fontWeight: 500 }}
-                >
-                  {summary.title}
-                </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{ fontSize: '14px', fontWeight: 500 }}
-                >
-                  {summary.value}
-                </Typography>
+                <Typography variant="body2">{summary.title}</Typography>
+                <Typography variant="body2">{summary.value}</Typography>
               </Box>
               {summary.icon}
             </Paper>

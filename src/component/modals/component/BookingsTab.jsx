@@ -24,6 +24,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
   // const [history, setHistory] = useState(null)
   // const [isLoading, setIsLoading] = useState(false)
   // Select endpoint based on ticketType
+  alert(ticketType)
   const endpoint =
     ticketType === 'External'
       ? GET_ENDPOINTS.CUSTOMER_TICKET_HISTORY(customerId)

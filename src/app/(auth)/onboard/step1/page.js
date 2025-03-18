@@ -1,3 +1,5 @@
+
+
 'use client'
 
 import React, { useState } from 'react'
@@ -9,8 +11,10 @@ import {
   Typography,
   MenuItem,
   InputAdornment,
+  FormControl,
 } from '@mui/material'
 import { toast } from 'react-toastify'
+import PhoneInput from 'react-phone-number-input'
 import countryList from '../../../../component/utils/countryList'
 import { usePatchData } from '@/hooks/useApiService'
 import { PATCH_ENDPOINTS } from '@/constants/endpoints'
@@ -27,7 +31,6 @@ const Page = ({ handleNext }) => {
     phone_number: '',
   })
   const [errors, setErrors] = useState({})
-  const [callingCode, setCallingCode] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const patchData = usePatchData(
     PATCH_ENDPOINTS.BUSINESS_OWNER_PROFILE,
@@ -36,12 +39,6 @@ const Page = ({ handleNext }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    if (name === 'nationality') {
-      const selectedCountry = countryList.find(
-        (country) => country.name === value,
-      )
-      setCallingCode(selectedCountry ? selectedCountry.code : '')
-    }
     setFormData((prev) => ({ ...prev, [name]: value }))
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
@@ -82,9 +79,9 @@ const Page = ({ handleNext }) => {
 
   return (
     <Box sx={{ padding: '20px' }}>
-      <Typography variant="h6" sx={{ fontWeight: 300, mb: 2 }}>
+      {/* <Typography variant="h6" sx={{ mb: 2 }}>
         Personal Details
-      </Typography>
+      </Typography> */}
       <Grid container spacing={2}>
         {Object.keys(formData).map((key) => (
           <Grid item xs={12} sm={6} key={key}>
@@ -129,7 +126,36 @@ const Page = ({ handleNext }) => {
               >
                 <MenuItem value="Passport">Passport</MenuItem>
                 <MenuItem value="National ID Card">National ID Card</MenuItem>
+                <MenuItem value="Driver's License">Driver's License</MenuItem>
               </TextField>
+            ) : key === 'phone_number' ? (
+              <FormControl
+                fullWidth
+                style={{
+                  width: '100%',
+                  padding: '15px 14px',
+                  border: '1px solid rgba(0, 0, 0, 0.23)',
+                  borderRadius: '4px',
+                  fontSize: '16px',
+                }}
+              >
+                <PhoneInput
+                  international
+                  defaultCountry="ZA"
+                  value={formData.phone_number || ''}
+                  onChange={(value) =>
+                    setFormData((prev) => ({ ...prev, phone_number: value }))
+                  }
+                  className="phone-input"
+                  sx={{
+                    '& .PhoneInputInput': {
+                      outline: 'none',
+                      border: 'none',
+                      boxShadow: 'none',
+                    },
+                  }}
+                />
+              </FormControl>
             ) : (
               <TextField
                 label={key
@@ -143,17 +169,6 @@ const Page = ({ handleNext }) => {
                 type={key === 'date_of_birth' ? 'date' : 'text'}
                 InputLabelProps={
                   key === 'date_of_birth' ? { shrink: true } : {}
-                }
-                InputProps={
-                  key === 'phone_number'
-                    ? {
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            {callingCode}
-                          </InputAdornment>
-                        ),
-                      }
-                    : {}
                 }
               />
             )}

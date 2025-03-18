@@ -82,7 +82,7 @@ const Layout = () => {
             <AssignmentIcon
               sx={{ color: '#115093', fontSize: '32px', mr: 1 }}
             />
-            <Typography variant="h4" sx={{ color: '#115093', fontWeight: 300 }}>
+            <Typography variant="h4" sx={{ color: '#115093',   }}>
               REGISTRATION
             </Typography>
           </Box>

@@ -90,7 +90,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
         {/* Contact Info */}
         <Box sx={{ overflowY: 'auto', flexGrow: 1, p: '1em' }}>
           <Typography
-            variant="subtitle1"
+            variant="subtitle2"
             sx={{ fontWeight: 400, fontSize: '1em' }}
           >
             Fulfiller Control Centre
@@ -104,7 +104,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
 
           <Box>
             <Typography
-              variant="h4"
+              variant="body2"
               sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -116,14 +116,14 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               Location: {user?.location || '35 Aromat Street, Hillbrow, Joburg'}
             </Typography>
             <Typography
-              variant="h4"
+              variant="body2"
               sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
             >
               <MdPhone style={{ color: theme.primary_color }} /> Phone Number:{' '}
               {user?.phone || '+27 74 637 7232'}
             </Typography>
             <Typography
-              variant="h4"
+              variant="body2"
               sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
             >
               <MdMail style={{ color: theme.primary_color }} /> Email:{' '}
@@ -133,36 +133,43 @@ const EmployeeProfile = ({ open, onClose, user }) => {
 
           {/* Actions */}
           <Box display="flex" justifyContent="space-between" sx={{ mt: 2 }}>
-            <Button
+            <Typography
+              variant='body2'
               sx={{
                 color: theme.primary_color,
-                fontSize: '0.7em',
-                fontWeight: 400,
+                display: 'flex',
+                alignItems: 'center',
                 gap: 0.6,
+                cursor: 'pointer',
               }}
             >
-              <MdMail /> Send Email
-            </Button>
-            <Button
+              <MdMail size={16} /> Send Email
+            </Typography>
+            <Typography
+              variant='body2'
               sx={{
                 color: theme.primary_color,
-                fontSize: '0.7em',
-                fontWeight: 400,
+                display: 'flex',
+                alignItems: 'center',
                 gap: 0.6,
+                cursor: 'pointer',
               }}
             >
-              <MdBlock /> Block
-            </Button>
-            <Button
+              <MdBlock size={16} /> Block
+            </Typography>
+            <Typography
+              variant='body2'
               sx={{
                 color: '#FF4C3B',
-                fontSize: '0.7em',
-                fontWeight: 400,
+               
+                display: 'flex',
+                alignItems: 'center',
                 gap: 0.6,
+                cursor: 'pointer',
               }}
             >
-              <PersonOffIcon /> Disable Account
-            </Button>
+              <PersonOffIcon sx={{ fontSize: 16 }} /> Disable Account
+            </Typography>
           </Box>
 
           <Divider sx={{ backgroundColor: theme.primary_color }} />
@@ -173,14 +180,16 @@ const EmployeeProfile = ({ open, onClose, user }) => {
             onChange={(event, newIndex) => setRightTabIndex(newIndex)}
             sx={{
               '& .MuiTabs-indicator': {
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093', // Blue for active tab underline
               },
               '& .MuiTab-root': {
                 textTransform: 'none',
                 fontWeight: 400,
+                color: '#000', // Black for text
                 fontSize: '0.80em',
-                color: '#000',
-                '&.Mui-selected': { color: theme.primary_color },
+                '&.Mui-selected': {
+                  color: theme.primary_color || '#115093', // Blue for active tab
+                },
               },
             }}
           >

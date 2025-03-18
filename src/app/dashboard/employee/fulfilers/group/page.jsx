@@ -10,7 +10,7 @@ import CreateFulfillerGroup from '@/component/modals/CreateFulfillerGroup'
 export default function FulfillerGroupPage() {
   const { theme } = useContext(ThemeContext)
   const [openModal, setOpenModal] = useState(false)
-
+ const [number, setNumber] = useState(0)
   return (
     <Box
       sx={{
@@ -34,7 +34,7 @@ export default function FulfillerGroupPage() {
             fontWeight: '500',
           }}
         >
-          Fulfillers Group
+          Fulfillers Group {`(${number})`}
           <Tooltip
             title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
             arrow
@@ -55,7 +55,7 @@ export default function FulfillerGroupPage() {
         </Button>
       </Box>
 
-      <FulfillerGroupTable />
+      <FulfillerGroupTable setNumber={setNumber} />
 
       {/* Modal */}
       <CreateFulfillerGroup

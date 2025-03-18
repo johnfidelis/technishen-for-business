@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   TextField,
@@ -23,7 +23,7 @@ import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { useFetchData } from '@/hooks/useApiService'
 import { useRouter } from 'next/navigation'
 
-const CustomersTable = () => {
+const CustomersTable = ({ setNumber }) => {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [sortOrder, setSortOrder] = useState('Newest')
@@ -33,6 +33,15 @@ const CustomersTable = () => {
     GET_ENDPOINTS.ALL_CUSTOMER,
     'allCustomer',
   )
+
+  useEffect(() => {
+    if (setNumber && typeof setNumber === 'function') {
+      // Ensure outsourcedTicketsData and ticketCounts exist before calculation
+      const fetchedNumber =
+        (customers?.length || 0) 
+      setNumber(fetchedNumber)
+    }
+  }, [customers])
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value)
   }
@@ -77,11 +86,17 @@ const CustomersTable = () => {
             fontSize: '0.80em',
           }}
         >
-          <InputLabel>Sort</InputLabel>
-          <Select value={sortOrder} onChange={handleSortChange} label="Sort">
+          {/* <InputLabel>Sort</InputLabel> */}
+
+          <TextField
+            select
+            value={sortOrder}
+            onChange={handleSortChange}
+            label="Sort"
+          >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
-          </Select>
+          </TextField>
         </FormControl>
       </Box>
 

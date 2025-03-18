@@ -76,13 +76,13 @@ export default function LoginPage() {
           <Image
             src={logo}
             alt="Technisen Logo"
-            width={200}
-            height={150}
+            width={250}
+            height={200}
             style={{ margin: 'auto' }}
           />
         </Box>
 
-        <Typography variant="h5" align="center" fontWeight="bold" color="white">
+        <Typography style={{fontSize: 25, fontWeight: 400}} align="center" color="white">
           Login
         </Typography>
 

@@ -28,6 +28,7 @@ import EmployeeProfile from './modals/EmployeeProfile'
 
 const InternalTicketForm = () => {
   const { theme } = useContext(ThemeContext)
+  const [reloadKey, setReloadKey] = useState(Date.now())
   const cookies = new Cookies()
   const businessId = cookies.get('selectedBusinessId')
   const createInternalTicket = useCreateData(
@@ -271,6 +272,8 @@ const InternalTicketForm = () => {
       onSuccess: async () => {
         setSubmitLoading(false)
         toast.success('Successfully created ticket.')
+        
+        setReloadKey(Date.now())
         resetForm()
       },
       onError: () => {
@@ -445,6 +448,7 @@ const InternalTicketForm = () => {
             <AddressAutocomplete
               label="Address"
               fullWidth
+              key={reloadKey}
               componentRestrictions={{ country: 'za' }}
               InputLabelProps={{
                 style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },

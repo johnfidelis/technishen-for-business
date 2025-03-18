@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useState, useCallback, useContext, useEffect } from 'react'
 import {
   Table,
   TableBody,
@@ -18,6 +18,7 @@ import {
   MenuItem,
   CircularProgress,
   Typography,
+  Skeleton,
 } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
@@ -28,22 +29,31 @@ import { GET_ENDPOINTS, DELETE_ENDPOINTS } from '@/constants/endpoints'
 import { ThemeContext } from '@/context/ThemeContext'
 import { useRouter } from 'next/navigation'
 import EditCategoryModal from './modals/EditCategoryModal'
+import { SentimentDissatisfied } from '@mui/icons-material'
 
 /**
  * @param {Object} props
  * @param {"Customer" | "Employee"} props.catalogType - The type of catalog (customer or employee).
  */
-const CatalogTable = ({ catalogType }) => {
+const CatalogTable = ({ catalogType, setNumber }) => {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
   const { data, isLoading } = useFetchData(
     GET_ENDPOINTS.ALL_CATEGORIES,
     'allCategories',
   )
-  // const { delete: deleteCategory } = useDeleteData(
-  //   DELETE_ENDPOINTS.DELETE_CATALOG,
-  //   'deleteCategory',
-  // )
+
+  useEffect(() => {
+    if (setNumber && typeof setNumber === 'function') {
+      const fetchedNumber = data
+        ? data.filter((category) => category.service_type === catalogType).length
+        : 0;
+  
+      setNumber(fetchedNumber);
+    }
+  }, [data, catalogType]);
+  
+
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [filter, setFilter] = useState('')
@@ -115,14 +125,181 @@ const CatalogTable = ({ catalogType }) => {
             fontSize: '0.80em',
           }}
         >
-          <InputLabel>Sort</InputLabel>
-          <Select value={sortOrder} onChange={handleSortChange} label="Sort">
+          {/* <InputLabel>Sort</InputLabel> */}
+          <TextField
+            select
+            value={sortOrder}
+            onChange={handleSortChange}
+            label="Sort"
+          >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
-          </Select>
+          </TextField>
         </FormControl>
       </Box>
-      {isLoading ? (
+
+      <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+        <Table>
+          <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+            <TableRow>
+              <TableCell>Display</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Sub-Categories</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                {[...Array(6)].map((_, index) => (
+                  <TableCell key={index}>
+                    <Skeleton variant="text" />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ) : filteredData?.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={7}
+                  sx={{ textAlign: 'center', padding: '2em' }}
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    <SentimentDissatisfied
+                      sx={{ fontSize: 50, color: 'gray' }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{ fontWeight: 300, fontSize: '1em', color: 'gray' }}
+                    >
+                      No data found
+                    </Typography>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredData
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((category) => (
+                  <TableRow key={category.id} sx={{ cursor: 'pointer' }} hover>
+                    <TableCell>
+                      <Box
+                        sx={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: '5px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontWeight: 300,
+                          color: 'white',
+                          background: category.service_images
+                            ? ''
+                            : theme.primary_color,
+                        }}
+                      >
+                        {category.service_images ? (
+                          <img
+                            src={
+                              'https://technishenbackend.onrender.com' +
+                              category.service_images
+                            }
+                            alt="Icon"
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                            }}
+                          />
+                        ) : (
+                          category.service_name?.slice(0, 2).toUpperCase()
+                        )}
+                      </Box>
+                    </TableCell>
+                    <TableCell>{category.service_name}</TableCell>
+                    <TableCell>
+                      {category?.associated_sub_services?.length}
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        color: category.status ? 'green' : 'red',
+                      }}
+                    >
+                      {category.status ? 'Active' : 'Inactive'}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 300,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      <Tooltip
+                        title={
+                          <span
+                            style={{
+                              fontSize: '0.85em',
+                              lineHeight: 1.5,
+                            }}
+                          >
+                            {category.description}
+                          </span>
+                        }
+                        placement="top"
+                        arrow
+                        sx={{
+                          backgroundColor: theme.primary_color,
+                          color: '#fff',
+                          fontFamily: 'Inter, sans-serif',
+                          fontSize: '0.85em',
+                        }}
+                      >
+                        <IconButton size="small">
+                          <InfoIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell>
+                      <Tooltip title="View Details" arrow>
+                        <IconButton>
+                          <VisibilityIcon
+                            onClick={() =>
+                              router.push(`/dashboard/catalog/${category?.id}`)
+                            }
+                          />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Edit" arrow>
+                        <IconButton onClick={() => handleEdit(category)}>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <DeleteWithConfirmation
+                        id={category.id}
+                        handleDeleteCategory={handleDelete}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))
+            )}
+          </TableBody>
+        </Table>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 15]}
+          component="div"
+          count={filteredData?.length || 0}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </TableContainer>
+
+      {/* {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
           <CircularProgress />
         </Box>
@@ -245,7 +422,7 @@ const CatalogTable = ({ catalogType }) => {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </TableContainer>
-      )}
+      )} */}
 
       <EditCategoryModal
         open={editModalOpen}

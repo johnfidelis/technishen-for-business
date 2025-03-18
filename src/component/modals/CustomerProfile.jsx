@@ -1,212 +1,3 @@
-// 'use client'
-
-// import { useState, useContext, useEffect } from 'react'
-// import {
-//   Modal,
-//   Tabs,
-//   Tab,
-//   Box,
-//   Typography,
-//   Divider,
-//   Avatar,
-//   Skeleton,
-//   Dialog,
-//   DialogTitle,
-//   DialogContent,
-//   IconButton,
-// } from '@mui/material'
-// import CloseIcon from '@mui/icons-material/Close'
-// import { ThemeContext } from '@/context/ThemeContext'
-// import { MdLocationOn, MdPhone, MdMail } from 'react-icons/md'
-// import ChatTab from './component/ChatTab'
-// import BookingsTab from './component/BookingsTab'
-
-// const CustomerProfile = ({ open, onClose, ticket }) => {
-//   const { theme } = useContext(ThemeContext)
-
-//   const [isLoading, setIsLoading] = useState(true)
-//   const [rightTabIndex, setRightTabIndex] = useState(0)
-
-//   useEffect(() => {
-//     setTimeout(() => setIsLoading(false), 1000)
-//   }, [])
-
-//   const handleRightTabChange = (event, newIndex) => {
-//     setRightTabIndex(newIndex)
-//   }
-
-//   const firstName = ticket?.customer_details?.first_name
-//   const lastName = ticket?.customer_details?.last_name
-
-//   const modalStyle = {
-//     position: 'absolute',
-//     right: '2px',
-//     transform: 'translate(0, 0)',
-//     width: '450px',
-//     height: '100%',
-//     backgroundColor: '#FFFFFF',
-//     boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
-//     color: 'black',
-//     display: 'flex',
-//     flexDirection: 'column',
-//     fontFamily: 'Inter, sans-serif',
-//   }
-
-//   return (
-//     <Modal open={open} onClose={onClose}>
-//       <Box sx={modalStyle}>
-//         {/* Header */}
-//         <Box
-//           display="flex"
-//           justifyContent="right"
-//           alignItems="center"
-//           sx={{ backgroundColor: theme.primary_color }}
-//         >
-//           <IconButton
-//             onClick={onClose}
-//             sx={{ color: 'white', fontSize: '1em' }}
-//           >
-//             Close <CloseIcon />
-//           </IconButton>
-//         </Box>
-
-//         <Box
-//           sx={{
-//             p: '1em',
-//             backgroundColor: '#FFFFFF',
-//             fontFamily: 'Inter, sans-serif',
-//           }}
-//         >
-//           <Box display="flex" alignItems="center" gap="1em" mb="1em">
-//             {isLoading ? (
-//               <Skeleton variant="circular" width={60} height={60} />
-//             ) : (
-//               <Avatar
-//                 sx={{ width: 60, height: 60 }}
-//                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNiAaKk2O5kUsjqJP01k24EW93PnSHjuJLTA&s"
-//               />
-//             )}
-//             <Box>
-//               <Typography
-//                 variant="h6"
-//                 sx={{
-//                   fontWeight: 400,
-//                   color: '#000',
-//                   textTransform: 'capitalize',
-//                 }}
-//               >
-//                 {isLoading ? (
-//                   <Skeleton width={150} />
-//                 ) : (
-//                   `${firstName} ${lastName}`
-//                 )}
-//               </Typography>
-//               {isLoading ? (
-//                 <Skeleton width={150} />
-//               ) : (
-//                 <Typography variant="body2" sx={{ fontSize: '0.80em' }}>
-//                   ✓ 6 Successful Tickets{' '}
-//                   <span style={{ color: '#F44336' }}>
-//                     ❗ 1 Cancelled Ticket
-//                   </span>
-//                 </Typography>
-//               )}
-//             </Box>
-//           </Box>
-
-//           <Divider
-//             sx={{
-//               my: '1em',
-//               backgroundColor: theme.primary_color || '#115093',
-//             }}
-//           />
-
-//           {isLoading ? (
-//             <>
-//               <Skeleton width={400} />
-//               <Skeleton width={400} />
-//               <Skeleton width={400} />
-//             </>
-//           ) : (
-//             <Box>
-//               <Typography
-//                 variant="body2"
-//                 sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
-//               >
-//                 <MdLocationOn
-//                   style={{ color: theme.primary_color || '#115093' }}
-//                 />{' '}
-//                 Ticket Location: {ticket?.ticket_details?.address || 'N/A'}
-//               </Typography>
-//               <Typography
-//                 variant="body2"
-//                 sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
-//               >
-//                 <MdPhone style={{ color: theme.primary_color || '#115093' }} />{' '}
-//                 Phone Number: {ticket?.customer_details?.phone_number || 'N/A'}
-//               </Typography>
-//               <Typography
-//                 variant="body2"
-//                 sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
-//               >
-//                 <MdMail style={{ color: theme.primary_color || '#115093' }} />{' '}
-//                 Email: {ticket?.customer_details?.email || 'N/A'}
-//               </Typography>
-//             </Box>
-//           )}
-
-//           <Divider
-//             sx={{
-//               my: '1em',
-//               backgroundColor: theme.primary_color || '#115093',
-//             }}
-//           />
-
-//           <Tabs
-//             value={rightTabIndex}
-//             onChange={handleRightTabChange}
-//             sx={{
-//               '& .MuiTabs-indicator': {
-//                 backgroundColor: theme.primary_color || '#115093',
-//               },
-//               '& .MuiTab-root': {
-//                 textTransform: 'none',
-//                 fontWeight: 400,
-//                 color: '#000',
-//                 fontSize: '0.80em',
-//                 '&.Mui-selected': { color: theme.primary_color || '#115093' },
-//               },
-//             }}
-//           >
-//             <Tab label="Current Tickets" />
-//             <Tab label="History" />
-//             <Tab label="Chat to Vivica" />
-//           </Tabs>
-
-//           <Box mt="1em">
-//             {rightTabIndex === 0 && (
-//               <BookingsTab
-//                 customerId={ticket?.customer_details?.id}
-//                 ticketType={ticket?.ticket_details?.ticket_type}
-//                 bookingType="all"
-//               />
-//             )}
-//             {rightTabIndex === 1 && (
-//               <BookingsTab
-//                 customerId={ticket?.customer_details?.id}
-//                 ticketType={ticket?.ticket_details?.ticket_type}
-//                 bookingType="all"
-//               />
-//             )}
-//             {rightTabIndex === 2 && <ChatTab />}
-//           </Box>
-//         </Box>
-//       </Box>
-//     </Modal>
-//   )
-// }
-
-// export default CustomerProfile
 
 import React, { useContext, useState } from 'react'
 import {
@@ -386,7 +177,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
         </Box>
         <Box sx={bodyStyle}>
           <Typography
-            variant="subtitle1"
+              variant="subtitle2"
             // sx={{ fontWeight: 00, fontSize: '1em' }}
           >
             Customer Details
@@ -537,8 +328,10 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     alignItems="center"
                   >
                     <Typography
-                      variant="subtitle1"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
+                      variant="body1"
+                      sx={{
+                        textTransform: 'capitalize',
+                      }}
                     >
                       IT Support
                     </Typography>
@@ -571,21 +364,14 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     </Box>
                   </Box>
                   <Box>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: '0.80em',
-                      }}
-                    >
+                    <Typography variant="body2">
                       Fulfiller Name:{' '}
                       <Typography
-                        component="span"
+                        component="body2"
                         sx={{
-                          color: theme.primary_color || '#115093',
-                          textDecoration: 'underline',
-                          fontSize: '0.80em',
-                          fontWeight: 400,
+                          color: theme.primary_color,
+
+                          cursor: 'pointer',
                         }}
                       >
                         David Willie
@@ -593,10 +379,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     </Typography>
                     <Typography
                       variant="body2"
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: '0.80em',
-                      }}
+                      sx={{ fontWeight: 300, fontSize: '0.80em' }}
                     >
                       Ticket Number: TECH-10036LA
                     </Typography>
@@ -613,7 +396,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     alignItems="center"
                   >
                     <Typography
-                      variant="subtitle1"
+                      variant="body2"
                       sx={{ fontWeight: 400, fontSize: '0.80em' }}
                     >
                       Date
@@ -636,7 +419,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     alignItems="center"
                   >
                     <Typography
-                      variant="subtitle1"
+                      variant="body2"
                       sx={{ fontWeight: 400, fontSize: '0.80em' }}
                     >
                       Time
@@ -659,7 +442,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     alignItems="center"
                   >
                     <Typography
-                      variant="subtitle1"
+                      variant="body2"
                       sx={{ fontWeight: 400, fontSize: '0.80em' }}
                     >
                       Ticket Duration
@@ -712,21 +495,22 @@ const CustomerProfile = ({ open, onClose, user }) => {
                       Update Ticket
                     </Button>
                   </Box>
-                  <Box style={{ textAlign: 'center' }}>
-                    <Button
-                      variant="text"
-                      onClick={() => setViewMoreOpen(true)}
+                  <Box sx={{ textAlign: 'center', mt: '1em' }}>
+                    <Typography
+                      variant="caption"
                       sx={{
-                        color: theme.primary_color || '#115093',
+                        // fontSize: '0.7rem',
                         fontWeight: 400,
-                        textTransform: 'none',
-                        mt: '1em',
-                        fontSize: '0.80em',
-                        margin: 'auto',
+                        cursor: 'pointer',
+                        marginTop: '5px',
+
+                        gap: '5px',
+                        color: theme?.primary_color,
                       }}
+                      onClick={() => setViewMoreOpen(true)}
                     >
                       View More Details ➔
-                    </Button>
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
@@ -801,8 +585,10 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     alignItems="center"
                   >
                     <Typography
-                      variant="subtitle1"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
+                      variant="body1"
+                      sx={{
+                        textTransform: 'capitalize',
+                      }}
                     >
                       IT Support
                     </Typography>
@@ -835,21 +621,14 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     </Box>
                   </Box>
                   <Box>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: '0.80em',
-                      }}
-                    >
+                    <Typography variant="body2">
                       Fulfiller Name:{' '}
                       <Typography
-                        component="span"
+                        component="body2"
                         sx={{
-                          color: theme.primary_color || '#115093',
-                          textDecoration: 'underline',
-                          fontSize: '0.80em',
-                          fontWeight: 400,
+                          color: theme.primary_color,
+
+                          cursor: 'pointer',
                         }}
                       >
                         David Willie
@@ -857,10 +636,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     </Typography>
                     <Typography
                       variant="body2"
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: '0.80em',
-                      }}
+                      sx={{ fontWeight: 300, fontSize: '0.80em' }}
                     >
                       Ticket Number: TECH-10036LA
                     </Typography>
@@ -877,7 +653,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     alignItems="center"
                   >
                     <Typography
-                      variant="subtitle1"
+                      variant="body2"
                       sx={{ fontWeight: 400, fontSize: '0.80em' }}
                     >
                       Date
@@ -900,7 +676,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     alignItems="center"
                   >
                     <Typography
-                      variant="subtitle1"
+                      variant="body2"
                       sx={{ fontWeight: 400, fontSize: '0.80em' }}
                     >
                       Time
@@ -923,7 +699,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                     alignItems="center"
                   >
                     <Typography
-                      variant="subtitle1"
+                      variant="body2"
                       sx={{ fontWeight: 400, fontSize: '0.80em' }}
                     >
                       Ticket Duration
@@ -972,27 +748,26 @@ const CustomerProfile = ({ open, onClose, user }) => {
                         padding: '0.375rem 0.75em',
                         width: '30%',
                       }}
-                      disabled
                     >
                       Update Ticket
                     </Button>
                   </Box>
-
-                  <Box style={{ textAlign: 'center' }}>
-                    <Button
-                      variant="text"
-                      onClick={() => setViewMoreOpen(true)}
+                  <Box sx={{ textAlign: 'center', mt: '1em' }}>
+                    <Typography
+                      variant="caption"
                       sx={{
-                        color: theme.primary_color || '#115093',
+                        // fontSize: '0.7rem',
                         fontWeight: 400,
-                        textTransform: 'none',
-                        mt: '1em',
-                        fontSize: '0.80em',
-                        margin: 'auto',
+                        cursor: 'pointer',
+                        marginTop: '5px',
+
+                        gap: '5px',
+                        color: theme?.primary_color,
                       }}
+                      onClick={() => setViewMoreOpen(true)}
                     >
                       View More Details ➔
-                    </Button>
+                    </Typography>
                   </Box>
                 </Box>
               </Box>

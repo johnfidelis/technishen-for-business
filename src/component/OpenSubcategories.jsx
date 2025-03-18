@@ -21,11 +21,19 @@ import { GET_ENDPOINTS } from '@/constants/endpoints'
 import EditSubCategoryModal from './modals/EditSubCategoryModal'
 import { ThemeContext } from '@/context/ThemeContext'
 
-const OpenSubcategories = ({ categoryId, onServiceNameChange }) => {
+const OpenSubcategories = ({ categoryId, onServiceNameChange, setNumber }) => {
   const { theme } = useContext(ThemeContext)
   const { data: subCategories, isLoading } = useFetchData(
     GET_ENDPOINTS.SUB_CATEGORY(categoryId),
   )
+
+  useEffect(() => {
+    if (setNumber && typeof setNumber === 'function') {
+      // Ensure outsourcedTicketsData and ticketCounts exist before calculation
+      const fetchedNumber = subCategories?.length || 0
+      setNumber(fetchedNumber)
+    }
+  }, [subCategories])
 
   useEffect(() => {
     if (subCategories?.length > 0) {

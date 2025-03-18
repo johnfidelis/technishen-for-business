@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   TextField,
@@ -22,12 +22,20 @@ import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { useRouter } from 'next/navigation'
 
-const FulfillerGroupTable = () => {
+const FulfillerGroupTable = ({ setNumber }) => {
   const router = useRouter()
   const { data: groups, isLoading } = useFetchData(
     GET_ENDPOINTS.ALL_FULFILLER_GROUPS,
     'allFulfilerGroups',
   )
+
+  useEffect(() => {
+    if (setNumber && typeof setNumber === 'function') {
+      // Ensure outsourcedTicketsData and ticketCounts exist before calculation
+      const fetchedNumber = groups?.length || 0
+      setNumber(fetchedNumber)
+    }
+  }, [groups])
   const [searchTerm, setSearchTerm] = useState('')
   const [sortOrder, setSortOrder] = useState('Newest')
   const [page, setPage] = useState(0)
@@ -78,11 +86,16 @@ const FulfillerGroupTable = () => {
             fontSize: '0.80em',
           }}
         >
-          <InputLabel>Sort</InputLabel>
-          <Select value={sortOrder} onChange={handleSortChange} label="Sort">
+          {/* <InputLabel>Sort</InputLabel> */}
+          <TextField
+            select
+            value={sortOrder}
+            onChange={handleSortChange}
+            label="Sort"
+          >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
-          </Select>
+          </TextField>
         </FormControl>
       </Box>
 

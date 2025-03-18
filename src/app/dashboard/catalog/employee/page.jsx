@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import CatalogTable from '@/component/CatalogTable'
 import { MdInfoOutline } from 'react-icons/md'
 import AddIcon from '@mui/icons-material/Add'
@@ -9,6 +9,7 @@ import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 
 const Page = () => {
   const { theme } = useContext(ThemeContext)
+   const [number, setNumber] = useState(0)
   return (
     <Box
       sx={{
@@ -32,7 +33,7 @@ const Page = () => {
               fontWeight: '500',
             }}
           >
-            Manage Employee Catalog
+            Manage Employee Catalog {`(${number})`}
             <Tooltip
               title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
               arrow
@@ -54,7 +55,7 @@ const Page = () => {
         </Box>
         <hr />
       </Box>
-      <CatalogTable catalogType={'Employee'} />
+      <CatalogTable catalogType={'Employee'}  setNumber={setNumber} />
     </Box>
   )
 }

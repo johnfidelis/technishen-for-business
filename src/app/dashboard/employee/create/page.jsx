@@ -27,6 +27,8 @@ import { MdInfoOutline } from 'react-icons/md'
 
 const Page = () => {
   const { theme } = useContext(ThemeContext)
+
+  const [reloadKey, setReloadKey] = useState(Date.now())
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -78,34 +80,12 @@ const Page = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  // const handleImageUpload = (e) => {
-  //   const file = e.target.files?.[0]
-  //   if (file) {
-  //     setFormData({ ...formData, ['profile_picture']: file })
-  //     const reader = new FileReader()
-  //     reader.onloadend = () => {
-  //       setImagePreview(reader.result)
-  //     }
-  //     reader.readAsDataURL(file)
-  //   }
-  // }
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
     if (file) {
       setFormData((prevData) => ({ ...prevData, profile_picture: file }))
 
-      // // Use createObjectURL for preview
-      // const imageUrl = URL.createObjectURL(file)
-      // setImagePreview(imageUrl)
       setImagePreview(URL.createObjectURL(file))
-
-      // Optional: Use FileReader as an alternative
-      // const reader = new FileReader()
-      // reader.onloadend = () => {
-      //   setImagePreview(reader.result)
-      // }
-      // reader.readAsDataURL(file)
     }
   }
 
@@ -113,6 +93,8 @@ const Page = () => {
     setFormData((prevData) => ({
       ...prevData,
       address:
+        parsedAddress?.street +
+        ' ' +
         parsedAddress?.city +
         ' ' +
         parsedAddress?.state +
@@ -137,6 +119,7 @@ const Page = () => {
     createEmployee.mutate(formDataObject, {
       onSuccess: async () => {
         setLoading(false)
+        setReloadKey(Date.now())
         setFormData({
           first_name: '',
           last_name: '',
@@ -301,6 +284,7 @@ const Page = () => {
               <Box sx={{ mt: 2 }}>
                 <AddressAutocomplete
                   label="Address"
+                  key={reloadKey}
                   fullWidth
                   value={formData.address}
                   error={!!errors.address}
@@ -399,8 +383,9 @@ const Page = () => {
                   helperText={errors.identity_type}
                   onChange={handleInputChange}
                 >
-                  <MenuItem value="ID Number">ID Number</MenuItem>
-                  <MenuItem value="Passport Number">Passport Number</MenuItem>
+                  <MenuItem value="Passport">Passport</MenuItem>
+                  <MenuItem value="National ID Card">National ID Card</MenuItem>
+                  <MenuItem value="Driver's License">Driver's License</MenuItem>
                 </TextField>
               </FormControl>
 

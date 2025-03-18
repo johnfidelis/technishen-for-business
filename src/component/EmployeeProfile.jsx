@@ -258,10 +258,9 @@ const EmployeeProfile = ({ employeeId }) => {
                       //  InputProps={{ readOnly: !isEditing }}
                       sx={{ mb: 2 }}
                     >
-                      <MenuItem value="ID Number">ID Number</MenuItem>
-                      <MenuItem value="Passport Number">
-                        Passport Number
-                      </MenuItem>
+                   <MenuItem value="Passport">Passport</MenuItem>
+                                   <MenuItem value="National ID Card">National ID Card</MenuItem>
+                                   <MenuItem value="Driver's License">Driver's License</MenuItem>
                     </TextField>
                   </Grid>
 

@@ -123,12 +123,12 @@ const DashboardMap = () => {
         style={{
           marginTop: 10,
           width: '100%',
-          height: '500px',
+          height: '580px',
           borderRadius: '15px',
           border: '2px solid black',
         }}
       >
-        <Skeleton variant="rectangular" width="100%" height={'500px'} />
+        <Skeleton variant="rectangular" width="100%" height={'580px'} />
         {/* <Skeleton variant="text" width="60%" sx={{ mt: 2 }} /> */}
       </Box>
     )
@@ -151,7 +151,7 @@ const DashboardMap = () => {
         center={mapCenter}
         mapContainerStyle={{
           width: '100%',
-          height: '500px',
+          height: '580px',
           borderRadius: '15px',
           border: '2px solid black',
         }}
@@ -235,7 +235,7 @@ const DashboardMap = () => {
 
       {/* 🎯 Map Legend & Filters */}
       <Box sx={{ mt: 2, textAlign: 'start' }}>
-        <Typography sx={{ fontWeight: 400 }}>Map Legend</Typography>
+        <Typography variant='body1'>Map Legend</Typography>
         <Grid container justifyContent="start">
           {/* ✅ Show Available Tickets Checkbox */}
           <Grid item>
@@ -247,7 +247,7 @@ const DashboardMap = () => {
                 />
               }
               label={
-                <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
+                <Typography variant='body1'>
                   Show Available Tickets
                 </Typography>
               }

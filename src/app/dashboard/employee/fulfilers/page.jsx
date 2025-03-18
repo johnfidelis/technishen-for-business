@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Box,
   Button,
@@ -20,6 +20,7 @@ import EmployeeTable from '@/component/EmployeeTable'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
+      const [number, setNumber] = useState(0)
 
   return (
     <Box
@@ -45,7 +46,7 @@ export default function Page() {
               fontWeight: '500',
             }}
           >
-            All Fulfilers
+            All Fulfillers {`(${number})`}
             <Tooltip
               title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
               arrow
@@ -58,7 +59,7 @@ export default function Page() {
         </Box>
         <hr />
       </Box>
-      <EmployeeTable role={'Fulfiller'} />
+      <EmployeeTable role={'Fulfiller'} setNumber={setNumber}/>
     </Box>
   )
 }

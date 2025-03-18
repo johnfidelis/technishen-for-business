@@ -64,7 +64,7 @@ export const GET_ENDPOINTS = {
     `/all-tickets-assigned-to-employee/${customerId}/${getBusinessId()}`,
 
   ALL_EMPLOYEE: `/all-employees/${getBusinessId()}`,
-  ALL_CUSTOMER: `/all-employees/${getBusinessId()}`,
+  ALL_CUSTOMER: `/all-customers/${getBusinessId()}`,
   ALL_FULFILLER_GROUPS: `/all-fulfiller-groups/${getBusinessId()}`,
   GET_EMPLOYEE: (employeeId) =>
     `/get-employee/${getBusinessId()}/${employeeId}/`,
