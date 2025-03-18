@@ -127,7 +127,11 @@ const PersonalDetails = () => {
                 label: 'Identity Type',
                 name: 'id_type',
                 type: 'select',
-                options: ['Passport', 'National ID Card', `Driver's License`],
+                options: [
+                  'Passport',
+                  'National ID Card',
+                  `Driver&apos;s License`,
+                ],
                 disabled: true,
               },
               { label: 'ID Number', name: 'id_number', disabled: true },

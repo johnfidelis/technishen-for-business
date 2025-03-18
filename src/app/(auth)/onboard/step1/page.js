@@ -124,7 +124,9 @@ const Page = ({ handleNext }) => {
               >
                 <MenuItem value="Passport">Passport</MenuItem>
                 <MenuItem value="National ID Card">National ID Card</MenuItem>
-                <MenuItem value="Driver's License">Driver's License</MenuItem>
+                <MenuItem value="Driver's License">
+                  Driver&apos;s License
+                </MenuItem>
               </TextField>
             ) : key === 'phone_number' ? (
               <FormControl

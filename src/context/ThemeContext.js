@@ -22,7 +22,7 @@ export const ThemeProvider = ({ children }) => {
         logo: data?.logo,
       })
     }
-  }, [data])
+  }, [data, isLoading])
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

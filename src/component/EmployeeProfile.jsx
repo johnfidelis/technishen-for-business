@@ -263,7 +263,7 @@ const EmployeeProfile = ({ employeeId }) => {
                         National ID Card
                       </MenuItem>
                       <MenuItem value="Driver's License">
-                        Driver's License
+                        Driver&apos;s License
                       </MenuItem>
                     </TextField>
                   </Grid>
