@@ -10,7 +10,7 @@ import CreateSubCategory from '@/component/modals/CreateSubCategory'
 
 const Page = ({ onBack }) => {
   const { theme } = useContext(ThemeContext)
-    const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(0)
   const router = useRouter()
   const { id } = useParams()
   const [serviceName, setServiceName] = useState('')
@@ -55,7 +55,7 @@ const Page = ({ onBack }) => {
           &larr; Back
         </Button>
         <Typography variant="h6" sx={{ ml: 2, textTransform: 'uppercase' }}>
-          {serviceName} {serviceName ? `(${number})` : ""}
+          {serviceName} {serviceName ? `(${number})` : ''}
         </Typography>
 
         <Button
@@ -67,7 +67,11 @@ const Page = ({ onBack }) => {
           New Sub-category
         </Button>
       </Box>
-      <OpenSubcategories categoryId={id} onServiceNameChange={setServiceName} setNumber={setNumber} />
+      <OpenSubcategories
+        categoryId={id}
+        onServiceNameChange={setServiceName}
+        setNumber={setNumber}
+      />
 
       {/* Create SubCategory Modal */}
       <CreateSubCategory

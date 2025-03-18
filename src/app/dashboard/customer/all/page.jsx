@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material'
 import CustomersTable from '@/component/CustomersTable'
 
 const Page = () => {
-    const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(0)
   return (
     <Box
       sx={{
@@ -32,7 +32,7 @@ const Page = () => {
         </Typography>
         <hr />
       </Box>
-      <CustomersTable setNumber={setNumber}/>
+      <CustomersTable setNumber={setNumber} />
     </Box>
   )
 }

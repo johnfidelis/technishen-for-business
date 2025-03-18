@@ -30,8 +30,6 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
   )
   const isNoTicketDetails = ticket?.employee_details !== null
 
-
-
   const handleRightTabChange = (event, newIndex) => {
     setRightTabIndex(newIndex)
   }

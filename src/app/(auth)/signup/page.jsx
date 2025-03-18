@@ -102,7 +102,11 @@ export default function Page() {
           />
         </Box>
 
-        <Typography  style={{fontSize: 25, fontWeight: 400}} align="center" color="white">
+        <Typography
+          style={{ fontSize: 25, fontWeight: 400 }}
+          align="center"
+          color="white"
+        >
           Create Account
         </Typography>
 

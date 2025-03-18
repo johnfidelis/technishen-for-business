@@ -46,13 +46,13 @@ const CatalogTable = ({ catalogType, setNumber }) => {
   useEffect(() => {
     if (setNumber && typeof setNumber === 'function') {
       const fetchedNumber = data
-        ? data.filter((category) => category.service_type === catalogType).length
-        : 0;
-  
-      setNumber(fetchedNumber);
+        ? data.filter((category) => category.service_type === catalogType)
+            .length
+        : 0
+
+      setNumber(fetchedNumber)
     }
-  }, [data, catalogType]);
-  
+  }, [data, catalogType])
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)

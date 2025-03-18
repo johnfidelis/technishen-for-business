@@ -272,7 +272,7 @@ const InternalTicketForm = () => {
       onSuccess: async () => {
         setSubmitLoading(false)
         toast.success('Successfully created ticket.')
-        
+
         setReloadKey(Date.now())
         resetForm()
       },

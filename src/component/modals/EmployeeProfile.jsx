@@ -134,7 +134,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
           {/* Actions */}
           <Box display="flex" justifyContent="space-between" sx={{ mt: 2 }}>
             <Typography
-              variant='body2'
+              variant="body2"
               sx={{
                 color: theme.primary_color,
                 display: 'flex',
@@ -146,7 +146,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               <MdMail size={16} /> Send Email
             </Typography>
             <Typography
-              variant='body2'
+              variant="body2"
               sx={{
                 color: theme.primary_color,
                 display: 'flex',
@@ -158,10 +158,10 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               <MdBlock size={16} /> Block
             </Typography>
             <Typography
-              variant='body2'
+              variant="body2"
               sx={{
                 color: '#FF4C3B',
-               
+
                 display: 'flex',
                 alignItems: 'center',
                 gap: 0.6,

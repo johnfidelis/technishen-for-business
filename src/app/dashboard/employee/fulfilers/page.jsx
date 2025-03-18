@@ -20,7 +20,7 @@ import EmployeeTable from '@/component/EmployeeTable'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
-      const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(0)
 
   return (
     <Box
@@ -59,7 +59,7 @@ export default function Page() {
         </Box>
         <hr />
       </Box>
-      <EmployeeTable role={'Fulfiller'} setNumber={setNumber}/>
+      <EmployeeTable role={'Fulfiller'} setNumber={setNumber} />
     </Box>
   )
 }

@@ -39,13 +39,11 @@ const Page = ({ onBack }) => {
           &larr; Back
         </Button>
         <Typography
-             variant="h5"
+          variant="h5"
           sx={{
-          
             mb: 3,
             mt: 3,
             textAlign: 'left',
-          
           }}
         >
           Ticket Information

@@ -27,7 +27,7 @@ import CustomerProfile from './modals/CustomerProfile'
 
 const InternalTicketForm = () => {
   const { theme } = useContext(ThemeContext)
-    const [reloadKey, setReloadKey] = useState(Date.now())
+  const [reloadKey, setReloadKey] = useState(Date.now())
   /*** Constants & Initial Setup ***/
   // Replace with your actual business id source
   const businessId = '155f5f2b-b0e7-4364-a91c-80b0f75128db'

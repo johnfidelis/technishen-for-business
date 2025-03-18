@@ -1,4 +1,3 @@
-
 import React, { useContext, useState } from 'react'
 import {
   Modal,
@@ -177,7 +176,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
         </Box>
         <Box sx={bodyStyle}>
           <Typography
-              variant="subtitle2"
+            variant="subtitle2"
             // sx={{ fontWeight: 00, fontSize: '1em' }}
           >
             Customer Details

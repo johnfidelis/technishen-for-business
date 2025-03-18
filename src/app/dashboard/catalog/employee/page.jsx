@@ -9,7 +9,7 @@ import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 
 const Page = () => {
   const { theme } = useContext(ThemeContext)
-   const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(0)
   return (
     <Box
       sx={{
@@ -55,7 +55,7 @@ const Page = () => {
         </Box>
         <hr />
       </Box>
-      <CatalogTable catalogType={'Employee'}  setNumber={setNumber} />
+      <CatalogTable catalogType={'Employee'} setNumber={setNumber} />
     </Box>
   )
 }

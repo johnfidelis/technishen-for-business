@@ -279,7 +279,7 @@ const BusinessSelector = () => {
           sx={{ mb: 1 }}
         />
         <Button
-        variant="contained"
+          variant="contained"
           startIcon={<AddIcon />}
           sx={{
             width: '100%',

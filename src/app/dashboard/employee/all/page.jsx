@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
-    const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(0)
 
   return (
     <Box
@@ -57,7 +57,7 @@ export default function Page() {
         </Box>
         <hr />
       </Box>
-      <EmployeeTable role={''}  setNumber={setNumber}/>
+      <EmployeeTable role={''} setNumber={setNumber} />
     </Box>
   )
 }

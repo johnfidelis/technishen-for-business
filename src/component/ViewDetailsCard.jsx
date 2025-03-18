@@ -50,7 +50,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
   }
 
   const handleViewMore = (ticket) => {
-    console.log("dd",{ticket})
+    console.log('dd', { ticket })
     setSelectedTicket(ticket)
     setViewMoreOpen(true)
   }
@@ -437,8 +437,6 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
 
             {/* View More Button */}
             <Box sx={{ textAlign: 'center', mt: '1em' }}>
-            
-
               <Typography
                 variant="caption"
                 sx={{
@@ -467,12 +465,12 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
         {rightTabIndex === 2 && <ChatTab />}
       </Box>
 
-        {/* Modal */}
-            <TicketDetails
-              ticketData={selectedTicket}
-              open={viewMoreOpen}
-              onClose={handleClose}
-            />
+      {/* Modal */}
+      <TicketDetails
+        ticketData={selectedTicket}
+        open={viewMoreOpen}
+        onClose={handleClose}
+      />
     </Box>
   )
 }

@@ -72,7 +72,6 @@ const DashboardCards = () => {
               <Typography
                 variant="body2"
                 sx={{
-            
                   padding: '0.6vh 0vh',
                 }}
               >

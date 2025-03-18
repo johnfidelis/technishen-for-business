@@ -1,4 +1,3 @@
-
 'use client'
 import { useState, useEffect, useContext } from 'react'
 import {
@@ -114,27 +113,36 @@ const PersonalDetails = () => {
           </Box>
           <Grid container spacing={2}>
             {[
-              { label: 'First Name', name: 'first_name',  disabled: true },
-              { label: 'Last Name', name: 'last_name' ,  disabled: true},
+              { label: 'First Name', name: 'first_name', disabled: true },
+              { label: 'Last Name', name: 'last_name', disabled: true },
               {
                 label: 'Gender',
                 name: 'gender',
                 type: 'select',
-                options: ['Male', 'Female']
-                ,  disabled: true
+                options: ['Male', 'Female'],
+                disabled: true,
               },
-              { label: 'Nationality', name: 'nationality',  disabled: true },
+              { label: 'Nationality', name: 'nationality', disabled: true },
               {
                 label: 'Identity Type',
                 name: 'id_type',
                 type: 'select',
-                options: ['Passport', 'National ID Card', `Driver's License`],  disabled: true
+                options: ['Passport', 'National ID Card', `Driver's License`],
+                disabled: true,
               },
-              { label: 'ID Number', name: 'id_number',  disabled: true },
-              { label: 'Contact Number', name: 'phone_number',  disabled: false },
+              { label: 'ID Number', name: 'id_number', disabled: true },
+              {
+                label: 'Contact Number',
+                name: 'phone_number',
+                disabled: false,
+              },
               // { label: ' Email', name: 'email', disabled: false },
 
-              { label: 'Date of Birth (MM-DD-YYYY)', name: 'date_of_birth',  disabled: true },
+              {
+                label: 'Date of Birth (MM-DD-YYYY)',
+                name: 'date_of_birth',
+                disabled: true,
+              },
             ].map(({ label, name, type, options, disabled }, index) => (
               <Grid item xs={12} sm={6} key={index}>
                 <TextField

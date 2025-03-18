@@ -10,7 +10,7 @@ import CreateFulfillerGroup from '@/component/modals/CreateFulfillerGroup'
 export default function FulfillerGroupPage() {
   const { theme } = useContext(ThemeContext)
   const [openModal, setOpenModal] = useState(false)
- const [number, setNumber] = useState(0)
+  const [number, setNumber] = useState(0)
   return (
     <Box
       sx={{

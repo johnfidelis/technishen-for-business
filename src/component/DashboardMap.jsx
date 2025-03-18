@@ -235,7 +235,7 @@ const DashboardMap = () => {
 
       {/* 🎯 Map Legend & Filters */}
       <Box sx={{ mt: 2, textAlign: 'start' }}>
-        <Typography variant='body1'>Map Legend</Typography>
+        <Typography variant="body1">Map Legend</Typography>
         <Grid container justifyContent="start">
           {/* ✅ Show Available Tickets Checkbox */}
           <Grid item>
@@ -247,9 +247,7 @@ const DashboardMap = () => {
                 />
               }
               label={
-                <Typography variant='body1'>
-                  Show Available Tickets
-                </Typography>
+                <Typography variant="body1">Show Available Tickets</Typography>
               }
             />
           </Grid>

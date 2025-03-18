@@ -37,8 +37,7 @@ const CustomersTable = ({ setNumber }) => {
   useEffect(() => {
     if (setNumber && typeof setNumber === 'function') {
       // Ensure outsourcedTicketsData and ticketCounts exist before calculation
-      const fetchedNumber =
-        (customers?.length || 0) 
+      const fetchedNumber = customers?.length || 0
       setNumber(fetchedNumber)
     }
   }, [customers])

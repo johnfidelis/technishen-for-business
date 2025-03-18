@@ -1,4 +1,3 @@
-
 'use client'
 
 import { Box, Grid, Paper, Typography } from '@mui/material'
