@@ -617,6 +617,9 @@ const InternalTicketForm = () => {
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
               shrink: true,
             }}
+            inputProps={{
+              min: new Date().toISOString().slice(0, 16), // Restrict past dates
+            }}
             value={scheduleDateAndTime || ' '}
             onChange={(e) => setScheduleDateAndTime(e.target.value)}
           />
@@ -692,7 +695,7 @@ const InternalTicketForm = () => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: theme.primary_color,
+              backgroundColor: theme.primary_color || '#115093',
               color: '#FFFFFF',
               fontWeight: 300,
               padding: '0.625rem 1.25em',

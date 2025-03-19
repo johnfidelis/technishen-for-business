@@ -28,7 +28,7 @@ const Page = ({ onBack }) => {
           variant="contained"
           onClick={onBack || (() => router.back())}
           sx={{
-            backgroundColor: theme.primary_color,
+            backgroundColor: theme.primary_color || '#115093',
             color: '#FFF',
             textTransform: 'none',
             fontSize: '0.7em',

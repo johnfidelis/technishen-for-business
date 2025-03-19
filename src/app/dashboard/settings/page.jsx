@@ -60,7 +60,7 @@ const SettingsLayoutContent = ({ activeSection = 0 }) => {
               elevation={3}
               sx={{
                 p: 3,
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093',
                 height: '500px',
                 borderRadius: '12px',
                 display: 'flex',

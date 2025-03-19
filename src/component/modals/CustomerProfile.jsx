@@ -368,7 +368,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                       <Typography
                         component="body2"
                         sx={{
-                          color: theme.primary_color,
+                          color: theme.primary_color || '#115093',
 
                           cursor: 'pointer',
                         }}
@@ -625,7 +625,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
                       <Typography
                         component="body2"
                         sx={{
-                          color: theme.primary_color,
+                          color: theme.primary_color || '#115093',
 
                           cursor: 'pointer',
                         }}

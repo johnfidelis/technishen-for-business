@@ -73,7 +73,9 @@ const CreateFulfillerGroup = ({ open, onClose }) => {
           </IconButton>
         </Box>
 
-        <Divider sx={{ borderColor: theme.primary_color, mb: 2 }} />
+        <Divider
+          sx={{ borderColor: theme.primary_color || '#115093', mb: 2 }}
+        />
 
         {/* Form Fields */}
         <TextField
@@ -97,7 +99,7 @@ const CreateFulfillerGroup = ({ open, onClose }) => {
             onClick={handleCreateGroup}
             disabled={!groupName.trim()}
             sx={{
-              backgroundColor: theme.primary_color,
+              backgroundColor: theme.primary_color || '#115093',
               color: '#FFFFFF',
               '&:hover': {
                 backgroundColor: '#00A55A',

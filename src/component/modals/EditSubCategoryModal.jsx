@@ -131,7 +131,9 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
         </Box>
         <Box sx={{ p: '1em' }}>
           <Typography variant="h6">Edit Sub-Category</Typography>
-          <Divider sx={{ backgroundColor: theme.primary_color, mt: 1 }} />
+          <Divider
+            sx={{ backgroundColor: theme.primary_color || '#115093', mt: 1 }}
+          />
         </Box>
         <Box sx={{ flexGrow: 1, p: '1em', overflowY: 'auto' }}>
           <TextField

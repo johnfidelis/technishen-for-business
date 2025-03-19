@@ -460,6 +460,9 @@ const InternalTicketForm = () => {
             }}
             value={scheduleDateAndTime || ' '}
             onChange={(e) => setScheduleDateAndTime(e.target.value)}
+            inputProps={{
+              min: new Date().toISOString().slice(0, 16), // Restrict past dates
+            }}
           />
         </Box>
       </Grid>
@@ -531,7 +534,7 @@ const InternalTicketForm = () => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: theme.primary_color,
+              backgroundColor: theme.primary_color || '#115093',
               color: '#FFFFFF',
               fontWeight: 300,
               py: '0.625rem',

@@ -16,7 +16,7 @@ import CustomTextField from '@/component/CustomTextField'
 import BackgroundBox from '@/component/BackgroundBox'
 import { useCreateData } from '@/hooks/useApiService'
 import { AUTH_ENDPOINTS, GET_ENDPOINTS } from '@/constants/endpoints'
-import logo from '@/assets/images/Technisen.png'
+import logo from '../../../assets/images/Technisen.png'
 import { validate } from '@/component/utils/validate'
 import { useRouter } from 'next/navigation'
 import { Cookies } from 'react-cookie'
@@ -75,7 +75,7 @@ export default function LoginPage() {
         <Box sx={{ mt: -4, textAlign: 'center' }}>
           <Image
             src={logo}
-            alt="Technisen Logo"
+            alt="Technishen Logo"
             width={250}
             height={200}
             style={{ margin: 'auto' }}

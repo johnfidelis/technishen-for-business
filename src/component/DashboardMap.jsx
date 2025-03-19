@@ -77,8 +77,8 @@ const DashboardMap = () => {
         id: 3,
         position: { lat: -26.212, lng: 28.1403 },
         image: Img1,
-        name: 'David Technisen',
-        company: 'Technisen',
+        name: 'David Technishen',
+        company: 'Technishen',
         role: 'Software Engineer',
         ticketAvailable: true,
         user: 'employee',
@@ -97,7 +97,7 @@ const DashboardMap = () => {
 
   // ✅ Filter States
   const [showTickets, setShowTickets] = useState(false) // Show Available Tickets
-  const [showTechnisen, setShowTechnisen] = useState(false) // Show only Technisen tickets
+  const [showTechnisen, setShowTechnisen] = useState(false) // Show only Technishen tickets
 
   // 📌 Modal States
   const [customerModalOpen, setCustomerModalOpen] = useState(false)
@@ -107,7 +107,7 @@ const DashboardMap = () => {
   const filteredLocations = useMemo(() => {
     return locations.filter((location) => {
       if (showTickets && !location.ticketAvailable) return false
-      if (showTechnisen && location.company !== 'Technisen') return false
+      if (showTechnisen && location.company !== 'Technishen') return false
       return true
     })
   }, [showTickets, showTechnisen, locations])
@@ -252,7 +252,7 @@ const DashboardMap = () => {
             />
           </Grid>
 
-          {/* ✅ Show Only Technisen Tickets Checkbox */}
+          {/* ✅ Show Only Technishen Tickets Checkbox */}
           <Grid item>
             <FormControlLabel
               control={
@@ -263,7 +263,7 @@ const DashboardMap = () => {
               }
               label={
                 <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
-                  Technisen
+                  Technishen
                 </Typography>
               }
             />

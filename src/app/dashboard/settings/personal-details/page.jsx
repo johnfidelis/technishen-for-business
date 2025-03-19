@@ -14,10 +14,12 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 import { ThemeContext } from '@/context/ThemeContext'
 import { useFetchData, usePatchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS, PATCH_ENDPOINTS } from '@/constants/endpoints'
+import { toast } from 'react-toastify'
 
 const PersonalDetails = () => {
   const { theme } = useContext(ThemeContext)
   const [activeTab, setActiveTab] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const { data: profileData, isLoading } = useFetchData(
     GET_ENDPOINTS.BUSINESS_OWNER_PROFILE,
@@ -67,7 +69,17 @@ const PersonalDetails = () => {
       formData.append('owner_image', img)
     }
 
-    await patchData.mutateAsync(formData)
+    // await patchData.mutateAsync(formData)
+    setLoading(true)
+    try {
+      await patchData.mutateAsync(formData)
+      toast.success('Profile updated successfully!')
+    } catch (error) {
+      console.error('Error updating profile:', error)
+      toast.error('Failed to update profile. Please try again.')
+    } finally {
+      setLoading(false) // Stop loading
+    }
   }
 
   const menuItems = [
@@ -178,10 +190,24 @@ const PersonalDetails = () => {
         <Button
           variant="contained"
           onClick={handleSave}
-          sx={{ backgroundColor: theme.primary_color, color: 'white' }}
+          disabled={loading} // Disable when loading
+          sx={{
+            backgroundColor: theme.primary_color || '#115093',
+            color: 'white',
+          }}
+        >
+          {loading ? 'Saving...' : 'Save'}
+        </Button>
+        {/* <Button
+          variant="contained"
+          onClick={handleSave}
+          sx={{
+            backgroundColor: theme.primary_color || '#115093',
+            color: 'white',
+          }}
         >
           Save
-        </Button>
+        </Button> */}
       </Box>
     </Box>
   )

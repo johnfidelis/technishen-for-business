@@ -42,7 +42,7 @@ const CustomerForm = () => {
     gender: '',
     nationality: '',
     phone_number: '',
-    identity_type: '',
+    identity_type: 'Passport',
     id_number: '',
     email: '',
     businessName: '',
@@ -195,7 +195,7 @@ const CustomerForm = () => {
           gender: '',
           nationality: '',
           phone_number: '',
-          identity_type: '',
+          identity_type: 'Passport',
           id_number: '',
           email: '',
           businessName: '',
@@ -378,7 +378,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label={formData.identity_type || 'ID Number'}
+                    label={formData.identity_type + ' Number'}
                     name="id_number"
                     value={formData.id_number}
                     onChange={handleInputChange}
@@ -571,7 +571,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label={formData.identity_type || 'ID Number'}
+                    label={formData.identity_type + ' Number'}
                     name="id_number"
                     value={formData.id_number}
                     onChange={handleInputChange}
@@ -679,7 +679,7 @@ const CustomerForm = () => {
                 sx={{
                   marginTop: '16px',
                   fontFamily: 'Inter, sans-serif',
-                  background: theme.primary_color,
+                  background: theme.primary_color || '#115093',
                 }}
                 startIcon={<CloudUploadIcon />}
               >
@@ -697,7 +697,7 @@ const CustomerForm = () => {
               <MdInfoOutline
                 style={{
                   fontSize: '2em',
-                  color: theme.primary_color,
+                  color: theme.primary_color || '#115093',
                   marginRight: '8px',
                 }}
               />
@@ -714,7 +714,7 @@ const CustomerForm = () => {
               <MdInfoOutline
                 style={{
                   fontSize: '2em',
-                  color: theme.primary_color,
+                  color: theme.primary_color || '#115093',
                   marginRight: '8px',
                 }}
               />

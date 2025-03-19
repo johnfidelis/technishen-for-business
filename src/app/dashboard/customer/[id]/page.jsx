@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation'
 import { useParams } from 'next/navigation'
 import { Box, Button, Typography } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
-import EmployeeProfile from '@/component/EmployeeProfile'
+// import EmployeeProfile from '@/component/EmployeeProfile'
+import CustomerProfile from '@/component/CustomerProfile'
 
 const Page = ({ onBack }) => {
   const { theme } = useContext(ThemeContext)
@@ -28,7 +29,7 @@ const Page = ({ onBack }) => {
           variant="contained"
           onClick={onBack || (() => router.back())}
           sx={{
-            backgroundColor: theme.primary_color,
+            backgroundColor: theme.primary_color || '#115093',
             color: '#FFF',
             textTransform: 'none',
             fontSize: '0.7em',
@@ -40,7 +41,7 @@ const Page = ({ onBack }) => {
         </Button>
       </Box>
 
-      <EmployeeProfile employeeId={id} />
+      <CustomerProfile employeeId={id} />
     </Box>
   )
 }

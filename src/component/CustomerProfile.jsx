@@ -31,7 +31,7 @@ import BookingsTable from './BookingsTable'
 import { toast } from 'react-toastify'
 import { usePathname } from 'next/navigation'
 
-const EmployeeProfile = ({ employeeId }) => {
+const CustomerProfile = ({ employeeId }) => {
   const { theme } = useContext(ThemeContext)
 
   const pathname = usePathname()
@@ -42,7 +42,7 @@ const EmployeeProfile = ({ employeeId }) => {
     PATCH_ENDPOINTS.UPDATE_EMPLOYEE_ROLE(employeeId)
 
   const { data: employeeData, isLoading } = useFetchData(
-    GET_ENDPOINTS.GET_EMPLOYEE(employeeId),
+    GET_ENDPOINTS.GET_CUSTOMER(employeeId),
   )
 
   const resendAccessCode = useCreateData(
@@ -64,7 +64,7 @@ const EmployeeProfile = ({ employeeId }) => {
   const handleUpdate = () => alert('Profile Updated')
   const handleResendInvite = async () => {
     const payload = {
-      user_type: 'employee', // or "customer" based on your application logic
+      user_type: 'customer', // or "customer" based on your application logic
       email: employeeData?.email,
     }
 
@@ -297,35 +297,6 @@ const EmployeeProfile = ({ employeeId }) => {
                       sx={{ mb: 2 }}
                     />
                   </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="Role"
-                      variant="outlined"
-                      required
-                      name="role"
-                      disabled
-                      value={employeeData?.role || ''}
-                      onChange={handleInputChange}
-                      //  InputProps={{ readOnly: !isEditing }}
-                      sx={{ mb: 2 }}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="Position"
-                      variant="outlined"
-                      required
-                      name="position"
-                      value={employeeData?.position || ''}
-                      onChange={handleInputChange}
-                      //  InputProps={{ readOnly: !isEditing }}
-                      sx={{ mb: 2 }}
-                    />
-                  </Grid>
                 </Grid>
 
                 <Button
@@ -501,4 +472,4 @@ const EmployeeProfile = ({ employeeId }) => {
   )
 }
 
-export default EmployeeProfile
+export default CustomerProfile

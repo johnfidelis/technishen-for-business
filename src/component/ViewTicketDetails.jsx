@@ -17,9 +17,9 @@ import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 
 const ViewTicketDetails = ({ ticketId }) => {
-  // const { data: ticketNote, isLoading: isLoadingNote } = useFetchData(
-  //   GET_ENDPOINTS.TICKET_NOTES(ticketId),
-  // )
+  const { data: ticketNote, isLoading: isLoadingNote } = useFetchData(
+    GET_ENDPOINTS.TICKET_NOTES(ticketId),
+  )
 
   const { data: ticket, isLoading } = useFetchData(
     GET_ENDPOINTS.VIEW_TICKETS(ticketId),
@@ -40,7 +40,7 @@ const ViewTicketDetails = ({ ticketId }) => {
     setLoadNote(true)
     setTimeout(() => setLoadNote(false), 1000)
   }
-  console.log('dssddsds', { ticket })
+  console.log('dssddsds', { ticketNote })
 
   return (
     <Box display="flex" gap={2}>
@@ -145,7 +145,7 @@ const ViewTicketDetails = ({ ticketId }) => {
             borderBottom: '1px solid #E0E0E0',
             mt: '1.5em',
             '& .MuiTabs-indicator': {
-              backgroundColor: theme.primary_color,
+              backgroundColor: theme.primary_color || '#115093',
             },
             '& .MuiTab-root': {
               textTransform: 'none',
@@ -154,7 +154,7 @@ const ViewTicketDetails = ({ ticketId }) => {
               fontFamily: 'Inter, sans-serif',
               color: '#000',
               '&.Mui-selected': {
-                color: theme.primary_color,
+                color: theme.primary_color || '#115093',
               },
             },
           }}
@@ -177,15 +177,27 @@ const ViewTicketDetails = ({ ticketId }) => {
             />
           ) : (
             <Box>
-              <TextField
-                fullWidth
-                label="Add Note"
-                multiline
-                rows={3}
-                value={noteContent}
-                onChange={(e) => setNoteContent(e.target.value)}
-                variant="outlined"
-              />
+              {/* Get the selected note based on tab */}
+              {['resolution', 'paused', 'general'].includes(
+                ['resolution', 'paused', 'general'][leftTabIndex - 1],
+              ) && (
+                <TextField
+                  fullWidth
+                  label="Edit Note"
+                  multiline
+                  rows={3}
+                  defaultValue={
+                    ticketNote.find(
+                      (note) =>
+                        note.note_type ===
+                        ['resolution', 'paused', 'general'][leftTabIndex - 1],
+                    )?.content || ''
+                  }
+                  onChange={(e) => setNoteContent(e.target.value)}
+                  variant="outlined"
+                />
+              )}
+
               <Box textAlign="right" sx={{ marginTop: '1em' }}>
                 <Button
                   variant="contained"
@@ -194,10 +206,10 @@ const ViewTicketDetails = ({ ticketId }) => {
                   sx={{
                     mt: '1.5em',
                     width: '100%',
-                    backgroundColor: theme.primary_color,
+                    backgroundColor: theme.primary_color || '#115093',
                   }}
                 >
-                  {loadNote ? 'Saving...' : 'Save Note'}
+                  {loadNote ? 'Updating...' : 'Update Note'}
                 </Button>
               </Box>
             </Box>

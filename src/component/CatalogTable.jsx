@@ -200,7 +200,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                           color: 'white',
                           background: category.service_images
                             ? ''
-                            : theme.primary_color,
+                            : theme.primary_color || '#115093',
                         }}
                       >
                         {category.service_images ? (
@@ -252,7 +252,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                         placement="top"
                         arrow
                         sx={{
-                          backgroundColor: theme.primary_color,
+                          backgroundColor: theme.primary_color || '#115093',
                           color: '#fff',
                           fontFamily: 'Inter, sans-serif',
                           fontSize: '0.85em',
@@ -338,7 +338,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                           color: 'white',
                           background: category.service_images
                             ? ''
-                            : theme.primary_color,
+                            : theme.primary_color || "#115093",
                         }}
                       >
                         {category.service_images ? (
@@ -377,7 +377,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                         placement="top"
                         arrow
                         sx={{
-                          backgroundColor: theme.primary_color,
+                          backgroundColor: theme.primary_color || "#115093",
                           color: '#fff',
                           fontFamily: 'Inter, sans-serif',
                           fontSize: '0.85em',

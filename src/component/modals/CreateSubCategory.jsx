@@ -143,7 +143,7 @@ const CreateSubCategory = ({ open, onClose, serviceId }) => {
           <Typography variant="h6">Create Sub-Category</Typography>
           <Divider
             sx={{
-              backgroundColor: theme.primary_color,
+              backgroundColor: theme.primary_color || '#115093',
               mt: 1,
             }}
           />
@@ -219,7 +219,7 @@ const CreateSubCategory = ({ open, onClose, serviceId }) => {
               width: 100,
               height: 100,
               borderRadius: '5px',
-              backgroundColor: theme.primary_color,
+              backgroundColor: theme.primary_color || '#115093',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

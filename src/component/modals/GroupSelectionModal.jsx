@@ -119,7 +119,7 @@ const GroupSelectionModal = ({ open, onClose, employeeId }) => {
                       color: '#fff',
                       textTransform: 'none',
                       '&:hover': {
-                        backgroundColor: theme.primary_color,
+                        backgroundColor: theme.primary_color || '#115093',
                       },
                     }}
                     onClick={() => onSelectGroup(group.id)}

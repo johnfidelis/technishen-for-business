@@ -98,7 +98,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
           <Divider
             sx={{
               my: '0.3em',
-              backgroundColor: theme.primary_color,
+              backgroundColor: theme.primary_color || '#115093',
             }}
           />
 
@@ -136,7 +136,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
             <Typography
               variant="body2"
               sx={{
-                color: theme.primary_color,
+                color: theme.primary_color || '#115093',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 0.6,
@@ -148,7 +148,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
             <Typography
               variant="body2"
               sx={{
-                color: theme.primary_color,
+                color: theme.primary_color || '#115093',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 0.6,

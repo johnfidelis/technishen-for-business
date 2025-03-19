@@ -18,6 +18,7 @@ import {
 import ChatTab from './modals/component/ChatTab'
 import BookingsTab from './modals/component/BookingsTab'
 import TicketDetails from './modals/TicketDetails'
+import { formatDateTime } from './utils/formatDateTime'
 
 const ViewDetailsCard = ({ ticket, ticketId }) => {
   const { theme } = useContext(ThemeContext)
@@ -224,7 +225,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
                   variant="body2"
                   // sx={{ fontWeight: 300, fontSize: '0.75em' }}
                 >
-                  {ticket?.ticket_details?.created_at || ''}
+                  {formatDateTime(ticket?.ticket_details?.created_at) || ''}
                 </Typography>
                 <Typography
                   variant="body2"
@@ -252,7 +253,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
                 <Typography
                   component="body2"
                   sx={{
-                    color: theme.primary_color,
+                    color: theme.primary_color || '#115093',
 
                     cursor: 'pointer',
                   }}
@@ -272,7 +273,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
             <Divider
               sx={{
                 my: '1em',
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093',
               }}
             />
 
@@ -343,7 +344,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
             <Divider
               sx={{
                 my: '1em',
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093',
               }}
             />
 
@@ -415,7 +416,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: theme.primary_color,
+                  backgroundColor: theme.primary_color || '#115093',
                   color: '#FFF',
                   textTransform: 'none',
                   fontSize: '0.7em',

@@ -191,7 +191,7 @@ const BusinessCustomization = () => {
           onClick={handleReset}
           disabled={loading}
           sx={{
-            backgroundColor: theme.primary_color,
+            backgroundColor: theme.primary_color || '#115093',
             color: 'white',
             mt: 4,
             mr: 2,
@@ -204,7 +204,7 @@ const BusinessCustomization = () => {
           onClick={handleSave}
           disabled={saveLoading}
           sx={{
-            backgroundColor: theme.primary_color,
+            backgroundColor: theme.primary_color || '#115093',
             color: 'white',
             mt: 4,
           }}

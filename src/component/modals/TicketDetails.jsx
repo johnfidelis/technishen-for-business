@@ -113,7 +113,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
             <Divider
               sx={{
                 my: '0.3em',
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093',
               }}
             />
             <Box>
@@ -225,7 +225,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                   >
                     Ticket Number: {ticket?.ticket_details?.ticket_number}
                   </Typography>
-                  <Typography
+                  {/* <Typography
                     variant="body2"
                     sx={{
                       fontSize: '0.80em',
@@ -233,8 +233,8 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                     }}
                   >
                     Booking Date: (PLEASE WILL THIS BE NEEDED)
-                  </Typography>
-                  <Typography
+                  </Typography> */}
+                  {/* <Typography
                     variant="body2"
                     sx={{
                       fontSize: '0.80em',
@@ -242,7 +242,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                     }}
                   >
                     Booking Time: (PLEASE WILL THIS BE NEEDED)
-                  </Typography>
+                  </Typography> */}
                   <Typography
                     variant="body2"
                     sx={{
@@ -283,7 +283,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
           <Divider
             sx={{
               mt: '1em',
-              backgroundColor: theme.primary_color,
+              backgroundColor: theme.primary_color || '#115093',
             }}
           />
           {/* Tabs */}
@@ -293,7 +293,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
             onChange={handleRightTabChange}
             sx={{
               '& .MuiTabs-indicator': {
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093',
               },
               '& .MuiTab-root': {
                 textTransform: 'none',
@@ -301,7 +301,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                 color: '#000',
                 fontSize: '0.8em',
                 '&.Mui-selected': {
-                  color: theme.primary_color,
+                  color: theme.primary_color || '#115093',
                 },
               },
             }}
@@ -374,7 +374,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
 
                 {/* Ticket Tracker */}
                 <Typography variant="subtitle1" sx={{ fontWeight: 300, mb: 1 }}>
-                  Ticket Tracker
+                  Ticket Trackerd
                 </Typography>
                 {isLoading
                   ? ''

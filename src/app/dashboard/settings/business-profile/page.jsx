@@ -317,9 +317,10 @@ const BusinessProfileSettings = () => {
           variant="contained"
           startIcon={<EditIcon />}
           onClick={handleSave}
+          disabled
           sx={{ backgroundColor: theme?.primary_color, color: 'white' }}
         >
-          Save
+          Cannot be edited
         </Button>
       </Box>
     </Box>

@@ -252,7 +252,7 @@ export default function UnassignedTicketsPage() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 p: 2,
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093',
                 color: '#FFFFFF',
                 borderRadius: '8px',
                 minHeight: '40px',

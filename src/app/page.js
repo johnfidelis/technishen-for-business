@@ -48,7 +48,7 @@ export default function Home() {
             src={TechnisenLogo}
             width={100}
             height={100}
-            alt="Technisen Logo"
+            alt="Technishen Logo"
             style={{ width: '100%', margin: 'auto', maxHeight: '50px' }}
           />
         </motion.div>

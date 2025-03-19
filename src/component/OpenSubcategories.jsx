@@ -122,7 +122,7 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange, setNumber }) => {
                           borderRadius: '5px',
                           backgroundColor: subCategory.sub_service_images
                             ? ''
-                            : theme.primary_color,
+                            : theme.primary_color || '#115093',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',

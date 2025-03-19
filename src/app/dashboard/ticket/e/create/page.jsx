@@ -55,8 +55,8 @@ const CreateTicket = () => {
           sx={{ marginBottom: '20px', fontSize: '0.75em' }}
         >
           {outsourced
-            ? 'This ticket will be outsourced to Technisen Experts. Additional costs may apply.'
-            : 'Toggle this ticket to outsource it to Technisen Experts.'}
+            ? 'This ticket will be outsourced to Technishen Experts. Additional costs may apply.'
+            : 'Toggle this ticket to outsource it to Technishen Experts.'}
         </Typography>
 
         <hr />

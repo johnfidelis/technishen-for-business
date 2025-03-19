@@ -17,6 +17,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import TicketDetails from '../TicketDetails'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { formatDateTime } from '@/component/utils/formatDateTime'
 
 const BookingsTab = ({ customerId, ticketType, bookingType }) => {
   const { theme } = useContext(ThemeContext)
@@ -117,7 +118,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                   variant="body2"
                   sx={{ fontWeight: 300, fontSize: '0.75em' }}
                 >
-                  {ticket?.created_at || ''}
+                  {formatDateTime(ticket?.created_at) || ''}
                 </Typography>
                 <Typography
                   variant="body2"
@@ -146,7 +147,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                 <Typography
                   component="span"
                   sx={{
-                    color: theme.primary_color,
+                    color: theme.primary_color || '#115093',
                     fontSize: '0.85em',
                     fontWeight: 300,
                     cursor: 'pointer',
@@ -167,7 +168,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
             <Divider
               sx={{
                 my: '1em',
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093',
               }}
             />
 
@@ -216,7 +217,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
             <Divider
               sx={{
                 my: '1em',
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093',
               }}
             />
 
@@ -288,7 +289,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: theme.primary_color,
+                  backgroundColor: theme.primary_color || '#115093',
                   color: '#FFF',
                   textTransform: 'none',
                   fontSize: '0.7em',
@@ -314,7 +315,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                 variant="text"
                 onClick={() => handleViewMore(ticket)}
                 sx={{
-                  color: theme.primary_color,
+                  color: theme.primary_color || '#115093',
                   fontWeight: 300,
                   textTransform: 'none',
                   fontSize: '0.80em',

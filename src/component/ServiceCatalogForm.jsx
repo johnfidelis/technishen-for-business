@@ -235,7 +235,7 @@ const ServiceCatalog = () => {
               fontWeight: 300,
               fontSize: '1rem',
               color: 'white',
-              background: theme.primary_color,
+              background: theme.primary_color || '#115093',
               overflow: 'hidden',
               margin: 'auto',
               cursor: 'pointer',
@@ -353,7 +353,7 @@ const ServiceCatalog = () => {
               fontWeight: 300,
               fontSize: '1rem',
               color: 'white',
-              background: theme.primary_color,
+              background: theme.primary_color || '#115093',
               overflow: 'hidden',
               margin: 'auto',
               cursor: 'pointer',
@@ -381,7 +381,7 @@ const ServiceCatalog = () => {
             sx={{
               marginTop: '16px',
               fontFamily: 'Inter, sans-serif',
-              background: theme.primary_color,
+              background: theme.primary_color || '#115093',
               width: '13em',
               display: 'flex',
               alignItems: 'center',
@@ -495,7 +495,7 @@ const ServiceCatalog = () => {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: theme.primary_color,
+            backgroundColor: theme.primary_color || '#115093',
             width: '15em',
             height: '3em',
           }}

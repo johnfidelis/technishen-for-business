@@ -120,7 +120,7 @@ const ChatTab = () => {
       <Box
         sx={{
           height: '1px',
-          backgroundColor: theme.primary_color,
+          backgroundColor: theme.primary_color || '#115093',
           width: '100%',
         }}
       />
@@ -133,8 +133,8 @@ const ChatTab = () => {
           sx={{
             fontSize: '0.85em',
             textTransform: 'none',
-            color: theme.primary_color,
-            borderColor: theme.primary_color,
+            color: theme.primary_color || '#115093',
+            borderColor: theme.primary_color || '#115093',
             mr: 1,
           }}
         >
@@ -154,7 +154,7 @@ const ChatTab = () => {
         <IconButton
           onClick={handleSendMessage}
           sx={{
-            backgroundColor: theme.primary_color,
+            backgroundColor: theme.primary_color || '#115093',
             color: '#fff',
             ml: 1,
             '&:hover': { backgroundColor: theme.primary_color },

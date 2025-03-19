@@ -55,7 +55,7 @@ const TopBar = ({ ownerName, ownerImage }) => {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: theme.primary_color,
+        backgroundColor: theme.primary_color || '#115093',
         boxShadow: 'none',
         width: `calc(100% - ${SIDEBAR_WIDTH}px)`, // Ensure TopBar does not overlap SideBar
         ml: `${SIDEBAR_WIDTH}px`, // Moves the TopBar to the right

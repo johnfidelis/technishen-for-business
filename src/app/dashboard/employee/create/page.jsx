@@ -39,7 +39,7 @@ const Page = () => {
     date_of_birth: '',
     hire_date: '',
     nationality: '',
-    identity_type: 'ID Number',
+    identity_type: 'Passport',
     id_number: '',
     position: '',
     password: '00000000',
@@ -393,7 +393,7 @@ const Page = () => {
 
               <TextField
                 fullWidth
-                label={formData.identity_type}
+                label={formData.identity_type + ' Number'}
                 variant="outlined"
                 required
                 name="id_number"
@@ -459,7 +459,7 @@ const Page = () => {
                 sx={{
                   marginTop: '16px',
                   fontFamily: 'Inter, sans-serif',
-                  background: theme.primary_color,
+                  background: theme.primary_color || '#115093',
                 }}
                 startIcon={<CloudUploadIcon />}
               >

@@ -117,7 +117,7 @@ export default function Page() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: theme.primary_color,
+                backgroundColor: theme.primary_color || '#115093',
                 color: '#fff',
                 padding: '10px',
                 borderRadius: '5px',
