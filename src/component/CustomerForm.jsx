@@ -212,13 +212,16 @@ const CustomerForm = () => {
         })
         setLoading(false)
       },
-      onError: () => {
-        toast.error('An error occurred while creating customer', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: true,
-        })
+      onError: (error) => {
         setLoading(false)
+        if (
+          error?.data.username == 'A user with that username already exists.'
+        ) {
+          toast.error('A user with that email already exists.')
+        } else {
+          toast.error('Error - refresh and try again.')
+        }
+        console.log({ error })
       },
     })
   }
