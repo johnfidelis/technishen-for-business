@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useMemo } from 'react'
 import {
   Box,
   TextField,
@@ -13,8 +13,12 @@ import {
 } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
 import ViewDetailsCard from '@/component/ViewDetailsCard'
-import { useFetchData } from '@/hooks/useApiService'
-import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useCreateData, useFetchData } from '@/hooks/useApiService'
+import {
+  GET_ENDPOINTS,
+  PATCH_ENDPOINTS,
+  POST_ENDPOINTS,
+} from '@/constants/endpoints'
 
 const ViewTicketDetails = ({ ticketId }) => {
   const { data: ticketNote, isLoading: isLoadingNote } = useFetchData(
@@ -24,9 +28,16 @@ const ViewTicketDetails = ({ ticketId }) => {
   const { data: ticket, isLoading } = useFetchData(
     GET_ENDPOINTS.VIEW_TICKETS(ticketId),
   )
-  // const { data: ticket, isLoading } = useFetchData(
-  //   GET_ENDPOINTS.VIEW_OUTSOURCED_TICKETS(ticketId),
-  // )
+
+  const updateNoteEndpoint = useMemo(() => {
+    return PATCH_ENDPOINTS.UPDATE_NOTE(ticketId, existingNote.id)
+  }, [ticketId, existingNote])
+
+  const createNote = useCreateData(
+    POST_ENDPOINTS.CREATE_NOTE(ticketId),
+    'createNote',
+  )
+
   const { theme } = useContext(ThemeContext)
   const [isOutsourced, setIsOutsourced] = useState(false)
   const [leftTabIndex, setLeftTabIndex] = useState(0)

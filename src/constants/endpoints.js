@@ -17,6 +17,7 @@ export const POST_ENDPOINTS = {
   ADD_EMPLOYEE_TO_FULFILER_GROUP: (groupId) =>
     `/add-employees-to-fulfiller-group/${groupId}/`,
   CREATE_SUB_CATALOG: (serviceId) => `/create-sub-category/${serviceId}/`,
+  CREATE_NOTE: (ticketId) => `/ticket/${ticketId}/notes/`,
 }
 export const PATCH_ENDPOINTS = {
   BUSINESS_OWNER_PROFILE: '/business-owner-profile/',
@@ -24,6 +25,7 @@ export const PATCH_ENDPOINTS = {
     `/update-employee-role/${getBusinessId()}/${employeeId}/`,
   UPDATE_CATALOG: (serviceId) => `/update-category/${serviceId}/`,
   UPDATE_SUB_CATALOG: (serviceId) => `/update-sub-category/${serviceId}/`,
+  UPDATE_NOTE: (ticketId, noteId) => `/ticket/${ticketId}/notes/${noteId}/`,
   CUSTOMIZE_UI: `/customize-UI/${getBusinessId()}/`,
   UPDATE_BUSINESS: `/update-business/${getBusinessId()}/`,
 }
