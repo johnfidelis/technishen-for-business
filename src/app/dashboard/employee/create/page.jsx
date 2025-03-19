@@ -140,9 +140,16 @@ const Page = () => {
         setLong(null)
         toast.success('Employee created successfully')
       },
-      onError: () => {
+      onError: (error) => {
         setLoading(false)
-        toast.error('Error Creating Employee')
+        if (
+          error?.data.username == 'A user with that username already exists.'
+        ) {
+          toast.error('A user with that email already exists.')
+        } else {
+          toast.error('Error - refresh and try again.')
+        }
+        console.log({ error })
       },
     })
   }
