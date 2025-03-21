@@ -257,7 +257,7 @@ const EmployeeTable = ({ role, setNumber }) => {
                     >
                       {employee.status === 'Accepted'
                         ? 'Account Linked'
-                        : 'Invitation Sendt'}
+                        : 'Invitation Sent'}
                     </TableCell>
                   </TableRow>
                 ))

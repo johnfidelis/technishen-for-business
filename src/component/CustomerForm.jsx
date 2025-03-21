@@ -327,7 +327,39 @@ const CustomerForm = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
+                  <FormControl
+                    fullWidth
+                    style={{
+                      width: '100%',
+                      padding: '15px 14px',
+                      border: '1px solid rgba(0, 0, 0, 0.23)',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                    }}
+                  >
+                    <PhoneInput
+                      international
+                      defaultCountry="ZA"
+                      value={formData.phone_number || ''}
+                      // error={!!errors.phone_number}
+                      // helperText={errors.phone_number}
+                      onChange={(value) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          phone_number: value,
+                        }))
+                      }
+                      className="phone-input"
+                      sx={{
+                        '& .PhoneInputInput': {
+                          outline: 'none',
+                          border: 'none',
+                          boxShadow: 'none',
+                        },
+                      }}
+                    />
+                  </FormControl>
+                  {/* <FormControl fullWidth>
                     <PhoneInput
                       international
                       defaultCountry="ZA"
@@ -346,7 +378,7 @@ const CustomerForm = () => {
                         fontSize: '16px',
                       }}
                     />
-                  </FormControl>
+                  </FormControl> */}
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
@@ -452,7 +484,7 @@ const CustomerForm = () => {
                   </TextField>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                {/* <Grid item xs={12} sm={6}>
                   <FormControl fullWidth>
                     <PhoneInput
                       international
@@ -473,7 +505,7 @@ const CustomerForm = () => {
                       }}
                     />
                   </FormControl>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
