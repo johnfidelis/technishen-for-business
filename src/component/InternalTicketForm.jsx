@@ -216,6 +216,13 @@ const InternalTicketForm = () => {
 
   const handleGroupChange = (value) => {
     setAssignmentGroup(value)
+    const selectedGroup = assignmentGroups.find(
+      (group) => group.id === value
+    );
+    if (selectedGroup) {
+      setEmployees(selectedGroup.employees || []);
+    }
+    setAssignTo("");
   }
 
   const handleEmployeeSearch = (value) => {

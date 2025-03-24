@@ -16,8 +16,21 @@ import {
   TableBody,
   TablePagination,
 } from '@mui/material'
+import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useFetchData } from '@/hooks/useApiService'
+import { useRouter } from 'next/navigation'
 
-const BookingsTable = () => {
+const BookingsTable = ({ customerId, ticketType }) => {
+   const router = useRouter()
+  const endpoint =
+    ticketType === 'External' || ticketType === 'customer'
+      ? GET_ENDPOINTS.CUSTOMER_TICKET_HISTORY(customerId)
+      : GET_ENDPOINTS.EMPLOYEE_TICKET_HISTORY(customerId)
+
+  // Fetch data using the selected endpoint
+  const { data: bookings, isLoading } = useFetchData(endpoint)
+  console.log({bookings})
+
   const rows = [
     {
       caller: 'Vivica Samkelo',
@@ -125,25 +138,27 @@ const BookingsTable = () => {
         <Table>
           <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
             <TableRow>
-              <TableCell>Caller</TableCell>
+              <TableCell>Ticket Number</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Sub-Category</TableCell>
-              <TableCell>Date and Time</TableCell>
-              <TableCell>Type</TableCell>
+              <TableCell>Address</TableCell>
+              <TableCell>Assigned To</TableCell>
               <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => (
-                <TableRow key={index} hover>
-                  <TableCell>{row.caller}</TableCell>
-                  <TableCell>{row.category}</TableCell>
-                  <TableCell>{row.subCategory}</TableCell>
-                  <TableCell>{row.dateTime}</TableCell>
-                  <TableCell>{row.type}</TableCell>
-                  <TableCell>{row.status}</TableCell>
+            {bookings?.tickets
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((ticket, index) => (
+                <TableRow key={index} onClick={() =>
+                  router.push(`/dashboard/ticket/i/${ticket.id}`)
+                } hover>
+                  <TableCell>{ticket.ticket_number}</TableCell>
+                  <TableCell>{ticket.service}</TableCell>
+                  <TableCell>{ticket.sub_service}</TableCell>
+                  <TableCell>{ticket.address}</TableCell>
+                  <TableCell>{ticket.assigned_to.name}</TableCell>
+                  <TableCell>{ticket.status}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
@@ -152,7 +167,7 @@ const BookingsTable = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={bookings?.tickets?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

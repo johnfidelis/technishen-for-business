@@ -467,7 +467,7 @@ const CustomerProfile = ({ employeeId }) => {
             </Grid>
           )}
 
-          {tabIndex === 1 && <BookingsTable />}
+          {tabIndex === 1 && <BookingsTable customerId={employeeId} ticketType={"customer"} />}
         </>
       )}
     </Box>

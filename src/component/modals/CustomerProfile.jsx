@@ -12,18 +12,29 @@ import {
   Divider,
   Select,
   MenuItem,
+  Skeleton,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import ChatTab from './component/ChatTab'
 import ViewMoreDetailsModal from './ViewMoreDetailsModal'
 import { ThemeContext } from '@/context/ThemeContext'
 import BookingsTab from './component/BookingsTab'
+import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useFetchData } from '@/hooks/useApiService'
 
 const CustomerProfile = ({ open, onClose, user, type }) => {
   const [rightTabIndex, setRightTabIndex] = React.useState(0)
   const [viewMoreOpen, setViewMoreOpen] = useState(false)
 
-  console.log({ user })
+  const endpoint =
+    type === 'customer'
+      ? GET_ENDPOINTS.CUSTOMER_TICKET_HISTORY(user)
+      : GET_ENDPOINTS.EMPLOYEE_TICKET_HISTORY(user)
+
+  // Fetch data using the selected endpoint
+  const { data: tickets, isLoading } = useFetchData(endpoint)
+
+  console.log('trt', { user })
   const { theme } = useContext(ThemeContext)
 
   const modalStyle = {
@@ -113,7 +124,13 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
                   fontSize: '1.125em',
                 }}
               >
-                Vivica Samkelo
+                {!tickets ? (
+                  <Skeleton variant="text" width={120} height={20} />
+                ) : type === 'employee' ? (
+                  `${tickets?.employee_details?.first_name || ''} ${tickets?.employee_details?.last_name || ''}`
+                ) : (
+                  `${tickets?.customer_details?.first_name || ''} ${tickets?.customer_details?.last_name || ''}`
+                )}
               </Typography>
               <Typography
                 variant="body2"
@@ -200,7 +217,14 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
               fontWeight: 400,
             }}
           >
-            📍 Current Location: 35 Aromat Street, Hillbrow, Joburg
+            📍 Current Location:{' '}
+            {!tickets ? (
+              <Skeleton variant="text" width={80} height={10} />
+            ) : type === 'employee' ? (
+              `${tickets?.employee_details?.address}`
+            ) : (
+              `${tickets?.customer_details?.address}`
+            )}
           </Typography>
           <Typography
             variant="body2"
@@ -212,7 +236,13 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
               fontWeight: 400,
             }}
           >
-            📞 Emergency Number: +27 74 637 7232
+            📞 Emergency Number:  {!tickets ? (
+              <Skeleton variant="text" width={80} height={10} />
+            ) : type === 'employee' ? (
+              `${tickets?.employee_details?.phone_number}`
+            ) : (
+              `${tickets?.customer_details?.phone_number}`
+            )}
           </Typography>
           <Typography
             variant="body2"
@@ -224,7 +254,13 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
               fontWeight: 400,
             }}
           >
-            ✉️ Email: vivica.samkelo@gmail.com
+            ✉️ Email:  {!tickets ? (
+              <Skeleton variant="text" width={80} height={10} />
+            ) : type === 'employee' ? (
+              `${tickets?.employee_details?.email}`
+            ) : (
+              `${tickets?.customer_details?.email}`
+            )}
           </Typography>
 
           <Divider
@@ -317,205 +353,8 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
                 </Box>
 
                 {/* Ticket Details */}
-                <Box
-                  sx={{
-                    border: '0.063rem solid #E0E0E0',
-                    borderRadius: '0.625em',
-                    p: '1em',
-                    mb: '1em',
-                    boxShadow: `0px 4px 0px  ${theme.primary_color || '#115093'}`,
-                  }}
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        textTransform: 'capitalize',
-                      }}
-                    >
-                      IT Support
-                    </Typography>
-
-                    <Box>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight: 400,
-
-                          fontSize: '0.75em',
-                        }}
-                      >
-                        22 May 2023, 09:25 AM
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight: 400,
-                          color: 'red',
-                          border: 'solid 1px red',
-                          borderRadius: '0.25em',
-                          padding: '0.125rem 0.375em',
-                          fontSize: '0.75em',
-                          textAlign: 'center',
-                        }}
-                      >
-                        Closed
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box>
-                    <Typography variant="body2">
-                      Fulfiller Name:{' '}
-                      <Typography
-                        component="body2"
-                        sx={{
-                          color: theme.primary_color || '#115093',
-
-                          cursor: 'pointer',
-                        }}
-                      >
-                        David Willie
-                      </Typography>
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 300, fontSize: '0.80em' }}
-                    >
-                      Ticket Number: TECH-10036LA
-                    </Typography>
-                  </Box>
-                  <Divider
-                    sx={{
-                      my: '1em',
-                      backgroundColor: theme.primary_color || '#115093',
-                    }}
-                  />
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
-                    >
-                      Date
-                    </Typography>
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 400,
-
-                        fontSize: '0.75em',
-                      }}
-                    >
-                      22 May 2023
-                    </Typography>
-                  </Box>
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
-                    >
-                      Time
-                    </Typography>
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 400,
-
-                        fontSize: '0.75em',
-                      }}
-                    >
-                      09:25 AM
-                    </Typography>
-                  </Box>
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
-                    >
-                      Ticket Duration
-                    </Typography>
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 400,
-
-                        fontSize: '0.75em',
-                      }}
-                    >
-                      2hrs 45mins
-                    </Typography>
-                  </Box>
-                  <Divider
-                    sx={{
-                      my: '1em',
-                      backgroundColor: theme.primary_color || '#115093',
-                    }}
-                  />
-                  {/* Assign Section */}
-                  <Box display="flex" alignItems="center" gap="0.5em">
-                    <TextField
-                      placeholder="Search Fulfiller Name..."
-                      fullWidth
-                      label="Assign to"
-                      size="small"
-                      sx={{
-                        '& .MuiInputBase-input': {
-                          fontSize: '0.80em',
-                        },
-                        width: '70%',
-                      }}
-                    />
-
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: theme.primary_color || '#115093',
-                        color: '#FFF',
-                        textTransform: 'none',
-                        fontSize: '0.80em',
-                        fontWeight: 400,
-                        padding: '0.375rem 0.75em',
-                        width: '30%',
-                      }}
-                    >
-                      Update Ticket
-                    </Button>
-                  </Box>
-                  <Box sx={{ textAlign: 'center', mt: '1em' }}>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        // fontSize: '0.7rem',
-                        fontWeight: 400,
-                        cursor: 'pointer',
-                        marginTop: '5px',
-
-                        gap: '5px',
-                        color: theme?.primary_color,
-                      }}
-                      onClick={() => setViewMoreOpen(true)}
-                    >
-                      View More Details ➔
-                    </Typography>
-                  </Box>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Typography variant="body2">No tickets found.</Typography>
                 </Box>
               </Box>
             )}

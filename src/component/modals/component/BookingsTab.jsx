@@ -19,13 +19,9 @@ import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { formatDateTime } from '@/component/utils/formatDateTime'
 
-const BookingsTab = ({ customerId, ticketType, bookingType }) => {
+const BookingsTab = ({ customerId, ticketType }) => {
   const { theme } = useContext(ThemeContext)
-  console.log({ customerId, ticketType })
-  // const [history, setHistory] = useState(null)
-  // const [isLoading, setIsLoading] = useState(false)
-  // Select endpoint based on ticketType
-  // alert(ticketType)
+ 
   const endpoint =
     ticketType === 'External' || ticketType === 'customer'
       ? GET_ENDPOINTS.CUSTOMER_TICKET_HISTORY(customerId)
@@ -151,8 +147,8 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                   }}
                 >
                   {' '}
-                  {ticket?.assigned_to?.name || ''}
-                  {'N/A'}
+                  {ticket?.assigned_to?.name || 'N/A'}
+                  
                 </span>
               </Typography>
               <Typography

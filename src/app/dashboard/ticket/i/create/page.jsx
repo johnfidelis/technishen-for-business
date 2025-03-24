@@ -47,18 +47,19 @@ const CreateTicket = () => {
             typography: { sx: { fontSize: '0.75em' } },
           }}
         />
-
+<br />
         {/* Outsourcing Warning */}
         <Typography
           color="error"
-          sx={{ marginBottom: '20px', fontSize: '0.75em' }}
+          variant='caption'
+        
         >
           {outsourced
             ? 'This ticket will be outsourced to Technishen Experts. Additional costs may apply.'
             : 'Toggle this ticket to outsource it to Technishen Experts.'}
         </Typography>
 
-        <hr />
+        <hr   style={{ marginTop: '10px',}}/>
       </Box>
 
       {/* Render Form Based on State */}
