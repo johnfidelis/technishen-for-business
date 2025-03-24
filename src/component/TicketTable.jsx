@@ -396,27 +396,27 @@ const TicketTable = ({ filterType, setNumber }) => {
                 ))
               ) : ticketList.length === 0 ? (
                 <TableRow>
-                <TableCell
-                  colSpan={9}
-                  sx={{ textAlign: 'center', padding: '2em' }}
-                >
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
+                  <TableCell
+                    colSpan={9}
+                    sx={{ textAlign: 'center', padding: '2em' }}
                   >
-                    <SentimentDissatisfied
-                      sx={{ fontSize: 50, color: 'gray' }}
-                    />
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 300, fontSize: '1em', color: 'gray' }}
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
                     >
-                      No tickets available.
-                    </Typography>
-                  </Box>
-                </TableCell>
-              </TableRow>
+                      <SentimentDissatisfied
+                        sx={{ fontSize: 50, color: 'gray' }}
+                      />
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: 300, fontSize: '1em', color: 'gray' }}
+                      >
+                        No tickets available.
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                </TableRow>
               ) : (
                 ticketList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
