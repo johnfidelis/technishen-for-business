@@ -28,6 +28,7 @@ import DateRangeInput from './DateRangeInput'
 import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
 import { formatDateTime } from './utils/formatDateTime'
+import { SentimentDissatisfied } from '@mui/icons-material'
 
 const TicketTable = ({ filterType, setNumber }) => {
   const router = useRouter()
@@ -294,16 +295,24 @@ const TicketTable = ({ filterType, setNumber }) => {
                 ))
               ) : outsourcedTicketsData.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} align="center">
+                  <TableCell
+                    colSpan={8}
+                    sx={{ textAlign: 'center', padding: '2em' }}
+                  >
                     <Box
                       display="flex"
                       flexDirection="column"
                       alignItems="center"
                     >
-                      <SentimentDissatisfiedIcon
+                      <SentimentDissatisfied
                         sx={{ fontSize: 50, color: 'gray' }}
                       />
-                      <Typography>No tickets found</Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: 300, fontSize: '1em', color: 'gray' }}
+                      >
+                        No tickets available.
+                      </Typography>
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -387,19 +396,27 @@ const TicketTable = ({ filterType, setNumber }) => {
                 ))
               ) : ticketList.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={9} align="center">
-                    <Box
-                      display="flex"
-                      flexDirection="column"
-                      alignItems="center"
+                <TableCell
+                  colSpan={9}
+                  sx={{ textAlign: 'center', padding: '2em' }}
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    <SentimentDissatisfied
+                      sx={{ fontSize: 50, color: 'gray' }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{ fontWeight: 300, fontSize: '1em', color: 'gray' }}
                     >
-                      <SentimentDissatisfiedIcon
-                        sx={{ fontSize: 50, color: 'gray' }}
-                      />
-                      <Typography>No tickets found</Typography>
-                    </Box>
-                  </TableCell>
-                </TableRow>
+                      No tickets available.
+                    </Typography>
+                  </Box>
+                </TableCell>
+              </TableRow>
               ) : (
                 ticketList
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
