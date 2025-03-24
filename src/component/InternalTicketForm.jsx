@@ -187,6 +187,9 @@ const InternalTicketForm = () => {
 
   const handleCategoryChange = (value) => {
     setCategory(value)
+    const selectedCategory = categories.find((cat) => cat.id === value)
+    setSubCategories(selectedCategory?.sub_services || [])
+    setSubCategory(selectedCategory?.sub_services?.[0]?.id || '')
     // Optionally update subCategories based on the selected category
   }
 
@@ -714,11 +717,22 @@ const InternalTicketForm = () => {
         </Grid>
       </Grid>
 
-      <CustomerProfile
-        open={callerModalOpen}
-        onClose={() => setCallerModalOpen(false)}
-        user={caller}
-      />
+      {callerType === 'customer' ? (
+        <CustomerProfile
+          open={callerModalOpen}
+          onClose={() => setCallerModalOpen(false)}
+          user={caller}
+          type={'customer'}
+        />
+      ) : (
+        <CustomerProfile
+          open={callerModalOpen}
+          onClose={() => setCallerModalOpen(false)}
+          user={caller}
+          type={'employee'}
+        />
+      )}
+
       <EmployeeProfile
         open={assignModalOpen}
         onClose={() => setAssignModalOpen(false)}

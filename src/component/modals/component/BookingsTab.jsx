@@ -25,9 +25,9 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
   // const [history, setHistory] = useState(null)
   // const [isLoading, setIsLoading] = useState(false)
   // Select endpoint based on ticketType
-  alert(ticketType)
+  // alert(ticketType)
   const endpoint =
-    ticketType === 'External'
+    ticketType === 'External' || ticketType === 'customer'
       ? GET_ENDPOINTS.CUSTOMER_TICKET_HISTORY(customerId)
       : GET_ENDPOINTS.EMPLOYEE_TICKET_HISTORY(customerId)
 
@@ -104,7 +104,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               alignItems="center"
             >
               <Typography
-                variant="subtitle1"
+                variant="subtitle2"
                 sx={{
                   fontWeight: 300,
                   fontSize: '0.80em',

@@ -16,6 +16,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import { useFetchData, useCreateData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS, POST_ENDPOINTS } from '@/constants/endpoints'
 import { toast } from 'react-toastify'
+import Link from 'next/link'
 
 const GroupSelectionModal = ({ open, onClose, employeeId }) => {
   const { theme } = useContext(ThemeContext)
@@ -99,39 +100,106 @@ const GroupSelectionModal = ({ open, onClose, employeeId }) => {
           </Box>
         ) : (
           <List>
-            {groups.map((group) => (
-              <React.Fragment key={group.id}>
-                <ListItem
+            {groups.length > 0 ? (
+              groups.map((group) => (
+                <React.Fragment key={group.id}>
+                  <ListItem
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ListItemText
+                      primary={group.group_name}
+                      secondary={`Created on: ${new Date(group.created_at).toLocaleDateString()}`}
+                    />
+                    <Button
+                      variant="contained"
+                      sx={{
+                        backgroundColor: theme.primary_color || '#007BFF',
+                        color: '#fff',
+                        textTransform: 'none',
+                        '&:hover': {
+                          backgroundColor: theme.primary_color || '#115093',
+                        },
+                      }}
+                      onClick={() => onSelectGroup(group.id)}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Processing...' : 'Select'}
+                    </Button>
+                  </ListItem>
+                  <Divider />
+                </React.Fragment>
+              ))
+            ) : (
+              <>
+                <ListItem>
+                  <ListItemText
+                    primary="No groups available."
+                    sx={{
+                      textAlign: 'center',
+                      fontSize: '16px',
+                      fontWeight: '500',
+                    }}
+                  />
+                </ListItem>
+
+                <Typography
+                  component={Link}
+                  href="/dashboard/employee/fulfilers/group"
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
+                    display: 'block',
+                    textAlign: 'center',
+                    color: theme.primary_color || '#007BFF',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    fontSize: '14px',
+                    marginTop: '8px',
+                    '&:hover': { textDecoration: 'underline' },
                   }}
                 >
-                  <ListItemText
-                    primary={group.group_name}
-                    secondary={`Created on: ${new Date(group.created_at).toLocaleDateString()}`}
-                  />
-                  <Button
-                    variant="contained"
-                    sx={{
-                      backgroundColor: theme.primary_color || '#007BFF',
-                      color: '#fff',
-                      textTransform: 'none',
-                      '&:hover': {
-                        backgroundColor: theme.primary_color || '#115093',
-                      },
-                    }}
-                    onClick={() => onSelectGroup(group.id)}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Processing...' : 'Select'}
-                  </Button>
-                </ListItem>
-                <Divider />
-              </React.Fragment>
-            ))}
+                  Create FulFilers Group Now
+                </Typography>
+              </>
+            )}
           </List>
+
+          // <List>
+          //   {groups.map((group) => (
+          //     <React.Fragment key={group.id}>
+          //       <ListItem
+          //         sx={{
+          //           display: 'flex',
+          //           justifyContent: 'space-between',
+          //           alignItems: 'center',
+          //         }}
+          //       >
+          //         <ListItemText
+          //           primary={group.group_name}
+          //           secondary={`Created on: ${new Date(group.created_at).toLocaleDateString()}`}
+          //         />
+          //         <Button
+          //           variant="contained"
+          //           sx={{
+          //             backgroundColor: theme.primary_color || '#007BFF',
+          //             color: '#fff',
+          //             textTransform: 'none',
+          //             '&:hover': {
+          //               backgroundColor: theme.primary_color || '#115093',
+          //             },
+          //           }}
+          //           onClick={() => onSelectGroup(group.id)}
+          //           disabled={isLoading}
+          //         >
+          //           {isLoading ? 'Processing...' : 'Select'}
+          //         </Button>
+          //       </ListItem>
+          //       <Divider />
+          //     </React.Fragment>
+          //   ))}
+          // </List>
         )}
       </Box>
     </Modal>

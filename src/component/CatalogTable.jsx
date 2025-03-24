@@ -229,7 +229,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                         color: category.status ? 'green' : 'red',
                       }}
                     >
-                      {category.status ? 'Active' : 'Inactive'}
+                      {category.status ? 'Active' : 'In-active'}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -359,7 +359,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                     <TableCell
                       style={{ color: category.status ? 'green' : 'red' }}
                     >
-                      {category.status ? 'Active' : 'Inactive'}
+                      {category.status ? 'Active' : 'In-active'}
                     </TableCell>
                     <TableCell
                       sx={{

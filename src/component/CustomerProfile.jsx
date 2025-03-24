@@ -30,10 +30,11 @@ import {
 import BookingsTable from './BookingsTable'
 import { toast } from 'react-toastify'
 import { usePathname } from 'next/navigation'
+import { getMinDateForAge } from './utils/calenderManipulation'
 
 const CustomerProfile = ({ employeeId }) => {
   const { theme } = useContext(ThemeContext)
-
+  const minDate = getMinDateForAge(18)
   const pathname = usePathname()
   const segments = pathname.split('/')
   const userType = segments[2]
@@ -225,6 +226,7 @@ const CustomerProfile = ({ employeeId }) => {
                       value={employeeData?.date_of_birth || ''}
                       onChange={handleInputChange}
                       //  InputProps={{ readOnly: !isEditing }}
+                      inputProps={{ max: minDate }}
                       sx={{ mb: 2 }}
                     />
                   </Grid>

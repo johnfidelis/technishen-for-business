@@ -160,7 +160,7 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange, setNumber }) => {
                     <TableCell
                       sx={{ color: subCategory.status ? 'green' : 'red' }}
                     >
-                      {subCategory.status ? 'Active' : 'Inactive'}
+                      {subCategory.status}
                     </TableCell>
                     <TableCell>
                       <IconButton

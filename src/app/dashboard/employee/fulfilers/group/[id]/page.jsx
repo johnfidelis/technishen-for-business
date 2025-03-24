@@ -24,16 +24,47 @@ import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SentimentDissatisfied from '@mui/icons-material/SentimentDissatisfied'
 import { ThemeContext } from '@/context/ThemeContext'
-import { useFetchData } from '@/hooks/useApiService'
-import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useCreateData, useFetchData } from '@/hooks/useApiService'
+import { GET_ENDPOINTS, POST_ENDPOINTS } from '@/constants/endpoints'
 
 const Page = () => {
   const { theme } = useContext(ThemeContext)
   const router = useRouter()
   const { id } = useParams()
+  const [groupId, setGroupId] = useState(null)
+
   const { data: employeeData, isLoading } = useFetchData(
     GET_ENDPOINTS.GET_FULFILLER_GROUP(id),
   )
+
+  const createData = useCreateData(
+    POST_ENDPOINTS.ADD_EMPLOYEE_TO_FULFILER_GROUP(groupId),
+    'businessProfile',
+  )
+
+  const onSelectGroup = async (employeeId) => {
+    setGroupId(employeeData?.id)
+    createData.mutate(
+      {
+        employees: [employeeId],
+        action: 'remove',
+      },
+      {
+        onSuccess: async () => {
+          toast.success('Successful!.', {
+            autoClose: 5000,
+            hideProgressBar: true,
+          })
+          onClose()
+        },
+        onError: () =>
+          toast.error('Error!.', {
+            autoClose: 5000,
+            hideProgressBar: true,
+          }),
+      },
+    )
+  }
 
   const [employeePage, setEmployeePage] = useState(0)
   const [employeeRowsPerPage, setEmployeeRowsPerPage] = useState(5)
@@ -171,15 +202,12 @@ const Page = () => {
                   employeePage * employeeRowsPerPage + employeeRowsPerPage,
                 )
                 .map((employee) => (
-                  <TableRow
-                    key={employee?.id}
-                    onClick={() =>
-                      router.push(`/dashboard/employee/${employee.id}`)
-                    }
-                    sx={{ cursor: 'pointer' }}
-                    hover
-                  >
-                    <TableCell>
+                  <TableRow key={employee?.id} sx={{ cursor: 'pointer' }} hover>
+                    <TableCell
+                      onClick={() =>
+                        router.push(`/dashboard/employee/${employee.id}`)
+                      }
+                    >
                       <Avatar
                         src={
                           'https://technishenbackend.onrender.com' +
@@ -188,14 +216,50 @@ const Page = () => {
                         alt={employee.first_name}
                       />
                     </TableCell>
-                    <TableCell>{`${employee?.first_name} ${employee?.last_name}`}</TableCell>
-                    <TableCell>{employee?.email}</TableCell>
-                    <TableCell>{employee?.position}</TableCell>
-                    <TableCell>{employee?.phone_number}</TableCell>
+                    <TableCell
+                      onClick={() =>
+                        router.push(`/dashboard/employee/${employee.id}`)
+                      }
+                    >{`${employee?.first_name} ${employee?.last_name}`}</TableCell>
+                    <TableCell
+                      onClick={() =>
+                        router.push(`/dashboard/employee/${employee.id}`)
+                      }
+                    >
+                      {employee?.email}
+                    </TableCell>
+                    <TableCell
+                      onClick={() =>
+                        router.push(`/dashboard/employee/${employee.id}`)
+                      }
+                    >
+                      {employee?.position}
+                    </TableCell>
+                    <TableCell
+                      onClick={() =>
+                        router.push(`/dashboard/employee/${employee.id}`)
+                      }
+                    >
+                      {employee?.phone_number}
+                    </TableCell>
                     <TableCell>
-                      <Button sx={{ fontSize: '0.80em', color: 'red' }}>
-                        Remove <DeleteIcon />
-                      </Button>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          // fontSize: '0.80em',
+                          color: 'red',
+                          display: 'flex',
+                          alignItems: 'center',
+                          cursor: 'pointer',
+                          '&:hover': { textDecoration: 'underline' },
+                        }}
+                        onClick={() => onSelectGroup(employee.id)}
+                      >
+                        Remove{' '}
+                        <DeleteIcon
+                          sx={{ fontSize: '1em', marginLeft: '4px' }}
+                        />
+                      </Typography>
                     </TableCell>
                   </TableRow>
                 ))

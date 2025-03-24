@@ -60,7 +60,7 @@ const ViewMoreDetailsModal = ({ open, onClose, user }) => {
       textTransform: 'none',
       fontWeight: 300,
       fontSize: '0.80em',
-      color: '#000', // Inactive tab text color
+      color: '#000', // In-active tab text color
       '&.Mui-selected': {
         color: '#115093', // Active tab text color
       },

@@ -17,11 +17,13 @@ import CloseIcon from '@mui/icons-material/Close'
 import ChatTab from './component/ChatTab'
 import ViewMoreDetailsModal from './ViewMoreDetailsModal'
 import { ThemeContext } from '@/context/ThemeContext'
+import BookingsTab from './component/BookingsTab'
 
-const CustomerProfile = ({ open, onClose, user }) => {
+const CustomerProfile = ({ open, onClose, user, type }) => {
   const [rightTabIndex, setRightTabIndex] = React.useState(0)
   const [viewMoreOpen, setViewMoreOpen] = useState(false)
 
+  console.log({ user })
   const { theme } = useContext(ThemeContext)
 
   const modalStyle = {
@@ -58,7 +60,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
       textTransform: 'none',
       fontWeight: 400,
       fontSize: '0.80em',
-      color: '#000', // Inactive tab text color
+      color: '#000', // In-active tab text color
       '&.Mui-selected': {
         color: '#115093', // Active tab text color
       },
@@ -258,261 +260,7 @@ const CustomerProfile = ({ open, onClose, user }) => {
           <Box mt="1em">
             {/* Current Tickets */}
             {rightTabIndex === 0 && (
-              <Box>
-                {/* Sort and Search */}
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  mb="1em"
-                >
-                  <Box display="flex" flexDirection="column" gap="0.5em">
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
-                    >
-                      Sort By
-                    </Typography>
-                    <Select
-                      fullWidth
-                      value="Newest (Most Recent)"
-                      variant="outlined"
-                      size="small"
-                      sx={{
-                        '& .MuiSelect-select': {
-                          fontSize: '0.80em',
-                        },
-                      }}
-                    >
-                      <MenuItem value="Newest (Most Recent)">
-                        Newest (Most Recent)
-                      </MenuItem>
-                      <MenuItem value="Oldest">Oldest</MenuItem>
-                    </Select>
-                  </Box>
-                  <Box display="flex" flexDirection="column" gap="0.5em">
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
-                    >
-                      Search
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      placeholder="Type something..."
-                      variant="outlined"
-                      size="small"
-                      sx={{
-                        '& .MuiInputBase-input': {
-                          fontSize: '0.80em',
-                        },
-                      }}
-                    />
-                  </Box>
-                </Box>
-
-                {/* Ticket Details */}
-                <Box
-                  sx={{
-                    border: '0.063rem solid #E0E0E0',
-                    borderRadius: '0.625em',
-                    p: '1em',
-                    mb: '1em',
-                    boxShadow: `0px 4px 0px  ${theme.primary_color || '#115093'}`,
-                  }}
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        textTransform: 'capitalize',
-                      }}
-                    >
-                      IT Support
-                    </Typography>
-
-                    <Box>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight: 400,
-
-                          fontSize: '0.75em',
-                        }}
-                      >
-                        22 May 2023, 09:25 AM
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          fontWeight: 400,
-                          color: '#4CAF50',
-                          border: 'solid 1px #4CAF50',
-                          borderRadius: '0.25em',
-                          padding: '0.125rem 0.375em',
-                          fontSize: '0.75em',
-                          textAlign: 'center',
-                        }}
-                      >
-                        Working
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <Box>
-                    <Typography variant="body2">
-                      Fulfiller Name:{' '}
-                      <Typography
-                        component="body2"
-                        sx={{
-                          color: theme.primary_color || '#115093',
-
-                          cursor: 'pointer',
-                        }}
-                      >
-                        David Willie
-                      </Typography>
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 300, fontSize: '0.80em' }}
-                    >
-                      Ticket Number: TECH-10036LA
-                    </Typography>
-                  </Box>
-                  <Divider
-                    sx={{
-                      my: '1em',
-                      backgroundColor: theme.primary_color || '#115093',
-                    }}
-                  />
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
-                    >
-                      Date
-                    </Typography>
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 400,
-
-                        fontSize: '0.75em',
-                      }}
-                    >
-                      22 May 2023
-                    </Typography>
-                  </Box>
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
-                    >
-                      Time
-                    </Typography>
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 400,
-
-                        fontSize: '0.75em',
-                      }}
-                    >
-                      09:25 AM
-                    </Typography>
-                  </Box>
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 400, fontSize: '0.80em' }}
-                    >
-                      Ticket Duration
-                    </Typography>
-
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontWeight: 400,
-
-                        fontSize: '0.75em',
-                      }}
-                    >
-                      2hrs 45mins
-                    </Typography>
-                  </Box>
-                  <Divider
-                    sx={{
-                      my: '1em',
-                      backgroundColor: theme.primary_color || '#115093',
-                    }}
-                  />
-                  {/* Assign Section */}
-                  <Box display="flex" alignItems="center" gap="0.5em">
-                    <TextField
-                      placeholder="Search Fulfiller Name..."
-                      fullWidth
-                      label="Assign to"
-                      size="small"
-                      sx={{
-                        '& .MuiInputBase-input': {
-                          fontSize: '0.80em',
-                        },
-                        width: '70%',
-                      }}
-                    />
-
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: theme.primary_color || '#115093',
-                        color: '#FFF',
-                        textTransform: 'none',
-                        fontSize: '0.80em',
-                        fontWeight: 400,
-                        padding: '0.375rem 0.75em',
-                        width: '30%',
-                      }}
-                    >
-                      Update Ticket
-                    </Button>
-                  </Box>
-                  <Box sx={{ textAlign: 'center', mt: '1em' }}>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        // fontSize: '0.7rem',
-                        fontWeight: 400,
-                        cursor: 'pointer',
-                        marginTop: '5px',
-
-                        gap: '5px',
-                        color: theme?.primary_color,
-                      }}
-                      onClick={() => setViewMoreOpen(true)}
-                    >
-                      View More Details ➔
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
+              <BookingsTab customerId={user} ticketType={type} />
             )}
             {rightTabIndex === 1 && (
               <Box>

@@ -15,8 +15,10 @@ import PhoneInput from 'react-phone-number-input'
 import countryList from '../../../../component/utils/countryList'
 import { usePatchData } from '@/hooks/useApiService'
 import { PATCH_ENDPOINTS } from '@/constants/endpoints'
+import { getMinDateForAge } from '@/component/utils/calenderManipulation'
 
 const Page = ({ handleNext }) => {
+  const minDate = getMinDateForAge(18)
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -177,6 +179,7 @@ const Page = ({ handleNext }) => {
             InputLabelProps={{ shrink: true }}
             error={!!errors.date_of_birth}
             helperText={errors.date_of_birth}
+            inputProps={{ max: minDate }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>

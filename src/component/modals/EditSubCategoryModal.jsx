@@ -33,7 +33,7 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
     status: 'Active',
     price_type: 'Fixed',
     price_visibility: 'Yes',
-    sub_service_images: '',
+    sub_service_images: null,
   })
   const [uploadedImage, setUploadedImage] = useState(null)
 
@@ -46,7 +46,7 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
       setFormData({
         sub_service_name: subCategory.sub_service_name || '',
         cost: subCategory.cost || '',
-        status: subCategory.status ? 'Active' : 'Inactive',
+        status: subCategory.status ? 'Active' : 'In-active',
         price_type: subCategory.price_type || 'Fixed',
         price_visibility: subCategory.price_visibility || 'Yes',
         sub_service_images: subCategory.sub_service_images || '',
@@ -165,7 +165,7 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
             sx={{ mb: 2 }}
           >
             <MenuItem value="Active">Active</MenuItem>
-            <MenuItem value="Inactive">Inactive</MenuItem>
+            <MenuItem value="In-active">In-active</MenuItem>
           </TextField>
           <TextField
             fullWidth
@@ -193,6 +193,44 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
             <MenuItem value="Yes">Yes</MenuItem>
             <MenuItem value="No">No</MenuItem>
           </TextField>
+          <Box
+            sx={{
+              width: 100,
+              height: 100,
+              borderRadius: '5px',
+              backgroundColor: theme.primary_color || '#115093',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 300,
+              fontSize: '1rem',
+              color: 'white',
+              overflow: 'hidden',
+              margin: 'auto',
+              cursor: 'pointer',
+            }}
+            onClick={() =>
+              document.getElementById('sub_service_images').click()
+            }
+          >
+            {uploadedImage ? (
+              <img
+                src={uploadedImage}
+                alt="Uploaded Subcategory Icon"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            ) : (
+              formData?.sub_service_name?.slice(0, 2).toUpperCase() || 'IMG'
+            )}
+          </Box>
+          <input
+            id="sub_service_images"
+            name="sub_service_images"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+          />
           <Box textAlign="center" mt={4}>
             <Button
               variant="contained"

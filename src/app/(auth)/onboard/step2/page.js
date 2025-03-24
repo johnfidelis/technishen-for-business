@@ -50,26 +50,6 @@ const Page = ({ handleNext }) => {
   const validateForm = () => {
     let newErrors = {}
 
-    // if (!formData.business_type)
-    //   newErrors.business_type = 'Business type is required'
-    // if (!formData.business_name)
-    //   newErrors.business_name = 'Business name is required'
-    // if (!formData.business_email || !isEmail(formData.business_email))
-    //   newErrors.business_email = 'Valid business email is required'
-    // if (!formData.support_email || !isEmail(formData.support_email))
-    //   newErrors.support_email = 'Valid support email is required'
-    // if (!formData.trading_name)
-    //   newErrors.trading_name = 'Trading name is required'
-    // if (!formData.registration_number)
-    //   newErrors.registration_number = 'Registration number is required'
-    // if (!formData.industry) newErrors.industry = 'Industry is required'
-    // if (!formData.company_size)
-    //   newErrors.company_size = 'Company size is required'
-    // if (!formData.office_phone || formData.office_phone.length < 10)
-    //   newErrors.office_phone = 'Valid office phone number is required'
-    // if (formData.website && !isURL(formData.website))
-    //   newErrors.website = 'Enter a valid URL'
-
     if (!formData.business_type)
       newErrors.business_type = 'Business type is required'
     if (!formData.business_name)
@@ -251,17 +231,6 @@ const Page = ({ handleNext }) => {
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          {/* <TextField
-            fullWidth
-            label="Website (optional)"
-            name="website"
-            placeholder="e.g., example.com"
-            // value={formData.website || ''}
-            value={formData.website?.replace('https://www.', '') || ''}
-            error={!!errors.website}
-            helperText={errors.website}
-            onChange={handleChange}
-          /> */}
           <TextField
             fullWidth
             label="Website (optional)"

@@ -23,9 +23,12 @@ import Image from 'next/image'
 import { useCreateData } from '@/hooks/useApiService'
 import { POST_ENDPOINTS } from '@/constants/endpoints'
 import { toast } from 'react-toastify'
+import { getMinDateForAge } from './utils/calenderManipulation'
 
 const CustomerForm = () => {
   const { theme } = useContext(ThemeContext)
+  const minDate = getMinDateForAge(18)
+
   const [reloadKey, setReloadKey] = useState(Date.now())
   const createCustomer = useCreateData(
     POST_ENDPOINTS.CREATE_CUSTOMER,
@@ -45,15 +48,15 @@ const CustomerForm = () => {
     identity_type: 'Passport',
     id_number: '',
     email: '',
-    businessName: '',
+    business_name: '',
 
     officeNumber: '',
     industry: '',
-    companyRegNumber: '',
-    staffSize: '',
-    vatNumber: '',
+    reg_number: '',
+    staff_size: '',
+    vat: '',
     website: '',
-    supportEmail: '',
+    support_email: '',
     password: '00000000',
     profile_picture: null,
   })
@@ -139,7 +142,7 @@ const CustomerForm = () => {
         : [
             'first_name',
             'last_name',
-            'businessName',
+            'business_name',
             'address',
             'gender',
             'nationality',
@@ -148,11 +151,11 @@ const CustomerForm = () => {
             'id_number',
             'email',
             'industry',
-            'companyRegNumber',
-            'staffSize',
-            'vatNumber',
+            'reg_number',
+            'staff_size',
+            'vat',
             'website',
-            'supportEmail',
+            'support_email',
           ]
 
     for (const field of requiredFields) {
@@ -186,6 +189,7 @@ const CustomerForm = () => {
           autoClose: 3000,
           hideProgressBar: true,
         })
+        setImagePreview(profileAddIcon)
         setFormData({
           first_name: '',
           last_name: '',
@@ -198,15 +202,15 @@ const CustomerForm = () => {
           identity_type: 'Passport',
           id_number: '',
           email: '',
-          businessName: '',
+          business_name: '',
 
           officeNumber: '',
           industry: '',
-          companyRegNumber: '',
-          staffSize: '',
-          vatNumber: '',
+          reg_number: '',
+          staff_size: '',
+          vat: '',
           website: '',
-          supportEmail: '',
+          support_email: '',
           password: '00000000',
           profile_picture: null,
         })
@@ -267,6 +271,7 @@ const CustomerForm = () => {
                     InputLabelProps={{ shrink: true }}
                     value={formData.date_of_birth}
                     onChange={handleInputChange}
+                    inputProps={{ max: minDate }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -438,8 +443,8 @@ const CustomerForm = () => {
                   <TextField
                     fullWidth
                     label="Business Name"
-                    name="businessName"
-                    value={formData.businessName}
+                    name="business_name"
+                    value={formData.business_name}
                     onChange={handleInputChange}
                   />
                 </Grid>
@@ -526,23 +531,35 @@ const CustomerForm = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
+                  <FormControl
+                    fullWidth
+                    style={{
+                      width: '100%',
+                      padding: '15px 14px',
+                      border: '1px solid rgba(0, 0, 0, 0.23)',
+                      borderRadius: '4px',
+                      fontSize: '16px',
+                    }}
+                  >
                     <PhoneInput
                       international
                       defaultCountry="ZA"
                       value={formData.phone_number || ''}
+                      // error={!!errors.phone_number}
+                      // helperText={errors.phone_number}
                       onChange={(value) =>
                         setFormData((prev) => ({
                           ...prev,
                           phone_number: value,
                         }))
                       }
-                      style={{
-                        width: '100%',
-                        padding: '16.5px 14px',
-                        border: '1px solid rgba(0, 0, 0, 0.23)',
-                        borderRadius: '4px',
-                        fontSize: '16px',
+                      className="phone-input"
+                      sx={{
+                        '& .PhoneInputInput': {
+                          outline: 'none',
+                          border: 'none',
+                          boxShadow: 'none',
+                        },
                       }}
                     />
                   </FormControl>
@@ -551,8 +568,8 @@ const CustomerForm = () => {
                   <TextField
                     fullWidth
                     label="Company Registration Number"
-                    name="companyRegNumber"
-                    value={formData.companyRegNumber}
+                    name="reg_number"
+                    value={formData.reg_number}
                     onChange={handleInputChange}
                   />
                 </Grid>
@@ -565,6 +582,7 @@ const CustomerForm = () => {
                     InputLabelProps={{ shrink: true }}
                     value={formData.date_of_birth}
                     onChange={handleInputChange}
+                    inputProps={{ max: minDate }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -617,8 +635,8 @@ const CustomerForm = () => {
                   <TextField
                     fullWidth
                     label="Staff Size"
-                    name="staffSize"
-                    value={formData.staffSize}
+                    name="staff_size"
+                    value={formData.staff_size}
                     onChange={handleInputChange}
                   />
                 </Grid>
@@ -626,27 +644,51 @@ const CustomerForm = () => {
                   <TextField
                     fullWidth
                     label="VAT Number"
-                    name="vatNumber"
-                    value={formData.vatNumber}
+                    name="vat"
+                    value={formData.vat}
                     onChange={handleInputChange}
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <TextField
+                  {/* <TextField
                     fullWidth
                     label="Website"
                     name="website"
                     value={formData.website}
                     onChange={handleInputChange}
+                  /> */}
+
+                  <TextField
+                    fullWidth
+                    label="Website (optional)"
+                    name="website"
+                    placeholder="e.g., example.com"
+                    value={formData.website || ''}
+                    onChange={(e) => {
+                      let rawValue = e.target.value.trim()
+
+                      // Remove unwanted prefixes if present
+                      rawValue = rawValue.replace(/^(https?:\/\/)?(www\.)?/, '')
+
+                      // Ensure it always has "https://www." in front
+                      const formattedValue = rawValue
+                        ? `https://www.${rawValue}`
+                        : ''
+
+                      setFormData((prev) => ({
+                        ...prev,
+                        website: formattedValue,
+                      }))
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
                     label="Support Email"
-                    name="supportEmail"
-                    value={formData.supportEmail}
+                    name="support_email"
+                    value={formData.support_email}
                     onChange={handleInputChange}
                   />
                 </Grid>

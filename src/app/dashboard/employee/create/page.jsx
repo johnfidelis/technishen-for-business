@@ -24,10 +24,15 @@ import { useCreateData } from '@/hooks/useApiService'
 import { POST_ENDPOINTS } from '@/constants/endpoints'
 import { toast } from 'react-toastify'
 import { MdInfoOutline } from 'react-icons/md'
+import {
+  getMaxPastDate,
+  getMinDateForAge,
+} from '@/component/utils/calenderManipulation'
 
 const Page = () => {
   const { theme } = useContext(ThemeContext)
-
+  const minDate = getMinDateForAge(18)
+  const maxDate = getMaxPastDate()
   const [reloadKey, setReloadKey] = useState(Date.now())
   const [formData, setFormData] = useState({
     first_name: '',
@@ -326,6 +331,7 @@ const Page = () => {
                 value={formData.date_of_birth}
                 error={!!errors.date_of_birth}
                 helperText={errors.date_of_birth}
+                inputProps={{ max: minDate }}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
               />
@@ -341,6 +347,7 @@ const Page = () => {
                 error={!!errors.hire_date}
                 helperText={errors.hire_date}
                 onChange={handleInputChange}
+                inputProps={{ max: maxDate }}
                 sx={{ mb: 2 }}
               />
 
