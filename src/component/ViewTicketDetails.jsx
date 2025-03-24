@@ -29,9 +29,9 @@ const ViewTicketDetails = ({ ticketId }) => {
     GET_ENDPOINTS.VIEW_TICKETS(ticketId),
   )
 
-  const updateNoteEndpoint = useMemo(() => {
-    return PATCH_ENDPOINTS.UPDATE_NOTE(ticketId, existingNote.id)
-  }, [ticketId, existingNote])
+  // const updateNoteEndpoint = useMemo(() => {
+  //   return PATCH_ENDPOINTS.UPDATE_NOTE(ticketId, existingNote.id)
+  // }, [ticketId, existingNote])
 
   const createNote = useCreateData(
     POST_ENDPOINTS.CREATE_NOTE(ticketId),

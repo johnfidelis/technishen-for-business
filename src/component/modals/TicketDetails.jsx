@@ -23,6 +23,8 @@ import { GET_ENDPOINTS } from '@/constants/endpoints'
 const TicketDetails = ({ open, onClose, ticketData }) => {
   const [rightTabIndex, setRightTabIndex] = useState(0)
   const { theme } = useContext(ThemeContext)
+
+  console.log({ ticketData })
   // const isLoading = !ticket || ticket.length === 0
 
   const { data: ticket, isLoading } = useFetchData(

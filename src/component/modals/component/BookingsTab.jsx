@@ -104,7 +104,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               alignItems="center"
             >
               <Typography
-                variant="subtitle2"
+                variant="caption"
                 sx={{
                   fontWeight: 300,
                   fontSize: '0.80em',
@@ -144,18 +144,16 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                 sx={{ fontWeight: 300, fontSize: '0.80em' }}
               >
                 Fulfiller Name:{' '}
-                <Typography
-                  component="span"
-                  sx={{
+                <span
+                  style={{
                     color: theme.primary_color || '#115093',
-                    fontSize: '0.85em',
-                    fontWeight: 300,
                     cursor: 'pointer',
                   }}
                 >
+                  {' '}
                   {ticket?.assigned_to?.name || ''}
                   {'N/A'}
-                </Typography>
+                </span>
               </Typography>
               <Typography
                 variant="body2"
@@ -179,7 +177,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               alignItems="center"
             >
               <Typography
-                variant="subtitle1"
+                variant="body2"
                 sx={{ fontWeight: 300, fontSize: '0.80em' }}
               >
                 Date
@@ -197,7 +195,7 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               alignItems="center"
             >
               <Typography
-                variant="subtitle1"
+                variant="body2"
                 sx={{ fontWeight: 300, fontSize: '0.80em' }}
               >
                 Time
@@ -214,15 +212,15 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               </Typography>
             </Box>
 
-            <Divider
+            {/* <Divider
               sx={{
                 my: '1em',
                 backgroundColor: theme.primary_color || '#115093',
               }}
-            />
+            /> */}
 
             {/* Assignment Section */}
-            <TextField
+            {/* <TextField
               label="Assignment group"
               disabled={history?.employee_details !== null}
               select
@@ -247,10 +245,10 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
               ) : (
                 <MenuItem disabled>No groups available</MenuItem>
               )}
-            </TextField>
+            </TextField> */}
 
             {/* Employee Assignment */}
-            <Box
+            {/* <Box
               display="flex"
               alignItems="center"
               gap="0.5em"
@@ -307,24 +305,28 @@ const BookingsTab = ({ customerId, ticketType, bookingType }) => {
                   'Already Assigned'
                 )}
               </Button>
-            </Box>
+            </Box> */}
 
             {/* View More Button */}
-            <Box sx={{ textAlign: 'center', mt: '1em' }}>
-              <Button
-                variant="text"
-                onClick={() => handleViewMore(ticket)}
+            {/* <Box sx={{ textAlign: 'center', mt: '1em' }}>
+             
+
+              <Typography
+                variant="caption"
                 sx={{
-                  color: theme.primary_color || '#115093',
-                  fontWeight: 300,
-                  textTransform: 'none',
-                  fontSize: '0.80em',
-                  margin: 'auto',
+                  // fontSize: '0.7rem',
+                  fontWeight: 400,
+                  cursor: 'pointer',
+                  marginTop: '5px',
+
+                  gap: '5px',
+                  color: theme?.primary_color,
                 }}
+                onClick={() => handleViewMore(ticket)}
               >
-                View More Details ➔
-              </Button>
-            </Box>
+               View More Details ➔
+              </Typography>
+            </Box> */}
           </Box>
         ))
       ) : (

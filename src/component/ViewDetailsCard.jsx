@@ -213,7 +213,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
               alignItems="center"
             >
               <Typography
-                variant="body1"
+                variant="body2"
                 sx={{
                   textTransform: 'capitalize',
                 }}
@@ -245,22 +245,18 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
 
             {/* Client Details */}
             <Box>
-              <Typography
-                variant="body2"
-                // sx={{ fontWeight: 300, fontSize: '0.80em' }}
-              >
+              <Typography variant="body2" sx={{ display: 'flex' }}>
                 Fulfiller Name:{' '}
-                <Typography
-                  component="body2"
-                  sx={{
+                <span
+                  style={{
                     color: theme.primary_color || '#115093',
-
                     cursor: 'pointer',
                   }}
                 >
+                  {' '}
                   {ticket?.employee_details?.assigned_to?.name || ''}
                   {'N/A'}
-                </Typography>
+                </span>
               </Typography>
               <Typography
                 variant="body2"
