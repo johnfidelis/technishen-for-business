@@ -236,7 +236,8 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
               fontWeight: 400,
             }}
           >
-            📞 Emergency Number:  {!tickets ? (
+            📞 Emergency Number:{' '}
+            {!tickets ? (
               <Skeleton variant="text" width={80} height={10} />
             ) : type === 'employee' ? (
               `${tickets?.employee_details?.phone_number}`
@@ -254,7 +255,8 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
               fontWeight: 400,
             }}
           >
-            ✉️ Email:  {!tickets ? (
+            ✉️ Email:{' '}
+            {!tickets ? (
               <Skeleton variant="text" width={80} height={10} />
             ) : type === 'employee' ? (
               `${tickets?.employee_details?.email}`

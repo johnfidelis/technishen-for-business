@@ -34,7 +34,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
   const [rightTabIndex, setRightTabIndex] = useState(0)
   const [viewMoreOpen, setViewMoreOpen] = useState(false)
   const { theme } = useContext(ThemeContext)
-console.log("yyyy",{user})
+  console.log('yyyy', { user })
   const modalStyle = {
     position: 'absolute',
     right: '2px',
@@ -72,16 +72,18 @@ console.log("yyyy",{user})
           <Box display="flex" alignItems="center" gap="1em">
             <Avatar
               sx={{ width: '3.75em', height: '3.75em' }}
-              src={"https://technishenbackend.onrender.com"+user?.profile_picture || 'https://via.placeholder.com/150'}
+              src={
+                'https://technishenbackend.onrender.com' +
+                  user?.profile_picture || 'https://via.placeholder.com/150'
+              }
             />
             <Box>
               <Typography sx={{ fontWeight: 400, fontSize: '1.125em' }}>
-                {user?.first_name + " " + user?.last_name}
+                {user?.first_name + ' ' + user?.last_name}
               </Typography>
               <Typography sx={{ fontWeight: 400, fontSize: '0.9em' }}>
-                {user?.role }
+                {user?.role}
               </Typography>
-        
             </Box>
           </Box>
         </Box>
@@ -112,21 +114,21 @@ console.log("yyyy",{user})
               }}
             >
               <MdLocationOn style={{ color: theme.primary_color }} /> Current
-              Location: {user?.address }
+              Location: {user?.address}
             </Typography>
             <Typography
               variant="body2"
               sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
             >
               <MdPhone style={{ color: theme.primary_color }} /> Phone Number:{' '}
-              {user?.phone_number }
+              {user?.phone_number}
             </Typography>
             <Typography
               variant="body2"
               sx={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}
             >
               <MdMail style={{ color: theme.primary_color }} /> Email:{' '}
-              {user?.email }
+              {user?.email}
             </Typography>
           </Box>
 
@@ -209,14 +211,14 @@ console.log("yyyy",{user})
                     label="First Name"
                     variant="outlined"
                     sx={{ mb: 3 }}
-                    value={user?.first_name }
+                    value={user?.first_name}
                   />
                   <TextField
                     fullWidth
                     label="Last Name"
                     variant="outlined"
                     sx={{ mb: 3 }}
-                    value={user?.last_name }
+                    value={user?.last_name}
                   />{' '}
                 </Box>
                 <Box display="flex" alignItems="center" gap="0.5em">
@@ -226,14 +228,14 @@ console.log("yyyy",{user})
                     label="Gender"
                     variant="outlined"
                     sx={{ mb: 3 }}
-                    value={user?.gender }
+                    value={user?.gender}
                   />
                   <TextField
                     fullWidth
                     label="Email"
                     variant="outlined"
                     sx={{ mb: 3 }}
-                    value={user?.email }
+                    value={user?.email}
                   />
                 </Box>
                 <Box display="flex" alignItems="center" gap="0.5em">
@@ -249,7 +251,9 @@ console.log("yyyy",{user})
             )}
             {rightTabIndex === 1 && <CategoriesTab />}
             {/* {rightTabIndex === 2 && <StaticBookingTab />} */}
-            {rightTabIndex === 2 &&     <BookingsTab customerId={user?.id} ticketType={"employee"} />}
+            {rightTabIndex === 2 && (
+              <BookingsTab customerId={user?.id} ticketType={'employee'} />
+            )}
             {rightTabIndex === 3 && <ChatTab />}
           </Box>
         </Box>

@@ -21,7 +21,7 @@ import { formatDateTime } from '@/component/utils/formatDateTime'
 
 const BookingsTab = ({ customerId, ticketType }) => {
   const { theme } = useContext(ThemeContext)
- 
+
   const endpoint =
     ticketType === 'External' || ticketType === 'customer'
       ? GET_ENDPOINTS.CUSTOMER_TICKET_HISTORY(customerId)
@@ -148,7 +148,6 @@ const BookingsTab = ({ customerId, ticketType }) => {
                 >
                   {' '}
                   {ticket?.assigned_to?.name || 'N/A'}
-                  
                 </span>
               </Typography>
               <Typography

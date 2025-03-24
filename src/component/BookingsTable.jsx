@@ -21,7 +21,7 @@ import { useFetchData } from '@/hooks/useApiService'
 import { useRouter } from 'next/navigation'
 
 const BookingsTable = ({ customerId, ticketType }) => {
-   const router = useRouter()
+  const router = useRouter()
   const endpoint =
     ticketType === 'External' || ticketType === 'customer'
       ? GET_ENDPOINTS.CUSTOMER_TICKET_HISTORY(customerId)
@@ -29,7 +29,7 @@ const BookingsTable = ({ customerId, ticketType }) => {
 
   // Fetch data using the selected endpoint
   const { data: bookings, isLoading } = useFetchData(endpoint)
-  console.log({bookings})
+  console.log({ bookings })
 
   const rows = [
     {
@@ -150,9 +150,13 @@ const BookingsTable = ({ customerId, ticketType }) => {
             {bookings?.tickets
               ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((ticket, index) => (
-                <TableRow key={index} onClick={() =>
-                  router.push(`/dashboard/ticket/i/${ticket.id}`)
-                } hover>
+                <TableRow
+                  key={index}
+                  onClick={() =>
+                    router.push(`/dashboard/ticket/i/${ticket.id}`)
+                  }
+                  hover
+                >
                   <TableCell>{ticket.ticket_number}</TableCell>
                   <TableCell>{ticket.service}</TableCell>
                   <TableCell>{ticket.sub_service}</TableCell>
