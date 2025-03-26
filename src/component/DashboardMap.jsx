@@ -9,7 +9,7 @@ import {
 } from '@react-google-maps/api'
 import EmployeeProfile from './modals/EmployeeProfile'
 import CustomerProfile from './modals/CustomerProfile'
-
+import { Cookies } from 'react-cookie'
 // import CustomerProfile from './modals/CustomerProfile'
 import Image from 'next/image'
 import Img1 from '../assets/images/jay1.jpeg'
@@ -25,7 +25,8 @@ import {
 
 const DashboardMap = () => {
   const libraries = useMemo(() => ['places'], [])
-
+  const cookies = new Cookies()
+  const businessName = cookies.get('businessName')
   // 📍 Default Map Center
   const mapCenter = useMemo(() => ({ lat: -26.2041, lng: 28.0473 }), [])
 
@@ -263,7 +264,7 @@ const DashboardMap = () => {
               }
               label={
                 <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
-                  Technishen
+                  {businessName || ""}
                 </Typography>
               }
             />

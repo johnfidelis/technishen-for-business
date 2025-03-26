@@ -386,7 +386,7 @@ const InternalTicketForm = () => {
           {callerOptions == '' ? (
             <Typography
               variant="caption"
-              onClick={() => router.push(`/dashboard/catalog/create`)}
+              onClick={() => router.push(`/dashboard/employee/create`)}
               style={{ color: theme.primary_color, cursor: 'pointer' }}
             >
               Create Caller Now
