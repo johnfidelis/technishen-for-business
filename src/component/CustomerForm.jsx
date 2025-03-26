@@ -214,8 +214,8 @@ const CustomerForm = () => {
             'industry',
             'reg_number',
             'staff_size',
-            'vat',
-            'website',
+            // 'vat',
+            // 'website',
             'support_email',
           ]
 
