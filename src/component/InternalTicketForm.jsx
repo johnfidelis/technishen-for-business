@@ -25,9 +25,11 @@ import { toast } from 'react-toastify'
 import { ThemeContext } from '@/context/ThemeContext'
 import CustomerProfile from './modals/CustomerProfile'
 import EmployeeProfile from './modals/EmployeeProfile'
+import { useRouter } from 'next/navigation'
 
 const InternalTicketForm = () => {
   const { theme } = useContext(ThemeContext)
+  const router = useRouter()
   const [reloadKey, setReloadKey] = useState(Date.now())
   const cookies = new Cookies()
   const businessId = cookies.get('selectedBusinessId')
@@ -381,6 +383,16 @@ const InternalTicketForm = () => {
               />
             )}
           />
+          {callerOptions == "" ? (
+            <Typography variant='caption' onClick={() => router.push(`/dashboard/catalog/create`)} style={{color: theme.primary_color, cursor: "pointer"}}>
+              Create Caller Now
+            </Typography>
+          ) : (
+            <Typography variant='caption' >
+              `${callerOptions.length} callers found`
+          </Typography>
+          
+          )}
 
           {/* Category */}
           <Box sx={{ mt: '1em' }}>
@@ -397,11 +409,22 @@ const InternalTicketForm = () => {
               helperText={errors.category}
               onChange={(e) => handleCategoryChange(e.target.value)}
             >
-              {categories?.map((cat) => (
-                <MenuItem key={cat.id} value={cat.id}>
-                  {cat.service_name}
-                </MenuItem>
-              ))}
+              {categories.length > 0 ? (
+                categories?.map((cat) => (
+                  <MenuItem key={cat.id} value={cat.id}>
+                    {cat.service_name}
+                  </MenuItem>
+                ))
+              ) : (
+                <>
+                  <MenuItem disabled>No category available</MenuItem>
+                  <MenuItem
+                    onClick={() => router.push(`/dashboard/catalog/create`)}
+                  >
+                    Create Category Now
+                  </MenuItem>
+                </>
+              )}
             </TextField>
           </Box>
 
@@ -503,7 +526,7 @@ const InternalTicketForm = () => {
             InputLabelProps={{
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
             }}
-            sx={{ mt: '1em' }}
+            sx={{ mt: '1em', mb: "1.2em" }}
             value={urgency}
             error={!!errors.urgency}
             helperText={errors.urgency}
@@ -515,7 +538,7 @@ const InternalTicketForm = () => {
           </TextField>
 
           {/* Priority */}
-          <PriorityCalculator impact={impact} urgency={urgency} />
+          <PriorityCalculator impact={impact} urgency={urgency}  />
 
           {/* Assignment Group */}
           <TextField
@@ -543,7 +566,16 @@ const InternalTicketForm = () => {
                 </MenuItem>
               ))
             ) : (
-              <MenuItem disabled>No groups available</MenuItem>
+              <>
+                <MenuItem disabled>No category available</MenuItem>
+                <MenuItem
+                  onClick={() =>
+                    router.push(`/dashboard/employee/fulfilers/group`)
+                  }
+                >
+                  Create Assignment Group Now
+                </MenuItem>
+              </>
             )}
           </TextField>
 

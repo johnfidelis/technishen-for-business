@@ -11,6 +11,7 @@ import {
   Paper,
   Grid,
   Divider,
+  Button,
 } from '@mui/material'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import BackgroundBox from '@/component/BackgroundBox'
@@ -21,6 +22,7 @@ import Step1 from './step1/page'
 import Step2 from './step2/page'
 import Step3 from './step3/page'
 import Step4 from './step4/page'
+import { useRouter } from 'next/navigation'
 
 const steps = [
   'Personal Details',
@@ -31,7 +33,8 @@ const steps = [
 
 const Layout = () => {
   const [activeStep, setActiveStep] = useState(0)
-
+  const [backButton, setBackButton] = useState(false)
+  const router = useRouter()
   const { data, isLoading } = useFetchData(
     GET_ENDPOINTS.BUSINESS_OWNER_PROFILE,
     'fetchBusinessOwner',
@@ -40,11 +43,13 @@ const Layout = () => {
   useEffect(() => {
     if (!isLoading && data) {
       try {
-        console.log({ data })
         if (data?.first_name === '') {
           setActiveStep(0)
         } else if (data?.first_name !== '') {
           setActiveStep(1)
+        }
+        if (data.business_count > 0) {
+          setBackButton(true)
         }
       } catch (error) {
         console.error('Error fetching business owner profile:', error)
@@ -124,13 +129,29 @@ const Layout = () => {
             {/* Step Content */}
             <Grid item xs={12} md={8}>
               <Box
-                sx={{
-                  minHeight: '550px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                }}
+              // sx={{
+              //   minHeight: '550px',
+              //   display: 'flex',
+              //   flexDirection: 'column',
+              //   justifyContent: 'space-between',
+              // }}
               >
+                {backButton ? (
+                  <Button
+                    variant="contained"
+                    onClick={() => router.back()}
+                    sx={{
+                      backgroundColor: '#115093',
+                      color: '#FFF',
+                      textTransform: 'none',
+                      marginBottom: '20px',
+                    }}
+                  >
+                    &larr; Back
+                  </Button>
+                ) : (
+                  ''
+                )}
                 {activeStep === 0 && <Step1 handleNext={handleNext} />}
                 {activeStep === 1 && (
                   <Step2 handleNext={handleNext} handleBack={handleBack} />

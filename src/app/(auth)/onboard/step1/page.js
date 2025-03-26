@@ -38,20 +38,72 @@ const Page = ({ handleNext }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+
+    if (name === 'date_of_birth') {
+      if (!value) {
+        setErrors((prev) => ({
+          ...prev,
+          date_of_birth: 'Date of Birth is required.',
+        }))
+      } else if (value > minDate) {
+        setErrors((prev) => ({
+          ...prev,
+          date_of_birth: 'You must be at least 18 years old.',
+        }))
+      } else {
+        setErrors((prev) => ({ ...prev, date_of_birth: '' }))
+      }
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }))
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
 
   const validateFields = () => {
     const newErrors = {}
+
     Object.entries(formData).forEach(([key, value]) => {
       if (!value.trim()) {
         newErrors[key] = 'This field is required.'
       }
     })
+
+    // Ensure date_of_birth meets the age restriction
+    if (formData.date_of_birth && formData.date_of_birth > minDate) {
+      newErrors.date_of_birth = 'You must be at least 18 years old.'
+    }
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target
+  //   // Validate date input
+  //   if (name === 'date_of_birth') {
+  //     if (value > minDate) {
+  //       setErrors((prev) => ({
+  //         ...prev,
+  //         date_of_birth: 'You must be at least 18 years old.',
+  //       }))
+  //       return
+  //     } else {
+  //       setErrors((prev) => ({ ...prev, date_of_birth: '' }))
+  //     }
+  //   }
+  //   setFormData((prev) => ({ ...prev, [name]: value }))
+  //   setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
+  // }
+
+  // const validateFields = () => {
+  //   const newErrors = {}
+  //   Object.entries(formData).forEach(([key, value]) => {
+  //     if (!value.trim()) {
+  //       newErrors[key] = 'This field is required.'
+  //     }
+  //   })
+  //   setErrors(newErrors)
+  //   return Object.keys(newErrors).length === 0
+  // }
 
   const handleSubmit = async () => {
     if (!validateFields()) {

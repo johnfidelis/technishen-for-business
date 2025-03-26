@@ -67,11 +67,28 @@ const CustomerForm = () => {
     setFormData((prevData) => ({ ...prevData, ['customer_type']: value }))
   }
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target
-    setFormData((prevData) => ({ ...prevData, [name]: value }))
-  }
-
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target
+  //   setFormData((prevData) => ({ ...prevData, [name]: value }))
+  // }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+  
+    if (name === "date_of_birth") {
+      const minDate = getMinDateForAge(18); // Get minimum valid date
+      if (!value) {
+       toast.error("Date of Birth is required.")
+      } else if (value > minDate) {
+        
+          toast.error("You must be at least 18 years old.",)
+    
+      
+      }
+    }
+  
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+  
   const handleImageUpload = (event) => {
     const file = event.target.files[0]
     if (file) {
@@ -124,52 +141,120 @@ const CustomerForm = () => {
     setLat(parsedAddress?.latitude)
   }
 
+  // const validateInputs = () => {
+  //   const requiredFields =
+  //     formData.customer_type === 'Personal'
+  //       ? [
+  //           'first_name',
+  //           'last_name',
+  //           'date_of_birth',
+  //           'address',
+  //           'gender',
+  //           'nationality',
+  //           'phone_number',
+  //           'identity_type',
+  //           'id_number',
+  //           'email',
+  //         ]
+  //       : [
+  //           'first_name',
+  //           'last_name',
+  //           'business_name',
+  //           'address',
+  //           'gender',
+  //           'nationality',
+  //           'phone_number',
+  //           'identity_type',
+  //           'id_number',
+  //           'email',
+  //           'industry',
+  //           'reg_number',
+  //           'staff_size',
+  //           'vat',
+  //           'website',
+  //           'support_email',
+  //         ]
+
+  //   for (const field of requiredFields) {
+  //     if (!formData[field]) {
+  //       toast.error(`Please fill out the ${field.replace('_', ' ')} field`, {
+  //         position: 'top-right',
+  //         autoClose: 3000,
+  //         hideProgressBar: true,
+  //       })
+  //       return false
+  //     }
+  //   }
+  //   return true
+  // }
+
   const validateInputs = () => {
     const requiredFields =
-      formData.customer_type === 'Personal'
+      formData.customer_type === "Personal"
         ? [
-            'first_name',
-            'last_name',
-            'date_of_birth',
-            'address',
-            'gender',
-            'nationality',
-            'phone_number',
-            'identity_type',
-            'id_number',
-            'email',
+            "first_name",
+            "last_name",
+            "date_of_birth",
+            "address",
+            "gender",
+            "nationality",
+            "phone_number",
+            "identity_type",
+            "id_number",
+            "email",
           ]
         : [
-            'first_name',
-            'last_name',
-            'business_name',
-            'address',
-            'gender',
-            'nationality',
-            'phone_number',
-            'identity_type',
-            'id_number',
-            'email',
-            'industry',
-            'reg_number',
-            'staff_size',
-            'vat',
-            'website',
-            'support_email',
-          ]
-
+            "first_name",
+            "last_name",
+            "business_name",
+            "address",
+            "gender",
+            "nationality",
+            "phone_number",
+            "identity_type",
+            "id_number",
+            "email",
+            "industry",
+            "reg_number",
+            "staff_size",
+            "vat",
+            "website",
+            "support_email",
+          ];
+  
+    const minDate = getMinDateForAge(18);
+  
+    if (!formData.date_of_birth) {
+      toast.error("Date of Birth is required.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
+      return false;
+    }
+  
+    if (formData.date_of_birth > minDate) {
+      toast.error("You must be at least 18 years old.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
+      return false;
+    }
+  
     for (const field of requiredFields) {
       if (!formData[field]) {
-        toast.error(`Please fill out the ${field.replace('_', ' ')} field`, {
-          position: 'top-right',
+        toast.error(`Please fill out the ${field.replace(/_/g, " ")} field.`, {
+          position: "top-right",
           autoClose: 3000,
           hideProgressBar: true,
-        })
-        return false
+        });
+        return false;
       }
     }
-    return true
-  }
+  
+    return true;
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault()
