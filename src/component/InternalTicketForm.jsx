@@ -383,15 +383,18 @@ const InternalTicketForm = () => {
               />
             )}
           />
-          {callerOptions == "" ? (
-            <Typography variant='caption' onClick={() => router.push(`/dashboard/catalog/create`)} style={{color: theme.primary_color, cursor: "pointer"}}>
+          {callerOptions == '' ? (
+            <Typography
+              variant="caption"
+              onClick={() => router.push(`/dashboard/catalog/create`)}
+              style={{ color: theme.primary_color, cursor: 'pointer' }}
+            >
               Create Caller Now
             </Typography>
           ) : (
-            <Typography variant='caption' >
+            <Typography variant="caption">
               `${callerOptions.length} callers found`
-          </Typography>
-          
+            </Typography>
           )}
 
           {/* Category */}
@@ -526,7 +529,7 @@ const InternalTicketForm = () => {
             InputLabelProps={{
               style: { fontSize: '0.80em', fontFamily: 'Inter, sans-serif' },
             }}
-            sx={{ mt: '1em', mb: "1.2em" }}
+            sx={{ mt: '1em', mb: '1.2em' }}
             value={urgency}
             error={!!errors.urgency}
             helperText={errors.urgency}
@@ -538,7 +541,7 @@ const InternalTicketForm = () => {
           </TextField>
 
           {/* Priority */}
-          <PriorityCalculator impact={impact} urgency={urgency}  />
+          <PriorityCalculator impact={impact} urgency={urgency} />
 
           {/* Assignment Group */}
           <TextField
