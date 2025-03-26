@@ -397,7 +397,8 @@ const InternalTicketForm = () => {
             </Typography>
           ) : (
             <Typography variant="caption">
-              `${callerOptions.length} callers found`
+              {callerOptions.length} caller{callerOptions.length > 0 ? 's' : ''}{' '}
+              found
             </Typography>
           )}
 
