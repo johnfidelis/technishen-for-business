@@ -78,7 +78,7 @@ const Page = () => {
       tempErrors.date_of_birth = 'Must be at least 18 years old.'
     }
     if (!formData.hire_date) tempErrors.hire_date = 'Hire date is required'
-    if (formData.hire_date && formData.hire_date < maxDate) {
+    if (formData.hire_date && formData.hire_date > maxDate) {
       tempErrors.hire_date = 'Must not be a future date.'
     }
     if (!formData.id_number) tempErrors.id_number = 'ID Number is required'
@@ -86,10 +86,6 @@ const Page = () => {
     setErrors(tempErrors)
     return Object.keys(tempErrors).length === 0
   }
-
-  // const handleInputChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value })
-  // }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -109,21 +105,21 @@ const Page = () => {
         setErrors((prev) => ({ ...prev, date_of_birth: '' }))
       }
     }
-    if (name === 'hire_date') {
-      if (!value) {
-        setErrors((prev) => ({
-          ...prev,
-          hire_date: 'Date of Hire is required.',
-        }))
-      } else if (value < minDate) {
-        setErrors((prev) => ({
-          ...prev,
-          hire_date: 'Must not be a future date.',
-        }))
-      } else {
-        setErrors((prev) => ({ ...prev, hire_date: '' }))
-      }
-    }
+    // if (name === 'hire_date') {
+    //   if (!value) {
+    //     setErrors((prev) => ({
+    //       ...prev,
+    //       hire_date: 'Date of Hire is required.',
+    //     }))
+    //   } else if (value > minDate) {
+    //     setErrors((prev) => ({
+    //       ...prev,
+    //       hire_date: 'Must not be a future date.',
+    //     }))
+    //   } else {
+    //     setErrors((prev) => ({ ...prev, hire_date: '' }))
+    //   }
+    // }
 
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
