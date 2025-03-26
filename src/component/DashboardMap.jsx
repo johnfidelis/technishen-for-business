@@ -264,7 +264,7 @@ const DashboardMap = () => {
               }
               label={
                 <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
-                  {businessName || ""}
+                  {businessName || ''}
                 </Typography>
               }
             />

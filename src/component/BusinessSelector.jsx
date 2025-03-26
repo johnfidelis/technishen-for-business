@@ -30,7 +30,6 @@ const BusinessSelector = () => {
   const router = useRouter()
 
   useEffect(() => {
-    
     if (
       !isLoading &&
       Array.isArray(data?.businesses) &&
@@ -40,15 +39,13 @@ const BusinessSelector = () => {
       const matchingBusiness = data.businesses.find(
         (business) => business.id === cookieBusinessId,
       )
-      
 
       if (cookieBusinessId && matchingBusiness) {
         setSelectedBusiness(cookieBusinessId)
- 
       } else {
         cookies.remove('selectedBusinessId')
         const firstBusinessId = data.businesses[0].id
-        cookies.set("businessName", data.businesses[0].business_name,  {
+        cookies.set('businessName', data.businesses[0].business_name, {
           path: '/',
           secure: true,
           sameSite: 'Strict',
