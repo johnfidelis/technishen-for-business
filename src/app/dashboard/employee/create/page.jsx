@@ -115,7 +115,7 @@ const Page = () => {
           ...prev,
           hire_date: 'Date of Hire is required.',
         }))
-      } else if (value > minDate) {
+      } else if (value < minDate) {
         setErrors((prev) => ({
           ...prev,
           hire_date: 'Must not be a future date.',
