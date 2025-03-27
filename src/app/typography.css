@@ -136,7 +136,6 @@ Helper text
   font-size: 0.875rem !important;
   font-weight: 500 !important;
   text-transform: uppercase !important;
- 
 }
 
 /* Global styles for MUI TextField */
@@ -193,9 +192,7 @@ Helper text
   padding: 10px !important;
   font-size: 0.9rem !important;
   /* border-radius: 8px !important; */
-  
 }
-
 
 .MuiButton-contained:disabled {
   background-color: #b0bec5 !important;
