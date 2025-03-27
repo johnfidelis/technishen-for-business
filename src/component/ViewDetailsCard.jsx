@@ -19,13 +19,19 @@ import ChatTab from './modals/component/ChatTab'
 import BookingsTab from './modals/component/BookingsTab'
 import TicketDetails from './modals/TicketDetails'
 import { formatDateTime } from './utils/formatDateTime'
+import { buildEndpoint } from '@/lib/apiHelpers'
+import { useFetchData, usePatchData } from '@/hooks/useApiService'
+import { Cookies } from 'react-cookie'
+import { toast } from 'react-toastify'
+import { PATCH_ENDPOINTS } from '@/constants/endpoints'
 
 const ViewDetailsCard = ({ ticket, ticketId }) => {
   const { theme } = useContext(ThemeContext)
   const [isLoading, setIsLoading] = useState(true)
   const [ticketas, setTickets] = useState('')
   const [rightTabIndex, setRightTabIndex] = useState(0)
-  console.log('dsd', { ticket })
+  const cookies = new Cookies()
+  const businessId = cookies.get('selectedBusinessId')
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1000)
   }, [])
@@ -46,22 +52,78 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
   const [loadingGroups, setLoadingGroups] = useState(false)
   const [loadingEmployees, setLoadingEmployees] = useState(false)
 
+  const assignmentGroupsUrl = buildEndpoint('FULFILLER_GROUP_TO_BOOK', {
+    business_id: businessId,
+    caller_type: 'employee',
+  })
+
+  // const assignTicket = usePatchData(
+  //   PATCH_ENDPOINTS.ASSIGN_TICKET,
+  //   'assignTicket',
+  // )
+
+  const assignTicket = PATCH_ENDPOINTS.ASSIGN_TICKET(ticketId)
+  const { mutate: patchData } = usePatchData(assignTicket)
+
+  // Assignment Groups
+  const { data: groups, isLoading: loadGroups } = useFetchData(
+    assignmentGroupsUrl,
+    ['fetchAssignmentGroups', businessId, 'employee'],
+    { enabled: !!businessId },
+  )
+
+  useEffect(() => {
+    if (groups) {
+      setAssignmentGroups(groups)
+      if (groups.length > 0) {
+        setAssignmentGroup(groups[0].id)
+        setEmployees(groups[0].employees)
+      }
+      setLoadingGroups(false)
+    }
+  }, [groups])
+
   const handleClose = () => {
     setViewMoreOpen(false)
   }
 
   const handleViewMore = (ticket) => {
-    console.log('dd', { ticket })
     setSelectedTicket(ticket)
     setViewMoreOpen(true)
   }
 
   const handleGroupChange = (value) => {
     setAssignmentGroup(value)
+    const selectedGroup = assignmentGroups.find((group) => group.id === value)
+    if (selectedGroup) {
+      setEmployees(selectedGroup.employees || [])
+    }
+    setAssignTo('')
   }
 
   const handleEmployeeSearch = (value) => {
-    console.log(`Searching for employee: ${value}`)
+    // console.log(`Searching for employee: ${value}`)
+  }
+
+  // const handleAssignTicket = () => {
+  //   try {
+  //     const formData = new FormData()
+  //     formData.append('fulfiller_group_id', assignmentGroup)
+  //     formData.append('employee_id', assignTo.id)
+
+  //     usePatchData(assignTicket, formData)
+  //     toast.success('Successful')
+  //   } catch (error) {
+  //     console.log({ error })
+  //     toast.error('Error')
+  //   }
+  // }
+
+  const handleAssignTicket = async () => {
+    const formData = new FormData()
+    formData.append('fulfiller_group_id', assignmentGroup)
+    formData.append('employee_id', assignTo.id)
+    patchData(formData)
   }
 
   return (
@@ -192,7 +254,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
         }}
       >
         <Tab label="Current Tickets" />
-        <Tab label="ticket" />
+        <Tab label="History" />
         <Tab label="Chat to Vivica" />
       </Tabs>
 
@@ -361,14 +423,23 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
                 <MenuItem disabled>
                   <CircularProgress size={20} />
                 </MenuItem>
-              ) : assignmentGroups?.length > 0 ? (
-                assignmentGroups.map((group) => (
+              ) : assignmentGroups.length > 0 ? (
+                assignmentGroups?.map((group) => (
                   <MenuItem key={group.id} value={group.id}>
                     {group.group_name}
                   </MenuItem>
                 ))
               ) : (
-                <MenuItem disabled>No groups available</MenuItem>
+                <>
+                  <MenuItem disabled>No category available</MenuItem>
+                  <MenuItem
+                  // onClick={() =>
+                  //   router.push(`/dashboard/employee/fulfilers/group`)
+                  // }
+                  >
+                    Create Assignment Group Now
+                  </MenuItem>
+                </>
               )}
             </TextField>
 
@@ -420,6 +491,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
                   padding: '0.75rem 0.75em',
                   width: '30%',
                 }}
+                onClick={handleAssignTicket}
                 disabled={ticket?.employee_details !== null}
               >
                 {loadingEmployees ? (
