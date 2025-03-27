@@ -41,7 +41,12 @@ const EditCategoryModal = ({ open, onClose, category }) => {
       setServiceName(category.service_name || '')
       setDescription(category.description || '')
       setServiceType(category.service_type || '')
-      setUploadedImage(category.service_images || '')
+      setUploadedImage(
+        category.service_images == null
+          ? null
+          : 'https://technishenbackend.onrender.com' +
+              category.service_images || '',
+      )
     }
   }, [category])
 

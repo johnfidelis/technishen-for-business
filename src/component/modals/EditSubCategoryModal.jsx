@@ -43,14 +43,26 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
 
   useEffect(() => {
     if (subCategory) {
+      console.log({ subCategory })
       setFormData({
         sub_service_name: subCategory.sub_service_name || '',
         cost: subCategory.cost || '',
         status: subCategory.status ? 'Active' : 'In-active',
         price_type: subCategory.price_type || 'Fixed',
         price_visibility: subCategory.price_visibility || 'Yes',
-        sub_service_images: subCategory.sub_service_images || '',
+        // sub_service_images: subCategory.sub_service_images || '',
+        sub_service_images:
+          subCategory.sub_service_images == null
+            ? null
+            : 'https://technishenbackend.onrender.com' +
+                subCategory.sub_service_images || '',
       })
+      setUploadedImage(
+        subCategory.sub_service_images == null
+          ? null
+          : 'https://technishenbackend.onrender.com' +
+              subCategory.sub_service_images || '',
+      )
     }
   }, [subCategory])
 
