@@ -17,44 +17,6 @@ import TicketTable from '@/component/TicketTable'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
-  const unassignedTickets = [
-    {
-      id: 'TCK-001',
-      subject: 'Payment issue on checkout',
-      created_at: '2025-02-25T10:30:00Z',
-      priority: 'High',
-      status: 'Open',
-    },
-    {
-      id: 'TCK-002',
-      subject: 'Login credentials not working',
-      created_at: '2025-02-24T15:20:00Z',
-      priority: 'Medium',
-      status: 'Open',
-    },
-  ]
-
-  const filteredTickets = unassignedTickets // In real case, you might filter it
-  const loading = false
-  const searchQuery = ''
-  const setSearchQuery = () => {}
-  const sortOrder = 'asc'
-  const setSortOrder = () => {}
-  const startDate = null
-  const endDate = null
-  const handleDateChange = () => {}
-  const status = 'Open'
-  const setStatus = () => {}
-  const showOutsourcedTickets = false
-  const handleSwitchChange = () => {}
-  const Page = 0
-  const rowsPerPage = 10
-  const handleChangePage = () => {}
-  const handleChangeRowsPerPage = () => {}
-  const handleTicketClick = (ticketId) =>
-    console.log(`Clicked ticket: ${ticketId}`)
-  const handleOutsourcedTicketClick = () => {}
-  const formatDateTime = (dateString) => new Date(dateString).toLocaleString()
 
   return (
     <Box

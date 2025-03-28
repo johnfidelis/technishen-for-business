@@ -14,10 +14,16 @@ import ListAltIcon from '@mui/icons-material/ListAlt'
 import InboxIcon from '@mui/icons-material/Inbox'
 import { ThemeContext } from '@/context/ThemeContext'
 import TicketTable from '@/component/TicketTable'
+import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useFetchData } from '@/hooks/useApiService'
 
 export default function UnassignedTicketsPage() {
   const { theme } = useContext(ThemeContext)
   const [number, setNumber] = useState(0)
+  const { data: ticketStat, isLoading } = useFetchData(
+    GET_ENDPOINTS.TICKETS_STATUSES_STATS,
+    'allTickets',
+  )
 
   return (
     <Box
@@ -54,17 +60,17 @@ export default function UnassignedTicketsPage() {
         {[
           {
             title: "Today's Tickets",
-            value: 32,
+            value: ticketStat?.unassigned_tickets?.today || 0,
             icon: <InsertDriveFileIcon sx={{ color: 'white' }} />,
           },
           {
             title: 'Average Monthly Tickets',
-            value: 23,
+            value: ticketStat?.unassigned_tickets?.monthly_average || 0,
             icon: <ListAltIcon sx={{ color: 'white' }} />,
           },
           {
             title: 'Total Tickets',
-            value: 453,
+            value: ticketStat?.unassigned_tickets?.total_this_month || 0,
             icon: <InboxIcon sx={{ color: 'white' }} />,
           },
         ].map((summary, index) => (

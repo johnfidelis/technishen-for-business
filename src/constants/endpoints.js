@@ -48,6 +48,7 @@ export const GET_ENDPOINTS = {
   FULFILLER_GROUP_TO_BOOK: '/fulfiller-group-to-book/',
   ALL_TICKETS: `/all-tickets/${getBusinessId()}/`,
   DASHBOARD_TICKETS: `/dashboard-tickets/${getBusinessId()}/open/`,
+  TICKETS_STATUSES_STATS: `/ticket-statuses-stats/${getBusinessId()}/`,
   TICKETS_STATS: `/ticket-stats/${getBusinessId()}/`,
   COLORS: `/get-colors/${getBusinessId()}/`,
   ALL_CATEGORIES: `/all-categories/${getBusinessId()}/`,

@@ -14,48 +14,16 @@ import ListAltIcon from '@mui/icons-material/ListAlt'
 import InboxIcon from '@mui/icons-material/Inbox'
 import { ThemeContext } from '@/context/ThemeContext'
 import TicketTable from '@/component/TicketTable'
+import { useFetchData } from '@/hooks/useApiService'
+import { GET_ENDPOINTS } from '@/constants/endpoints'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
   const [number, setNumber] = useState(0)
-  const unassignedTickets = [
-    {
-      id: 'TCK-001',
-      subject: 'Payment issue on checkout',
-      created_at: '2025-02-25T10:30:00Z',
-      priority: 'High',
-      status: 'Open',
-    },
-    {
-      id: 'TCK-002',
-      subject: 'Login credentials not working',
-      created_at: '2025-02-24T15:20:00Z',
-      priority: 'Medium',
-      status: 'Open',
-    },
-  ]
-
-  const filteredTickets = unassignedTickets // In real case, you might filter it
-  const loading = false
-  const searchQuery = ''
-  const setSearchQuery = () => {}
-  const sortOrder = 'asc'
-  const setSortOrder = () => {}
-  const startDate = null
-  const endDate = null
-  const handleDateChange = () => {}
-  const status = 'Open'
-  const setStatus = () => {}
-  const showOutsourcedTickets = false
-  const handleSwitchChange = () => {}
-  const Page = 0
-  const rowsPerPage = 10
-  const handleChangePage = () => {}
-  const handleChangeRowsPerPage = () => {}
-  const handleTicketClick = (ticketId) =>
-    console.log(`Clicked ticket: ${ticketId}`)
-  const handleOutsourcedTicketClick = () => {}
-  const formatDateTime = (dateString) => new Date(dateString).toLocaleString()
+  const { data: ticketStat, isLoading } = useFetchData(
+    GET_ENDPOINTS.TICKETS_STATUSES_STATS,
+    'allTickets',
+  )
 
   return (
     <Box
@@ -97,17 +65,17 @@ export default function Page() {
         {[
           {
             title: "Today's Tickets",
-            value: 32,
+            value: ticketStat?.resolved_tickets?.today || 0,
             icon: <InsertDriveFileIcon sx={{ color: 'white' }} />,
           },
           {
             title: 'Average Monthly Tickets',
-            value: 23,
+            value: ticketStat?.resolved_tickets?.monthly_average || 0,
             icon: <ListAltIcon sx={{ color: 'white' }} />,
           },
           {
             title: 'Total Tickets',
-            value: 453,
+            value: ticketStat?.resolved_tickets?.total_this_month || 0,
             icon: <InboxIcon sx={{ color: 'white' }} />,
           },
         ].map((summary, index) => (
