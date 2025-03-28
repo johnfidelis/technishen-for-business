@@ -218,16 +218,16 @@ const DashboardMap = () => {
                     />
                   ) : (
                     <div
-                    style={{
-                      width: '10px',
-                      height: '10px',
-                      backgroundColor: 'yellow',
-                      borderRadius: '50%',
-                      marginTop: '-5px',
-                    }}
-                  />
+                      style={{
+                        width: '10px',
+                        height: '10px',
+                        backgroundColor: 'yellow',
+                        borderRadius: '50%',
+                        marginTop: '-5px',
+                      }}
+                    />
                   )}
-                
+
                   {/* Small pointer icon below (optional) */}
                 </div>
               </OverlayView>
