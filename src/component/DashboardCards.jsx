@@ -8,45 +8,51 @@ import GroupIcon from '@mui/icons-material/Group'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Link from 'next/link'
+import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useFetchData } from '@/hooks/useApiService'
 
 const DashboardCards = () => {
   const { theme } = useContext(ThemeContext)
+  const { data: ticketStats, isLoading } = useFetchData(
+    GET_ENDPOINTS.TICKETS_STATS,
+    'allTickets',
+  )
 
   const cardData = [
     {
       label: 'All Tickets',
-      count: 10,
+      count: ticketStats?.total_tickets || 0,
       path: '/dashboard/ticket/i/all',
       icon: <AllInboxIcon />,
     },
     {
       label: 'Open Tickets',
-      count: 10,
+      count: ticketStats?.open_tickets || 0,
       path: '/dashboard/ticket/i/open',
       icon: <HelpOutlineIcon />,
     },
     {
       label: 'Assigned Tickets',
-      count: 10,
+      count: ticketStats?.assigned_tickets || 0,
       path: '/dashboard/ticket/i/assigned',
 
       icon: <AssignmentIcon />,
     },
     {
       label: 'Unassigned Ticket',
-      count: 0,
+      count: ticketStats?.unassigned_tickets || 0,
       path: '/dashboard/ticket/i/open-unassigned',
       icon: <HelpOutlineIcon />,
     },
     {
       label: 'Resolved Tickets',
-      count: 10,
+      count: ticketStats?.resolved_tickets || 0,
       path: '/dashboard/ticket/i/resolved',
       icon: <CheckCircleIcon />,
     },
     {
       label: 'Total Users',
-      count: 4,
+      count: ticketStats?.num_callers || 0,
       path: '/dashboard/customer/all',
       icon: <GroupIcon />,
     },
