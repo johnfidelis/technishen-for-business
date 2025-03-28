@@ -32,12 +32,33 @@ const DashboardMap = () => {
   const cookies = new Cookies()
   const businessName = cookies.get('businessName')
   // 📍 Default Map Center
-  const mapCenter = useMemo(() => ({ lat: -26.2041, lng: 28.0473 }), [])
+  // const mapCenter = useMemo(() => ({ lat: -26.2041, lng: 28.0473 }), [])
 
   const { data: ticketsData, isLoading } = useFetchData(
     GET_ENDPOINTS.DASHBOARD_TICKETS,
     'allTickets',
   )
+
+  const mapCenter = useMemo(() => {
+    if (ticketsData?.length === 0) return { lat: -26.2041, lng: 28.0473 } // Default fallback
+
+    const totalLat = ticketsData?.reduce(
+      (sum, ticket) => sum + ticket.latitude,
+      0,
+    )
+    const totalLng = ticketsData?.reduce(
+      (sum, ticket) => sum + ticket.longitude,
+      0,
+    )
+
+    console.log('Total Lat:', totalLat)
+    console.log('Total Lng:', totalLng)
+
+    return {
+      lat: totalLat / ticketsData?.length,
+      lng: totalLng / ticketsData?.length,
+    }
+  }, [ticketsData])
 
   // 🎯 Google Map Options
   // const mapOptions = useMemo(
@@ -89,6 +110,16 @@ const DashboardMap = () => {
 
   // 🔍 State for selected marker
   const [selectedMarker, setSelectedMarker] = useState(null)
+  const [showCustomers, setShowCustomers] = useState(true)
+  const [showEmployees, setShowEmployees] = useState(true)
+
+  const filteredLocations = useMemo(() => {
+    return locations.filter((location) => {
+      if (!showCustomers && location.user === 'customer') return false
+      if (!showEmployees && location.user === 'employee') return false
+      return true
+    })
+  }, [showCustomers, showEmployees, locations])
 
   // ✅ Filter States
   const [showTickets, setShowTickets] = useState(false) // Show Available Tickets
@@ -97,15 +128,6 @@ const DashboardMap = () => {
   // 📌 Modal States
   const [customerModalOpen, setCustomerModalOpen] = useState(false)
   const [employeeModalOpen, setEmployeeModalOpen] = useState(false)
-
-  // 🛠️ Apply Filters
-  const filteredLocations = useMemo(() => {
-    return locations.filter((location) => {
-      if (showTickets && !location.ticketAvailable) return false
-      if (showTechnisen && location.company !== 'Technishen') return false
-      return true
-    })
-  }, [showTickets, showTechnisen, locations])
 
   // ❌ Prevent access to `window.google.maps` if not loaded
   if (!isLoaded)
@@ -143,7 +165,7 @@ const DashboardMap = () => {
       {/* 🗺️ Google Map */}
       <GoogleMap
         options={mapOptions}
-        zoom={10}
+        zoom={6.2}
         center={mapCenter}
         mapContainerStyle={{
           width: '100%',
@@ -303,12 +325,12 @@ const DashboardMap = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={showTickets}
-                  onChange={() => setShowTickets(!showTickets)}
+                  checked={showCustomers}
+                  onChange={() => setShowCustomers(!showCustomers)}
                 />
               }
               label={
-                <Typography variant="body1">Show Available Tickets</Typography>
+                <Typography variant="body1">Show Customer Tickets</Typography>
               }
             />
           </Grid>
@@ -318,13 +340,14 @@ const DashboardMap = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={showTechnisen}
-                  onChange={() => setShowTechnisen(!showTechnisen)}
+                  checked={showEmployees}
+                  onChange={() => setShowEmployees(!showEmployees)}
                 />
               }
               label={
                 <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
-                  {businessName || ''}
+                  {/* {businessName || ''} */}
+                  Show Employee Tickets
                 </Typography>
               }
             />
