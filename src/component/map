@@ -6,7 +6,6 @@ import {
   GoogleMap,
   Marker,
   InfoWindow,
-  OverlayView,
 } from '@react-google-maps/api'
 import EmployeeProfile from './modals/EmployeeProfile'
 import CustomerProfile from './modals/CustomerProfile'
@@ -23,9 +22,6 @@ import {
   Button,
   Skeleton,
 } from '@mui/material'
-import { useFetchData } from '@/hooks/useApiService'
-import { GET_ENDPOINTS } from '@/constants/endpoints'
-import profileAddIcon from '../assets/images/profileAddIcon.svg'
 
 const DashboardMap = () => {
   const libraries = useMemo(() => ['places'], [])
@@ -33,11 +29,6 @@ const DashboardMap = () => {
   const businessName = cookies.get('businessName')
   // 📍 Default Map Center
   const mapCenter = useMemo(() => ({ lat: -26.2041, lng: 28.0473 }), [])
-
-  const { data: ticketsData, isLoading } = useFetchData(
-    GET_ENDPOINTS.DASHBOARD_TICKETS,
-    'allTickets',
-  )
 
   // 🎯 Google Map Options
   // const mapOptions = useMemo(
@@ -62,24 +53,39 @@ const DashboardMap = () => {
 
   // 🏷️ Locations on the map
   const locations = useMemo(
-    () =>
-      ticketsData?.map((ticket) => ({
-        ticket_id: ticket.ticket_id,
-        position: { lat: ticket.latitude, lng: ticket.longitude },
-        image: ticket.employee_image,
-        role: ticket.employee_role,
-        name: ticket.caller_first_name + ' ' + ticket.caller_last_name,
-        first_name: ticket.caller_first_name,
-        last_name: ticket.caller_last_name,
-        ticketType: ticket.ticket_type,
-        email: ticket.caller_email,
-        address: ticket.address,
-        phone_number: ticket.caller_phone,
-        gender: ticket.caller_gender,
-        id: ticket.caller_id,
-        user: ticket.ticket_type == 'Internal' ? 'employee' : 'customer',
-      })) || [],
-    [ticketsData],
+    () => [
+      {
+        id: 1,
+        position: { lat: -26.2044, lng: 28.0456 },
+        image: Img1,
+        name: 'David Tsogolo',
+        company: 'Tsogolo Technology',
+        role: 'Laptop Engineer',
+        ticketAvailable: false,
+        user: 'customer',
+      },
+      {
+        id: 2,
+        position: { lat: -26.2155, lng: 28.1073 },
+        image: Img1,
+        name: 'Sammie Google',
+        company: 'Google',
+        role: 'Electrical Engineer',
+        ticketAvailable: true,
+        user: 'customer',
+      },
+      {
+        id: 3,
+        position: { lat: -26.212, lng: 28.1403 },
+        image: Img1,
+        name: 'David Technishen',
+        company: 'Technishen',
+        role: 'Software Engineer',
+        ticketAvailable: true,
+        user: 'employee',
+      },
+    ],
+    [],
   )
 
   const { isLoaded } = useLoadScript({
@@ -129,8 +135,7 @@ const DashboardMap = () => {
     )
 
   // 🔥 Handle Open Click
-  const handleOpenClick = (selectedMarker) => {
-    console.log('Selected Marker:', selectedMarker)
+  const handleOpenClick = () => {
     if (selectedMarker?.user === 'customer') {
       setCustomerModalOpen(true)
     } else if (selectedMarker?.user === 'employee') {
@@ -143,7 +148,7 @@ const DashboardMap = () => {
       {/* 🗺️ Google Map */}
       <GoogleMap
         options={mapOptions}
-        zoom={10}
+        zoom={12}
         center={mapCenter}
         mapContainerStyle={{
           width: '100%',
@@ -154,7 +159,7 @@ const DashboardMap = () => {
         // onLoad={() => console.log('Google Map Loaded...')}
       >
         {/* ✅ Ensure `window.google.maps` is defined before using */}
-        {/* {isLoaded && window.google && (
+        {isLoaded && window.google && (
           <>
             {filteredLocations.map((location) => (
               <Marker
@@ -168,72 +173,8 @@ const DashboardMap = () => {
               />
             ))}
           </>
-        )} */}
-        {/* import {OverlayView} from "@react-google-maps/api"; */}
-        {isLoaded && window.google && (
-          <>
-            {filteredLocations.map((location) => (
-              <OverlayView
-                key={location.id}
-                position={location.position}
-                mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET} // Keeps it interactive
-                getPixelPositionOffset={(width, height) => ({
-                  x: -width / 2,
-                  y: -height - 10,
-                })} // Moves the icon above
-              >
-                <div
-                  onClick={() => setSelectedMarker(location)}
-                  style={{
-                    position: 'relative',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {/* Image above */}
-                  <Image
-                    src={profileAddIcon}
-                    alt={location.name}
-                    style={{
-                      width: '50px',
-                      height: '50px',
-                      borderRadius: '50%',
-                      border: '2px solid white',
-                      boxShadow: '0px 2px 5px rgba(0,0,0,0.2)',
-                    }}
-                  />
-
-                  {location?.user == 'employee' ? (
-                    <div
-                      style={{
-                        width: '10px',
-                        height: '10px',
-                        backgroundColor: 'red',
-                        borderRadius: '50%',
-                        marginTop: '-5px',
-                      }}
-                    />
-                  ) : (
-                    <div
-                    style={{
-                      width: '10px',
-                      height: '10px',
-                      backgroundColor: 'yellow',
-                      borderRadius: '50%',
-                      marginTop: '-5px',
-                    }}
-                  />
-                  )}
-                
-                  {/* Small pointer icon below (optional) */}
-                </div>
-              </OverlayView>
-            ))}
-          </>
         )}
+
         {/* 🏠 InfoWindow on Marker Click */}
         {selectedMarker && (
           <InfoWindow
@@ -241,7 +182,7 @@ const DashboardMap = () => {
             onCloseClick={() => setSelectedMarker(null)}
           >
             <Box
-              onClick={() => handleOpenClick(selectedMarker)}
+              onClick={handleOpenClick}
               sx={{
                 textAlign: 'center',
                 borderRadius: '15px',
@@ -249,7 +190,6 @@ const DashboardMap = () => {
                 color: '#000000',
                 display: 'flex',
                 gap: 1,
-                cursor: 'pointer',
               }}
             >
               <Image
@@ -338,15 +278,12 @@ const DashboardMap = () => {
         <CustomerProfile
           open={customerModalOpen}
           onClose={() => setCustomerModalOpen(false)}
-          type="customer"
-          user={selectedMarker.id}
         />
       )}
       {employeeModalOpen && (
         <EmployeeProfile
           open={employeeModalOpen}
           onClose={() => setEmployeeModalOpen(false)}
-          user={selectedMarker}
         />
       )}
     </Box>
