@@ -114,7 +114,7 @@ const DashboardMap = () => {
   // 🏷️ Locations on the map
   const locations = useMemo(
     () =>
-      ticketsData?.map((ticket) => ({
+      ticketsData?.internal_tickets?.map((ticket) => ({
         ticket_id: ticket.ticket_id,
         position: { lat: ticket.latitude, lng: ticket.longitude },
         image: ticket.employee_image,
@@ -454,16 +454,16 @@ const DashboardMap = () => {
                 >
                   {businessDetails?.business_type}
                 </Typography>
-                <Typography
+                {/* <Typography
                   variant="body2"
                   sx={{
-                    // color: '#115093',
+                    color: '#115093',
                     textAlign: 'start',
-                    // textTransform: 'capitalize',
+                    textTransform: 'capitalize',
                   }}
                 >
                   Your Company
-                </Typography>
+                </Typography> */}
               </div>
             </Box>
           </InfoWindow>
