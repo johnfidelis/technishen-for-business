@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useContext, useEffect } from 'react'
 import {
   useLoadScript,
   GoogleMap,
@@ -22,53 +22,83 @@ import {
   Checkbox,
   Button,
   Skeleton,
+  Modal,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  TablePagination,
 } from '@mui/material'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import profileAddIcon from '../assets/images/profileAddIcon.svg'
+import { ThemeContext } from '@/context/ThemeContext'
+import CloseIcon from '@mui/icons-material/Close'
+import { SentimentDissatisfied } from '@mui/icons-material'
 
 const DashboardMap = () => {
   const libraries = useMemo(() => ['places'], [])
   const cookies = new Cookies()
   const businessName = cookies.get('businessName')
+  const { theme } = useContext(ThemeContext)
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage)
+  }
+
+  const { data: allBusiness, isLoading: loadBusinesses } = useFetchData(
+    GET_ENDPOINTS.BUSINESSES,
+    'fetchBusinesses',
+  )
+  const [selectedBusiness, setSelectedBusiness] = useState('')
+  const [businessDetails, setBusinessDetails] = useState(null)
+  const [openCompany, setOpenCompany] = useState(false)
+
+  useEffect(() => {
+    if (!loadBusinesses && Array.isArray(allBusiness?.businesses)) {
+      const storedBusinessId = cookies.get('selectedBusinessId')
+      const matchedBusiness = allBusiness.businesses.find(
+        (biz) => biz.id === storedBusinessId,
+      )
+
+      if (matchedBusiness) {
+        setSelectedBusiness(storedBusinessId)
+        setBusinessDetails(matchedBusiness)
+        console.log({ matchedBusiness })
+      } else if (allBusiness.businesses.length > 0) {
+        const firstBusiness = allBusiness.businesses[0]
+        setSelectedBusiness(firstBusiness.id)
+        setBusinessDetails(firstBusiness)
+      }
+    }
+  }, [allBusiness, loadBusinesses, cookies])
   // 📍 Default Map Center
-  // const mapCenter = useMemo(() => ({ lat: -26.2041, lng: 28.0473 }), [])
 
   const { data: ticketsData, isLoading } = useFetchData(
     GET_ENDPOINTS.DASHBOARD_TICKETS,
     'allTickets',
   )
+  console.log({ businessDetails })
 
   const mapCenter = useMemo(() => {
-    if (ticketsData?.length === 0) return { lat: -26.2041, lng: 28.0473 } // Default fallback
-
-    const totalLat = ticketsData?.reduce(
-      (sum, ticket) => sum + ticket.latitude,
-      0,
-    )
-    const totalLng = ticketsData?.reduce(
-      (sum, ticket) => sum + ticket.longitude,
-      0,
-    )
-
-    console.log('Total Lat:', totalLat)
-    console.log('Total Lng:', totalLng)
+    if (loadBusinesses) return { lat: -26.2041, lng: 28.0473 } // Default fallback
 
     return {
-      lat: totalLat / ticketsData?.length,
-      lng: totalLng / ticketsData?.length,
+      lat: businessDetails?.latitude,
+      lng: businessDetails?.longitude,
     }
-  }, [ticketsData])
-
-  // 🎯 Google Map Options
-  // const mapOptions = useMemo(
-  //   () => ({
-  //     disableDefaultUI: true,
-  //     clickableIcons: true,
-  //     scrollwheel: true,
-  //   }),
-  //   [],
-  // )
+  }, [businessDetails])
 
   const mapOptions = useMemo(
     () => ({
@@ -112,6 +142,7 @@ const DashboardMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [showCustomers, setShowCustomers] = useState(true)
   const [showEmployees, setShowEmployees] = useState(true)
+  const [tableOpen, setTableOpen] = useState(false)
 
   const filteredLocations = useMemo(() => {
     return locations.filter((location) => {
@@ -160,12 +191,51 @@ const DashboardMap = () => {
     }
   }
 
+  const modalStyle = {
+    position: 'absolute',
+    right: '2px',
+    transform: 'translate(0, 0)',
+    width: '450px',
+    height: '100%',
+    backgroundColor: '#FFFFFF',
+    boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
+    color: 'black',
+    display: 'flex',
+    flexDirection: 'column',
+    fontFamily: 'Inter, sans-serif',
+  }
+
+  const headerStyle = {
+    backgroundColor: '#FFFFFF',
+    zIndex: 1,
+    p: '1em',
+  }
+
+  const handleRowClick = (location) => {
+    setSelectedMarker(location)
+  }
+
+  const bodyStyle = {
+    overflowY: 'auto',
+    flexGrow: 1,
+    pl: '1em',
+    pr: '1em',
+  }
   return (
     <Box style={{ marginTop: '24px' }}>
       {/* 🗺️ Google Map */}
+      <Box sx={{ textAlign: 'right', bordder: 'solid red' }}>
+        <Button
+          style={{ backgroundColor: theme?.primary_color, margin: '10px 0px' }}
+          variant="contained"
+          onClick={() => setTableOpen(true)}
+        >
+          Open Table
+        </Button>
+      </Box>
       <GoogleMap
         options={mapOptions}
-        zoom={6.2}
+        zoom={7}
         center={mapCenter}
         mapContainerStyle={{
           width: '100%',
@@ -175,22 +245,6 @@ const DashboardMap = () => {
         }}
         // onLoad={() => console.log('Google Map Loaded...')}
       >
-        {/* ✅ Ensure `window.google.maps` is defined before using */}
-        {/* {isLoaded && window.google && (
-          <>
-            {filteredLocations.map((location) => (
-              <Marker
-                key={location.id}
-                position={location.position}
-                icon={{
-                  url: location.image.src,
-                  scaledSize: new window.google.maps.Size(40, 40),
-                }}
-                onClick={() => setSelectedMarker(location)}
-              />
-            ))}
-          </>
-        )} */}
         {/* import {OverlayView} from "@react-google-maps/api"; */}
         {isLoaded && window.google && (
           <>
@@ -215,7 +269,6 @@ const DashboardMap = () => {
                     cursor: 'pointer',
                   }}
                 >
-                  {/* Image above */}
                   <Image
                     src={profileAddIcon}
                     alt={location.name}
@@ -249,8 +302,6 @@ const DashboardMap = () => {
                       }}
                     />
                   )}
-
-                  {/* Small pointer icon below (optional) */}
                 </div>
               </OverlayView>
             ))}
@@ -314,6 +365,109 @@ const DashboardMap = () => {
             </Box>
           </InfoWindow>
         )}
+
+        {!loadBusinesses && window.google && (
+          <OverlayView
+            key={businessDetails?.id}
+            position={{
+              lat: businessDetails?.latitude,
+              lng: businessDetails?.longitude,
+            }}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET} // Keeps it interactive
+            getPixelPositionOffset={(width, height) => {
+              return { x: -width / 2, y: -height - 10 }
+            }} // Moves the icon above
+          >
+            <div
+              style={{
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                cursor: 'pointer',
+              }}
+              onClick={() => setOpenCompany(true)}
+            >
+              {/* Image above */}
+              <img
+                src={`https://technishenbackend.onrender.com${businessDetails?.logo}`}
+                alt={businessDetails?.business_name}
+                style={{
+                  width: '50px',
+                  height: '50px',
+                  borderRadius: '50%',
+                  border: `2px solid ${theme?.primary_color}`,
+                  boxShadow: '0px 2px 5px rgba(0,0,0,0.2)',
+                  backgroundColor: 'white',
+                }}
+              />
+            </div>
+          </OverlayView>
+        )}
+
+        {/* 🏠 InfoWindow on Marker Click */}
+        {openCompany && (
+          <InfoWindow
+            position={{
+              lat: businessDetails?.latitude,
+              lng: businessDetails?.longitude,
+            }}
+            onCloseClick={() => setOpenCompany(false)}
+          >
+            <Box
+              // onClick={() => handleOpenClick(selectedMarker)}
+              sx={{
+                textAlign: 'center',
+                borderRadius: '15px',
+                backgroundColor: '#FFFFFF',
+                color: '#000000',
+                display: 'flex',
+                gap: 1,
+                cursor: 'pointer',
+              }}
+            >
+              <img
+                src={`https://technishenbackend.onrender.com${businessDetails?.logo}`}
+                alt={selectedMarker?.business_name}
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  // border: `2px solid ${theme?.primary_color}`,
+                  backgroundColor: 'white',
+                }}
+              />
+              <div>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 500,
+                    // color: '#333',
+                    textAlign: 'start',
+                  }}
+                >
+                  {businessDetails?.business_name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: '#333', textAlign: 'start' }}
+                >
+                  {businessDetails?.business_type}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    // color: '#115093',
+                    textAlign: 'start',
+                    // textTransform: 'capitalize',
+                  }}
+                >
+                  Your Company
+                </Typography>
+              </div>
+            </Box>
+          </InfoWindow>
+        )}
       </GoogleMap>
 
       {/* 🎯 Map Legend & Filters */}
@@ -372,6 +526,147 @@ const DashboardMap = () => {
           user={selectedMarker}
         />
       )}
+
+      <Modal open={tableOpen} onClose={() => setTableOpen(false)}>
+        <Box sx={modalStyle}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            style={{ backgroundColor: theme.primary_color || '#115093' }}
+          >
+            <IconButton
+              onClick={() => setTableOpen(false)}
+              sx={{ color: 'white', fontSize: '1em' }}
+            >
+              {''}
+            </IconButton>
+            <IconButton
+              onClick={() => setTableOpen(false)}
+              sx={{ color: 'white', fontSize: '1em' }}
+            >
+              Close
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Box sx={headerStyle}>
+            <Typography variant="h6" gutterBottom>
+              Users List
+            </Typography>
+          </Box>
+          <Box sx={bodyStyle}>
+            <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+              <Table>
+                <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+                  <TableRow>
+                    <TableCell>Image</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Role</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {!isLoaded ? (
+                    <TableRow>
+                      {[...Array(4)].map((_, index) => (
+                        <TableCell key={index}>
+                          <Skeleton variant="text" />
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ) : filteredLocations?.length === 0 ? (
+                    <TableRow>
+                      <TableCell
+                        colSpan={4}
+                        sx={{ textAlign: 'center', padding: '2em' }}
+                      >
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          alignItems="center"
+                        >
+                          <SentimentDissatisfied
+                            sx={{ fontSize: 50, color: 'gray' }}
+                          />
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              fontWeight: 300,
+                              fontSize: '1em',
+                              color: 'gray',
+                            }}
+                          >
+                            No Ticket found
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    filteredLocations.map((location) => (
+                      <TableRow
+                        key={location.id}
+                        hover
+                        sx={{ cursor: 'pointer' }}
+                        onClick={() => handleRowClick(location)}
+                      >
+                        <TableCell>
+                          <Image
+                            src={profileAddIcon}
+                            alt={location.name}
+                            width={30}
+                            height={30}
+                            style={{ borderRadius: '50%' }}
+                          />
+                        </TableCell>
+                        <TableCell sx={{ fontSize: '0.75em', fontWeight: 300 }}>
+                          {location.name}
+                        </TableCell>
+                        <TableCell sx={{ fontSize: '0.75em', fontWeight: 300 }}>
+                          {location.email}
+                        </TableCell>
+                        <TableCell sx={{ fontSize: '0.75em', fontWeight: 300 }}>
+                          {location.user}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                  {/* {filteredLocations.map((location) => (
+                    <TableRow
+                      key={location.id}
+                      hover
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => handleRowClick(location)}
+                    >
+                      <TableCell>
+                        <Image
+                          src={profileAddIcon}
+                          alt={location.name}
+                          width={30}
+                          height={30}
+                          style={{ borderRadius: '50%' }}
+                        />
+                      </TableCell>
+                      <TableCell>{location.name}</TableCell>
+                      <TableCell>{location.email}</TableCell>
+                      <TableCell>{location.user}</TableCell>
+                    </TableRow>
+                  ))} */}
+                </TableBody>
+              </Table>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 15]}
+                component="div"
+                count={filteredLocations?.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                sx={{ fontSize: '0.80em', fontFamily: 'Inter, sans-serif' }}
+              />
+            </TableContainer>
+          </Box>
+        </Box>
+      </Modal>
     </Box>
   )
 }
