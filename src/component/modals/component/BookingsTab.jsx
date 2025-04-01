@@ -28,7 +28,7 @@ const BookingsTab = ({ customerId, ticketType }) => {
 
   const handleOpenClick = (selectedUser) => {
     setSelectedMarker(selectedUser)
-   
+
     setEmployeeModalOpen(true)
   }
 
@@ -39,7 +39,6 @@ const BookingsTab = ({ customerId, ticketType }) => {
 
   // Fetch data using the selected endpoint
   const { data: history, isLoading } = useFetchData(endpoint)
-
 
   const [viewMoreOpen, setViewMoreOpen] = useState(false)
   const [selectedTicket, setSelectedTicket] = useState(null)
@@ -131,7 +130,6 @@ const BookingsTab = ({ customerId, ticketType }) => {
                 variant="body2"
                 sx={{ fontWeight: 300, fontSize: '0.80em' }}
                 onClick={() => handleOpenClick(ticket?.assigned_to)}
-
               >
                 Fulfiller Name:{' '}
                 <span

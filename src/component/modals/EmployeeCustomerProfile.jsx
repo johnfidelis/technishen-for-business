@@ -40,7 +40,7 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
   const [rightTabIndex, setRightTabIndex] = useState(0)
   const [viewMoreOpen, setViewMoreOpen] = useState(false)
   const { theme } = useContext(ThemeContext)
- 
+
   const modalStyle = {
     position: 'absolute',
     right: '2px',
@@ -214,14 +214,14 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
                     label="First Name"
                     variant="outlined"
                     sx={{ mb: 3 }}
-                    value={user?.first_name}
+                    value={user?.first_name || ''}
                   />
                   <TextField
                     fullWidth
                     label="Last Name"
                     variant="outlined"
                     sx={{ mb: 3 }}
-                    value={user?.last_name}
+                    value={user?.last_name || ''}
                   />{' '}
                 </Box>
                 <Box display="flex" alignItems="center" gap="0.5em">
@@ -231,14 +231,14 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
                     label="Gender"
                     variant="outlined"
                     sx={{ mb: 3 }}
-                    value={user?.gender}
+                    value={user?.gender || ''}
                   />
                   <TextField
                     fullWidth
                     label="Email"
                     variant="outlined"
                     sx={{ mb: 3 }}
-                    value={user?.email}
+                    value={user?.email || ''}
                   />
                 </Box>
                 <Box display="flex" alignItems="center" gap="0.5em">
@@ -247,7 +247,7 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
                     label="Phone Number"
                     variant="outlined"
                     sx={{ mb: 3 }}
-                    value={user?.phone_number}
+                    value={user?.phone_number || ''}
                   />
                 </Box>
               </Box>
