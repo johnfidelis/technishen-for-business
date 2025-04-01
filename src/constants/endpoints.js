@@ -56,6 +56,7 @@ export const GET_ENDPOINTS = {
   TECHNISHEN_BOOKABLE_SERVICES: '/b2c/bookable-services/',
 
   VIEW_TICKETS: (ticketId) => `/the-ticket/${getBusinessId()}/${ticketId}/`,
+  GET_CUSTOMER_OR_EMPLOYEE_DETAILS: (userId) => `/employee-customer-details/${userId}/`,
   VIEW_OUTSOURCED_TICKETS: (ticketId) =>
     `/b2c/customer-or-outsourced-ticket-details/${ticketId}/`,
   TICKET_NOTES: (ticketId) => `/ticket/${ticketId}/notes/`,

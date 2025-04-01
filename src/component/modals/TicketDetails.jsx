@@ -28,7 +28,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
   // const isLoading = !ticket || ticket.length === 0
 
   const { data: ticket, isLoading } = useFetchData(
-    GET_ENDPOINTS.VIEW_TICKETS(ticketData?.ticket_details?.id),
+    GET_ENDPOINTS.VIEW_TICKETS(ticketData?.ticket_details?.id || ticketData?.id),
   )
   const isNoTicketDetails = ticket?.employee_details !== null
 

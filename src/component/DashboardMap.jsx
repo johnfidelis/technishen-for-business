@@ -114,7 +114,7 @@ const DashboardMap = () => {
   // 🏷️ Locations on the map
   const locations = useMemo(
     () =>
-      ticketsData?.internal_tickets?.map((ticket) => ({
+      ticketsData?.assigned_tickets?.map((ticket) => ({
         ticket_id: ticket.ticket_id,
         position: { lat: ticket.latitude, lng: ticket.longitude },
         image: ticket.employee_image,
@@ -152,9 +152,7 @@ const DashboardMap = () => {
     })
   }, [showCustomers, showEmployees, locations])
 
-  // ✅ Filter States
-  const [showTickets, setShowTickets] = useState(false) // Show Available Tickets
-  const [showTechnisen, setShowTechnisen] = useState(false) // Show only Technishen tickets
+  console.log({ filteredLocations })
 
   // 📌 Modal States
   const [customerModalOpen, setCustomerModalOpen] = useState(false)
@@ -506,6 +504,22 @@ const DashboardMap = () => {
               }
             />
           </Grid>
+          <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                // checked={showEmployees}
+                // onChange={() => setShowEmployees(!showEmployees)}
+                />
+              }
+              label={
+                <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
+                  {/* {businessName || ''} */}
+                  Show Outsourced Tickets
+                </Typography>
+              }
+            />
+          </Grid>
         </Grid>
       </Box>
 
@@ -624,33 +638,18 @@ const DashboardMap = () => {
                         <TableCell sx={{ fontSize: '0.75em', fontWeight: 300 }}>
                           {location.email}
                         </TableCell>
-                        <TableCell sx={{ fontSize: '0.75em', fontWeight: 300 }}>
+                        <TableCell
+                          sx={{
+                            fontSize: '0.75em',
+                            fontWeight: 300,
+                            textTransform: 'capitalize',
+                          }}
+                        >
                           {location.user}
                         </TableCell>
                       </TableRow>
                     ))
                   )}
-                  {/* {filteredLocations.map((location) => (
-                    <TableRow
-                      key={location.id}
-                      hover
-                      sx={{ cursor: 'pointer' }}
-                      onClick={() => handleRowClick(location)}
-                    >
-                      <TableCell>
-                        <Image
-                          src={profileAddIcon}
-                          alt={location.name}
-                          width={30}
-                          height={30}
-                          style={{ borderRadius: '50%' }}
-                        />
-                      </TableCell>
-                      <TableCell>{location.name}</TableCell>
-                      <TableCell>{location.email}</TableCell>
-                      <TableCell>{location.user}</TableCell>
-                    </TableRow>
-                  ))} */}
                 </TableBody>
               </Table>
               <TablePagination

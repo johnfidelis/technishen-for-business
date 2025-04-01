@@ -18,9 +18,19 @@ import TicketDetails from '../TicketDetails'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { formatDateTime } from '@/component/utils/formatDateTime'
+// import EmployeeProfile from '../EmployeeProfile'
+import EmployeeCustomerProfile from '../EmployeeCustomerProfile'
 
 const BookingsTab = ({ customerId, ticketType }) => {
   const { theme } = useContext(ThemeContext)
+  const [employeeModalOpen, setEmployeeModalOpen] = useState(false)
+  const [selectedMarker, setSelectedMarker] = useState(null)
+
+  const handleOpenClick = (selectedUser) => {
+    setSelectedMarker(selectedUser)
+   
+    setEmployeeModalOpen(true)
+  }
 
   const endpoint =
     ticketType === 'External' || ticketType === 'customer'
@@ -30,26 +40,7 @@ const BookingsTab = ({ customerId, ticketType }) => {
   // Fetch data using the selected endpoint
   const { data: history, isLoading } = useFetchData(endpoint)
 
-  // useEffect(() => {
-  //   if (!customerId) return
 
-  //   const fetchHistory = async () => {
-  //     setIsLoading(true)
-  //     alert("ds")
-  //     const endpoint =
-  //       ticketType === 'Internal'
-  //         ? GET_ENDPOINTS.EMPLOYEE_TICKET_HISTORY(customerId)
-  //         : GET_ENDPOINTS.CUSTOMER_TICKET_HISTORY(customerId)
-
-  //     const { data } = useFetchData(endpoint)
-  //     setHistory(data)
-  //     setIsLoading(false)
-  //   }
-
-  //   fetchHistory()
-  // }, [customerId, ticketType])
-
-  // Internal state variables
   const [viewMoreOpen, setViewMoreOpen] = useState(false)
   const [selectedTicket, setSelectedTicket] = useState(null)
   const [assignmentGroup, setAssignmentGroup] = useState('')
@@ -65,6 +56,7 @@ const BookingsTab = ({ customerId, ticketType }) => {
 
   const handleViewMore = (ticket) => {
     setSelectedTicket(ticket)
+    console.log('sasasa', { ticket })
     setViewMoreOpen(true)
   }
 
@@ -138,6 +130,8 @@ const BookingsTab = ({ customerId, ticketType }) => {
               <Typography
                 variant="body2"
                 sx={{ fontWeight: 300, fontSize: '0.80em' }}
+                onClick={() => handleOpenClick(ticket?.assigned_to)}
+
               >
                 Fulfiller Name:{' '}
                 <span
@@ -206,16 +200,39 @@ const BookingsTab = ({ customerId, ticketType }) => {
                 })}
               </Typography>
             </Box>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography
+                variant="body2"
+                sx={{ fontWeight: 300, fontSize: '0.80em' }}
+              >
+                Ticket Duration
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ fontWeight: 300, fontSize: '0.75em' }}
+              >
+                {/* {new Date(ticket?.created_at).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: true,
+                })} */}
+                2hours
+              </Typography>
+            </Box>
 
-            {/* <Divider
+            <Divider
               sx={{
                 my: '1em',
                 backgroundColor: theme.primary_color || '#115093',
               }}
-            /> */}
+            />
 
             {/* Assignment Section */}
-            {/* <TextField
+            <TextField
               label="Assignment group"
               disabled={history?.employee_details !== null}
               select
@@ -240,10 +257,10 @@ const BookingsTab = ({ customerId, ticketType }) => {
               ) : (
                 <MenuItem disabled>No groups available</MenuItem>
               )}
-            </TextField> */}
+            </TextField>
 
             {/* Employee Assignment */}
-            {/* <Box
+            <Box
               display="flex"
               alignItems="center"
               gap="0.5em"
@@ -300,12 +317,10 @@ const BookingsTab = ({ customerId, ticketType }) => {
                   'Already Assigned'
                 )}
               </Button>
-            </Box> */}
+            </Box>
 
             {/* View More Button */}
-            {/* <Box sx={{ textAlign: 'center', mt: '1em' }}>
-             
-
+            <Box sx={{ textAlign: 'center', mt: '1em' }}>
               <Typography
                 variant="caption"
                 sx={{
@@ -319,9 +334,9 @@ const BookingsTab = ({ customerId, ticketType }) => {
                 }}
                 onClick={() => handleViewMore(ticket)}
               >
-               View More Details ➔
+                View More Details ➔
               </Typography>
-            </Box> */}
+            </Box>
           </Box>
         ))
       ) : (
@@ -335,6 +350,12 @@ const BookingsTab = ({ customerId, ticketType }) => {
         ticketData={selectedTicket}
         open={viewMoreOpen}
         onClose={handleClose}
+      />
+
+      <EmployeeCustomerProfile
+        open={employeeModalOpen}
+        onClose={() => setEmployeeModalOpen(false)}
+        userId={selectedMarker?.id}
       />
     </Box>
   )
