@@ -15,17 +15,49 @@ import {
 } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
 import TicketDetails from '../TicketDetails'
-import { useFetchData } from '@/hooks/useApiService'
-import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useFetchData, usePatchData } from '@/hooks/useApiService'
+import { GET_ENDPOINTS, PATCH_ENDPOINTS } from '@/constants/endpoints'
 import { formatDateTime } from '@/component/utils/formatDateTime'
 // import EmployeeProfile from '../EmployeeProfile'
+import { Cookies } from 'react-cookie'
 import EmployeeCustomerProfile from '../EmployeeCustomerProfile'
+import { buildEndpoint } from '@/lib/apiHelpers'
 
 const BookingsTab = ({ customerId, ticketType }) => {
   const { theme } = useContext(ThemeContext)
+  const cookies = new Cookies()
+  const businessId = cookies.get('selectedBusinessId')
   const [employeeModalOpen, setEmployeeModalOpen] = useState(false)
   const [selectedMarker, setSelectedMarker] = useState(null)
+  const [ticketId, setTicketId] = useState(null)
 
+  const assignmentGroupsUrl = buildEndpoint('FULFILLER_GROUP_TO_BOOK', {
+    business_id: businessId,
+    caller_type: 'employee',
+  })
+  // Assignment Groups
+  const { data: groups, isLoading: loadGroups } = useFetchData(
+    assignmentGroupsUrl,
+    ['fetchAssignmentGroups', businessId, 'employee'],
+    { enabled: !!businessId },
+  )
+
+  const assignTicket = PATCH_ENDPOINTS.ASSIGN_TICKET(ticketId)
+  const { mutate: patchAssignData } = usePatchData(assignTicket)
+
+  const reassignTicket = PATCH_ENDPOINTS.REASSIGN_TICKET(ticketId)
+  const { mutate: patchData } = usePatchData(reassignTicket)
+  useEffect(() => {
+    if (groups) {
+      setAssignmentGroups(groups)
+      if (groups.length > 0) {
+        setAssignmentGroup(groups[0].id)
+        setEmployees(groups[0].employees)
+      }
+      setLoadingGroups(false)
+    }
+  }, [groups])
+  console.log('groups', { groups })
   const handleOpenClick = (selectedUser) => {
     setSelectedMarker(selectedUser)
 
@@ -61,10 +93,32 @@ const BookingsTab = ({ customerId, ticketType }) => {
 
   const handleGroupChange = (value) => {
     setAssignmentGroup(value)
+    const selectedGroup = assignmentGroups.find((group) => group.id === value)
+    if (selectedGroup) {
+      setEmployees(selectedGroup.employees || [])
+    }
+    setAssignTo('')
   }
 
   const handleEmployeeSearch = (value) => {
     console.log(`Searching for employee: ${value}`)
+  }
+
+  const handleReassignTicket = async (id) => {
+    setTicketId(id)
+    const formData = new FormData()
+    formData.append('fulfiller_group_id', assignmentGroup)
+    formData.append('employee_id', assignTo.id)
+    // formData.append('new_employee_id,', assignTo.id)
+    patchData(formData)
+  }
+
+  const handleAssignTicket = async (id) => {
+    setTicketId(id)
+    const formData = new FormData()
+    formData.append('fulfiller_group_id', assignmentGroup)
+    formData.append('employee_id', assignTo.id)
+    patchAssignData(formData)
   }
 
   return (
@@ -129,7 +183,11 @@ const BookingsTab = ({ customerId, ticketType }) => {
               <Typography
                 variant="body2"
                 sx={{ fontWeight: 300, fontSize: '0.80em' }}
-                onClick={() => handleOpenClick(ticket?.assigned_to)}
+                onClick={
+                  ticket?.assigned_to?.name
+                    ? () => handleOpenClick(ticket?.assigned_to)
+                    : null
+                }
               >
                 Fulfiller Name:{' '}
                 <span
@@ -232,7 +290,7 @@ const BookingsTab = ({ customerId, ticketType }) => {
             {/* Assignment Section */}
             <TextField
               label="Assignment group"
-              disabled={history?.employee_details !== null}
+              // disabled={history?.employee_details !== null}
               select
               fullWidth
               variant="outlined"
@@ -265,7 +323,7 @@ const BookingsTab = ({ customerId, ticketType }) => {
               sx={{ marginTop: '1em' }}
             >
               <Autocomplete
-                disabled={history?.employee_details !== null}
+                // disabled={history?.employee_details !== null}
                 options={employees}
                 getOptionLabel={(option) =>
                   `${option.first_name} ${option.last_name}`
@@ -296,6 +354,11 @@ const BookingsTab = ({ customerId, ticketType }) => {
               />
               <Button
                 variant="contained"
+                onClick={
+                  ticket?.assigned_to == null
+                    ? () => handleAssignTicket(ticket?.id)
+                    : () => handleReassignTicket(ticket?.id)
+                }
                 sx={{
                   backgroundColor: theme.primary_color || '#115093',
                   color: '#FFF',
@@ -305,14 +368,14 @@ const BookingsTab = ({ customerId, ticketType }) => {
                   padding: '0.75rem 0.75em',
                   width: '30%',
                 }}
-                disabled={ticket?.employee_details !== null}
+                // disabled={ticket?.employee_details !== null}
               >
                 {loadingEmployees ? (
                   <CircularProgress size={24} color="inherit" />
-                ) : ticket?.employee_details == null ? (
+                ) : ticket?.assigned_to == null ? (
                   'Assign Ticket'
                 ) : (
-                  'Already Assigned'
+                  'Reassign Ticket'
                 )}
               </Button>
             </Box>

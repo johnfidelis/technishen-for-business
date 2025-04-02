@@ -27,6 +27,7 @@ export const PATCH_ENDPOINTS = {
   UPDATE_SUB_CATALOG: (serviceId) => `/update-sub-category/${serviceId}/`,
   UPDATE_NOTE: (ticketId, noteId) => `/ticket/${ticketId}/notes/${noteId}/`,
   ASSIGN_TICKET: (ticketId) => `/assign-ticket/${ticketId}/`,
+  REASSIGN_TICKET: (ticketId) => `/assign-ticket/${ticketId}/`,
   CUSTOMIZE_UI: `/customize-UI/${getBusinessId()}/`,
   UPDATE_BUSINESS: `/update-business/${getBusinessId()}/`,
 }

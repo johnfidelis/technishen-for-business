@@ -41,7 +41,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import { SentimentDissatisfied } from '@mui/icons-material'
 
 const DashboardMap = () => {
-  const libraries = useMemo(() => ['places'], [])
+  // const libraries = useMemo(() => ['places'], [])
+  const libraries = useMemo(() => [], [])
   const cookies = new Cookies()
   const businessName = cookies.get('businessName')
   const { theme } = useContext(ThemeContext)
@@ -359,109 +360,6 @@ const DashboardMap = () => {
                 >
                   {selectedMarker.user} Details
                 </Typography>
-              </div>
-            </Box>
-          </InfoWindow>
-        )}
-
-        {!loadBusinesses && window.google && (
-          <OverlayView
-            key={businessDetails?.id}
-            position={{
-              lat: businessDetails?.latitude,
-              lng: businessDetails?.longitude,
-            }}
-            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET} // Keeps it interactive
-            getPixelPositionOffset={(width, height) => {
-              return { x: -width / 2, y: -height - 10 }
-            }} // Moves the icon above
-          >
-            <div
-              style={{
-                position: 'relative',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',
-                cursor: 'pointer',
-              }}
-              onClick={() => setOpenCompany(true)}
-            >
-              {/* Image above */}
-              <img
-                src={`https://technishenbackend.onrender.com${businessDetails?.logo}`}
-                alt={businessDetails?.business_name}
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  border: `2px solid ${theme?.primary_color}`,
-                  boxShadow: '0px 2px 5px rgba(0,0,0,0.2)',
-                  backgroundColor: 'white',
-                }}
-              />
-            </div>
-          </OverlayView>
-        )}
-
-        {/* 🏠 InfoWindow on Marker Click */}
-        {openCompany && (
-          <InfoWindow
-            position={{
-              lat: businessDetails?.latitude,
-              lng: businessDetails?.longitude,
-            }}
-            onCloseClick={() => setOpenCompany(false)}
-          >
-            <Box
-              // onClick={() => handleOpenClick(selectedMarker)}
-              sx={{
-                textAlign: 'center',
-                borderRadius: '15px',
-                backgroundColor: '#FFFFFF',
-                color: '#000000',
-                display: 'flex',
-                gap: 1,
-                cursor: 'pointer',
-              }}
-            >
-              <img
-                src={`https://technishenbackend.onrender.com${businessDetails?.logo}`}
-                alt={selectedMarker?.business_name}
-                style={{
-                  width: '60px',
-                  height: '60px',
-                  // border: `2px solid ${theme?.primary_color}`,
-                  backgroundColor: 'white',
-                }}
-              />
-              <div>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: 500,
-                    // color: '#333',
-                    textAlign: 'start',
-                  }}
-                >
-                  {businessDetails?.business_name}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ color: '#333', textAlign: 'start' }}
-                >
-                  {businessDetails?.business_type}
-                </Typography>
-                {/* <Typography
-                  variant="body2"
-                  sx={{
-                    color: '#115093',
-                    textAlign: 'start',
-                    textTransform: 'capitalize',
-                  }}
-                >
-                  Your Company
-                </Typography> */}
               </div>
             </Box>
           </InfoWindow>
