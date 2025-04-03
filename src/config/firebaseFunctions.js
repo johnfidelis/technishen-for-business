@@ -11,6 +11,8 @@ import {
   getDoc,
 } from 'firebase/firestore'
 import { db } from './firebase'
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+const storage = getStorage()
 
 export const generateChatId = (id1, id2) => {
   return [id1, id2].sort().join('_')
@@ -47,6 +49,47 @@ export const sendMessage = async (senderId, receiverId, text) => {
     lastMessage: messageData,
     unreadCounts: unreadCounts,
   })
+}
+
+export const uploadFileAndSendMessage = async (senderId, receiverId, file) => {
+  if (!file) return
+
+  const chatId = generateChatId(senderId, receiverId)
+  const storageRef = ref(storage, `chats/${chatId}/${file.name}`)
+
+  try {
+    const snapshot = await uploadBytes(storageRef, file)
+    const downloadURL = await getDownloadURL(snapshot.ref)
+
+    const messageData = {
+      senderId,
+      file: {
+        name: file.name,
+        url: downloadURL,
+      },
+      timestamp: serverTimestamp(),
+    }
+
+    const messagesRef = collection(db, 'chats', chatId, 'messages')
+    const chatDocRef = doc(db, 'chats', chatId)
+
+    await addDoc(messagesRef, messageData)
+    const chatDocSnap = await getDoc(chatDocRef)
+    let unreadCounts = {}
+    if (chatDocSnap.exists()) {
+      unreadCounts = chatDocSnap.data().unreadCounts || {}
+    }
+    unreadCounts[receiverId] = (unreadCounts[receiverId] || 0) + 1
+    unreadCounts[senderId] = 0
+
+    await updateDoc(chatDocRef, {
+      lastMessage: messageData,
+      unreadCounts: unreadCounts,
+    })
+  } catch (error) {
+    console.error('Error uploading file:', error)
+    throw error
+  }
 }
 
 export const listenForMessages = (senderId, receiverId, callback) => {

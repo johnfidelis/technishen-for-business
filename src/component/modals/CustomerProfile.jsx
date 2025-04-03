@@ -192,14 +192,14 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
               </Box>
             </Box>
           </Box>
-        </Box>
-        <Box sx={bodyStyle}>
+
           <Typography
             variant="subtitle2"
             // sx={{ fontWeight: 00, fontSize: '1em' }}
           >
             Customer Details
           </Typography>
+
           <Divider
             sx={{
               my: '0.3em',
@@ -294,7 +294,8 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
             <Tab label="History" />
             <Tab label="Chat to Vivica" />
           </Tabs>
-
+        </Box>
+        <Box sx={bodyStyle}>
           <Box mt="1em">
             {/* Current Tickets */}
             {rightTabIndex === 0 && (
@@ -360,10 +361,10 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
                 </Box>
               </Box>
             )}
-
-            {rightTabIndex === 2 && <ChatTab />}
           </Box>
+          {rightTabIndex === 2 && <ChatTab />}
         </Box>
+
         <ViewMoreDetailsModal
           open={viewMoreOpen}
           onClose={() => setViewMoreOpen(false)}
