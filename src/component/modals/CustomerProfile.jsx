@@ -21,6 +21,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import BookingsTab from './component/BookingsTab'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { useFetchData } from '@/hooks/useApiService'
+import profileAddIcon from '../../assets/images/profileAddIcon.svg'
 
 const CustomerProfile = ({ open, onClose, user, type }) => {
   const [rightTabIndex, setRightTabIndex] = React.useState(0)
@@ -113,7 +114,16 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
                 width: '3.75em',
                 height: '3.75em',
               }}
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNiAaKk2O5kUsjqJP01k24EW93PnSHjuJLTA&s" // Replace with actual avatar source
+              // src={!tickets ?  "https://technishenbackend.onrender.com" + tickets?.employee_details?.photo : profileAddIcon } // Replace with actual avatar source
+              src={
+                !tickets
+                  ? profileAddIcon
+                  : type === 'employee'
+                    ? 'https://technishenbackend.onrender.com' +
+                      tickets?.employee_details?.photo
+                    : 'https://technishenbackend.onrender.com' +
+                      tickets?.customer_details?.photo
+              }
             />
             <Box>
               <Typography
@@ -122,6 +132,7 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
                   fontWeight: 400,
                   color: '#000',
                   fontSize: '1.125em',
+                  textTransform: 'capitalize',
                 }}
               >
                 {!tickets ? (
@@ -197,7 +208,8 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
             variant="subtitle2"
             // sx={{ fontWeight: 00, fontSize: '1em' }}
           >
-            Customer Details
+            {/* Customer Details */}
+            Caller Details
           </Typography>
 
           <Divider

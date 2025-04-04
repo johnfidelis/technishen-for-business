@@ -77,7 +77,7 @@ const TopBar = ({ ownerName, ownerImage }) => {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar
             src={ownerImage}
-            alt="Profile Picture"
+            // alt="Profile Picture"
             sx={{ width: 32, height: 32, marginRight: 1 }}
           />
           <Button

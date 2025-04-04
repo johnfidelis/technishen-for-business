@@ -28,7 +28,8 @@ import { getMinDateForAge } from './utils/calenderManipulation'
 const CustomerForm = () => {
   const { theme } = useContext(ThemeContext)
   const minDate = getMinDateForAge(18)
-
+  const [long, setLong] = useState(null)
+  const [lat, setLat] = useState(null)
   const [reloadKey, setReloadKey] = useState(Date.now())
   const createCustomer = useCreateData(
     POST_ENDPOINTS.CREATE_CUSTOMER,
@@ -49,7 +50,8 @@ const CustomerForm = () => {
     id_number: '',
     email: '',
     business_name: '',
-
+    longitude: null,
+    latitude: null,
     officeNumber: '',
     industry: '',
     reg_number: '',
@@ -117,6 +119,8 @@ const CustomerForm = () => {
         parsedAddress?.state +
         ' ' +
         parsedAddress?.country,
+      longitude: parsedAddress?.longitude,
+      latitude: parsedAddress?.latitude,
     }))
 
     setLong(parsedAddress?.longitude)
@@ -199,6 +203,8 @@ const CustomerForm = () => {
             'identity_type',
             'id_number',
             'email',
+            //  'longitude',
+            //   'latitude',
           ]
         : [
             'first_name',

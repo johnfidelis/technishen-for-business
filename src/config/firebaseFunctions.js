@@ -18,11 +18,6 @@ export const generateChatId = (id1, id2) => {
   return [id1, id2].sort().join('_')
 }
 
-// export const generateChatId = (id1, id2) => {
-//     const sortedIds = [id1, id2].sort();
-//     return sortedIds.join('_');
-//   };
-
 export const sendMessage = async (senderId, receiverId, text) => {
   if (!text.trim()) return
 

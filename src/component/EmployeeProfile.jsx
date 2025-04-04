@@ -347,10 +347,18 @@ const EmployeeProfile = ({ employeeId }) => {
                   >
                     <GoogleMap
                       mapContainerStyle={mapContainerStyle}
-                      center={center}
+                      center={{
+                        lat: employeeData?.latitude,
+                        lng: employeeData?.longitude,
+                      }}
                       zoom={10}
                     >
-                      <Marker position={center} />
+                      <Marker
+                        position={{
+                          lat: employeeData?.latitude,
+                          lng: employeeData?.longitude,
+                        }}
+                      />
                     </GoogleMap>
                   </LoadScript>
 

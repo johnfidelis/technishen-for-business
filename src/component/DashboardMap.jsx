@@ -229,7 +229,7 @@ const DashboardMap = () => {
           variant="contained"
           onClick={() => setTableOpen(true)}
         >
-          Open Table
+          User List
         </Button>
       </Box>
       <GoogleMap

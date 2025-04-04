@@ -47,6 +47,8 @@ const Page = () => {
     identity_type: 'Passport',
     id_number: '',
     position: '',
+    longitude: null,
+    latitude: null,
     password: '00000000',
     profile_picture: null,
   })
@@ -144,6 +146,8 @@ const Page = () => {
         parsedAddress?.state +
         ' ' +
         parsedAddress?.country,
+      longitude: parsedAddress?.longitude,
+      latitude: parsedAddress?.latitude,
     }))
 
     setLong(parsedAddress?.longitude)
