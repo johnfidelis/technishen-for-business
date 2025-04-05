@@ -42,7 +42,8 @@ import { SentimentDissatisfied } from '@mui/icons-material'
 
 const DashboardMap = () => {
   // const libraries = useMemo(() => ['places'], [])
-  const libraries = useMemo(() => [], [])
+  // const libraries = useMemo(() => [], [])
+  const libraries = useMemo(() => ['places'], [])
   const cookies = new Cookies()
   const businessName = cookies.get('businessName')
   const { theme } = useContext(ThemeContext)
