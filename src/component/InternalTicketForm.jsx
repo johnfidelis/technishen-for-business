@@ -571,8 +571,11 @@ const InternalTicketForm = () => {
 
           {/* Priority */}
           {/* <PriorityCalculator impact={impact} urgency={urgency} /> */}
-          <PriorityCalculator impact={impact} urgency={urgency} setPriority={setPriority} />
-
+          <PriorityCalculator
+            impact={impact}
+            urgency={urgency}
+            setPriority={setPriority}
+          />
 
           {/* Assignment Group */}
           <TextField

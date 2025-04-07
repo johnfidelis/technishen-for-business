@@ -15,7 +15,7 @@ import {
   Autocomplete,
   Button,
 } from '@mui/material'
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ChatTab from './modals/component/ChatTab'
 import BookingsTab from './modals/component/BookingsTab'
 import TicketDetails from './modals/TicketDetails'
@@ -107,13 +107,13 @@ const ViewOutsouredDetailsCard = ({ ticket, ticketId }) => {
   }
 
   const lifecycle = [
-    { status: "Ticket Booked" },
-    { status: "Ticket Accepted" },
-    { status: "Start Trip" },
-    { status: "Fulfiller Arrived" },
-    { status: "Ticket has been started" },
-    { status: "Ticket has been completed" },
-  ];
+    { status: 'Ticket Booked' },
+    { status: 'Ticket Accepted' },
+    { status: 'Start Trip' },
+    { status: 'Fulfiller Arrived' },
+    { status: 'Ticket has been started' },
+    { status: 'Ticket has been completed' },
+  ]
 
   const handleAssignTicket = async () => {
     const formData = new FormData()

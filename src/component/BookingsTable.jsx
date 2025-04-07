@@ -32,7 +32,7 @@ const BookingsTable = ({ customerId, ticketType }) => {
 
   // Fetch data using the selected endpoint
   const { data: bookings, isLoading } = useFetchData(endpoint)
-  console.log('Bookings:', {bookings})
+  console.log('Bookings:', { bookings })
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)

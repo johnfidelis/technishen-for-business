@@ -323,9 +323,10 @@ const TicketTable = ({ filterType, setNumber }) => {
                     <TableRow
                       key={ticket.id}
                       onClick={() =>
-                        router.push(`/dashboard/ticket/i/outsource/${ticket.id}`)
+                        router.push(
+                          `/dashboard/ticket/i/outsource/${ticket.id}`,
+                        )
                       }
-
                       hover
                     >
                       <TableCell>{ticket.ticket_number}</TableCell>
