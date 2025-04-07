@@ -230,7 +230,7 @@ const DashboardMap = () => {
           variant="contained"
           onClick={() => setTableOpen(true)}
         >
-          User List
+          Ticket List
         </Button>
       </Box>
       <GoogleMap
@@ -464,7 +464,7 @@ const DashboardMap = () => {
           </Box>
           <Box sx={headerStyle}>
             <Typography variant="h6" gutterBottom>
-              Users List
+              Ticket List
             </Typography>
           </Box>
           <Box sx={bodyStyle}>

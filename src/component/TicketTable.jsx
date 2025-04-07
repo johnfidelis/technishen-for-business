@@ -322,9 +322,9 @@ const TicketTable = ({ filterType, setNumber }) => {
                   .map((ticket) => (
                     <TableRow
                       key={ticket.id}
-                      // onClick={() =>
-                      //   router.push(`/dashboard/ticket/i/${ticket.id}`)
-                      // }
+                      onClick={() =>
+                        router.push(`/dashboard/ticket/i/outsource/${ticket.id}`)
+                      }
 
                       hover
                     >

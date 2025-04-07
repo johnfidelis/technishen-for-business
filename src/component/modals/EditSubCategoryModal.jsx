@@ -104,8 +104,12 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
       submissionData.append('status', formData.status)
       submissionData.append('price_type', formData.price_type)
       submissionData.append('price_visibility', formData.price_visibility)
-      if (formData.sub_service_images)
+      if (
+        formData.sub_service_images instanceof File ||
+        formData.sub_service_images instanceof Blob
+      ) {
         submissionData.append('sub_service_images', formData.sub_service_images)
+      }
 
       await updateSubCategory(submissionData)
       toast.success('Sub-category updated successfully!')
