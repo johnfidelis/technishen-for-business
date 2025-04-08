@@ -120,7 +120,7 @@ const ServiceCatalog = () => {
       categoryFormData.append('sub_service[cost]', subCategory.cost)
       categoryFormData.append(
         'sub_service[allow_remote_work]',
-        subCategory.allow_remote_work || 'false',
+        subCategory.allow_remote_work == 'Yes' ? true : false,
       )
       categoryFormData.append(
         'sub_service[status]',
@@ -132,7 +132,7 @@ const ServiceCatalog = () => {
       )
       categoryFormData.append(
         'sub_service[price_visibility]',
-        subCategory.price_visibility || 'public',
+        subCategory.price_visibility == 'Yes' ? true : false,
       )
 
       if (subCategory.sub_service_image) {

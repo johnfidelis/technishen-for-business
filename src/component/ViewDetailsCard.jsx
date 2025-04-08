@@ -24,6 +24,7 @@ import { useFetchData, usePatchData } from '@/hooks/useApiService'
 import { Cookies } from 'react-cookie'
 import { toast } from 'react-toastify'
 import { PATCH_ENDPOINTS } from '@/constants/endpoints'
+import EmployeeCustomerProfile from './modals/EmployeeCustomerProfile'
 
 const ViewDetailsCard = ({ ticket, ticketId }) => {
   const { theme } = useContext(ThemeContext)
@@ -32,6 +33,8 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
   const [rightTabIndex, setRightTabIndex] = useState(0)
   const cookies = new Cookies()
   const businessId = cookies.get('selectedBusinessId')
+  const [employeeModalOpen, setEmployeeModalOpen] = useState(false)
+  const [selectedMarker, setSelectedMarker] = useState(null)
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1000)
   }, [])
@@ -83,6 +86,12 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
     }
   }, [groups])
 
+  const handleOpenClick = (selectedUser) => {
+    setSelectedMarker(selectedUser)
+
+    setEmployeeModalOpen(true)
+  }
+
   const handleClose = () => {
     setViewMoreOpen(false)
   }
@@ -120,10 +129,12 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
   // }
 
   const handleAssignTicket = async () => {
+    setLoadingEmployees(true)
     const formData = new FormData()
     formData.append('fulfiller_group_id', assignmentGroup)
     formData.append('employee_id', assignTo.id)
     patchData(formData)
+    setLoadingEmployees(false)
   }
 
   return (
@@ -307,7 +318,15 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
 
             {/* Client Details */}
             <Box>
-              <Typography variant="body2" sx={{ display: 'flex' }}>
+              <Typography
+                variant="body2"
+                sx={{ display: 'flex' }}
+                onClick={
+                  ticket?.employee_details?.first_name
+                    ? () => handleOpenClick(ticket?.employee_details)
+                    : null
+                }
+              >
                 Fulfiller Name:{' '}
                 <span
                   style={{
@@ -316,8 +335,8 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
                   }}
                 >
                   {' '}
-                  {ticket?.employee_details?.assigned_to?.name || ''}
-                  {'N/A'}
+                  {ticket?.employee_details?.first_name || 'N/A'}
+                  {ticket?.employee_details?.last_name || ''}
                 </span>
               </Typography>
               <Typography
@@ -539,6 +558,12 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
         ticketData={selectedTicket}
         open={viewMoreOpen}
         onClose={handleClose}
+      />
+
+      <EmployeeCustomerProfile
+        open={employeeModalOpen}
+        onClose={() => setEmployeeModalOpen(false)}
+        userId={selectedMarker?.id}
       />
     </Box>
   )

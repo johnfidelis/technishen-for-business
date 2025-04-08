@@ -185,6 +185,7 @@ const ViewTicketDetails = ({ ticketId }) => {
               value={ticket?.ticket_details?.description}
               onChange={(e) => setDescription(e.target.value)}
               variant="outlined"
+              InputLabelProps={{ shrink: true }}
             />
           ) : (
             <Box>

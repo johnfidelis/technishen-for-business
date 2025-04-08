@@ -206,8 +206,8 @@ const EditSubCategoryModal = ({ open, onClose, subCategory }) => {
             onChange={handleChange}
             sx={{ mb: 2 }}
           >
-            <MenuItem value="Yes">Yes</MenuItem>
-            <MenuItem value="No">No</MenuItem>
+            <MenuItem value={'Yes' || true}>Yes</MenuItem>
+            <MenuItem value={'No' || false}>No</MenuItem>
           </TextField>
           <Box
             sx={{
