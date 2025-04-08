@@ -48,7 +48,9 @@ export default function Page() {
           >
             All Fulfillers {`(${number})`}
             <Tooltip
-              title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
+              title="This page shows all employees who are designated as fulfillers. You can view their details, assignments, or reassign them as needed.
+
+"
               arrow
             >
               <IconButton size="small">

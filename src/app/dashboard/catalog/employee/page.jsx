@@ -35,7 +35,9 @@ const Page = () => {
           >
             Manage Employee Catalog {`(${number})`}
             <Tooltip
-              title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
+              title="TThis page lets you manage all employee profiles. You can add new staff, edit existing details, or deactivate accounts.
+
+"
               arrow
             >
               <IconButton size="small">

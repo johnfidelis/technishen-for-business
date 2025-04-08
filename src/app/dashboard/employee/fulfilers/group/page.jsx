@@ -36,7 +36,9 @@ export default function FulfillerGroupPage() {
         >
           Fulfillers Group {`(${number})`}
           <Tooltip
-            title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
+            title="This page allows you to create and manage groups of fulfillers for easier ticket distribution and team coordination.
+
+"
             arrow
           >
             <IconButton size="small">

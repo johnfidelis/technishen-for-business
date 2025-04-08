@@ -49,7 +49,9 @@ export default function Page() {
         >
           All Tickets {`(${number})`}
           <Tooltip
-            title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
+            title="This page shows every ticket in the system—open, assigned, resolved, and unassigned. Use this overview to manage and track all ticket activity.
+
+"
             arrow
           >
             <IconButton size="small">

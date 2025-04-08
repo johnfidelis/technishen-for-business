@@ -49,7 +49,9 @@ export default function Page() {
         >
           Resolved Tickets {`(${number})`}
           <Tooltip
-            title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
+            title="This page displays tickets that have been marked as resolved. You can review past resolutions or reopen them if necessary.
+
+"
             arrow
           >
             <IconButton size="small">

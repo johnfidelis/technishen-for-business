@@ -36,7 +36,9 @@ const Page = () => {
           >
             Manage Customer Catalog {`(${number})`}
             <Tooltip
-              title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
+              title="This page allows you to view, add, or update customer records. Manage your customer list efficiently from here.
+
+."
               arrow
             >
               <IconButton size="small">

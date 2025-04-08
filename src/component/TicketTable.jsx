@@ -56,10 +56,10 @@ const TicketTable = ({ filterType, setNumber }) => {
         assigned: ticketsData.assigned_tickets?.length || 0,
         open: (ticketsData.assigned_tickets || []).filter(
           (ticket) => ticket.status === 'Open',
-        ).length,
+        )?.length,
         resolved: (ticketsData.assigned_tickets || []).filter(
           (ticket) => ticket.status === 'Resolved',
-        ).length,
+        )?.length,
         all:
           (ticketsData.unassigned_tickets?.length || 0) +
           (ticketsData.assigned_tickets?.length || 0),
@@ -293,7 +293,7 @@ const TicketTable = ({ filterType, setNumber }) => {
                     ))}
                   </TableRow>
                 ))
-              ) : outsourcedTicketsData.length === 0 ? (
+              ) : outsourcedTicketsData?.length === 0 ? (
                 <TableRow>
                   <TableCell
                     colSpan={8}
@@ -346,7 +346,7 @@ const TicketTable = ({ filterType, setNumber }) => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 15]}
             component="div"
-            count={ticketList.length}
+            count={ticketList?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -395,7 +395,7 @@ const TicketTable = ({ filterType, setNumber }) => {
                     ))}
                   </TableRow>
                 ))
-              ) : ticketList.length === 0 ? (
+              ) : ticketList?.length === 0 ? (
                 <TableRow>
                   <TableCell
                     colSpan={9}

@@ -118,7 +118,7 @@ const Page = () => {
           >
             Fulfillers in {employeeData?.group_name || 'Group'}
             <Tooltip
-              title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
+              title={`This page displays all fulfillers who are part of the ${employeeData?.group_name || ''} Group. Use this view to manage group members or update group assignments.`}
               arrow
             >
               <IconButton size="small">

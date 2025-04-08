@@ -49,7 +49,9 @@ export default function Page() {
         >
           Open Tickets {`(${number})`}
           <Tooltip
-            title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
+            title="This page shows all tickets that are currently active and unresolved, whether assigned or unassigned. Use this view to track ongoing issues.
+
+"
             arrow
           >
             <IconButton size="small">

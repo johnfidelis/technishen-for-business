@@ -37,7 +37,9 @@ export default function Page() {
           >
             All Employees {`(${number})`}
             <Tooltip
-              title="This page displays all open tickets that are currently unassigned. You can take action to assign or manage these tickets."
+              title="This page displays a complete list of all employees in the system, regardless of their role or group. Use this view to monitor or manage your workforce.
+
+"
               arrow
             >
               <IconButton size="small">
