@@ -20,12 +20,15 @@ import {
   CircularProgress,
   Grid,
   Autocomplete,
+  IconButton,
 } from '@mui/material'
 import { SentimentDissatisfied } from '@mui/icons-material'
 import { useCreateData, useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS, POST_ENDPOINTS } from '@/constants/endpoints'
 import { ThemeContext } from '@/context/ThemeContext'
 import { toast } from 'react-toastify'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
@@ -33,9 +36,14 @@ export default function Page() {
   const { id } = useParams()
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const shouldFetch = debouncedQuery?.trim()?.length > 0
+  const [openFulfillerGroup, setOpenFulfillerGroup] = useState([])
   const { data, isLoading } = useFetchData(
     GET_ENDPOINTS.GET_FULFILLER_GROUP(id),
   )
+
+  useEffect(() => {
+    setOpenFulfillerGroup(data?.services)
+  }, [data])
   const [selectedId, setSelectedId] = useState(null)
 
   const addAndRemoveExpert = useCreateData(
@@ -51,7 +59,6 @@ export default function Page() {
   const [selectedCaller, setSelectedCaller] = useState(null)
 
   const [options, setOptions] = useState([])
-  const [openFulfillerGroup, setOpenFulfillerGroup] = useState([])
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
@@ -191,19 +198,22 @@ export default function Page() {
                     Profile Picture
                   </TableCell>
                   <TableCell sx={{ fontSize: '0.80em', fontWeight: 300 }}>
-                    Name
+                    Categories
                   </TableCell>
                   <TableCell sx={{ fontSize: '0.80em', fontWeight: 300 }}>
                     Status
                   </TableCell>
                   <TableCell sx={{ fontSize: '0.80em', fontWeight: 300 }}>
-                    Type
+                    Sub Categories
+                  </TableCell>
+                  <TableCell sx={{ fontSize: '0.80em', fontWeight: 300 }}>
+                    Actions
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {isLoading ? (
-                  Array.from({ length: 4 }).map((_, index) => (
+                  Array.from({ length: 5 }).map((_, index) => (
                     <TableRow key={index}>
                       <TableCell>
                         <Skeleton variant="circular" width={50} height={50} />
@@ -222,7 +232,7 @@ export default function Page() {
                 ) : openFulfillerGroup?.length === 0 ? (
                   <TableRow>
                     <TableCell
-                      colSpan={4}
+                      colSpan={5}
                       sx={{ textAlign: 'center', padding: '2em' }}
                     >
                       <Box
@@ -247,7 +257,7 @@ export default function Page() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  openFulfillerGroup.map((item) => (
+                  openFulfillerGroup?.map((item) => (
                     <TableRow
                       key={item?.id}
                       sx={{
@@ -269,7 +279,32 @@ export default function Page() {
                         {item?.status}
                       </TableCell>
                       <TableCell sx={{ fontSize: '0.75em', fontWeight: 500 }}>
-                        {item?.type}
+                        {item?.associated_sub_services?.length}
+                        <IconButton>
+                          <VisibilityIcon
+                            style={{ cursor: 'pointer' }}
+                            onClick={() =>
+                              router.push(`/dashboard/catalog/${item?.id}`)
+                            }
+                          />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>
+                        <Typography
+                          variant="subtitle2"
+                          sx={{
+                            // fontSize: '0.80em',
+                            color: 'red',
+                            display: 'flex',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            '&:hover': { textDecoration: 'underline' },
+                          }}
+                        >
+                          <DeleteIcon
+                            sx={{ fontSize: '2em', marginLeft: '4px' }}
+                          />
+                        </Typography>
                       </TableCell>
                     </TableRow>
                   ))

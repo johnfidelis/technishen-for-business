@@ -46,7 +46,7 @@ const DashboardMap = () => {
   const businessName = cookies.get('businessName')
   const { theme } = useContext(ThemeContext)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10))
@@ -548,7 +548,7 @@ const DashboardMap = () => {
             </Typography>
           </Box>
           <Box sx={bodyStyle}>
-            <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+            {/* <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
               <Table>
                 <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
                   <TableRow>
@@ -641,6 +641,64 @@ const DashboardMap = () => {
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+              /> 
+            </TableContainer> */}
+
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Type</TableCell>
+                    <TableCell>Email</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {isLoading ? (
+                    Array.from({ length: rowsPerPage }).map((_, index) => (
+                      <TableRow key={index}>
+                        <TableCell colSpan={3}>
+                          <Skeleton variant="rectangular" height={40} />
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : paginatedLocations.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={3} align="center">
+                        <SentimentDissatisfied
+                          color="disabled"
+                          fontSize="large"
+                        />
+                        <Typography variant="body2" color="textSecondary">
+                          No Tickets Found
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    paginatedLocations.map((location, index) => (
+                      <TableRow
+                        key={index}
+                        hover
+                        onClick={() => handleRowClick(location)}
+                        sx={{ cursor: 'pointer' }}
+                      >
+                        <TableCell>{location.name}</TableCell>
+
+                        <TableCell>{location.email}</TableCell>
+                        <TableCell>{location.ticketType}</TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+              <TablePagination
+                component="div"
+                count={filteredLocations.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                rowsPerPageOptions={[10, 20, 50]}
               />
             </TableContainer>
           </Box>
