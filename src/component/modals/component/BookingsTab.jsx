@@ -22,6 +22,7 @@ import { formatDateTime } from '@/component/utils/formatDateTime'
 import { Cookies } from 'react-cookie'
 import EmployeeCustomerProfile from '../EmployeeCustomerProfile'
 import { buildEndpoint } from '@/lib/apiHelpers'
+import { toast } from 'react-toastify'
 
 const BookingsTab = ({ customerId, ticketType }) => {
   const { theme } = useContext(ThemeContext)
@@ -103,23 +104,73 @@ const BookingsTab = ({ customerId, ticketType }) => {
   const handleEmployeeSearch = (value) => {
     console.log(`Searching for employee: ${value}`)
   }
+  const [assignLoading, setAssignLoading] = useState(false)
+  const handleAssignTicket = async (id) => {
+    try {
+      setAssignLoading(true)
+      setTicketId(id)
+      const formData = new FormData()
+      formData.append('fulfiller_group_id', assignmentGroup)
+      formData.append('employee_id', assignTo.id)
+
+      await patchAssignData(formData)
+      toast.success('Ticket assigned successfully!', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+      setAssignmentGroup('')
+      setAssignTo(null)
+    } catch (error) {
+      toast.error('Failed to assign ticket.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } finally {
+      setAssignLoading(false)
+    }
+  }
 
   const handleReassignTicket = async (id) => {
-    setTicketId(id)
-    const formData = new FormData()
-    formData.append('fulfiller_group_id', assignmentGroup)
-    formData.append('employee_id', assignTo.id)
-    // formData.append('new_employee_id,', assignTo.id)
-    patchData(formData)
+    try {
+      setAssignLoading(true)
+      setTicketId(id)
+      const formData = new FormData()
+      formData.append('fulfiller_group_id', assignmentGroup)
+      formData.append('employee_id', assignTo.id)
+
+      await patchData(formData)
+      toast.success('Ticket reassigned successfully!', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+      setAssignmentGroup('')
+      setAssignTo(null)
+    } catch (error) {
+      toast.error('Failed to reassign ticket.', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } finally {
+      setAssignLoading(false)
+    }
   }
 
-  const handleAssignTicket = async (id) => {
-    setTicketId(id)
-    const formData = new FormData()
-    formData.append('fulfiller_group_id', assignmentGroup)
-    formData.append('employee_id', assignTo.id)
-    patchAssignData(formData)
-  }
+  // const handleReassignTicket = async (id) => {
+  //   setTicketId(id)
+  //   const formData = new FormData()
+  //   formData.append('fulfiller_group_id', assignmentGroup)
+  //   formData.append('employee_id', assignTo.id)
+  //   // formData.append('new_employee_id,', assignTo.id)
+  //   patchData(formData)
+  // }
+
+  // const handleAssignTicket = async (id) => {
+  //   setTicketId(id)
+  //   const formData = new FormData()
+  //   formData.append('fulfiller_group_id', assignmentGroup)
+  //   formData.append('employee_id', assignTo.id)
+  //   patchAssignData(formData)
+  // }
 
   return (
     <Box>
@@ -368,9 +419,10 @@ const BookingsTab = ({ customerId, ticketType }) => {
                   padding: '0.75rem 0.75em',
                   width: '30%',
                 }}
-                // disabled={ticket?.employee_details !== null}
+                disabled={assignLoading}
               >
-                {loadingEmployees ? (
+                {/* {loadingEmployees ? ( */}
+                {assignLoading ? (
                   <CircularProgress size={24} color="inherit" />
                 ) : ticket?.assigned_to == null ? (
                   'Assign Ticket'

@@ -18,6 +18,8 @@ export const POST_ENDPOINTS = {
     `/add-employees-to-fulfiller-group/${groupId}/`,
   CREATE_SUB_CATALOG: (serviceId) => `/create-sub-category/${serviceId}/`,
   CREATE_NOTE: (ticketId) => `/ticket/${ticketId}/notes/`,
+  ADD_CATEGORY_TO_GROUP: (groupId) =>
+    `/add-catalogues-to-fulfiller-group/${groupId}/`,
 }
 export const PATCH_ENDPOINTS = {
   BUSINESS_OWNER_PROFILE: '/business-owner-profile/',
@@ -72,12 +74,15 @@ export const GET_ENDPOINTS = {
     `/customer-ticket-history/${customerId}/${getBusinessId()}`,
   EMPLOYEE_TICKET_HISTORY: (customerId) =>
     `/all-tickets-assigned-to-employee/${customerId}/${getBusinessId()}`,
+  // EMPLOYEE_IN_CATEGORY: (id) => `/add-catalogues-to-fulfiller-group/${id}/`,
 
   ALL_EMPLOYEE: `/all-employees/${getBusinessId()}`,
   ALL_CUSTOMER: `/all-customers/${getBusinessId()}`,
   ALL_FULFILLER_GROUPS: `/all-fulfiller-groups/${getBusinessId()}`,
   GET_EMPLOYEE: (employeeId) =>
     `/get-employee/${getBusinessId()}/${employeeId}/`,
+  GET_EMPLOYEE_SERVICES: (employeeId) =>
+    `/services-employees-have/${employeeId}/`,
   GET_CUSTOMER: (employeeId) =>
     `/get-customer/${getBusinessId()}/${employeeId}/`,
   GET_FULFILLER_GROUP: (groupId) =>

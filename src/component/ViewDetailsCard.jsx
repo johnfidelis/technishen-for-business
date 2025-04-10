@@ -155,7 +155,11 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
         ) : (
           <Avatar
             sx={{ width: '3.75em', height: '3.75em' }}
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNiAaKk2O5kUsjqJP01k24EW93PnSHjuJLTA&s"
+            src={
+              'https://technishenbackend.onrender.com' +
+                ticket?.customer_details?.profile_picture ||
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNiAaKk2O5kUsjqJP01k24EW93PnSHjuJLTA&s'
+            }
           />
         )}
 

@@ -21,6 +21,7 @@ import { SentimentDissatisfied } from '@mui/icons-material'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { useRouter } from 'next/navigation'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 
 const FulfillerGroupTable = ({ setNumber }) => {
   const router = useRouter()
@@ -164,31 +165,69 @@ const FulfillerGroupTable = ({ setNumber }) => {
                 .map((group) => (
                   <TableRow
                     key={group.id}
-                    onClick={() =>
-                      router.push(
-                        `/dashboard/employee/fulfilers/group/${group.id}`,
-                      )
-                    }
                     sx={{
                       cursor: 'pointer',
                       '&:hover': { backgroundColor: '#f5f5f5' },
                     }}
                     hover
                   >
-                    <TableCell>{group.group_name}</TableCell>
+                    <TableCell
+                      onClick={() =>
+                        router.push(
+                          `/dashboard/employee/fulfilers/group/categories/${group.id}`,
+                        )
+                      }
+                    >
+                      {group.group_name}
+                    </TableCell>
                     <TableCell sx={{ textAlign: 'center' }}>
                       {group?.employees?.length}
+
+                      <VisibilityIcon
+                        style={{ cursor: 'pointer', color: 'gray' }}
+                        onClick={() =>
+                          router.push(
+                            `/dashboard/employee/fulfilers/group/${group.id}`,
+                          )
+                        }
+                      />
                     </TableCell>
-                    <TableCell sx={{ textAlign: 'center' }}>
+                    <TableCell
+                      sx={{ textAlign: 'center' }}
+                      onClick={() =>
+                        router.push(
+                          `/dashboard/employee/fulfilers/group/categories/${group.id}`,
+                        )
+                      }
+                    >
                       {group?.services?.length}
                     </TableCell>
-                    <TableCell sx={{ textAlign: 'center' }}>
+                    <TableCell
+                      sx={{ textAlign: 'center' }}
+                      onClick={() =>
+                        router.push(
+                          `/dashboard/employee/fulfilers/group/categories/${group.id}`,
+                        )
+                      }
+                    >
                       {group?.sub_services?.length}
                     </TableCell>
-                    <TableCell>
+                    <TableCell
+                      onClick={() =>
+                        router.push(
+                          `/dashboard/employee/fulfilers/group/categories/${group.id}`,
+                        )
+                      }
+                    >
                       {new Date(group.created_at).toLocaleDateString()}
                     </TableCell>
-                    <TableCell>
+                    <TableCell
+                      onClick={() =>
+                        router.push(
+                          `/dashboard/employee/fulfilers/group/categories/${group.id}`,
+                        )
+                      }
+                    >
                       {new Date(group.updated_at).toLocaleDateString()}
                     </TableCell>
                   </TableRow>

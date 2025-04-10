@@ -73,8 +73,8 @@ const EmployeeProfile = ({ open, onClose, user }) => {
             <Avatar
               sx={{ width: '3.75em', height: '3.75em' }}
               src={
-                'https://technishenbackend.onrender.com' +
-                  user?.profile_picture || 'https://via.placeholder.com/150'
+                user?.image ||
+                'https://technishenbackend.onrender.com' + user?.profile_picture
               }
             />
             <Box>
@@ -249,7 +249,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
                 </Box>
               </Box>
             )}
-            {rightTabIndex === 1 && <CategoriesTab />}
+            {rightTabIndex === 1 && <CategoriesTab employeeId={user?.id} />}
             {/* {rightTabIndex === 2 && <StaticBookingTab />} */}
             {rightTabIndex === 2 && (
               <BookingsTab customerId={user?.id} ticketType={'employee'} />

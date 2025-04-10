@@ -41,14 +41,12 @@ import CloseIcon from '@mui/icons-material/Close'
 import { SentimentDissatisfied } from '@mui/icons-material'
 
 const DashboardMap = () => {
-  // const libraries = useMemo(() => ['places'], [])
-  // const libraries = useMemo(() => [], [])
   const libraries = useMemo(() => ['places'], [])
   const cookies = new Cookies()
   const businessName = cookies.get('businessName')
   const { theme } = useContext(ThemeContext)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10))
@@ -119,21 +117,70 @@ const DashboardMap = () => {
       ticketsData?.assigned_tickets?.map((ticket) => ({
         ticket_id: ticket.ticket_id,
         position: { lat: ticket.latitude, lng: ticket.longitude },
-        image: ticket.employee_image,
+        image: ticket.profile_picture,
         role: ticket.employee_role,
-        name: ticket.caller_first_name + ' ' + ticket.caller_last_name,
-        first_name: ticket.caller_first_name,
-        last_name: ticket.caller_last_name,
+        name: ticket.first_name + ' ' + ticket.last_name,
+        first_name: ticket.first_name,
+        last_name: ticket.last_name,
         ticketType: ticket.ticket_type,
-        email: ticket.caller_email,
+        email: ticket.email,
         address: ticket.address,
-        phone_number: ticket.caller_phone,
-        gender: ticket.caller_gender,
-        id: ticket.caller_id,
+        phone_number: ticket.phone_number,
+        gender: ticket.gender,
+        id: ticket.id,
         user: ticket.ticket_type == 'Internal' ? 'employee' : 'customer',
       })) || [],
     [ticketsData],
   )
+
+  // const locations = useMemo(() => {
+  //   const allTickets = [
+  //     ...(ticketsData?.assigned_tickets || []).map((ticket) => ({
+  //       ticket_id: ticket.ticket_id,
+  //       position: { lat: ticket.latitude, lng: ticket.longitude },
+  //       image: ticket.employee_image || profileAddIcon,
+  //       role: ticket.employee_role,
+  //       name: ticket.caller_first_name + ' ' + ticket.caller_last_name,
+  //       first_name: ticket.caller_first_name,
+  //       last_name: ticket.caller_last_name,
+  //       ticketType: ticket.ticket_type,
+  //       email: ticket.caller_email,
+  //       address: ticket.address,
+  //       phone_number: ticket.caller_phone,
+  //       gender: ticket.caller_gender,
+  //       id: ticket.caller_id,
+  //       user:
+  //         ticket.ticket_type === 'Internal'
+  //           ? 'employee'
+  //           : ticket.ticket_type === 'External'
+  //             ? 'customer'
+  //             : 'outsourced',
+  //     })),
+
+  //     ...(ticketsData?.outsourced_tickets || []).map((ticket) => {
+  //       const [first_name = 'not found', last_name = 'not found'] =
+  //         ticket.caller_name?.split(' ') || []
+  //       return {
+  //         ticket_id: ticket.ticket_id,
+  //         position: { lat: ticket.latitude, lng: ticket.longitude },
+  //         image: ticket.employee_image || profileAddIcon,
+  //         role: ticket.role,
+  //         name: ticket.caller_name || 'not found',
+  //         first_name,
+  //         last_name,
+  //         ticketType: ticket.ticket_type,
+  //         email: 'not found',
+  //         address: ticket.address || 'not found',
+  //         phone_number: 'not found',
+  //         gender: 'not found',
+  //         id: ticket.caller_id,
+  //         user: 'outsourced',
+  //       }
+  //     }),
+  //   ]
+
+  //   return allTickets
+  // }, [ticketsData])
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY,
@@ -144,17 +191,25 @@ const DashboardMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [showCustomers, setShowCustomers] = useState(true)
   const [showEmployees, setShowEmployees] = useState(true)
+  const [showOutsourced, setShowOutsourced] = useState(true)
   const [tableOpen, setTableOpen] = useState(false)
 
   const filteredLocations = useMemo(() => {
     return locations.filter((location) => {
       if (!showCustomers && location.user === 'customer') return false
       if (!showEmployees && location.user === 'employee') return false
+      if (!showOutsourced && location.user === 'outsourced') return false
       return true
     })
-  }, [showCustomers, showEmployees, locations])
+  }, [showCustomers, showEmployees, showOutsourced, locations])
 
-  console.log({ filteredLocations })
+  // Paginate filtered locations
+  const paginatedLocations = useMemo(() => {
+    return filteredLocations.slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage,
+    )
+  }, [filteredLocations, page, rowsPerPage])
 
   // 📌 Modal States
   const [customerModalOpen, setCustomerModalOpen] = useState(false)
@@ -188,6 +243,16 @@ const DashboardMap = () => {
       setCustomerModalOpen(true)
     } else if (selectedMarker?.user === 'employee') {
       setEmployeeModalOpen(true)
+    } else if (
+      selectedMarker?.user == 'outsourced' &&
+      selectedMarker?.role == 'Employee'
+    ) {
+      setEmployeeModalOpen(true)
+    } else if (
+      selectedMarker?.user == 'outsourced' &&
+      selectedMarker?.role == 'Customer'
+    ) {
+      setCustomerModalOpen(true)
     }
   }
 
@@ -235,7 +300,7 @@ const DashboardMap = () => {
       </Box>
       <GoogleMap
         options={mapOptions}
-        zoom={7}
+        zoom={10}
         center={mapCenter}
         mapContainerStyle={{
           width: '100%',
@@ -250,7 +315,8 @@ const DashboardMap = () => {
           <>
             {filteredLocations.map((location) => (
               <OverlayView
-                key={location.id}
+                // key={location.id}
+                // key={`${location.ticket_id}-${location.id}-${location.user}`}
                 position={location.position}
                 mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET} // Keeps it interactive
                 getPixelPositionOffset={(width, height) => ({
@@ -269,8 +335,9 @@ const DashboardMap = () => {
                     cursor: 'pointer',
                   }}
                 >
-                  <Image
-                    src={profileAddIcon}
+                  <img
+                    src={location?.image || profileAddIcon}
+                    // src='https://technishenbackend.onrender.com/images/employees/WhatsApp_Image_2025-03-20_at_15.58.21.jpeg'
                     alt={location.name}
                     style={{
                       width: '50px',
@@ -281,7 +348,7 @@ const DashboardMap = () => {
                     }}
                   />
 
-                  {location?.user == 'employee' ? (
+                  {location?.user === 'employee' ? (
                     <div
                       style={{
                         width: '10px',
@@ -291,7 +358,7 @@ const DashboardMap = () => {
                         marginTop: '-5px',
                       }}
                     />
-                  ) : (
+                  ) : location?.user === 'customer' ? (
                     <div
                       style={{
                         width: '10px',
@@ -301,6 +368,18 @@ const DashboardMap = () => {
                         marginTop: '-5px',
                       }}
                     />
+                  ) : location?.user === 'outsourced' ? (
+                    <div
+                      style={{
+                        width: '10px',
+                        height: '10px',
+                        backgroundColor: 'blue',
+                        borderRadius: '50%',
+                        marginTop: '-5px',
+                      }}
+                    />
+                  ) : (
+                    ''
                   )}
                 </div>
               </OverlayView>
@@ -325,8 +404,9 @@ const DashboardMap = () => {
                 cursor: 'pointer',
               }}
             >
-              <Image
-                src={Img1}
+              <img
+                src={selectedMarker?.image || profileAddIcon}
+                // src='https://technishenbackend.onrender.com/images/employees/WhatsApp_Image_2025-03-20_at_15.58.21.jpeg'
                 alt={selectedMarker.name}
                 style={{
                   width: '60px',
@@ -407,8 +487,8 @@ const DashboardMap = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                // checked={showEmployees}
-                // onChange={() => setShowEmployees(!showEmployees)}
+                  checked={showOutsourced}
+                  onChange={() => setShowOutsourced(!showOutsourced)}
                 />
               }
               label={
@@ -487,7 +567,7 @@ const DashboardMap = () => {
                         </TableCell>
                       ))}
                     </TableRow>
-                  ) : filteredLocations?.length === 0 ? (
+                  ) : paginatedLocations?.length === 0 ? (
                     <TableRow>
                       <TableCell
                         colSpan={4}
@@ -515,7 +595,7 @@ const DashboardMap = () => {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    filteredLocations.map((location) => (
+                    paginatedLocations.map((location) => (
                       <TableRow
                         key={location.id}
                         hover
@@ -523,12 +603,14 @@ const DashboardMap = () => {
                         onClick={() => handleRowClick(location)}
                       >
                         <TableCell>
-                          <Image
-                            src={profileAddIcon}
+                          <img
+                            src={location?.image || profileAddIcon}
                             alt={location.name}
-                            width={30}
-                            height={30}
-                            style={{ borderRadius: '50%' }}
+                            style={{
+                              borderRadius: '100%',
+                              height: '40px',
+                              width: '40px',
+                            }}
                           />
                         </TableCell>
                         <TableCell sx={{ fontSize: '0.75em', fontWeight: 300 }}>
@@ -552,14 +634,13 @@ const DashboardMap = () => {
                 </TableBody>
               </Table>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 15]}
+                rowsPerPageOptions={[5, 10, 20]}
                 component="div"
-                count={filteredLocations?.length}
+                count={filteredLocations.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-                sx={{ fontSize: '0.80em', fontFamily: 'Inter, sans-serif' }}
               />
             </TableContainer>
           </Box>
