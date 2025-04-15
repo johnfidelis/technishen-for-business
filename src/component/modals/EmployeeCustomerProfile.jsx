@@ -232,19 +232,7 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
                     fontSize: '0.80em',
                   }}
                 >
-                  ✓ 6 Successful Tickets{' '}
-                  <span
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.25em',
-                      color: '#F44336', // Red for cancelled tickets
-                      fontSize: '0.80em',
-                    }}
-                  >
-                    {' '}
-                    ❗ 1 Cancelled Ticket
-                  </span>
+                  {user?.completed_tickets || 0} Successful Tickets{' '}
                 </Typography>
 
                 <Box

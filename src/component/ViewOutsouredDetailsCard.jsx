@@ -165,12 +165,12 @@ const ViewOutsouredDetailsCard = ({ ticket, ticketId }) => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.25em',
+                color: '#4CAF50', // Green for successful tickets
                 fontSize: '0.80em',
-                color: '#4CAF50',
               }}
             >
-              ✓ 6 Successful Tickets{' '}
-              <span style={{ color: '#F44336' }}>❗ 1 Cancelled Ticket</span>
+              {ticket?.assigned_employee_profile?.completed_tickets || 0}{' '}
+              Successful Tickets{' '}
             </Typography>
           )}
         </Box>

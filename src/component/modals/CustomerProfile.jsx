@@ -143,7 +143,7 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
                   `${tickets?.customer_details?.first_name || ''} ${tickets?.customer_details?.last_name || ''}`
                 )}
               </Typography>
-              <Typography
+              {/* <Typography
                 variant="body2"
                 sx={{
                   display: 'flex',
@@ -154,20 +154,8 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
                 }}
               >
                 ✓ 6 Successful Tickets{' '}
-                <span
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.25em',
-                    color: '#F44336', // Red for cancelled tickets
-                    fontSize: '0.80em',
-                  }}
-                >
-                  {' '}
-                  ❗ 1 Cancelled Ticket
-                </span>
-              </Typography>
-              <Box
+              </Typography> */}
+              {/* <Box
                 display="flex"
                 alignItems="center"
                 justifyContent="space-between"
@@ -200,7 +188,7 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
                     5/5
                   </Typography>
                 </Box>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
 
