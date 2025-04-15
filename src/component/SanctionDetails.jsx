@@ -498,7 +498,9 @@ const SanctionDetails = ({ employeeId }) => {
       )}
 
       <Dialog open={openReasonModal} onClose={() => setOpenReasonModal(false)}>
-        <DialogTitle sx={{textTransform: "capitalize"}}>Provide Reason to {selectedAction} Employee</DialogTitle>
+        <DialogTitle sx={{ textTransform: 'capitalize' }}>
+          Provide Reason to {selectedAction} Employee
+        </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -512,12 +514,17 @@ const SanctionDetails = ({ employeeId }) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button     sx={{color: theme.primary_color || '#115093'}} onClick={() => setOpenReasonModal(false)}>Cancel</Button>
+          <Button
+            sx={{ color: theme.primary_color || '#115093' }}
+            onClick={() => setOpenReasonModal(false)}
+          >
+            Cancel
+          </Button>
           <Button
             onClick={handleConfirmAction}
             disabled={!reasonText.trim()}
             variant="contained"
-            sx={{backgroundColor: theme.primary_color || '#115093'}}
+            sx={{ backgroundColor: theme.primary_color || '#115093' }}
           >
             Confirm
           </Button>
