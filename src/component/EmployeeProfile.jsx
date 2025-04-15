@@ -205,7 +205,7 @@ const EmployeeProfile = ({ employeeId }) => {
   const handleConfirmAction = async () => {
     const payload = {
       target_type: 'employee',
-      target_id: selectedEmployeeId,
+      target_id: employeeId,
       action: selectedAction,
       reason: reasonText,
     }
