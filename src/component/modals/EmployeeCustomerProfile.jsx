@@ -26,6 +26,9 @@ import BookingsTab from './component/BookingsTab'
 import { useFetchData, usePatchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS, PATCH_ENDPOINTS } from '@/constants/endpoints'
 import { toast } from 'react-toastify'
+import StarIcon from '@mui/icons-material/Star'
+import StarHalfIcon from '@mui/icons-material/StarHalf'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
 
 // Dynamically import tabs for better performance
 const CategoriesTab = dynamic(() => import('./component/CategoriesTab'), {
@@ -218,6 +221,76 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
                 <Typography sx={{ fontWeight: 400, fontSize: '0.9em' }}>
                   {user?.role}
                 </Typography>
+
+                <Typography
+                  variant="body2"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.25em',
+                    color: '#4CAF50', // Green for successful tickets
+                    fontSize: '0.80em',
+                  }}
+                >
+                  ✓ 6 Successful Tickets{' '}
+                  <span
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.25em',
+                      color: '#F44336', // Red for cancelled tickets
+                      fontSize: '0.80em',
+                    }}
+                  >
+                    {' '}
+                    ❗ 1 Cancelled Ticket
+                  </span>
+                </Typography>
+
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mb="1em"
+                >
+                  <Box display="flex" alignItems="center" gap="0.25em">
+                    {[...Array(5)].map((_, index) => {
+                      const rating = user?.average_rating || 0
+                      const rounded = Math.floor(rating)
+                      const isHalf = rating - index >= 0.5 && rating - index < 1
+
+                      return (
+                        <Box
+                          key={index}
+                          component="span"
+                          sx={{ color: '#FFC107', fontSize: '1.25em' }}
+                        >
+                          {index + 1 <= rating ? (
+                            <StarIcon fontSize="inherit" />
+                          ) : isHalf && index === rounded ? (
+                            <StarHalfIcon fontSize="inherit" />
+                          ) : (
+                            <StarBorderIcon fontSize="inherit" />
+                          )}
+                        </Box>
+                      )
+                    })}
+
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: 400,
+                        backgroundColor: theme.primary_color || '#115093',
+                        borderRadius: '0.75em',
+                        padding: '0.225rem 0.5em',
+                        fontSize: '0.75em',
+                        color: '#fff',
+                      }}
+                    >
+                      {user?.average_rating?.toFixed(0)}/5
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Box>

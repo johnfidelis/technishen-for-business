@@ -301,51 +301,6 @@ const SanctionDetails = ({ employeeId }) => {
                     // justifyContent: 'center',
                   }}
                 >
-                  {/* <Button
-                    variant="contained"
-                    onClick={() =>
-                      employeeData?.user?.is_blocked
-                        ? handleUnBlockEmployee(employeeData?.user?.id)
-                        : handleBlockEmployee(employeeData?.user?.id)
-                    }
-                    sx={{
-                      backgroundColor: employeeData?.user?.is_blocked
-                        ? 'darkgreen'
-                        : 'darkred',
-                      '&:hover': {
-                        backgroundColor: employeeData?.user?.is_blocked
-                          ? 'green'
-                          : 'red',
-                      },
-                    }}
-                  >
-                    {employeeData?.user?.is_blocked ? 'Unblock' : 'Block'}{' '}
-                    Employee
-                  </Button>
-
-                
-                  <Button
-                    variant="contained"
-                    onClick={() =>
-                      employeeData?.user?.is_disabled
-                        ? handleEnableEmployee(employeeData?.user?.id)
-                        : handleDisableEmployee(employeeData?.user?.id)
-                    }
-                    sx={{
-                      backgroundColor: employeeData?.user?.is_disabled
-                        ? 'darkgreen'
-                        : 'darkred',
-                      '&:hover': {
-                        backgroundColor: employeeData?.user?.is_disabled
-                          ? 'green'
-                          : 'red',
-                      },
-                    }}
-                  >
-                    {employeeData?.user?.is_disabled ? 'Enable' : 'Disable'}{' '}
-                    Employee
-                  </Button> */}
-
                   <Button
                     variant="contained"
                     onClick={() =>
