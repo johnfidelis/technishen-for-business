@@ -21,7 +21,7 @@ import { Cookies } from 'react-cookie'
 const BusinessSelector = () => {
   const cookies = new Cookies()
   const { data, isLoading } = useFetchData(
-    GET_ENDPOINTS.BUSINESSES,
+    '/get-businesses/',
     'fetchBusinesses',
   )
   const [selectedBusiness, setSelectedBusiness] = useState('')

@@ -59,7 +59,7 @@ const Page = () => {
   const [errors, setErrors] = useState({})
 
   const createEmployee = useCreateData(
-    POST_ENDPOINTS.CREATE_EMPLOYEE,
+    POST_ENDPOINTS.CREATE_EMPLOYEE(),
     'createEmployee',
   )
 

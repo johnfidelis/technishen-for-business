@@ -23,7 +23,7 @@ const GroupSelectionModal = ({ open, onClose, employeeId }) => {
   const [groupId, setGroupId] = useState(null)
   // Fetch groups
   const { data: groups, isLoading } = useFetchData(
-    GET_ENDPOINTS.ALL_FULFILLER_GROUPS,
+    GET_ENDPOINTS.ALL_FULFILLER_GROUPS(),
     'allFulfilerGroups',
   )
 

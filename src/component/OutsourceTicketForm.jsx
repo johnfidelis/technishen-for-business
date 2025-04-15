@@ -605,7 +605,7 @@ const InternalTicketForm = () => {
   const cookies = new Cookies()
   const businessId = cookies.get('selectedBusinessId')
   const createInternalTicket = useCreateData(
-    POST_ENDPOINTS.CREATE_EXTERNAL_TICKET,
+    POST_ENDPOINTS.CREATE_EXTERNAL_TICKET(),
 
     'createInternalTicket',
   )

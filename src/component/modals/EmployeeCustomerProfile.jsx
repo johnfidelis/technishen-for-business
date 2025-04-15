@@ -43,7 +43,7 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
   )
 
   const patchBlockAndUnblock = usePatchData(
-    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER,
+    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER(),
     'blockandUnblock',
   )
 

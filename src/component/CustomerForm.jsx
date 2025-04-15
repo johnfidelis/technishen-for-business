@@ -32,7 +32,7 @@ const CustomerForm = () => {
   const [lat, setLat] = useState(null)
   const [reloadKey, setReloadKey] = useState(Date.now())
   const createCustomer = useCreateData(
-    POST_ENDPOINTS.CREATE_CUSTOMER,
+    POST_ENDPOINTS.CREATE_CUSTOMER(),
     'createCustomer',
   )
   // const [customer_type, setCustomerType] = useState('Personal')

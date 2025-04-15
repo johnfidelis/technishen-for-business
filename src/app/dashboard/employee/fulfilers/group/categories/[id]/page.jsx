@@ -52,7 +52,7 @@ export default function Page() {
   )
 
   const { data: catalog, isLoading: loadCatalog } = useFetchData(
-    GET_ENDPOINTS.ALL_CATEGORIES,
+    GET_ENDPOINTS.ALL_CATEGORIES(),
   )
 
   const [loading, setLoading] = useState(false)

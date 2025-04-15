@@ -45,7 +45,7 @@ const TicketTable = ({ filterType, setNumber }) => {
 
   // Fetch tickets based on the toggle state
   const { data: ticketsData, isLoading } = useFetchData(
-    GET_ENDPOINTS.ALL_TICKETS,
+    GET_ENDPOINTS.ALL_TICKETS(),
     'allTickets',
   )
 
@@ -69,7 +69,7 @@ const TicketTable = ({ filterType, setNumber }) => {
 
   const { data: outsourcedTicketsData, isLoading: outsourcedLoading } =
     useFetchData(
-      GET_ENDPOINTS.ALL_OUTSOURCED_TICKETS,
+      GET_ENDPOINTS.ALL_OUTSOURCED_TICKETS(),
 
       'allOutsourcedTickets',
     )

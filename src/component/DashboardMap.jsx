@@ -87,7 +87,7 @@ const DashboardMap = () => {
   // 📍 Default Map Center
 
   const { data: ticketsData, isLoading } = useFetchData(
-    GET_ENDPOINTS.DASHBOARD_TICKETS,
+    GET_ENDPOINTS.DASHBOARD_TICKETS(),
     'allTickets',
   )
   console.log({ businessDetails })

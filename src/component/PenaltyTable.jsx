@@ -36,13 +36,13 @@ const PenaltyTable = ({ role, setNumber }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const { data: allEmployee, isLoading } = useFetchData(
-    GET_ENDPOINTS.PUBLISHMENT_LOG,
+    GET_ENDPOINTS.PUBLISHMENT_LOG(),
     { action: 'block' },
     'allEmployee',
   )
 
   const patchBlockAndUnblock = usePatchData(
-    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER,
+    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER(),
     'blockandUnblock',
   )
 

@@ -39,7 +39,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
   const { data, isLoading } = useFetchData(
-    GET_ENDPOINTS.ALL_CATEGORIES,
+    GET_ENDPOINTS.ALL_CATEGORIES(),
     'allCategories',
   )
 

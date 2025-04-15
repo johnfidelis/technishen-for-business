@@ -26,7 +26,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 const FulfillerGroupTable = ({ setNumber }) => {
   const router = useRouter()
   const { data: groups, isLoading } = useFetchData(
-    GET_ENDPOINTS.ALL_FULFILLER_GROUPS,
+    GET_ENDPOINTS.ALL_FULFILLER_GROUPS(),
     'allFulfilerGroups',
   )
 

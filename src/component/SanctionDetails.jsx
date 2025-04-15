@@ -71,7 +71,7 @@ const SanctionDetails = ({ employeeId }) => {
   // const blockandUnblockEndpoint = PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER
 
   const patchBlockAndUnblock = usePatchData(
-    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER,
+    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER(),
     'blockandUnblock',
   )
 

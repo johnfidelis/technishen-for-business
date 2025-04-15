@@ -32,18 +32,9 @@ const EmployeeTable = ({ role, setNumber }) => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const { data: allEmployee, isLoading } = useFetchData(
-    GET_ENDPOINTS.ALL_EMPLOYEE,
+    GET_ENDPOINTS.ALL_EMPLOYEE(),
     'allEmployee',
   )
-
-  // useEffect(() => {
-  //   if (setNumber && typeof setNumber === 'function') {
-  //     // Ensure outsourcedTicketsData and ticketCounts exist before calculation
-  //     const fetchedNumber =
-  //       (allEmployee?.length || 0)
-  //     setNumber(fetchedNumber)
-  //   }
-  // }, [allEmployee])
 
   useEffect(() => {
     if (setNumber && typeof setNumber === 'function') {

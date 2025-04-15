@@ -30,7 +30,7 @@ const CustomersTable = ({ setNumber }) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const { data: customers, isLoading } = useFetchData(
-    GET_ENDPOINTS.ALL_CUSTOMER,
+    GET_ENDPOINTS.ALL_CUSTOMER(),
     'allCustomer',
   )
 

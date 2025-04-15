@@ -57,7 +57,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
   }
 
   const patchBlockAndUnblock = usePatchData(
-    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER,
+    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER(),
     'blockandUnblock',
   )
 

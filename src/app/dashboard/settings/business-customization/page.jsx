@@ -22,10 +22,10 @@ const BusinessCustomization = () => {
   const { theme, setTheme } = useContext(ThemeContext)
 
   const patchThemeColor = usePatchData(
-    PATCH_ENDPOINTS.CUSTOMIZE_UI,
+    PATCH_ENDPOINTS.CUSTOMIZE_UI(),
     'customizeUI',
   )
-  const resetTheme = useDeleteData(DELETE_ENDPOINTS.RESET_THEME, 'resetTheme')
+  const resetTheme = useDeleteData(DELETE_ENDPOINTS.RESET_THEME(), 'resetTheme')
 
   const [primaryColor, setPrimaryColor] = useState(
     theme?.primary_color || '#115093',

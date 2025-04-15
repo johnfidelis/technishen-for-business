@@ -14,7 +14,7 @@ import { useFetchData } from '@/hooks/useApiService'
 const DashboardCards = () => {
   const { theme } = useContext(ThemeContext)
   const { data: ticketStats, isLoading } = useFetchData(
-    GET_ENDPOINTS.TICKETS_STATS,
+    GET_ENDPOINTS.TICKETS_STATS(),
     'allTickets',
   )
 

@@ -19,7 +19,7 @@ const CreateFulfillerGroup = ({ open, onClose }) => {
   const [groupName, setGroupName] = useState('')
 
   const createFulfillerGroup = useCreateData(
-    POST_ENDPOINTS.CREATE_FULFILLER_GROUP,
+    POST_ENDPOINTS.CREATE_FULFILLER_GROUP(),
     'createFulfillerGroup',
   )
 

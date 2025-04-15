@@ -21,7 +21,7 @@ export default function UnassignedTicketsPage() {
   const { theme } = useContext(ThemeContext)
   const [number, setNumber] = useState(0)
   const { data: ticketStat, isLoading } = useFetchData(
-    GET_ENDPOINTS.TICKETS_STATUSES_STATS,
+    GET_ENDPOINTS.TICKETS_STATUSES_STATS(),
     'allTickets',
   )
 

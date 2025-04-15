@@ -6,7 +6,7 @@ import React, { createContext, useState, useEffect } from 'react'
 export const ThemeContext = createContext()
 
 export const ThemeProvider = ({ children }) => {
-  const { data, isLoading } = useFetchData(GET_ENDPOINTS.COLORS, 'colors')
+  const { data, isLoading } = useFetchData(GET_ENDPOINTS.COLORS(), 'colors')
   // Default theme
   const [theme, setTheme] = useState({
     primary_color: '#115093',

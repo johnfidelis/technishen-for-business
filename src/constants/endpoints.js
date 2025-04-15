@@ -2,17 +2,16 @@ import { Cookies } from 'react-cookie'
 const cookies = new Cookies()
 const getBusinessId = () => cookies.get('selectedBusinessId')
 
-// const business() = cookies.get('selectedgetBusinessId()')
-
 export const POST_ENDPOINTS = {
   BUSINESS_PROFILE: '/business-profile/',
   CREATE_INTERNAL_TICKET: '/create-web-ticket/',
-  CREATE_EXTERNAL_TICKET: `/b2c/business/${getBusinessId()}/create-ticket/`,
-  CREATE_EMPLOYEE: `/create-employee/${getBusinessId()}/`,
-  CREATE_CUSTOMER: `/create-customer/${getBusinessId()}/`,
+  CREATE_EXTERNAL_TICKET: () =>
+    `/b2c/business/${getBusinessId()}/create-ticket/`,
+  CREATE_EMPLOYEE: () => `/create-employee/${getBusinessId()}/`,
+  CREATE_CUSTOMER: () => `/create-customer/${getBusinessId()}/`,
 
   RESEND_ACCESS_CODE: '/resend-access-code/',
-  CREATE_FULFILLER_GROUP: `/create-fulfiller-group/${getBusinessId()}/`,
+  CREATE_FULFILLER_GROUP: () => `/create-fulfiller-group/${getBusinessId()}/`,
   CREATE_CATEGORY_AND_SUB_CATEGORY: `/create-category-and-sub-category/`,
   ADD_EMPLOYEE_TO_FULFILER_GROUP: (groupId) =>
     `/add-employees-to-fulfiller-group/${groupId}/`,
@@ -30,9 +29,9 @@ export const PATCH_ENDPOINTS = {
   UPDATE_NOTE: (ticketId, noteId) => `/ticket/${ticketId}/notes/${noteId}/`,
   ASSIGN_TICKET: (ticketId) => `/assign-ticket/${ticketId}/`,
   REASSIGN_TICKET: (ticketId) => `/assign-ticket/${ticketId}/`,
-  CUSTOMIZE_UI: `/customize-UI/${getBusinessId()}/`,
-  UPDATE_BUSINESS: `/update-business/${getBusinessId()}/`,
-  BLOCK_UNBLOCK_USER: `/block-unblock-user/`,
+  CUSTOMIZE_UI: () => `/customize-UI/${getBusinessId()}/`,
+  UPDATE_BUSINESS: () => `/update-business/${getBusinessId()}/`,
+  BLOCK_UNBLOCK_USER: () => `/block-unblock-user/`,
 }
 
 export const AUTH_ENDPOINTS = {
@@ -41,7 +40,7 @@ export const AUTH_ENDPOINTS = {
 }
 export const DELETE_ENDPOINTS = {
   DELETE_CATALOG: (serviceId) => `/delete-category/${serviceId}/`,
-  RESET_THEME: `/customize-UI/${getBusinessId()}/`,
+  RESET_THEME: () => `/customize-UI/${getBusinessId()}/`,
 }
 
 export const GET_ENDPOINTS = {
@@ -51,13 +50,14 @@ export const GET_ENDPOINTS = {
   TICKET_CATEGORY_TO_BOOK: '/ticket-category-to-book/',
   FULFILLER_GROUP_TO_BOOK: '/fulfiller-group-to-book/',
 
-  ALL_TICKETS: `/all-tickets/${getBusinessId()}/`,
-  DASHBOARD_TICKETS: `/dashboard-tickets/${getBusinessId()}/open/`,
-  TICKETS_STATUSES_STATS: `/ticket-statuses-stats/${getBusinessId()}/`,
-  TICKETS_STATS: `/ticket-stats/${getBusinessId()}/`,
-  COLORS: `/get-colors/${getBusinessId()}/`,
-  ALL_CATEGORIES: `/all-categories/${getBusinessId()}/`,
-  ALL_OUTSOURCED_TICKETS: `/b2c/get-outsourced-tickets/${getBusinessId()}`,
+  ALL_TICKETS: () => `/all-tickets/${getBusinessId()}/`,
+  DASHBOARD_TICKETS: () => `/dashboard-tickets/${getBusinessId()}/open/`,
+  TICKETS_STATUSES_STATS: () => `/ticket-statuses-stats/${getBusinessId()}/`,
+  TICKETS_STATS: () => `/ticket-stats/${getBusinessId()}/`,
+  COLORS: () => `/get-colors/${getBusinessId()}/`,
+  ALL_CATEGORIES: () => `/all-categories/${getBusinessId()}/`,
+  ALL_OUTSOURCED_TICKETS: () =>
+    `/b2c/get-outsourced-tickets/${getBusinessId()}`,
   TECHNISHEN_BOOKABLE_SERVICES: '/b2c/bookable-services/',
 
   VIEW_TICKETS: (ticketId) => `/the-ticket/${getBusinessId()}/${ticketId}/`,
@@ -77,10 +77,10 @@ export const GET_ENDPOINTS = {
     `/all-tickets-assigned-to-employee/${customerId}/${getBusinessId()}`,
   // EMPLOYEE_IN_CATEGORY: (id) => `/add-catalogues-to-fulfiller-group/${id}/`,
 
-  ALL_EMPLOYEE: `/all-employees/${getBusinessId()}`,
-  PUBLISHMENT_LOG: `/punishment-log/${getBusinessId()}`,
-  ALL_CUSTOMER: `/all-customers/${getBusinessId()}`,
-  ALL_FULFILLER_GROUPS: `/all-fulfiller-groups/${getBusinessId()}`,
+  ALL_EMPLOYEE: () => `/all-employees/${getBusinessId()}`,
+  PUBLISHMENT_LOG: () => `/punishment-log/${getBusinessId()}`,
+  ALL_CUSTOMER: () => `/all-customers/${getBusinessId()}`,
+  ALL_FULFILLER_GROUPS: () => `/all-fulfiller-groups/${getBusinessId()}`,
   GET_EMPLOYEE: (employeeId) =>
     `/get-employee/${getBusinessId()}/${employeeId}/`,
   GET_SANCTION_DETAILS: (employeeId) =>

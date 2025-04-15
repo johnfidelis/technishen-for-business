@@ -165,7 +165,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 const BusinessProfileSettings = () => {
   const { theme } = useContext(ThemeContext)
   const patchBusinessInfo = usePatchData(
-    PATCH_ENDPOINTS.UPDATE_BUSINESS,
+    PATCH_ENDPOINTS.UPDATE_BUSINESS(),
     'updateBusiness',
   )
   const cookies = new Cookies()
