@@ -11,6 +11,7 @@ import {
   CircularProgress,
   InputAdornment,
   IconButton,
+  Alert,
 } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -40,6 +41,8 @@ const InternalTicketForm = () => {
   )
   /*** State Declarations ***/
   // Left Column States
+  const [isSanctioned, setIsSanctioned] = useState(false)
+
   const [callerType, setCallerType] = useState('employee')
   const [caller, setCaller] = useState('')
   const [callerQuery, setCallerQuery] = useState('')
@@ -630,7 +633,16 @@ const InternalTicketForm = () => {
                 handleEmployeeSearch(value)
               }
             }}
-            onChange={(event, newValue) => setAssignTo(newValue || '')}
+            // onChange={(event, newValue) => setAssignTo(newValue || '')}
+            onChange={(event, newValue) => {
+              setAssignTo(newValue || '')
+
+              if (newValue?.is_blocked || newValue?.is_disabled) {
+                setIsSanctioned(true)
+              } else {
+                setIsSanctioned(false)
+              }
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -669,6 +681,11 @@ const InternalTicketForm = () => {
               />
             )}
           />
+          {isSanctioned && (
+            <Alert severity="warning" sx={{ mt: 2 }}>
+              This employee is blocked or disabled and may not be assignable.
+            </Alert>
+          )}
 
           {/* Support Type */}
           <TextField
@@ -779,7 +796,7 @@ const InternalTicketForm = () => {
               fontSize: '0.80em',
               fontFamily: 'Inter, sans-serif',
             }}
-            disabled={submitLoading}
+            disabled={submitLoading || isSanctioned}
             onClick={handleSubmit}
           >
             {submitLoading ? (
@@ -788,6 +805,12 @@ const InternalTicketForm = () => {
               'CREATE TICKET'
             )}
           </Button>
+
+          {isSanctioned && (
+            <Alert severity="warning" sx={{ mt: 2 }}>
+              Cannot assignd ticket to a blocked or disabled employee.
+            </Alert>
+          )}
         </Grid>
       </Grid>
 

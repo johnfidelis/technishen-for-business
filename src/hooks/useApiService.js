@@ -38,7 +38,7 @@ const useMutationWithToast = (mutationFn, queryKey) => {
     onError: (error) => {
       const errorMessage = handleGenericError(error)
       // toast.error(errorMessage)
-      throw new Error(errorMessage)
+      // throw new Error(errorMessage)
     },
   })
 }

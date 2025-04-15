@@ -45,6 +45,7 @@ import { toast } from 'react-toastify'
 import { usePathname } from 'next/navigation'
 import { getMinDateForAge } from './utils/calenderManipulation'
 import { SentimentDissatisfied } from '@mui/icons-material'
+import { formatDateTime } from './utils/formatDateTime'
 
 const SanctionDetails = ({ employeeId }) => {
   const { theme } = useContext(ThemeContext)
@@ -418,13 +419,14 @@ const SanctionDetails = ({ employeeId }) => {
                   <TableCell>Email</TableCell>
                   <TableCell>Reason</TableCell>
                   <TableCell>Role</TableCell>
+                  <TableCell>Time</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {isLoading ? (
-                  [...Array(5)].map((_, index) => (
+                  [...Array(7)].map((_, index) => (
                     <TableRow key={index}>
-                      {Array(6)
+                      {Array(7)
                         .fill()
                         .map((_, i) => (
                           <TableCell key={i}>
@@ -449,6 +451,7 @@ const SanctionDetails = ({ employeeId }) => {
                         <TableCell>{log.target_employee?.email}</TableCell>
                         <TableCell>{log.reason}</TableCell>
                         <TableCell>{log.target_employee?.role}</TableCell>
+                        <TableCell>{formatDateTime(log?.timestamp)}</TableCell>
                       </TableRow>
                     ))
                 ) : (

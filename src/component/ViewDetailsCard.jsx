@@ -114,27 +114,58 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
     // console.log(`Searching for employee: ${value}`)
   }
 
-  // const handleAssignTicket = () => {
+  // const handleAssignTicket = async () => {
+  //   setLoadingEmployees(true)
+  //   const formData = new FormData()
+  //   formData.append('fulfiller_group_id', assignmentGroup)
+  //   formData.append('employee_id', assignTo.id)
+  //   patchData(formData)
+  //   setLoadingEmployees(false)
+  // }
+
+  // const handleAssignTicket = async () => {
   //   try {
+  //     setLoadingEmployees(true)
   //     const formData = new FormData()
   //     formData.append('fulfiller_group_id', assignmentGroup)
   //     formData.append('employee_id', assignTo.id)
 
-  //     usePatchData(assignTicket, formData)
-  //     toast.success('Successful')
+  //     const response = await patchData(formData)
+
+  //     toast.success('Ticket assigned successfully!')
   //   } catch (error) {
-  //     console.log({ error })
-  //     toast.error('Error')
+  //     console.error("ss",{error})
+  //     toast.error('Failed to assign ticket. Please try again.')
+  //   } finally {
+  //     setLoadingEmployees(false)
   //   }
   // }
 
-  const handleAssignTicket = async () => {
+  const handleAssignTicket = () => {
     setLoadingEmployees(true)
+
     const formData = new FormData()
     formData.append('fulfiller_group_id', assignmentGroup)
     formData.append('employee_id', assignTo.id)
-    patchData(formData)
-    setLoadingEmployees(false)
+
+    patchData(formData, {
+      onSuccess: () => {
+        toast.success('Ticket assigned successfully!')
+      },
+      onError: (error) => {
+        if (error?.status === 404) {
+          toast.error('Error 404: Ticket or user not found.')
+        } else if (error?.status === 400) {
+          toast.error(error?.data?.error)
+        } else {
+          toast.error('Failed to assign ticket. Please try again.')
+        }
+        console.error('Assign Error:', { error })
+      },
+      onSettled: () => {
+        setLoadingEmployees(false)
+      },
+    })
   }
 
   return (
