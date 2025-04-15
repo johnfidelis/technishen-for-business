@@ -84,7 +84,7 @@ export const menuItems = [
         icon: <GroupIcon />,
       },
       {
-        name: 'Employee Punishnment',
+        name: 'Employee Sanctions',
         routeTo: '/dashboard/employee/punishment',
         icon: <GroupIcon />,
       },

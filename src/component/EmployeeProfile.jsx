@@ -13,6 +13,10 @@ import {
   FormControlLabel,
   Checkbox,
   MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material'
 import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api'
 import GroupSelectionModal from './modals/GroupSelectionModal'
@@ -180,6 +184,41 @@ const EmployeeProfile = ({ employeeId }) => {
       })
     } catch (error) {
       toast.error('Failed to disable employee', {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
+  }
+
+  const [openReasonModal, setOpenReasonModal] = useState(false)
+  const [selectedAction, setSelectedAction] = useState('')
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState('')
+  const [reasonText, setReasonText] = useState('')
+
+  const handleOpenReasonModal = (action, employeeId) => {
+    setSelectedAction(action)
+    setSelectedEmployeeId(employeeId)
+    setReasonText('')
+    setOpenReasonModal(true)
+  }
+
+  const handleConfirmAction = async () => {
+    const payload = {
+      target_type: 'employee',
+      target_id: selectedEmployeeId,
+      action: selectedAction,
+      reason: reasonText,
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success(`Employee ${selectedAction}d successfully`, {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+      setOpenReasonModal(false)
+    } catch (error) {
+      toast.error(`Failed to ${selectedAction} employee`, {
         autoClose: 5000,
         hideProgressBar: false,
       })
@@ -519,71 +558,61 @@ const EmployeeProfile = ({ employeeId }) => {
                       flexWrap: 'wrap', // optional: makes it responsive
                     }}
                   >
-                    {/* Block / Unblock */}
-                    <Box>
-                      {employeeData?.is_blocked ? (
-                        <Button
-                          variant="contained"
-                          onClick={() =>
-                            handleUnBlockEmployee(employeeData?.id)
-                          }
-                          sx={{
-                            backgroundColor: 'darkgreen',
-                            '&:hover': {
-                              backgroundColor: 'darkgreen',
-                            },
-                          }}
-                        >
-                          Unblock Employee
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="contained"
-                          onClick={() => handleBlockEmployee(employeeData?.id)}
-                          sx={{
-                            backgroundColor: 'darkred',
-                            '&:hover': {
-                              backgroundColor: 'darkred',
-                            },
-                          }}
-                        >
-                          Block Employee
-                        </Button>
-                      )}
-                    </Box>
+                    <Button
+                      variant="contained"
+                      onClick={() =>
+                        employeeData?.user?.is_blocked
+                          ? handleOpenReasonModal(
+                              'unblock',
+                              employeeData?.user?.id,
+                            )
+                          : handleOpenReasonModal(
+                              'block',
+                              employeeData?.user?.id,
+                            )
+                      }
+                      sx={{
+                        backgroundColor: employeeData?.user?.is_blocked
+                          ? 'darkgreen'
+                          : 'darkred',
+                        '&:hover': {
+                          backgroundColor: employeeData?.user?.is_blocked
+                            ? 'green'
+                            : 'red',
+                        },
+                      }}
+                    >
+                      {employeeData?.user?.is_blocked ? 'Unblock' : 'Block'}{' '}
+                      Employee
+                    </Button>
 
-                    {/* Disable / Enable */}
-                    <Box>
-                      {employeeData?.is_disabled ? (
-                        <Button
-                          variant="contained"
-                          onClick={() => handleEnableEmployee(employeeData?.id)}
-                          sx={{
-                            backgroundColor: 'darkgreen',
-                            '&:hover': {
-                              backgroundColor: 'darkgreen',
-                            },
-                          }}
-                        >
-                          Enable Employee
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="contained"
-                          onClick={() =>
-                            handleDisableEmployee(employeeData?.id)
-                          }
-                          sx={{
-                            backgroundColor: 'darkred',
-                            '&:hover': {
-                              backgroundColor: 'darkred',
-                            },
-                          }}
-                        >
-                          Disable Employee
-                        </Button>
-                      )}
-                    </Box>
+                    <Button
+                      variant="contained"
+                      onClick={() =>
+                        employeeData?.user?.is_disabled
+                          ? handleOpenReasonModal(
+                              'enable',
+                              employeeData?.user?.id,
+                            )
+                          : handleOpenReasonModal(
+                              'disable',
+                              employeeData?.user?.id,
+                            )
+                      }
+                      sx={{
+                        backgroundColor: employeeData?.user?.is_disabled
+                          ? 'darkgreen'
+                          : 'darkred',
+                        '&:hover': {
+                          backgroundColor: employeeData?.user?.is_disabled
+                            ? 'green'
+                            : 'red',
+                        },
+                      }}
+                    >
+                      {employeeData?.user?.is_disabled ? 'Enable' : 'Disable'}{' '}
+                      Employee
+                    </Button>
                   </Box>
 
                   <Box sx={{ textAlign: 'left', mt: 2 }}>
@@ -614,6 +643,40 @@ const EmployeeProfile = ({ employeeId }) => {
           )}
         </>
       )}
+
+      <Dialog open={openReasonModal} onClose={() => setOpenReasonModal(false)}>
+        <DialogTitle sx={{ textTransform: 'capitalize' }}>
+          Provide Reason to {selectedAction} Employee
+        </DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Reason"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={reasonText}
+            onChange={(e) => setReasonText(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            sx={{ color: theme.primary_color || '#115093' }}
+            onClick={() => setOpenReasonModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirmAction}
+            disabled={!reasonText.trim()}
+            variant="contained"
+            sx={{ backgroundColor: theme.primary_color || '#115093' }}
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   )
 }

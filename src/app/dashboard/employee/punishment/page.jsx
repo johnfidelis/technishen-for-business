@@ -35,7 +35,7 @@ export default function Page() {
               fontWeight: '500',
             }}
           >
-            All Punishnments {`(${number})`}
+            All Sanctions {`(${number})`}
             <Tooltip
               title="This page displays a complete list of all employees in the system, regardless of their role or group. Use this view to monitor or manage your workforce.
 
