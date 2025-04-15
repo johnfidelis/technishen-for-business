@@ -470,6 +470,22 @@ const BookingsTab = ({ customerId, ticketType }) => {
         onClose={() => setEmployeeModalOpen(false)}
         userId={selectedMarker?.id}
       />
+
+      {/* {selectedTicket && (
+        <TicketDetails
+          ticketData={selectedTicket}
+          open={viewMoreOpen}
+          onClose={handleClose}
+        />
+      )}
+
+      {selectedTicket && (
+        <EmployeeCustomerProfile
+          open={employeeModalOpen}
+          onClose={() => setEmployeeModalOpen(false)}
+          userId={selectedMarker?.id}
+        />
+      )} */}
     </Box>
   )
 }

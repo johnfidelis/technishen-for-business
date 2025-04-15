@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useParams } from 'next/navigation'
 import { Box, Button, Typography } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
-import ViewTicketDetails from '@/component/ViewTicketDetails'
+import SanctionDetails from '@/component/SanctionDetails'
 
 const Page = ({ onBack }) => {
   const { theme } = useContext(ThemeContext)
@@ -38,25 +38,9 @@ const Page = ({ onBack }) => {
         >
           &larr; Back
         </Button>
-        <Typography
-          variant="h6"
-          sx={{
-            color: '#333',
-            fontSize: '1.5em',
-            mb: 3,
-            mt: 3,
-            textAlign: 'left',
-            fontWeight: 300,
-            height: '20px',
-          }}
-        >
-          Ticket Information
-        </Typography>
       </Box>
-      <hr style={{ margin: '0.625rem 0' }} />
-      {/* {(id !== null && id !== undefined) && <ViewTicketDetails ticketId={id} />} */}
 
-      <ViewTicketDetails ticketId={id} />
+      <SanctionDetails employeeId={id} />
     </Box>
   )
 }

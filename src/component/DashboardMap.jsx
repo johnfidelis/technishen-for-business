@@ -10,6 +10,7 @@ import {
 } from '@react-google-maps/api'
 import EmployeeProfile from './modals/EmployeeProfile'
 import CustomerProfile from './modals/CustomerProfile'
+import EmployeeCustomerProfile from './modals/EmployeeCustomerProfile'
 import { Cookies } from 'react-cookie'
 // import CustomerProfile from './modals/CustomerProfile'
 import Image from 'next/image'
@@ -353,7 +354,7 @@ const DashboardMap = () => {
                       style={{
                         width: '10px',
                         height: '10px',
-                        backgroundColor: 'red',
+                        backgroundColor: '#FF4C3B',
                         borderRadius: '50%',
                         marginTop: '-5px',
                       }}
@@ -513,10 +514,15 @@ const DashboardMap = () => {
         />
       )}
       {employeeModalOpen && (
-        <EmployeeProfile
+        // <EmployeeProfile
+        //   open={employeeModalOpen}
+        //   onClose={() => setEmployeeModalOpen(false)}
+        //   user={selectedMarker}
+        // />
+        <EmployeeCustomerProfile
           open={employeeModalOpen}
           onClose={() => setEmployeeModalOpen(false)}
-          user={selectedMarker}
+          userId={selectedMarker?.id}
         />
       )}
 

@@ -158,7 +158,7 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange, setNumber }) => {
                       {subCategory.cost}
                     </TableCell>
                     <TableCell
-                      sx={{ color: subCategory.status ? 'green' : 'red' }}
+                      sx={{ color: subCategory.status ? 'green' : '#FF4C3B' }}
                     >
                       {subCategory.status}
                     </TableCell>

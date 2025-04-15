@@ -19,8 +19,9 @@ import { ThemeContext } from '@/context/ThemeContext'
 import { MdLocationOn, MdPhone, MdMail, MdBlock } from 'react-icons/md'
 import PersonOffIcon from '@mui/icons-material/PersonOff'
 import BookingsTab from './component/BookingsTab'
-import { useFetchData } from '@/hooks/useApiService'
-import { GET_ENDPOINTS } from '@/constants/endpoints'
+import { useFetchData, usePatchData } from '@/hooks/useApiService'
+import { GET_ENDPOINTS, PATCH_ENDPOINTS } from '@/constants/endpoints'
+import { toast } from 'react-toastify'
 
 // Dynamically import tabs for better performance
 const CategoriesTab = dynamic(() => import('./component/CategoriesTab'), {
@@ -35,6 +36,11 @@ const TicketDetails = dynamic(() => import('./TicketDetails'), { ssr: false })
 const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
   const { data: user, isLoading: isLoadingNote } = useFetchData(
     GET_ENDPOINTS.GET_CUSTOMER_OR_EMPLOYEE_DETAILS(userId),
+  )
+
+  const patchBlockAndUnblock = usePatchData(
+    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER,
+    'blockandUnblock',
   )
 
   const [rightTabIndex, setRightTabIndex] = useState(0)
@@ -53,6 +59,91 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
     display: 'flex',
     flexDirection: 'column',
     fontFamily: 'Inter, sans-serif',
+  }
+
+  const handleBlockEmployee = async (employeeId) => {
+    const payload = {
+      target_type: 'employee',
+      target_id: employeeId,
+      action: 'block',
+      reason: '',
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success('Employee blocked successfully', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } catch (error) {
+      toast.error('Failed to block employee', {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
+  }
+  const handleUnblockEmployee = async (employeeId) => {
+    const payload = {
+      target_type: 'employee',
+      target_id: employeeId,
+      action: 'unblock',
+      reason: '',
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success('Employee unblocked successfully', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } catch (error) {
+      toast.error('Failed to unblock employee', {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
+  }
+  const handleEnableEmployee = async (employeeId) => {
+    const payload = {
+      target_type: 'employee',
+      target_id: employeeId,
+      action: 'enable',
+      reason: '',
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success('Employee enabled successfully', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } catch (error) {
+      toast.error('Failed to enable employee', {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
+  }
+  const handleDisableEmployee = async (employeeId) => {
+    const payload = {
+      target_type: 'employee',
+      target_id: employeeId,
+      action: 'disable',
+      reason: '',
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success('Employee disabled successfully', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } catch (error) {
+      toast.error('Failed to disable employee', {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
   }
 
   return (
@@ -137,7 +228,7 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
 
           {/* Actions */}
           <Box display="flex" justifyContent="space-between" sx={{ mt: 2 }}>
-            <Typography
+            {/* <Typography
               variant="body2"
               sx={{
                 color: theme.primary_color || '#115093',
@@ -148,31 +239,65 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
               }}
             >
               <MdMail size={16} /> Send Email
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                color: theme.primary_color || '#115093',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 0.6,
-                cursor: 'pointer',
-              }}
-            >
-              <MdBlock size={16} /> Block
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                color: '#FF4C3B',
+            </Typography> */}
 
+            <a
+              href={`mailto:${user?.email}`}
+              style={{ textDecoration: 'none' }}
+              target="_blank"
+            >
+              <Typography
+                variant="body2"
+                sx={{
+                  color: theme.primary_color || '#115093',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 0.6,
+                  cursor: 'pointer',
+                }}
+              >
+                <MdMail size={16} /> Send Email
+              </Typography>
+            </a>
+
+            <Typography
+              variant="body2"
+              sx={{
+                color: user?.is_blocked ? 'green' : '#FF4C3B',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 0.6,
                 cursor: 'pointer',
+                fontWeight: 500,
               }}
+              onClick={() =>
+                user?.is_blocked
+                  ? handleUnblockEmployee(userId)
+                  : handleBlockEmployee(userId)
+              }
             >
-              <PersonOffIcon sx={{ fontSize: 16 }} /> Disable Account
+              <MdBlock size={16} />
+              {user?.is_blocked ? 'Unblock' : 'Block'}
+            </Typography>
+
+            <Typography
+              variant="body2"
+              sx={{
+                color: user?.is_disabled ? 'green' : '#FF4C3B',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.6,
+                cursor: 'pointer',
+                fontWeight: 500,
+              }}
+              onClick={() =>
+                user?.is_disabled
+                  ? handleEnableEmployee(userId)
+                  : handleDisableEmployee(userId)
+              }
+            >
+              <PersonOffIcon sx={{ fontSize: 16 }} />
+              {user?.is_disabled ? 'Enable Account' : 'Disable Account'}
             </Typography>
           </Box>
 

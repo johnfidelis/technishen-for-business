@@ -32,6 +32,7 @@ export const PATCH_ENDPOINTS = {
   REASSIGN_TICKET: (ticketId) => `/assign-ticket/${ticketId}/`,
   CUSTOMIZE_UI: `/customize-UI/${getBusinessId()}/`,
   UPDATE_BUSINESS: `/update-business/${getBusinessId()}/`,
+  BLOCK_UNBLOCK_USER: `/block-unblock-user/`,
 }
 
 export const AUTH_ENDPOINTS = {
@@ -77,10 +78,13 @@ export const GET_ENDPOINTS = {
   // EMPLOYEE_IN_CATEGORY: (id) => `/add-catalogues-to-fulfiller-group/${id}/`,
 
   ALL_EMPLOYEE: `/all-employees/${getBusinessId()}`,
+  PUBLISHMENT_LOG: `/punishment-log/${getBusinessId()}`,
   ALL_CUSTOMER: `/all-customers/${getBusinessId()}`,
   ALL_FULFILLER_GROUPS: `/all-fulfiller-groups/${getBusinessId()}`,
   GET_EMPLOYEE: (employeeId) =>
     `/get-employee/${getBusinessId()}/${employeeId}/`,
+  GET_SANCTION_DETAILS: (employeeId) =>
+    `/details-for-punishment/employee/${employeeId}/`,
   GET_EMPLOYEE_SERVICES: (employeeId) =>
     `/services-employees-have/${employeeId}/`,
   GET_CUSTOMER: (employeeId) =>

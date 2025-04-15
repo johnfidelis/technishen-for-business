@@ -50,6 +50,8 @@ const Page = ({ onBack }) => {
         </Typography>
       </Box>
       <hr style={{ margin: '0.625rem 0' }} />
+      {/* {(id !== null && id !== undefined) && <ViewTicketDetails ticketId={id} />} */}
+
       <ViewTicketDetails ticketId={id} />
     </Box>
   )

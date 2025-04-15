@@ -124,7 +124,7 @@ const Page = ({ handleNext, handleBack }) => {
             handleAddressUpdate={handleAddressUpdate}
           />
           {errors.trading_address && (
-            <p style={{ color: 'red', marginTop: '4px' }}>
+            <p style={{ color: '#FF4C3B', marginTop: '4px' }}>
               {errors.trading_address}
             </p>
           )}

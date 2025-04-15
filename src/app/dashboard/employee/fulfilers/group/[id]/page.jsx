@@ -247,7 +247,7 @@ const Page = () => {
                         variant="subtitle2"
                         sx={{
                           // fontSize: '0.80em',
-                          color: 'red',
+                          color: '#FF4C3B',
                           display: 'flex',
                           alignItems: 'center',
                           cursor: 'pointer',

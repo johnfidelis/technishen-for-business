@@ -155,7 +155,7 @@ const Page = ({ handleNext }) => {
               }}
             />
             {errors.office_phone && (
-              <span style={{ color: 'red', fontSize: '12px' }}>
+              <span style={{ color: '#FF4C3B', fontSize: '12px' }}>
                 {errors.office_phone}
               </span>
             )}

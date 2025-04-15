@@ -41,6 +41,12 @@ const EmployeeProfile = ({ employeeId }) => {
 
   const patchEmployeeRoleEndpoint =
     PATCH_ENDPOINTS.UPDATE_EMPLOYEE_ROLE(employeeId)
+  // const blockandUnblockEndpoint = PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER
+
+  const patchBlockAndUnblock = usePatchData(
+    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER,
+    'blockandUnblock',
+  )
 
   const { data: employeeData, isLoading } = useFetchData(
     GET_ENDPOINTS.GET_EMPLOYEE(employeeId),
@@ -95,7 +101,90 @@ const EmployeeProfile = ({ employeeId }) => {
     }
   }
 
-  const handleBack = () => alert('Go Back')
+  const handleBlockEmployee = async (employeeId) => {
+    const payload = {
+      target_type: 'employee',
+      target_id: employeeId,
+      action: 'block',
+      reason: '',
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success('Employee blocked successfully', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } catch (error) {
+      toast.error('Failed to block employee', {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
+  }
+  const handleUnBlockEmployee = async (employeeId) => {
+    const payload = {
+      target_type: 'employee',
+      target_id: employeeId,
+      action: 'unblock',
+      reason: '',
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success('Employee unblocked successfully', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } catch (error) {
+      toast.error('Failed to unblock employee', {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
+  }
+  const handleEnableEmployee = async (employeeId) => {
+    const payload = {
+      target_type: 'employee',
+      target_id: employeeId,
+      action: 'enable',
+      reason: '',
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success('Employee enabled successfully', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } catch (error) {
+      toast.error('Failed to enable employee', {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
+  }
+  const handleDisableEmployee = async (employeeId) => {
+    const payload = {
+      target_type: 'employee',
+      target_id: employeeId,
+      action: 'disable',
+      reason: '',
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success('Employee disabled successfully', {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+    } catch (error) {
+      toast.error('Failed to disable employee', {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
+  }
 
   return (
     <Box>
@@ -422,65 +511,81 @@ const EmployeeProfile = ({ employeeId }) => {
                       />
                     </FormGroup>
                   )}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: 2,
+                      mt: 2,
+                      flexWrap: 'wrap', // optional: makes it responsive
+                    }}
+                  >
+                    {/* Block / Unblock */}
+                    <Box>
+                      {employeeData?.is_blocked ? (
+                        <Button
+                          variant="contained"
+                          onClick={() =>
+                            handleUnBlockEmployee(employeeData?.id)
+                          }
+                          sx={{
+                            backgroundColor: 'darkgreen',
+                            '&:hover': {
+                              backgroundColor: 'darkgreen',
+                            },
+                          }}
+                        >
+                          Unblock Employee
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          onClick={() => handleBlockEmployee(employeeData?.id)}
+                          sx={{
+                            backgroundColor: 'darkred',
+                            '&:hover': {
+                              backgroundColor: 'darkred',
+                            },
+                          }}
+                        >
+                          Block Employee
+                        </Button>
+                      )}
+                    </Box>
 
-                  {/* <FormGroup sx={{ textAlign: 'left', mt: 2 }}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={
-                            selectedRole === 'Admin' ||
-                            employeeData?.role === 'Admin'
+                    {/* Disable / Enable */}
+                    <Box>
+                      {employeeData?.is_disabled ? (
+                        <Button
+                          variant="contained"
+                          onClick={() => handleEnableEmployee(employeeData?.id)}
+                          sx={{
+                            backgroundColor: 'darkgreen',
+                            '&:hover': {
+                              backgroundColor: 'darkgreen',
+                            },
+                          }}
+                        >
+                          Enable Employee
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          onClick={() =>
+                            handleDisableEmployee(employeeData?.id)
                           }
-                          disabled={employeeData?.role === 'Admin'}
-                          onChange={() => handleRoleSelection('Admin')}
-                        />
-                      }
-                      label="Admin"
-                      sx={{ marginLeft: '8px' }}
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={
-                            selectedRole === 'User' ||
-                            employeeData?.role === 'User'
-                          }
-                          disabled={employeeData?.role === 'User'}
-                          onChange={() => handleRoleSelection('User')}
-                        />
-                      }
-                      label="User"
-                      sx={{ marginLeft: '8px' }}
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={
-                            selectedRole === 'Fulfiller' ||
-                            employeeData?.role === 'Fulfiller'
-                          }
-                          disabled={employeeData?.role === 'Fulfiller'}
-                          onChange={() => handleRoleSelection('Fulfiller')}
-                        />
-                      }
-                      label="Fulfiller"
-                      sx={{ marginLeft: '8px' }}
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={
-                            selectedRole === 'Finance' ||
-                            employeeData?.role === 'Finance'
-                          }
-                          disabled={employeeData?.role === 'Finance'}
-                          onChange={() => handleRoleSelection('Finance')}
-                        />
-                      }
-                      label="Finance"
-                      sx={{ marginLeft: '8px' }}
-                    />
-                  </FormGroup> */}
+                          sx={{
+                            backgroundColor: 'darkred',
+                            '&:hover': {
+                              backgroundColor: 'darkred',
+                            },
+                          }}
+                        >
+                          Disable Employee
+                        </Button>
+                      )}
+                    </Box>
+                  </Box>
+
                   <Box sx={{ textAlign: 'left', mt: 2 }}>
                     <Button
                       variant="contained"

@@ -84,6 +84,11 @@ export const menuItems = [
         icon: <GroupIcon />,
       },
       {
+        name: 'Employee Punishnment',
+        routeTo: '/dashboard/employee/punishment',
+        icon: <GroupIcon />,
+      },
+      {
         name: 'View Fulfillers',
         routeTo: '/dashboard/employee/fulfilers',
         icon: <GroupIcon />,

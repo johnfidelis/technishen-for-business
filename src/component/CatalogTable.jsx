@@ -226,7 +226,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                     </TableCell>
                     <TableCell
                       style={{
-                        color: category.status ? 'green' : 'red',
+                        color: category.status ? 'green' : '#FF4C3B',
                       }}
                     >
                       {category.status ? 'Active' : 'In-active'}
@@ -357,7 +357,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                       {category?.associated_sub_services?.length}
                     </TableCell>
                     <TableCell
-                      style={{ color: category.status ? 'green' : 'red' }}
+                      style={{ color: category.status ? 'green' : '#FF4C3B' }}
                     >
                       {category.status ? 'Active' : 'In-active'}
                     </TableCell>
