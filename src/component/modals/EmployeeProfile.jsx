@@ -25,10 +25,12 @@ import PersonOffIcon from '@mui/icons-material/PersonOff'
 import BookingsTab from './component/BookingsTab'
 import { usePatchData } from '@/hooks/useApiService'
 import { PATCH_ENDPOINTS } from '@/constants/endpoints'
+import actionVerbMap from '@/constants/actionVerbMap'
 import { toast } from 'react-toastify'
 import StarIcon from '@mui/icons-material/Star'
 import StarHalfIcon from '@mui/icons-material/StarHalf'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
+import EmailLauncher from './EmailLauncher'
 
 // Dynamically import tabs for better performance
 const CategoriesTab = dynamic(() => import('./component/CategoriesTab'), {
@@ -86,7 +88,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
 
     try {
       await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success(`Employee ${selectedAction}d successfully`, {
+      toast.success(`Employee ${actionVerbMap[selectedAction]} successfully`, {
         autoClose: 5000,
         hideProgressBar: true,
       })
@@ -244,7 +246,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
 
             {/* Actions */}
             <Box display="flex" justifyContent="space-between" sx={{ mt: 2 }}>
-              <Typography
+              {/* <Typography
                 variant="body2"
                 sx={{
                   color: theme.primary_color || '#115093',
@@ -255,7 +257,8 @@ const EmployeeProfile = ({ open, onClose, user }) => {
                 }}
               >
                 <MdMail size={16} /> Send Email
-              </Typography>
+              </Typography> */}
+              <EmailLauncher email={user?.email} />
               <Typography
                 variant="body2"
                 sx={{

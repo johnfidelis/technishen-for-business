@@ -136,7 +136,7 @@ const ViewTicketDetails = ({ ticketId }) => {
           control={
             <Switch checked={isOutsourced} onChange={handleOutsourcedToggle} />
           }
-          label="Ticket type: Outsourced"
+          label="Ticket type: Outsourcedzzzzz"
           sx={{ mt: '1em' }}
         />
         {isOutsourced && (
@@ -201,7 +201,7 @@ const ViewTicketDetails = ({ ticketId }) => {
                   defaultValue={
                     ticketNote.find(
                       (note) =>
-                        note.note_type ===
+                        note?.note_type ===
                         ['resolution', 'paused', 'general'][leftTabIndex - 1],
                     )?.content || ''
                   }

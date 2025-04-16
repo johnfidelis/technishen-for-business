@@ -85,7 +85,7 @@ export const menuItems = [
       },
       {
         name: 'Employee Sanctions',
-        routeTo: '/dashboard/employee/punishment',
+        routeTo: '/dashboard/employee/sanctions',
         icon: <GroupIcon />,
       },
       {
@@ -112,6 +112,11 @@ export const menuItems = [
       {
         name: 'View Customers',
         routeTo: '/dashboard/customer/all',
+        icon: <GroupIcon />,
+      },
+      {
+        name: 'Customer Sanctions',
+        routeTo: '/dashboard/customer/sanctions',
         icon: <GroupIcon />,
       },
     ],

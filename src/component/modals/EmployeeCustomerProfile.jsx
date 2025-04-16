@@ -26,9 +26,11 @@ import BookingsTab from './component/BookingsTab'
 import { useFetchData, usePatchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS, PATCH_ENDPOINTS } from '@/constants/endpoints'
 import { toast } from 'react-toastify'
+import actionVerbMap from '@/constants/actionVerbMap'
 import StarIcon from '@mui/icons-material/Star'
 import StarHalfIcon from '@mui/icons-material/StarHalf'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
+import EmailLauncher from './EmailLauncher'
 
 // Dynamically import tabs for better performance
 const CategoriesTab = dynamic(() => import('./component/CategoriesTab'), {
@@ -68,91 +70,6 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
     fontFamily: 'Inter, sans-serif',
   }
 
-  const handleBlockEmployee = async (employeeId) => {
-    const payload = {
-      target_type: 'employee',
-      target_id: employeeId,
-      action: 'block',
-      reason: '',
-    }
-
-    try {
-      await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success('Employee blocked successfully', {
-        autoClose: 5000,
-        hideProgressBar: true,
-      })
-    } catch (error) {
-      toast.error('Failed to block employee', {
-        autoClose: 5000,
-        hideProgressBar: false,
-      })
-    }
-  }
-  const handleUnblockEmployee = async (employeeId) => {
-    const payload = {
-      target_type: 'employee',
-      target_id: employeeId,
-      action: 'unblock',
-      reason: '',
-    }
-
-    try {
-      await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success('Employee unblocked successfully', {
-        autoClose: 5000,
-        hideProgressBar: true,
-      })
-    } catch (error) {
-      toast.error('Failed to unblock employee', {
-        autoClose: 5000,
-        hideProgressBar: false,
-      })
-    }
-  }
-  const handleEnableEmployee = async (employeeId) => {
-    const payload = {
-      target_type: 'employee',
-      target_id: employeeId,
-      action: 'enable',
-      reason: '',
-    }
-
-    try {
-      await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success('Employee enabled successfully', {
-        autoClose: 5000,
-        hideProgressBar: true,
-      })
-    } catch (error) {
-      toast.error('Failed to enable employee', {
-        autoClose: 5000,
-        hideProgressBar: false,
-      })
-    }
-  }
-  const handleDisableEmployee = async (employeeId) => {
-    const payload = {
-      target_type: 'employee',
-      target_id: employeeId,
-      action: 'disable',
-      reason: '',
-    }
-
-    try {
-      await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success('Employee disabled successfully', {
-        autoClose: 5000,
-        hideProgressBar: true,
-      })
-    } catch (error) {
-      toast.error('Failed to disable employee', {
-        autoClose: 5000,
-        hideProgressBar: false,
-      })
-    }
-  }
-
   const [openReasonModal, setOpenReasonModal] = useState(false)
   const [selectedAction, setSelectedAction] = useState('')
   const [selectedEmployeeId, setSelectedEmployeeId] = useState('')
@@ -175,7 +92,7 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
 
     try {
       await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success(`Employee ${selectedAction}d successfully`, {
+      toast.success(`Employee ${actionVerbMap[selectedAction]} successfully`, {
         autoClose: 5000,
         hideProgressBar: true,
       })
@@ -329,20 +246,7 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
 
             {/* Actions */}
             <Box display="flex" justifyContent="space-between" sx={{ mt: 2 }}>
-              {/* <Typography
-              variant="body2"
-              sx={{
-                color: theme.primary_color || '#115093',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 0.6,
-                cursor: 'pointer',
-              }}
-            >
-              <MdMail size={16} /> Send Email
-            </Typography> */}
-
-              <a
+              {/* <a
                 href={`mailto:${user?.email}`}
                 style={{ textDecoration: 'none' }}
                 target="_blank"
@@ -359,7 +263,8 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
                 >
                   <MdMail size={16} /> Send Email
                 </Typography>
-              </a>
+              </a> */}
+              <EmailLauncher email={user?.email} />
 
               <Typography
                 variant="body2"
@@ -496,7 +401,7 @@ const EmployeeCustomerProfile = ({ open, onClose, userId }) => {
 
       <Dialog open={openReasonModal} onClose={() => setOpenReasonModal(false)}>
         <DialogTitle sx={{ textTransform: 'capitalize' }}>
-          Provide Reason to {selectedAction} Employee
+          Provide Reason to {selectedAction} Customer
         </DialogTitle>
         <DialogContent>
           <TextField

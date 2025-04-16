@@ -1,13 +1,13 @@
 'use client'
 import React, { useContext, useState } from 'react'
-import CatalogTable from '@/component/CatalogTable'
+import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 import { MdInfoOutline } from 'react-icons/md'
 import AddIcon from '@mui/icons-material/Add'
-import Link from 'next/link'
 import { ThemeContext } from '@/context/ThemeContext'
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
+import PenaltyTable from '@/component/PenaltyTable'
+import Link from 'next/link'
 
-const Page = () => {
+export default function Page() {
   const { theme } = useContext(ThemeContext)
   const [number, setNumber] = useState(0)
 
@@ -15,14 +15,15 @@ const Page = () => {
     <Box
       sx={{
         width: '98%',
-        p: 4,
+        p: '2em',
         backgroundColor: '#FFFFFF',
-        borderRadius: '10px',
+        borderRadius: '0.625em',
         minHeight: '60vh',
         margin: 'auto',
+        fontFamily: 'Inter, sans-serif',
       }}
     >
-      <Box sx={{ mb: 4, textAlign: 'left' }}>
+      <Box sx={{ mb: 4 }}>
         <Box sx={{ mb: 1, display: 'flex', justifyContent: 'space-between' }}>
           <Typography
             variant="h5"
@@ -34,9 +35,13 @@ const Page = () => {
               fontWeight: '500',
             }}
           >
-            Manage Customer Catalog {`(${number})`}
+            All Sanctions {`(${number})`}
             <Tooltip
-              title="This page allows for creating and managing all service catalogues for employees, as well as managing fulfillers in the service catalogue."
+              title="This page allows managing, and reviewing all sanctioned  customers. It helps in keeping track of customers restricted from accessing certain services or privileges.
+
+.
+
+"
               arrow
             >
               <IconButton size="small">
@@ -44,21 +49,10 @@ const Page = () => {
               </IconButton>
             </Tooltip>
           </Typography>
-          <Link href="/dashboard/catalog/create">
-            <Button
-              variant="contained"
-              sx={{ backgroundColor: theme.primary_color }}
-              startIcon={<AddIcon />}
-            >
-              Create Catalog
-            </Button>
-          </Link>
         </Box>
         <hr />
       </Box>
-      <CatalogTable catalogType={'Customer'} setNumber={setNumber} />
+      <PenaltyTable role={''} setNumber={setNumber} userType={'customer'} />
     </Box>
   )
 }
-
-export default Page

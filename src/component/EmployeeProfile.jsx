@@ -35,6 +35,7 @@ import BookingsTable from './BookingsTable'
 import { toast } from 'react-toastify'
 import { usePathname } from 'next/navigation'
 import { getMinDateForAge } from './utils/calenderManipulation'
+import actionVerbMap from '@/constants/actionVerbMap'
 
 const EmployeeProfile = ({ employeeId }) => {
   const { theme } = useContext(ThemeContext)
@@ -105,91 +106,6 @@ const EmployeeProfile = ({ employeeId }) => {
     }
   }
 
-  const handleBlockEmployee = async (employeeId) => {
-    const payload = {
-      target_type: 'employee',
-      target_id: employeeId,
-      action: 'block',
-      reason: '',
-    }
-
-    try {
-      await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success('Employee blocked successfully', {
-        autoClose: 5000,
-        hideProgressBar: true,
-      })
-    } catch (error) {
-      toast.error('Failed to block employee', {
-        autoClose: 5000,
-        hideProgressBar: false,
-      })
-    }
-  }
-  const handleUnBlockEmployee = async (employeeId) => {
-    const payload = {
-      target_type: 'employee',
-      target_id: employeeId,
-      action: 'unblock',
-      reason: '',
-    }
-
-    try {
-      await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success('Employee unblocked successfully', {
-        autoClose: 5000,
-        hideProgressBar: true,
-      })
-    } catch (error) {
-      toast.error('Failed to unblock employee', {
-        autoClose: 5000,
-        hideProgressBar: false,
-      })
-    }
-  }
-  const handleEnableEmployee = async (employeeId) => {
-    const payload = {
-      target_type: 'employee',
-      target_id: employeeId,
-      action: 'enable',
-      reason: '',
-    }
-
-    try {
-      await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success('Employee enabled successfully', {
-        autoClose: 5000,
-        hideProgressBar: true,
-      })
-    } catch (error) {
-      toast.error('Failed to enable employee', {
-        autoClose: 5000,
-        hideProgressBar: false,
-      })
-    }
-  }
-  const handleDisableEmployee = async (employeeId) => {
-    const payload = {
-      target_type: 'employee',
-      target_id: employeeId,
-      action: 'disable',
-      reason: '',
-    }
-
-    try {
-      await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success('Employee disabled successfully', {
-        autoClose: 5000,
-        hideProgressBar: true,
-      })
-    } catch (error) {
-      toast.error('Failed to disable employee', {
-        autoClose: 5000,
-        hideProgressBar: false,
-      })
-    }
-  }
-
   const [openReasonModal, setOpenReasonModal] = useState(false)
   const [selectedAction, setSelectedAction] = useState('')
   const [selectedEmployeeId, setSelectedEmployeeId] = useState('')
@@ -212,7 +128,7 @@ const EmployeeProfile = ({ employeeId }) => {
 
     try {
       await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success(`Employee ${selectedAction}d successfully`, {
+      toast.success(`Employee ${actionVerbMap[selectedAction]} successfully`, {
         autoClose: 5000,
         hideProgressBar: true,
       })

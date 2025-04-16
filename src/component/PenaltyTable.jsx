@@ -27,7 +27,10 @@ import PersonOffIcon from '@mui/icons-material/PersonOff'
 import { MdBlock } from 'react-icons/md'
 import { toast } from 'react-toastify'
 
-const PenaltyTable = ({ role, setNumber }) => {
+const PenaltyTable = ({ role, setNumber, userType }) => {
+  const getTargetKey = () =>
+    userType === 'employee' ? 'target_employee' : 'target_customer'
+
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [sortOrder, setSortOrder] = useState('Newest')
@@ -67,6 +70,19 @@ const PenaltyTable = ({ role, setNumber }) => {
     setPage(0)
   }
 
+  // const filteredEmployees = allEmployee
+  //   ?.filter((employee) =>
+  //     `${employee.first_name} ${employee.last_name}`
+  //       .toLowerCase()
+  //       .includes(searchTerm.toLowerCase()),
+  //   )
+  //   ?.filter((employee) => (role ? employee.role === role : true))
+  //   ?.sort((a, b) =>
+  //     sortOrder === 'Newest'
+  //       ? b.timestamp.localeCompare(a.timestamp)
+  //       : a.timestamp.localeCompare(b.timestamp),
+  //   )
+
   const filteredEmployees = allEmployee
     ?.filter((employee) =>
       `${employee.first_name} ${employee.last_name}`
@@ -74,6 +90,12 @@ const PenaltyTable = ({ role, setNumber }) => {
         .includes(searchTerm.toLowerCase()),
     )
     ?.filter((employee) => (role ? employee.role === role : true))
+    ?.filter((employee) => {
+      if (!userType) return true
+      if (userType === 'customer') return employee.target_customer !== null
+      if (userType === 'employee') return employee.target_employee !== null
+      return true
+    })
     ?.sort((a, b) =>
       sortOrder === 'Newest'
         ? b.timestamp.localeCompare(a.timestamp)
@@ -82,7 +104,7 @@ const PenaltyTable = ({ role, setNumber }) => {
 
   const handleUnblockEmployee = async (employeeId) => {
     const payload = {
-      target_type: 'employee',
+      target_type: userType,
       target_id: employeeId,
       action: 'unblock',
       reason: '',
@@ -104,7 +126,7 @@ const PenaltyTable = ({ role, setNumber }) => {
 
   const handleEnableEmployee = async (employeeId) => {
     const payload = {
-      target_type: 'employee',
+      target_type: userType,
       target_id: employeeId,
       action: 'enable',
       reason: '',
@@ -189,7 +211,7 @@ const PenaltyTable = ({ role, setNumber }) => {
                 'Email',
                 'Role',
                 'Last Activity',
-                'Actions',
+                // 'Actions',
               ].map((header) => (
                 <TableCell
                   key={header}
@@ -207,13 +229,13 @@ const PenaltyTable = ({ role, setNumber }) => {
           <TableBody>
             {isLoading || isLoading ? (
               <TableRow>
-                <TableCell colSpan={6} align="center">
+                <TableCell colSpan={5} align="center">
                   <CircularProgress />
                 </TableCell>
               </TableRow>
             ) : filteredEmployees?.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} align="center">
+                <TableCell colSpan={5} align="center">
                   <Box
                     display="flex"
                     flexDirection="column"
@@ -234,19 +256,19 @@ const PenaltyTable = ({ role, setNumber }) => {
                     <TableCell
                       onClick={() =>
                         router.push(
-                          `/dashboard/employee/punishment/details/${employee.target_employee.id}`,
+                          `/dashboard/${userType}/sanctions/details/${employee?.[getTargetKey()]?.id}`,
                         )
                       }
                     >
                       <Avatar
-                        src={`https://technishenbackend.onrender.com${employee.target_employee.profile_picture}`}
-                        alt={`${employee.target_employee.first_name} ${employee.target_employee.last_name}`}
+                        src={`https://technishenbackend.onrender.com${employee?.[getTargetKey()]?.profile_picture}`}
+                        alt={`${employee?.[getTargetKey()]?.first_name} ${employee?.[getTargetKey()]?.last_name}`}
                       />
                     </TableCell>
                     <TableCell
                       onClick={() =>
                         router.push(
-                          `/dashboard/employee/punishment/details/${employee.target_employee.id}`,
+                          `/dashboard/${userType}/sanctions/details/${employee?.[getTargetKey()]?.id}`,
                         )
                       }
                       sx={{
@@ -254,25 +276,11 @@ const PenaltyTable = ({ role, setNumber }) => {
                         fontWeight: 300,
                         fontFamily: 'Inter, sans-serif',
                       }}
-                    >{`${employee.target_employee.first_name} ${employee.target_employee.last_name}`}</TableCell>
+                    >{`${employee?.[getTargetKey()]?.first_name} ${employee?.[getTargetKey()]?.last_name}`}</TableCell>
                     <TableCell
                       onClick={() =>
                         router.push(
-                          `/dashboard/employee/punishment/details/${employee.target_employee.id}`,
-                        )
-                      }
-                      sx={{
-                        fontSize: '0.75em',
-                        fontWeight: 300,
-                        fontFamily: 'Inter, sans-serif',
-                      }}
-                    >
-                      {employee.target_employee.email}
-                    </TableCell>
-                    <TableCell
-                      onClick={() =>
-                        router.push(
-                          `/dashboard/employee/punishment/details/${employee.target_employee.id}`,
+                          `/dashboard/${userType}/sanctions/details/${employee?.[getTargetKey()]?.id}`,
                         )
                       }
                       sx={{
@@ -281,12 +289,27 @@ const PenaltyTable = ({ role, setNumber }) => {
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
-                      {employee.target_employee.role}
+                      {employee?.[getTargetKey()]?.email}
                     </TableCell>
                     <TableCell
                       onClick={() =>
                         router.push(
-                          `/dashboard/employee/punishment/details/${employee.target_employee.id}`,
+                          `/dashboard/${userType}/sanctions/details/${employee?.[getTargetKey()]?.id}`,
+                        )
+                      }
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 300,
+                        fontFamily: 'Inter, sans-serif',
+                        textTransform: 'capitalize',
+                      }}
+                    >
+                      {employee?.[getTargetKey()]?.role || userType}
+                    </TableCell>
+                    <TableCell
+                      onClick={() =>
+                        router.push(
+                          `/dashboard/${userType}/sanctions/details/${employee?.[getTargetKey()]?.id}`,
                         )
                       }
                       sx={{
@@ -298,12 +321,14 @@ const PenaltyTable = ({ role, setNumber }) => {
                     >
                       {employee.action}
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       {employee?.action === 'block' ? (
                         <Typography
                           variant="contained"
                           onClick={() =>
-                            handleUnblockEmployee(employee.target_employee.id)
+                            handleUnblockEmployee(
+                              employee?.[getTargetKey()]?.id,
+                            )
                           }
                           sx={{
                             mt: 2,
@@ -320,7 +345,7 @@ const PenaltyTable = ({ role, setNumber }) => {
                         <Typography
                           variant="contained"
                           onClick={() =>
-                            handleEnableEmployee(employee.target_employee.id)
+                            handleEnableEmployee(employee?.[getTargetKey()]?.id)
                           }
                           sx={{
                             mt: 2,
@@ -336,7 +361,7 @@ const PenaltyTable = ({ role, setNumber }) => {
                           />
                         </Typography>
                       ) : null}
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 ))
             )}

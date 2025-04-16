@@ -136,7 +136,7 @@ const ViewOutsourceTicketDetails = ({ ticketId }) => {
           control={
             <Switch checked={isOutsourced} onChange={handleOutsourcedToggle} />
           }
-          label="Ticket type: Outsourced"
+          label="Ticket type: Outsourcedddd"
           sx={{ mt: '1em' }}
         />
         {isOutsourced && (
@@ -185,6 +185,7 @@ const ViewOutsourceTicketDetails = ({ ticketId }) => {
               value={ticket?.description}
               onChange={(e) => setDescription(e.target.value)}
               variant="outlined"
+              InputLabelProps={{ shrink: true }}
             />
           ) : (
             <Box>
@@ -198,9 +199,9 @@ const ViewOutsourceTicketDetails = ({ ticketId }) => {
                   multiline
                   rows={3}
                   defaultValue={
-                    ticketNote.find(
+                    ticket?.ticket_notes.find(
                       (note) =>
-                        note.note_type ===
+                        note?.note_type ===
                         ['resolution', 'paused', 'general'][leftTabIndex - 1],
                     )?.content || ''
                   }
@@ -209,7 +210,7 @@ const ViewOutsourceTicketDetails = ({ ticketId }) => {
                 />
               )}
 
-              <Box textAlign="right" sx={{ marginTop: '1em' }}>
+              {/* <Box textAlign="right" sx={{ marginTop: '1em' }}>
                 <Button
                   variant="contained"
                   onClick={handleAddOrUpdateNote}
@@ -222,7 +223,7 @@ const ViewOutsourceTicketDetails = ({ ticketId }) => {
                 >
                   {loadNote ? 'Updating...' : 'Update Note'}
                 </Button>
-              </Box>
+              </Box> */}
             </Box>
           )}
         </Box>

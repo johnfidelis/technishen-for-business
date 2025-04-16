@@ -13,6 +13,10 @@ import {
   FormControlLabel,
   Checkbox,
   MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material'
 import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api'
 import GroupSelectionModal from './modals/GroupSelectionModal'
@@ -31,6 +35,7 @@ import BookingsTable from './BookingsTable'
 import { toast } from 'react-toastify'
 import { usePathname } from 'next/navigation'
 import { getMinDateForAge } from './utils/calenderManipulation'
+import actionVerbMap from '@/constants/actionVerbMap'
 
 const CustomerProfile = ({ employeeId }) => {
   const { theme } = useContext(ThemeContext)
@@ -44,6 +49,11 @@ const CustomerProfile = ({ employeeId }) => {
 
   const { data: employeeData, isLoading } = useFetchData(
     GET_ENDPOINTS.GET_CUSTOMER(employeeId),
+  )
+
+  const patchBlockAndUnblock = usePatchData(
+    PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER(),
+    'blockandUnblock',
   )
 
   const resendAccessCode = useCreateData(
@@ -95,8 +105,40 @@ const CustomerProfile = ({ employeeId }) => {
     }
   }
 
-  const handleBack = () => alert('Go Back')
+  const [openReasonModal, setOpenReasonModal] = useState(false)
+  const [selectedAction, setSelectedAction] = useState('')
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState('')
+  const [reasonText, setReasonText] = useState('')
 
+  const handleOpenReasonModal = (action, employeeId) => {
+    setSelectedAction(action)
+    setSelectedEmployeeId(employeeId)
+    setReasonText('')
+    setOpenReasonModal(true)
+  }
+
+  const handleConfirmAction = async () => {
+    const payload = {
+      target_type: 'customer',
+      target_id: employeeId,
+      action: selectedAction,
+      reason: reasonText,
+    }
+
+    try {
+      await patchBlockAndUnblock.mutateAsync(payload)
+      toast.success(`Customer ${actionVerbMap[selectedAction]} successfully`, {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+      setOpenReasonModal(false)
+    } catch (error) {
+      toast.error(`Failed to ${selectedAction} customer`, {
+        autoClose: 5000,
+        hideProgressBar: false,
+      })
+    }
+  }
   return (
     <Box>
       {isLoading ? (
@@ -394,64 +436,57 @@ const CustomerProfile = ({ employeeId }) => {
                     </FormGroup>
                   )}
 
-                  {/* <FormGroup sx={{ textAlign: 'left', mt: 2 }}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={
-                            selectedRole === 'Admin' ||
-                            employeeData?.role === 'Admin'
-                          }
-                          disabled={employeeData?.role === 'Admin'}
-                          onChange={() => handleRoleSelection('Admin')}
-                        />
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: 2,
+                      mt: 2,
+                      flexWrap: 'wrap', // optional: makes it responsive
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      onClick={() =>
+                        employeeData?.is_blocked
+                          ? handleOpenReasonModal('unblock', employeeData?.id)
+                          : handleOpenReasonModal('block', employeeData?.id)
                       }
-                      label="Admin"
-                      sx={{ marginLeft: '8px' }}
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={
-                            selectedRole === 'User' ||
-                            employeeData?.role === 'User'
-                          }
-                          disabled={employeeData?.role === 'User'}
-                          onChange={() => handleRoleSelection('User')}
-                        />
+                      sx={{
+                        backgroundColor: employeeData?.is_blocked
+                          ? 'darkgreen'
+                          : 'darkred',
+                        '&:hover': {
+                          backgroundColor: employeeData?.is_blocked
+                            ? 'green'
+                            : 'red',
+                        },
+                      }}
+                    >
+                      {employeeData?.is_blocked ? 'Unblock' : 'Block'} Customer
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      onClick={() =>
+                        employeeData?.is_disabled
+                          ? handleOpenReasonModal('enable', employeeData?.id)
+                          : handleOpenReasonModal('disable', employeeData?.id)
                       }
-                      label="User"
-                      sx={{ marginLeft: '8px' }}
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={
-                            selectedRole === 'Fulfiller' ||
-                            employeeData?.role === 'Fulfiller'
-                          }
-                          disabled={employeeData?.role === 'Fulfiller'}
-                          onChange={() => handleRoleSelection('Fulfiller')}
-                        />
-                      }
-                      label="Fulfiller"
-                      sx={{ marginLeft: '8px' }}
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={
-                            selectedRole === 'Finance' ||
-                            employeeData?.role === 'Finance'
-                          }
-                          disabled={employeeData?.role === 'Finance'}
-                          onChange={() => handleRoleSelection('Finance')}
-                        />
-                      }
-                      label="Finance"
-                      sx={{ marginLeft: '8px' }}
-                    />
-                  </FormGroup> */}
+                      sx={{
+                        backgroundColor: employeeData?.is_disabled
+                          ? 'darkgreen'
+                          : 'darkred',
+                        '&:hover': {
+                          backgroundColor: employeeData?.is_disabled
+                            ? 'green'
+                            : 'red',
+                        },
+                      }}
+                    >
+                      {employeeData?.is_disabled ? 'Enable' : 'Disable'}{' '}
+                      Customer
+                    </Button>
+                  </Box>
                   <Box sx={{ textAlign: 'left', mt: 2 }}>
                     <Button
                       variant="contained"
@@ -480,6 +515,40 @@ const CustomerProfile = ({ employeeId }) => {
           )}
         </>
       )}
+
+      <Dialog open={openReasonModal} onClose={() => setOpenReasonModal(false)}>
+        <DialogTitle sx={{ textTransform: 'capitalize' }}>
+          Provide Reason to {selectedAction} Customer
+        </DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Reason"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={reasonText}
+            onChange={(e) => setReasonText(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            sx={{ color: theme.primary_color || '#115093' }}
+            onClick={() => setOpenReasonModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirmAction}
+            disabled={!reasonText.trim()}
+            variant="contained"
+            sx={{ backgroundColor: theme.primary_color || '#115093' }}
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   )
 }

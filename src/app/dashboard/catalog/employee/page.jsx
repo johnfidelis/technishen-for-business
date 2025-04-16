@@ -35,9 +35,7 @@ const Page = () => {
           >
             Manage Employee Catalog {`(${number})`}
             <Tooltip
-              title="TThis page lets you manage all employee profiles. You can add new staff, edit existing details, or deactivate accounts.
-
-"
+              title="This page allows for creating and managing all service catalogues for customers, as well as managing fulfillers in the service catalogue."
               arrow
             >
               <IconButton size="small">

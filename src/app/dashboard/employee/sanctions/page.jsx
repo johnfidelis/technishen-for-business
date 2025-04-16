@@ -37,7 +37,7 @@ export default function Page() {
           >
             All Sanctions {`(${number})`}
             <Tooltip
-              title="This page displays a complete list of all employees in the system, regardless of their role or group. Use this view to monitor or manage your workforce.
+              title="This page allows managing, and reviewing all sanctioned  employees. It helps in keeping track of employees restricted from accessing certain services or privileges.
 
 "
               arrow
@@ -50,7 +50,7 @@ export default function Page() {
         </Box>
         <hr />
       </Box>
-      <PenaltyTable role={''} setNumber={setNumber} />
+      <PenaltyTable role={''} setNumber={setNumber} userType={'employee'} />
     </Box>
   )
 }

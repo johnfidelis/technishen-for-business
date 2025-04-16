@@ -85,6 +85,8 @@ export const GET_ENDPOINTS = {
     `/get-employee/${getBusinessId()}/${employeeId}/`,
   GET_SANCTION_DETAILS: (employeeId) =>
     `/details-for-punishment/employee/${employeeId}/`,
+  GET_CUSTOMER_SANCTION_DETAILS: (employeeId) =>
+    `/details-for-punishment/customer/${employeeId}/`,
   GET_EMPLOYEE_SERVICES: (employeeId) =>
     `/services-employees-have/${employeeId}/`,
   GET_CUSTOMER: (employeeId) =>
