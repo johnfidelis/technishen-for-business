@@ -484,7 +484,7 @@ const DashboardMap = () => {
               }
             />
           </Grid>
-          <Grid item>
+          {/* <Grid item>
             <FormControlLabel
               control={
                 <Checkbox
@@ -494,12 +494,12 @@ const DashboardMap = () => {
               }
               label={
                 <Typography sx={{ fontWeight: 400, fontSize: '0.8em' }}>
-                  {/* {businessName || ''} */}
+              
                   Show Outsourced Tickets
                 </Typography>
               }
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
 
