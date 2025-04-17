@@ -943,10 +943,32 @@ const InternalTicketForm = () => {
             getOptionLabel={(option) =>
               option.first_name + ' ' + option.last_name || ''
             }
+            getOptionDisabled={(option) =>
+              option.is_blocked || option.is_disabled
+            }
             loading={callerLoading}
             noOptionsText="No caller found"
             onInputChange={handleInputChange}
             onChange={(event, newValue) => setCaller(newValue?.id || '')}
+            renderOption={(props, option) => (
+              <li
+                {...props}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                }}
+              >
+                <span>{option.first_name + ' ' + option.last_name}</span>
+                <span style={{ color: 'red', fontSize: '0.8em' }}>
+                  {option.is_blocked
+                    ? 'Blocked'
+                    : option.is_disabled
+                      ? 'Suspended'
+                      : ''}
+                </span>
+              </li>
+            )}
             renderInput={(params) => (
               <TextField
                 {...params}
