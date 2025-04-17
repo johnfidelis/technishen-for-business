@@ -377,6 +377,7 @@ const Page = () => {
                 inputProps={{ max: minDate }}
                 onChange={handleInputChange}
                 sx={{ mb: 2 }}
+                onKeyDown={(e) => e.preventDefault()}
               />
               <TextField
                 fullWidth

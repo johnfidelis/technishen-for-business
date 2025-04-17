@@ -359,6 +359,7 @@ const CustomerForm = () => {
                     InputLabelProps={{ shrink: true }}
                     value={formData.date_of_birth}
                     onChange={handleInputChange}
+                    onKeyDown={(e) => e.preventDefault()}
                     inputProps={{ max: minDate }}
                   />
                 </Grid>
@@ -671,6 +672,7 @@ const CustomerForm = () => {
                     value={formData.date_of_birth}
                     onChange={handleInputChange}
                     inputProps={{ max: minDate }}
+                    onKeyDown={(e) => e.preventDefault()}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>

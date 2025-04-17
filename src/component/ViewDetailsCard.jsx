@@ -334,7 +334,9 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
                   variant="body2"
                   // sx={{ fontWeight: 300, fontSize: '0.75em' }}
                 >
-                  {formatDateTime(ticket?.ticket_details?.created_at) || ''}
+                  {/* {formatDateTime(ticket?.ticket_details?.created_at) || ''} */}
+                  {formatDateTime(ticket?.ticket_details?.scheduled_datetime) ||
+                    ''}
                 </Typography>
                 <Typography
                   variant="body2"

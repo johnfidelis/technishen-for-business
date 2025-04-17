@@ -19,6 +19,7 @@ import {
   PATCH_ENDPOINTS,
   POST_ENDPOINTS,
 } from '@/constants/endpoints'
+import { formatDateTime } from './utils/formatDateTime'
 
 const ViewTicketDetails = ({ ticketId }) => {
   const { data: ticketNote, isLoading: isLoadingNote } = useFetchData(
@@ -110,7 +111,9 @@ const ViewTicketDetails = ({ ticketId }) => {
           <TextField
             fullWidth
             label="Ticket Date and Time"
-            value={ticket?.ticket_details?.scheduled_datetime || ' '}
+            value={
+              formatDateTime(ticket?.ticket_details?.scheduled_datetime) || ' '
+            }
             variant="outlined"
           />
           <TextField
@@ -132,13 +135,13 @@ const ViewTicketDetails = ({ ticketId }) => {
             variant="outlined"
           />
         </Box>
-        <FormControlLabel
+        {/* <FormControlLabel
           control={
             <Switch checked={isOutsourced} onChange={handleOutsourcedToggle} />
           }
-          label="Ticket type: Outsourcedzzzzz"
+          label="Ticket type: Outsourced"
           sx={{ mt: '1em' }}
-        />
+        /> */}
         {isOutsourced && (
           <Typography
             variant="body2"

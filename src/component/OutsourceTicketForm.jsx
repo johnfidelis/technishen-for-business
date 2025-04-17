@@ -1165,6 +1165,7 @@ const InternalTicketForm = () => {
             }}
             value={scheduleDateAndTime || ' '}
             onChange={(e) => setScheduleDateAndTime(e.target.value)}
+            onKeyDown={(e) => e.preventDefault()}
           />
         </Box>
       </Grid>

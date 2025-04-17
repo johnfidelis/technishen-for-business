@@ -232,6 +232,7 @@ const Page = ({ handleNext }) => {
             error={!!errors.date_of_birth}
             helperText={errors.date_of_birth}
             inputProps={{ max: minDate }}
+            onKeyDown={(e) => e.preventDefault()}
           />
         </Grid>
         <Grid item xs={12} sm={6}>

@@ -171,6 +171,11 @@ const PersonalDetails = () => {
                   type={type === 'password' ? 'password' : 'text'}
                   fullWidth
                   required
+                  onKeyDown={
+                    name === 'date_of_birth'
+                      ? (e) => e.preventDefault()
+                      : undefined
+                  }
                   disabled={disabled}
                 >
                   {options &&

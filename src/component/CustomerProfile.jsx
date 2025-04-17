@@ -267,7 +267,7 @@ const CustomerProfile = ({ employeeId }) => {
                       name="date_of_birth"
                       value={employeeData?.date_of_birth || ''}
                       onChange={handleInputChange}
-                      //  InputProps={{ readOnly: !isEditing }}
+                      onKeyDown={(e) => e.preventDefault()}
                       inputProps={{ max: minDate }}
                       sx={{ mb: 2 }}
                     />
