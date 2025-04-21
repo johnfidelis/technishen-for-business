@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { Box, Typography } from '@mui/material'
-import CustomersTable from '@/component/CustomersTable'
+import CustomersTable from '@/component/model1/CustomersTable'
 
 const Page = () => {
   const [number, setNumber] = useState(0)

@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation'
 import { Box, Button, Typography } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
 // import EmployeeProfile from '@/component/EmployeeProfile'
-import CustomerProfile from '@/component/CustomerProfile'
+import CustomerProfile from '@/component/model1/CustomerProfile'
 
 const Page = ({ onBack }) => {
   const { theme } = useContext(ThemeContext)

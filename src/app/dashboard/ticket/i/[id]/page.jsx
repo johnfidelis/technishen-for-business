@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useParams } from 'next/navigation'
 import { Box, Button, Typography } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
-import ViewTicketDetails from '@/component/ViewTicketDetails'
+import ViewTicketDetails from '@/component/model1/ViewTicketDetails'
 
 const Page = ({ onBack }) => {
   const { theme } = useContext(ThemeContext)

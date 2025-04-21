@@ -14,7 +14,7 @@ import {
   Button,
 } from '@mui/material'
 import AssignmentIcon from '@mui/icons-material/Assignment'
-import BackgroundBox from '@/component/BackgroundBox'
+import BackgroundBox from '@/component/model1/BackgroundBox'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 

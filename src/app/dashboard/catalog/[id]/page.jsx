@@ -4,9 +4,9 @@ import React, { useContext, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { Box, Button, Typography } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
-import OpenSubcategories from '@/component/OpenSubcategories'
+import OpenSubcategories from '@/component/model1/OpenSubcategories'
 import AddIcon from '@mui/icons-material/Add'
-import CreateSubCategory from '@/component/modals/CreateSubCategory'
+import CreateSubCategory from '@/component/model1/modals/CreateSubCategory'
 
 const Page = ({ onBack }) => {
   const { theme } = useContext(ThemeContext)

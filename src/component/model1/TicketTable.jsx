@@ -27,7 +27,7 @@ import { GET_ENDPOINTS } from '@/constants/endpoints'
 import DateRangeInput from './DateRangeInput'
 import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
-import { formatDateTime } from './utils/formatDateTime'
+import { formatDateTime } from '../utils/formatDateTime'
 import { SentimentDissatisfied } from '@mui/icons-material'
 
 const TicketTable = ({ filterType, setNumber }) => {

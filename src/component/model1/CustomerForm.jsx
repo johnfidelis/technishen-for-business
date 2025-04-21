@@ -14,16 +14,16 @@ import {
 
 import PhoneInput from 'react-phone-number-input'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import AddressAutocomplete from './utils/GoogleInputAddress'
-import countryList from './utils/countryList'
+import AddressAutocomplete from '../utils/GoogleInputAddress'
+import countryList from '../utils/countryList'
 import { MdInfoOutline } from 'react-icons/md'
-import profileAddIcon from '../assets/images/profileAddIcon.svg'
+import profileAddIcon from '../../assets/images/profileAddIcon.svg'
 import { ThemeContext } from '@/context/ThemeContext'
 import Image from 'next/image'
 import { useCreateData } from '@/hooks/useApiService'
 import { POST_ENDPOINTS } from '@/constants/endpoints'
 import { toast } from 'react-toastify'
-import { getMinDateForAge } from './utils/calenderManipulation'
+import { getMinDateForAge } from '../utils/calenderManipulation'
 
 const CustomerForm = () => {
   const { theme } = useContext(ThemeContext)

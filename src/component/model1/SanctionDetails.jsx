@@ -43,12 +43,12 @@ import {
 import BookingsTable from './BookingsTable'
 import { toast } from 'react-toastify'
 import { usePathname } from 'next/navigation'
-import { getMinDateForAge } from './utils/calenderManipulation'
+import { getMinDateForAge } from '../utils/calenderManipulation'
 import { SentimentDissatisfied } from '@mui/icons-material'
-import { formatDateTime } from './utils/formatDateTime'
+import { formatDateTime } from '../utils/formatDateTime'
 import actionVerbMap from '@/constants/actionVerbMap'
 
-const CustomerSanctionDetails = ({ employeeId }) => {
+const SanctionDetails = ({ employeeId }) => {
   const { theme } = useContext(ThemeContext)
   const minDate = getMinDateForAge(18)
   const pathname = usePathname()
@@ -77,7 +77,7 @@ const CustomerSanctionDetails = ({ employeeId }) => {
   )
 
   const { data: employeeData, isLoading } = useFetchData(
-    GET_ENDPOINTS.GET_CUSTOMER_SANCTION_DETAILS(employeeId),
+    GET_ENDPOINTS.GET_SANCTION_DETAILS(employeeId),
   )
 
   const resendAccessCode = useCreateData(
@@ -143,7 +143,7 @@ const CustomerSanctionDetails = ({ employeeId }) => {
 
   const handleConfirmAction = async () => {
     const payload = {
-      target_type: 'customer',
+      target_type: 'employee',
       target_id: selectedEmployeeId,
       action: selectedAction,
       reason: reasonText,
@@ -151,7 +151,7 @@ const CustomerSanctionDetails = ({ employeeId }) => {
 
     try {
       await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success(`Customer ${actionVerbMap[selectedAction]} successfully`, {
+      toast.success(`Employee ${actionVerbMap[selectedAction]} successfully`, {
         autoClose: 5000,
         hideProgressBar: true,
       })
@@ -316,12 +316,12 @@ const CustomerSanctionDetails = ({ employeeId }) => {
                         </TableCell>
                         <TableCell>{log.actor_name || 'System'}</TableCell>
                         <TableCell>
-                          {log.target_customer?.first_name}{' '}
-                          {log.target_customer?.last_name}
+                          {log.target_employee?.first_name}{' '}
+                          {log.target_employee?.last_name}
                         </TableCell>
-                        <TableCell>{log.target_customer?.email}</TableCell>
+                        <TableCell>{log.target_employee?.email}</TableCell>
                         <TableCell>{log.reason}</TableCell>
-                        <TableCell>{log.target_customer?.role}</TableCell>
+                        <TableCell>{log.target_employee?.role}</TableCell>
                         <TableCell>{formatDateTime(log?.timestamp)}</TableCell>
                       </TableRow>
                     ))
@@ -373,7 +373,7 @@ const CustomerSanctionDetails = ({ employeeId }) => {
 
       <Dialog open={openReasonModal} onClose={() => setOpenReasonModal(false)}>
         <DialogTitle sx={{ textTransform: 'capitalize' }}>
-          Provide Reason to {selectedAction} Customer
+          Provide Reason to {selectedAction} Employee
         </DialogTitle>
         <DialogContent>
           <TextField
@@ -408,4 +408,4 @@ const CustomerSanctionDetails = ({ employeeId }) => {
   )
 }
 
-export default CustomerSanctionDetails
+export default SanctionDetails

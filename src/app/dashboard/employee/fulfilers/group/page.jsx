@@ -4,8 +4,8 @@ import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 import { MdInfoOutline } from 'react-icons/md'
 import AddIcon from '@mui/icons-material/Add'
 import { ThemeContext } from '@/context/ThemeContext'
-import FulfillerGroupTable from '@/component/FulfillerGroupTable'
-import CreateFulfillerGroup from '@/component/modals/CreateFulfillerGroup'
+import FulfillerGroupTable from '@/component/model1/FulfillerGroupTable'
+import CreateFulfillerGroup from '@/component/model1/modals/CreateFulfillerGroup'
 
 export default function FulfillerGroupPage() {
   const { theme } = useContext(ThemeContext)

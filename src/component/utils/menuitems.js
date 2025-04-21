@@ -148,12 +148,12 @@ export const menuItems = [
     subcategories: [
       {
         name: 'Dashboard',
-        routeTo: '/',
+        routeTo: '/dashboard/resourcing',
         icon: <DashboardIcon />,
       },
       {
         name: 'Create Post',
-        routeTo: '/',
+        routeTo: '/dashboard/resourcing/create',
         icon: <AddCircleOutlineRounded />,
       },
       {

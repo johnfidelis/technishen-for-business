@@ -18,7 +18,7 @@ import {
 import ChatTab from './modals/component/ChatTab'
 import BookingsTab from './modals/component/BookingsTab'
 import TicketDetails from './modals/TicketDetails'
-import { formatDateTime } from './utils/formatDateTime'
+import { formatDateTime } from '../utils/formatDateTime'
 import { buildEndpoint } from '@/lib/apiHelpers'
 import { useFetchData, usePatchData } from '@/hooks/useApiService'
 import { Cookies } from 'react-cookie'

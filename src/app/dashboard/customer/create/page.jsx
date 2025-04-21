@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Box, Typography } from '@mui/material'
-import CustomerForm from '@/component/CustomerForm'
+import CustomerForm from '@/component/model1/CustomerForm'
 
 const Page = () => {
   return (

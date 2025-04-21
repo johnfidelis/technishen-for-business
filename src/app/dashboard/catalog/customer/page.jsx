@@ -1,6 +1,6 @@
 'use client'
 import React, { useContext, useState } from 'react'
-import CatalogTable from '@/component/CatalogTable'
+import CatalogTable from '@/component/model1/CatalogTable'
 import { MdInfoOutline } from 'react-icons/md'
 import AddIcon from '@mui/icons-material/Add'
 import Link from 'next/link'

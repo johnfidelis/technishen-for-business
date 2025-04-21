@@ -12,9 +12,6 @@ import EmployeeProfile from './modals/EmployeeProfile'
 import CustomerProfile from './modals/CustomerProfile'
 import EmployeeCustomerProfile from './modals/EmployeeCustomerProfile'
 import { Cookies } from 'react-cookie'
-// import CustomerProfile from './modals/CustomerProfile'
-import Image from 'next/image'
-import Img1 from '../assets/images/jay1.jpeg'
 import {
   Box,
   Typography,
@@ -36,7 +33,7 @@ import {
 } from '@mui/material'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
-import profileAddIcon from '../assets/images/profileAddIcon.svg'
+import profileAddIcon from '../../assets/images/profileAddIcon.svg'
 import { ThemeContext } from '@/context/ThemeContext'
 import CloseIcon from '@mui/icons-material/Close'
 import { SentimentDissatisfied } from '@mui/icons-material'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import DashboardCards from '@/component/DashboardCards'
-import DashboardMap from '@/component/DashboardMap'
+import DashboardCards from '@/component/model1/DashboardCards'
+import DashboardMap from '@/component/model1/DashboardMap'
 
 const Page = () => {
   return (

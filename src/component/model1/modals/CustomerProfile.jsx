@@ -21,7 +21,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import BookingsTab from './component/BookingsTab'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import { useFetchData } from '@/hooks/useApiService'
-import profileAddIcon from '../../assets/images/profileAddIcon.svg'
+import profileAddIcon from '../../../assets/images/profileAddIcon.svg'
 
 const CustomerProfile = ({ open, onClose, user, type }) => {
   const [rightTabIndex, setRightTabIndex] = React.useState(0)

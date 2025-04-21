@@ -4,7 +4,7 @@ import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
 import { MdInfoOutline } from 'react-icons/md'
 import AddIcon from '@mui/icons-material/Add'
 import { ThemeContext } from '@/context/ThemeContext'
-import EmployeeTable from '@/component/EmployeeTable'
+import EmployeeTable from '@/component/model1/EmployeeTable'
 import Link from 'next/link'
 
 export default function Page() {

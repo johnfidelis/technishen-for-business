@@ -34,10 +34,10 @@ import {
 import BookingsTable from './BookingsTable'
 import { toast } from 'react-toastify'
 import { usePathname } from 'next/navigation'
-import { getMinDateForAge } from './utils/calenderManipulation'
+import { getMinDateForAge } from '../utils/calenderManipulation'
 import actionVerbMap from '@/constants/actionVerbMap'
 
-const CustomerProfile = ({ employeeId }) => {
+const EmployeeProfile = ({ employeeId }) => {
   const { theme } = useContext(ThemeContext)
   const minDate = getMinDateForAge(18)
   const pathname = usePathname()
@@ -46,14 +46,15 @@ const CustomerProfile = ({ employeeId }) => {
 
   const patchEmployeeRoleEndpoint =
     PATCH_ENDPOINTS.UPDATE_EMPLOYEE_ROLE(employeeId)
-
-  const { data: employeeData, isLoading } = useFetchData(
-    GET_ENDPOINTS.GET_CUSTOMER(employeeId),
-  )
+  // const blockandUnblockEndpoint = PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER
 
   const patchBlockAndUnblock = usePatchData(
     PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER(),
     'blockandUnblock',
+  )
+
+  const { data: employeeData, isLoading } = useFetchData(
+    GET_ENDPOINTS.GET_EMPLOYEE(employeeId),
   )
 
   const resendAccessCode = useCreateData(
@@ -75,7 +76,7 @@ const CustomerProfile = ({ employeeId }) => {
   const handleUpdate = () => alert('Profile Updated')
   const handleResendInvite = async () => {
     const payload = {
-      user_type: 'customer', // or "customer" based on your application logic
+      user_type: 'employee', // or "customer" based on your application logic
       email: employeeData?.email,
     }
 
@@ -119,7 +120,7 @@ const CustomerProfile = ({ employeeId }) => {
 
   const handleConfirmAction = async () => {
     const payload = {
-      target_type: 'customer',
+      target_type: 'employee',
       target_id: employeeId,
       action: selectedAction,
       reason: reasonText,
@@ -127,18 +128,19 @@ const CustomerProfile = ({ employeeId }) => {
 
     try {
       await patchBlockAndUnblock.mutateAsync(payload)
-      toast.success(`Customer ${actionVerbMap[selectedAction]} successfully`, {
+      toast.success(`Employee ${actionVerbMap[selectedAction]} successfully`, {
         autoClose: 5000,
         hideProgressBar: true,
       })
       setOpenReasonModal(false)
     } catch (error) {
-      toast.error(`Failed to ${selectedAction} customer`, {
+      toast.error(`Failed to ${selectedAction} employee`, {
         autoClose: 5000,
         hideProgressBar: false,
       })
     }
   }
+
   return (
     <Box>
       {isLoading ? (
@@ -341,6 +343,35 @@ const CustomerProfile = ({ employeeId }) => {
                       sx={{ mb: 2 }}
                     />
                   </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Role"
+                      variant="outlined"
+                      required
+                      name="role"
+                      disabled
+                      value={employeeData?.role || ''}
+                      onChange={handleInputChange}
+                      //  InputProps={{ readOnly: !isEditing }}
+                      sx={{ mb: 2 }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Position"
+                      variant="outlined"
+                      required
+                      name="position"
+                      value={employeeData?.position || ''}
+                      onChange={handleInputChange}
+                      //  InputProps={{ readOnly: !isEditing }}
+                      sx={{ mb: 2 }}
+                    />
+                  </Grid>
                 </Grid>
 
                 <Button
@@ -435,7 +466,6 @@ const CustomerProfile = ({ employeeId }) => {
                       />
                     </FormGroup>
                   )}
-
                   <Box
                     sx={{
                       display: 'flex',
@@ -447,46 +477,60 @@ const CustomerProfile = ({ employeeId }) => {
                     <Button
                       variant="contained"
                       onClick={() =>
-                        employeeData?.is_blocked
-                          ? handleOpenReasonModal('unblock', employeeData?.id)
-                          : handleOpenReasonModal('block', employeeData?.id)
+                        employeeData?.user?.is_blocked
+                          ? handleOpenReasonModal(
+                              'unblock',
+                              employeeData?.user?.id,
+                            )
+                          : handleOpenReasonModal(
+                              'block',
+                              employeeData?.user?.id,
+                            )
                       }
                       sx={{
-                        backgroundColor: employeeData?.is_blocked
+                        backgroundColor: employeeData?.user?.is_blocked
                           ? 'darkgreen'
                           : 'darkred',
                         '&:hover': {
-                          backgroundColor: employeeData?.is_blocked
+                          backgroundColor: employeeData?.user?.is_blocked
                             ? 'green'
                             : 'red',
                         },
                       }}
                     >
-                      {employeeData?.is_blocked ? 'Unblock' : 'Block'} Customer
+                      {employeeData?.user?.is_blocked ? 'Unblock' : 'Block'}{' '}
+                      Employee
                     </Button>
 
                     <Button
                       variant="contained"
                       onClick={() =>
-                        employeeData?.is_disabled
-                          ? handleOpenReasonModal('enable', employeeData?.id)
-                          : handleOpenReasonModal('disable', employeeData?.id)
+                        employeeData?.user?.is_disabled
+                          ? handleOpenReasonModal(
+                              'enable',
+                              employeeData?.user?.id,
+                            )
+                          : handleOpenReasonModal(
+                              'disable',
+                              employeeData?.user?.id,
+                            )
                       }
                       sx={{
-                        backgroundColor: employeeData?.is_disabled
+                        backgroundColor: employeeData?.user?.is_disabled
                           ? 'darkgreen'
                           : 'darkred',
                         '&:hover': {
-                          backgroundColor: employeeData?.is_disabled
+                          backgroundColor: employeeData?.user?.is_disabled
                             ? 'green'
                             : 'red',
                         },
                       }}
                     >
-                      {employeeData?.is_disabled ? 'Enable' : 'Disable'}{' '}
-                      Customer
+                      {employeeData?.user?.is_disabled ? 'Enable' : 'Disable'}{' '}
+                      Employee
                     </Button>
                   </Box>
+
                   <Box sx={{ textAlign: 'left', mt: 2 }}>
                     <Button
                       variant="contained"
@@ -511,14 +555,14 @@ const CustomerProfile = ({ employeeId }) => {
           )}
 
           {tabIndex === 1 && (
-            <BookingsTable customerId={employeeId} ticketType={'customer'} />
+            <BookingsTable customerId={employeeId} ticketType={'employee'} />
           )}
         </>
       )}
 
       <Dialog open={openReasonModal} onClose={() => setOpenReasonModal(false)}>
         <DialogTitle sx={{ textTransform: 'capitalize' }}>
-          Provide Reason to {selectedAction} Customer
+          Provide Reason to {selectedAction} Employee
         </DialogTitle>
         <DialogContent>
           <TextField
@@ -553,4 +597,4 @@ const CustomerProfile = ({ employeeId }) => {
   )
 }
 
-export default CustomerProfile
+export default EmployeeProfile

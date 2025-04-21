@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react'
 import { Box, Typography, Switch, FormControlLabel } from '@mui/material'
-import InternalTicketForm from '@/component/InternalTicketForm'
-import OutsourceTicketForm from '@/component/OutsourceTicketForm'
+import InternalTicketForm from '@/component/model1/InternalTicketForm'
+import OutsourceTicketForm from '@/component/model1/OutsourceTicketForm'
 
 const CreateTicket = () => {
   const [outsourced, setOutsourced] = useState(false)

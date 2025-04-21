@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Box, Typography } from '@mui/material'
-import ServiceCatalog from '@/component/ServiceCatalogForm'
+import ServiceCatalog from '@/component/model1/ServiceCatalogForm'
 
 const Page = () => {
   return (

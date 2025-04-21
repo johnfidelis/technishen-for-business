@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useParams } from 'next/navigation'
 import { Box, Button, Typography } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
-import SanctionDetails from '@/component/SanctionDetails'
+import SanctionDetails from '@/component/model1/SanctionDetails'
 
 const Page = ({ onBack }) => {
   const { theme } = useContext(ThemeContext)

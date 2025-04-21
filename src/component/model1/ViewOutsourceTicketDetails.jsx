@@ -12,14 +12,14 @@ import {
   Button,
 } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
-import ViewOutsouredDetailsCard from '@/component/ViewOutsouredDetailsCard'
+import ViewOutsouredDetailsCard from '@/component/model1/ViewOutsouredDetailsCard'
 import { useCreateData, useFetchData } from '@/hooks/useApiService'
 import {
   GET_ENDPOINTS,
   PATCH_ENDPOINTS,
   POST_ENDPOINTS,
 } from '@/constants/endpoints'
-import { formatDateTime } from './utils/formatDateTime'
+import { formatDateTime } from '../utils/formatDateTime'
 
 const ViewOutsourceTicketDetails = ({ ticketId }) => {
   const { data: ticketNote, isLoading: isLoadingNote } = useFetchData(

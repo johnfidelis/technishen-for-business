@@ -164,7 +164,7 @@ const BusinessSelector = () => {
         Add Business
       </Button>
 
-      <Typography
+      {/* <Typography
         variant="caption"
         sx={{
           // fontSize: '0.7rem',
@@ -186,7 +186,7 @@ const BusinessSelector = () => {
           <RefreshIcon fontSize="small" />
         )}
         {isRefreshing ? 'Refreshing...' : 'Refresh Latest Data'}
-      </Typography>
+      </Typography> */}
     </Box>
   )
 }

@@ -13,7 +13,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import InboxIcon from '@mui/icons-material/Inbox'
 import { ThemeContext } from '@/context/ThemeContext'
-import TicketTable from '@/component/TicketTable'
+import TicketTable from '@/component/model1/TicketTable'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)

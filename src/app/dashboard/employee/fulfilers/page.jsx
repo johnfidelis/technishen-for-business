@@ -16,7 +16,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import InboxIcon from '@mui/icons-material/Inbox'
 import { ThemeContext } from '@/context/ThemeContext'
-import EmployeeTable from '@/component/EmployeeTable'
+import EmployeeTable from '@/component/model1/EmployeeTable'
 
 export default function Page() {
   const { theme } = useContext(ThemeContext)
