@@ -457,7 +457,7 @@ const CustomerProfile = ({ employeeId }) => {
                           : 'darkred',
                         '&:hover': {
                           backgroundColor: employeeData?.is_blocked
-                            ? 'green'
+                            ? '#1BA847'
                             : 'red',
                         },
                       }}
@@ -478,7 +478,7 @@ const CustomerProfile = ({ employeeId }) => {
                           : 'darkred',
                         '&:hover': {
                           backgroundColor: employeeData?.is_disabled
-                            ? 'green'
+                            ? '#1BA847'
                             : 'red',
                         },
                       }}

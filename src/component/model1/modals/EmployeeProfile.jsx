@@ -262,7 +262,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               <Typography
                 variant="body2"
                 sx={{
-                  color: user?.is_blocked ? 'green' : '#FF4C3B',
+                  color: user?.is_blocked ? '#1BA847' : '#FF4C3B',
                   display: 'flex',
                   alignItems: 'center',
                   gap: 0.6,
@@ -282,7 +282,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
               <Typography
                 variant="body2"
                 sx={{
-                  color: user?.is_disabled ? 'green' : '#FF4C3B',
+                  color: user?.is_disabled ? '#1BA847' : '#FF4C3B',
                   display: 'flex',
                   alignItems: 'center',
                   gap: 0.6,

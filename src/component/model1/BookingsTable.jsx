@@ -108,7 +108,7 @@ const BookingsTable = ({ customerId, ticketType }) => {
       </Box>
 
       {/* Bookings Table */}
-      <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+      <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
         <Table>
           <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
             <TableRow>

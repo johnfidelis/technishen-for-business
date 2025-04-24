@@ -233,7 +233,7 @@ const SanctionDetails = ({ employeeId }) => {
                         : 'darkred',
                       '&:hover': {
                         backgroundColor: employeeData?.user?.is_blocked
-                          ? 'green'
+                          ? '#1BA847'
                           : 'red',
                       },
                     }}
@@ -261,7 +261,7 @@ const SanctionDetails = ({ employeeId }) => {
                         : 'darkred',
                       '&:hover': {
                         backgroundColor: employeeData?.user?.is_disabled
-                          ? 'green'
+                          ? '#1BA847'
                           : 'red',
                       },
                     }}
@@ -280,7 +280,7 @@ const SanctionDetails = ({ employeeId }) => {
             </Grid>
           </Grid>
 
-          <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+          <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
             <Table>
               <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
                 <TableRow>

@@ -190,7 +190,7 @@ export default function Page() {
               Add Catalogues to {data?.group_name}
             </Button>
           </Box>
-          <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+          <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
             <Table>
               <TableHead>
                 <TableRow>

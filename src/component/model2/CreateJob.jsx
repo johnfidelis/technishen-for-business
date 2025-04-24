@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Box,
   Grid,
@@ -13,6 +13,7 @@ import {
   Divider,
   Button,
 } from '@mui/material'
+import { ThemeContext } from '@/context/ThemeContext'
 
 const initialSelectedCategories = [
   'Anti-Virus',
@@ -30,6 +31,7 @@ const suggestedCategories = [
 ]
 
 const CreateJob = () => {
+  const { theme } = useContext(ThemeContext)
   const [jobTitle, setJobTitle] = useState('')
   const [company, setCompany] = useState('')
   const [projectLocation, setProjectLocation] = useState('')
@@ -329,9 +331,9 @@ const CreateJob = () => {
           variant="contained"
           sx={{
             mt: 4,
-            backgroundColor: '#3BAB46',
+            backgroundColor: theme.primary_color || '#115093',
             color: 'white',
-            '&:hover': { backgroundColor: '#35A341' },
+            '&:hover': { backgroundColor: theme.primary_color || '#115093' },
           }}
           disabled
         >

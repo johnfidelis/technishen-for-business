@@ -136,7 +136,7 @@ const Page = () => {
         </Box>
       </Box>
       <hr style={{ margin: '0.625rem 0' }} />
-      <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+      <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: '#f5f5f5' }}>

@@ -201,7 +201,7 @@ const PenaltyTable = ({ role, setNumber, userType }) => {
       </Box>
 
       {/* Table */}
-      <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+      <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
         <Table>
           <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
             <TableRow>
@@ -339,7 +339,7 @@ const PenaltyTable = ({ role, setNumber, userType }) => {
                           }}
                         >
                           Unblock
-                          <MdBlock size={16} sx={{ color: 'green' }} />
+                          <MdBlock size={16} sx={{ color: '#1BA847' }} />
                         </Typography>
                       ) : employee?.action === 'disable' ? (
                         <Typography
@@ -357,7 +357,7 @@ const PenaltyTable = ({ role, setNumber, userType }) => {
                         >
                           Enable
                           <PersonOffIcon
-                            sx={{ color: 'green', fontSize: 16 }}
+                            sx={{ color: '#1BA847', fontSize: 16 }}
                           />
                         </Typography>
                       ) : null}

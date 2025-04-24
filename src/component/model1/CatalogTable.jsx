@@ -138,7 +138,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
         </FormControl>
       </Box>
 
-      <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+      <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
         <Table>
           <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
             <TableRow>
@@ -226,7 +226,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                     </TableCell>
                     <TableCell
                       style={{
-                        color: category.status ? 'green' : '#FF4C3B',
+                        color: category.status ? '#1BA847' : '#FF4C3B',
                       }}
                     >
                       {category.status ? 'Active' : 'In-active'}
@@ -308,7 +308,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
           No data available.
         </Typography>
       ) : (
-        <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+        <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
           <Table>
             <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
               <TableRow>
@@ -357,7 +357,7 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                       {category?.associated_sub_services?.length}
                     </TableCell>
                     <TableCell
-                      style={{ color: category.status ? 'green' : '#FF4C3B' }}
+                      style={{ color: category.status ? '#1BA847' : '#FF4C3B' }}
                     >
                       {category.status ? 'Active' : 'In-active'}
                     </TableCell>

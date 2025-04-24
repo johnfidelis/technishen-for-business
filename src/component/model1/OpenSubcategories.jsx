@@ -83,7 +83,7 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange, setNumber }) => {
           No subcategories found.
         </Typography>
       ) : (
-        <TableContainer component={Paper} sx={{ borderRadius: '0.5em' }}>
+        <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
           <Table>
             <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
               <TableRow>
@@ -154,11 +154,11 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange, setNumber }) => {
                     <TableCell>
                       {subCategory.price_visibility ? 'On' : 'Off'}
                     </TableCell>
-                    <TableCell sx={{ color: 'green' }}>
+                    <TableCell sx={{ color: '#1BA847' }}>
                       {subCategory.cost}
                     </TableCell>
                     <TableCell
-                      sx={{ color: subCategory.status ? 'green' : '#FF4C3B' }}
+                      sx={{ color: subCategory.status ? '#1BA847' : '#FF4C3B' }}
                     >
                       {subCategory.status}
                     </TableCell>
