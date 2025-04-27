@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import {
   Box,
   Button,
@@ -78,6 +79,7 @@ const initialData = [
 ]
 
 export default function Page() {
+  const router = useRouter()
   const { theme } = useContext(ThemeContext)
   const [data, setData] = useState(initialData)
   const [page, setPage] = useState(0)
@@ -93,7 +95,7 @@ export default function Page() {
   }
 
   const handleRowClick = (item) => {
-    console.log('Clicked row:', item)
+    router.push(`/dashboard/resourcing/interviews/${item.id}`)
   }
 
   return (

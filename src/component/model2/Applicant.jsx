@@ -1,6 +1,4 @@
 import React, { useContext, useState } from 'react'
-import { useRouter } from 'next/navigation'
-
 import {
   Box,
   Button,
@@ -24,83 +22,70 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import InboxIcon from '@mui/icons-material/Inbox'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
 
 // Dummy data for table
 const initialData = [
   {
-    id: 1,
-    title: 'Item One',
-    candidate: 'John Fidelis',
-    date: '2025-04-10',
-    endDate: '2025-09-10',
-    rate: '900',
-    isJobCompleted: false,
-    status: 'Pending',
+    id: 3434,
+    candidateName: 'Item One',
+    currentMatch: 93,
+    availability: 'Immediately',
+    dateApplied: '2025-04-10',
+    action: 'View',
   },
   {
-    id: 2,
-    title: 'Item Two',
-    candidate: 'Jame Brown',
-    date: '2025-04-09',
-    endDate: '2025-09-10',
-    rate: '400',
-    isJobCompleted: true,
-    status: 'Approved',
+    id: 2323,
+    candidateName: 'Item Two',
+    currentMatch: 60,
+    availability: 'Immediately',
+    dateApplied: '2025-04-09',
+    action: 'View',
   },
   {
-    id: 3,
-    title: 'Item Three',
-    candidate: 'Anna Smith',
-    date: '2025-04-08',
-    endDate: '2025-09-10',
-    rate: '200',
-    isJobCompleted: false,
-    status: 'Pending',
+    id: 323233,
+    candidateName: 'Item Three',
+    currentMatch: 45,
+    availability: 'In 30 days',
+    dateApplied: '2025-04-08',
+    action: 'View',
   },
   {
-    id: 4,
-    title: 'Item Four',
-    candidate: 'John Doe',
-    date: '2025-04-07',
-    endDate: '2025-09-10',
-    rate: '100',
-    isJobCompleted: false,
-    status: 'Approved',
+    id: 43233,
+    candidateName: 'Item Four',
+    currentMatch: 81,
+    availability: 'Calendar Month',
+    dateApplied: '2025-04-07',
+    action: 'View',
   },
   {
-    id: 5,
-    title: 'Item Five',
-    candidate: 'Jane Doe',
-    date: '2025-04-06',
-    endDate: '2025-09-10',
-    rate: '190',
-    isJobCompleted: true,
-    status: 'Pending',
+    id: 52323,
+    candidateName: 'Item Five',
+    currentMatch: 32,
+    availability: 'Immediately',
+    dateApplied: '2025-04-06',
+    action: 'View',
   },
   {
-    id: 6,
-    title: 'Item Six',
-    candidate: 'Mark Smith',
-    date: '2025-04-05',
-    endDate: '2025-09-10',
-    rate: '480',
-    isJobCompleted: true,
-    status: 'Approved',
+    id: 63233,
+    candidateName: 'Item Six',
+    currentMatch: 68,
+    availability: 'Calendar Month',
+    dateApplied: '2025-04-05',
+    action: 'View',
   },
   {
-    id: 7,
-    title: 'Item Seven',
-    candidate: 'Sarah Johnson',
-    date: '2025-04-04',
-    endDate: '2025-09-10',
-    rate: '1200',
-    isJobCompleted: true,
-    status: 'Pending',
+    id: 73232,
+    candidateName: 'Item Seven',
+    currentMatch: 55,
+    availability: 'Immediately',
+    dateApplied: '2025-04-04',
+    action: 'View',
   },
 ]
 
-export default function Page({ filteJobCompleted }) {
+export default function Page({ id }) {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
   const [data, setData] = useState(initialData)
@@ -117,12 +102,8 @@ export default function Page({ filteJobCompleted }) {
   }
 
   const handleRowClick = (item) => {
-    router.push(`/dashboard/resourcing/assignments/${item.id}`)
+    router.push(`/dashboard/resourcing/posts/open/candidate/${item.id}`)
   }
-
-  const filteredData = data.filter(
-    (item) => item.isJobCompleted === filteJobCompleted,
-  )
 
   return (
     <Box>
@@ -210,8 +191,8 @@ export default function Page({ filteJobCompleted }) {
           <InputLabel>Status</InputLabel>
           <Select defaultValue="All" label="Status">
             <MenuItem value="All">All</MenuItem>
-            <MenuItem value="Pending">Pending</MenuItem>
-            <MenuItem value="Approved">Approved</MenuItem>
+            <MenuItem value="Active">Active</MenuItem>
+            <MenuItem value="Inactive">Inactive</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -222,13 +203,10 @@ export default function Page({ filteJobCompleted }) {
           <TableHead>
             <TableRow>
               {[
-                'Job ID',
-                'Job Title',
-                'Candidates',
-                'Effective Date',
-                'End Date',
-                'Rate',
-                'Status',
+                'Candidate Name',
+                'Current Match',
+                'Availability',
+                'Date Applied',
                 'Action',
               ].map((head, i) => (
                 <TableCell
@@ -245,7 +223,7 @@ export default function Page({ filteJobCompleted }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredData
+            {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((item) => (
                 <TableRow
@@ -263,103 +241,64 @@ export default function Page({ filteJobCompleted }) {
                       fontFamily: 'Inter, sans-serif',
                     }}
                   >
-                    {item.id}
+                    {item.candidateName}
                   </TableCell>
                   <TableCell
                     sx={{
                       fontSize: '0.75em',
                       fontWeight: 500,
                       fontFamily: 'Inter, sans-serif',
+                      color:
+                        item.currentMatch < 50
+                          ? 'red'
+                          : item.currentMatch <= 80
+                            ? '#F5A623' // Yellow-ish
+                            : '#1BA847', // Green
                     }}
                   >
-                    {item.title}
+                    {item.currentMatch}%
                   </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.candidate}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.date}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.endDate}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.rate}
-                  </TableCell>
-                  {filteJobCompleted == false ? (
-                    <TableCell
-                      sx={{
-                        fontSize: '0.75em',
-                        fontWeight: 500,
-                        fontFamily: 'Inter, sans-serif',
-                        color:
-                          item.status === 'Pending'
-                            ? '#FFC107'
-                            : item.status === 'Approved'
-                              ? '#1BA847'
-                              : 'inherit',
-                        textTransform: 'capitalize',
-                      }}
-                    >
-                      {item.status}
-                    </TableCell>
-                  ) : (
-                    <TableCell
-                      sx={{
-                        fontSize: '0.75em',
-                        fontWeight: 500,
-                        fontFamily: 'Inter, sans-serif',
-                        color: '#1BA847',
 
-                        textTransform: 'capitalize',
-                      }}
-                    >
-                      Completed
-                    </TableCell>
-                  )}
                   <TableCell
                     sx={{
                       fontSize: '0.75em',
                       fontWeight: 500,
                       fontFamily: 'Inter, sans-serif',
-                      color: theme.primary_color || '#115093',
-                      textDecoration: 'underline',
                     }}
                   >
-                    View
+                    {item.availability}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontSize: '0.75em',
+                      fontWeight: 500,
+                      fontFamily: 'Inter, sans-serif',
+                    }}
+                  >
+                    {item.dateApplied}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontSize: '0.75em',
+                      fontWeight: 500,
+                      fontFamily: 'Inter, sans-serif',
+                      color: '#1976d2',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => console.log('Clicked Action for', item)}
+                  >
+                    {item.action}
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
+
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={filteredData.length}
+          count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -370,6 +309,20 @@ export default function Page({ filteJobCompleted }) {
           }}
         />
       </TableContainer>
+
+      {/* Action Button */}
+      <Box sx={{ textAlign: 'right', mt: 3 }}>
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: '5px',
+            backgroundColor: theme.primary_color || '#115093',
+            color: '#fff',
+          }}
+        >
+          Add New Item
+        </Button>
+      </Box>
     </Box>
   )
 }

@@ -22,6 +22,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import InboxIcon from '@mui/icons-material/Inbox'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
 
 // Dummy data for table
@@ -85,6 +86,7 @@ const initialData = [
 ]
 
 export default function Page({ filter }) {
+  const router = useRouter()
   const { theme } = useContext(ThemeContext)
   const [data, setData] = useState(initialData)
   const [page, setPage] = useState(0)
@@ -100,7 +102,7 @@ export default function Page({ filter }) {
   }
 
   const handleRowClick = (item) => {
-    console.log('Clicked row:', item)
+    router.push(`/dashboard/resourcing/posts/open/${item.id}`)
   }
 
   return (
