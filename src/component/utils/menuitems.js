@@ -157,6 +157,11 @@ export const menuItems = [
         icon: <AddCircleOutlineRounded />,
       },
       {
+        name: 'Post Requests',
+        routeTo: '/dashboard/resourcing/posts/requests',
+        icon: <AssignmentIcon />,
+      },
+      {
         name: 'Open Posts',
         routeTo: '/dashboard/resourcing/posts/open',
         icon: <ListIcon />,
