@@ -156,11 +156,11 @@ export const menuItems = [
         routeTo: '/dashboard/resourcing/create',
         icon: <AddCircleOutlineRounded />,
       },
-      {
-        name: 'Post Requests',
-        routeTo: '/dashboard/resourcing/posts/requests',
-        icon: <AssignmentIcon />,
-      },
+      // {
+      //   name: 'Post Requests',
+      //   routeTo: '/dashboard/resourcing/posts/requests',
+      //   icon: <AssignmentIcon />,
+      // },
       {
         name: 'Open Posts',
         routeTo: '/dashboard/resourcing/posts/open',

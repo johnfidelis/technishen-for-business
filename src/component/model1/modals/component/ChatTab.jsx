@@ -24,6 +24,8 @@ const ChatTab = () => {
   const [messages, setMessages] = useState([])
   const [file, setFile] = useState(null)
   const [filePreview, setFilePreview] = useState(null)
+  const [uploadError, setUploadError] = useState(null)
+  const [uploadProgress, setUploadProgress] = useState(0)
 
   const messagesEndRef = useRef(null)
 
@@ -63,10 +65,21 @@ const ChatTab = () => {
   const handleSendMessage = async () => {
     if (file) {
       try {
-        await uploadFileAndSendMessage(senderId, receiverId, file)
+        setUploadProgress(0)
+        await uploadFileAndSendMessage(
+          senderId,
+          receiverId,
+          file,
+          (progress) => {
+            setUploadProgress(progress)
+          },
+        )
         setFile(null)
+        setUploadProgress(0)
       } catch (error) {
         console.error('File upload error:', error)
+        // setUploadError('Failed to upload file. Please try again.')
+        setUploadProgress(0)
       }
     } else if (message.trim()) {
       try {
@@ -79,39 +92,19 @@ const ChatTab = () => {
   }
 
   const handleFileChange = (e) => {
-    if (e.target.files[0]) {
-      setFile(e.target.files[0])
+    const selectedFile = e.target.files[0]
+    if (selectedFile) {
+      setFile(selectedFile)
+      setUploadError(null) // Clear any previous error
     }
   }
 
   const handleClearFile = () => {
-    setFile('')
+    setFile(null)
+    setFilePreview(null)
+    setUploadError(null)
+    setUploadProgress(0)
   }
-
-  // useEffect(() => {
-  //   if (senderId && receiverId) {
-  //     const unsubscribe = listenForMessages(
-  //       senderId,
-  //       receiverId,
-  //       (newMessages) => {
-  //         setMessages(newMessages)
-  //       },
-  //     )
-  //     return () => unsubscribe()
-  //   }
-  // }, [senderId, receiverId])
-
-  // const handleSendMessage = async () => {
-  //   setMessage('')
-  //   if (message.trim()) {
-  //     try {
-  //       await sendMessage(senderId, receiverId, message)
-  //     } catch (error) {
-  //       console.error('Error sending message:', error)
-
-  //     }
-  //   }
-  // }
 
   return (
     <Box
@@ -130,34 +123,60 @@ const ChatTab = () => {
             }}
           >
             {/* Message Bubble */}
-            <Box
-              sx={{
-                maxWidth: '70%',
-                ml: msg.senderId === senderId ? 1 : 0,
-                mr: msg.senderId !== senderId ? 1 : 0,
-                backgroundColor:
-                  msg.senderId === senderId ? theme.primary_color : '#E0E0E0',
-                color: msg.senderId === senderId ? '#fff' : '#000',
-                borderRadius: 2,
-                p: 1.5,
-                fontSize: '0.85em',
-              }}
-            >
-              {msg.text}
-              <Typography
-                variant="caption"
+
+            {msg.file && msg.file.url ? (
+              <Box
                 sx={{
-                  display: 'block',
-                  fontSize: '0.75em',
-                  color: msg.senderId === senderId ? '#B0BEC5' : '#6C757D',
-                  mt: 0.5,
+                  maxWidth: '70%',
+                  ml: msg.senderId === senderId ? 1 : 0,
+                  mr: msg.senderId !== senderId ? 1 : 0,
+                  backgroundColor:
+                    msg.senderId === senderId ? theme.primary_color : '#E0E0E0',
+                  color: msg.senderId === senderId ? '#fff' : '#000',
+                  borderRadius: 1,
+                  p: 1,
+                  fontSize: '0.85em',
+                  wordBreak: 'break-word', // Prevent long text from breaking layout
                 }}
               >
-                {msg.timestamp?.toDate().toLocaleString()}
-              </Typography>
-            </Box>
+                <img
+                  src={msg.file.url}
+                  alt={msg.file.name}
+                  style={{ maxWidth: '100%', maxHeight: '200px' }}
+                />
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  maxWidth: '70%',
+                  ml: msg.senderId === senderId ? 1 : 0,
+                  mr: msg.senderId !== senderId ? 1 : 0,
+                  backgroundColor:
+                    msg.senderId === senderId ? theme.primary_color : '#E0E0E0',
+                  color: msg.senderId === senderId ? '#fff' : '#000',
+                  borderRadius: 1,
+                  p: 1.5,
+                  fontSize: '0.85em',
+                  wordBreak: 'break-word', // Prevent long text from breaking layout
+                }}
+              >
+                {msg.text}
+                <Typography
+                  variant="caption"
+                  sx={{
+                    display: 'block',
+                    fontSize: '0.75em',
+                    color: msg.senderId === senderId ? '#B0BEC5' : '#6C757D',
+                    mt: 0.5,
+                  }}
+                >
+                  {msg.timestamp?.toDate().toLocaleString()}
+                </Typography>
+              </Box>
+            )}
           </Box>
         ))}
+        <div ref={messagesEndRef} />
       </Box>
 
       {/* Divider */}
@@ -169,17 +188,37 @@ const ChatTab = () => {
         }}
       />
 
+      {uploadError && (
+        <Typography color="error" sx={{ p: 1, fontSize: '0.8em' }}>
+          {uploadError}
+        </Typography>
+      )}
+
+      {uploadProgress > 0 && uploadProgress < 100 && (
+        <Typography color="primary" sx={{ p: 1, fontSize: '0.8em' }}>
+          Uploading: {Math.round(uploadProgress)}%
+        </Typography>
+      )}
+
       {filePreview && (
-        <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
           {file.type.startsWith('image/') ? (
             <img
               src={filePreview}
               alt="Preview"
-              style={{ maxHeight: '50px', maxWidth: '50px' }}
+              style={{ maxHeight: '50px', maxWidth: '50px', mr: 1 }}
             />
+          ) : file.type === 'application/pdf' ? (
+            <PictureAsPdfIcon sx={{ fontSize: 40, mr: 1 }} />
           ) : (
-            <PictureAsPdfIcon />
+            <AttachmentIcon sx={{ fontSize: 40, mr: 1 }} />
           )}
+          <Typography
+            variant="body2"
+            sx={{ flexGrow: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}
+          >
+            {file.name}
+          </Typography>
           <IconButton onClick={handleClearFile}>
             <ClearIcon />
           </IconButton>
@@ -214,11 +253,13 @@ const ChatTab = () => {
         />
         <IconButton
           onClick={handleSendMessage}
+          disabled={uploadProgress > 0}
           sx={{
             backgroundColor: theme.primary_color || '#115093',
             color: '#fff',
             ml: 1,
             '&:hover': { backgroundColor: theme.primary_color },
+            ...(uploadProgress > 0 && { opacity: 0.5, cursor: 'not-allowed' }),
           }}
         >
           <SendIcon />
