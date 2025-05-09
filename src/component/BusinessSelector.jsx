@@ -29,6 +29,39 @@ const BusinessSelector = () => {
   const { theme } = useContext(ThemeContext)
   const router = useRouter()
 
+  // useEffect(() => {
+
+  //   if (
+  //     !isLoading &&
+  //     Array.isArray(data?.businesses) &&
+  //     data.businesses.length > 0
+  //   ) {
+  //     const cookieBusinessId = cookies.get('selectedBusinessId')
+  //     const matchingBusiness = data.businesses.find(
+  //       (business) => business.id === cookieBusinessId,
+  //     )
+
+  //     if (cookieBusinessId && matchingBusiness) {
+  //       setSelectedBusiness(cookieBusinessId)
+  //     } else {
+  //       cookies.remove('selectedBusinessId')
+  //       const firstBusinessId = data.businesses[0].id
+  //       cookies.set('businessName', data.businesses[0].business_name, {
+  //         path: '/',
+  //         secure: true,
+  //         sameSite: 'Strict',
+  //       })
+
+  //       setSelectedBusiness(firstBusinessId)
+  //       cookies.set('selectedBusinessId', firstBusinessId, {
+  //         path: '/',
+  //         secure: true,
+  //         sameSite: 'Strict',
+  //       })
+  //     }
+  //   }
+  // }, [data, isLoading, cookies])
+
   useEffect(() => {
     if (
       !isLoading &&
@@ -44,12 +77,21 @@ const BusinessSelector = () => {
         setSelectedBusiness(cookieBusinessId)
       } else {
         cookies.remove('selectedBusinessId')
-        const firstBusinessId = data.businesses[0].id
-        cookies.set('businessName', data.businesses[0].business_name, {
+        const firstBusiness = data.businesses[0]
+        const firstBusinessId = firstBusiness.id
+
+        cookies.set('businessName', firstBusiness.business_name, {
           path: '/',
           secure: true,
           sameSite: 'Strict',
         })
+
+        cookies.set('your-id', firstBusiness.owner.id, {
+          path: '/',
+          secure: true,
+          sameSite: 'Strict',
+        })
+
         setSelectedBusiness(firstBusinessId)
         cookies.set('selectedBusinessId', firstBusinessId, {
           path: '/',

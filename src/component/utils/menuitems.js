@@ -26,6 +26,7 @@ import {
 } from '@mui/icons-material'
 import DescriptionIcon from '@mui/icons-material/Description'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
+import HistoryIcon from '@mui/icons-material/History'
 
 export const menuItems = [
   {
@@ -156,11 +157,11 @@ export const menuItems = [
         routeTo: '/dashboard/resourcing/create',
         icon: <AddCircleOutlineRounded />,
       },
-      // {
-      //   name: 'Post Requests',
-      //   routeTo: '/dashboard/resourcing/posts/requests',
-      //   icon: <AssignmentIcon />,
-      // },
+      {
+        name: 'Post Requests',
+        routeTo: '/dashboard/resourcing/posts/requests',
+        icon: <AssignmentIcon />,
+      },
       {
         name: 'Open Posts',
         routeTo: '/dashboard/resourcing/posts/open',
@@ -205,6 +206,11 @@ export const menuItems = [
         name: 'Closed Posts',
         routeTo: '/dashboard/resourcing/posts/closed',
         icon: <CheckIcon />,
+      },
+      {
+        name: 'Audit Resourcing',
+        routeTo: '/dashboard/resourcing/audit/log',
+        icon: <HistoryIcon />,
       },
     ],
   },

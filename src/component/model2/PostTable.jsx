@@ -17,6 +17,7 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Skeleton,
 } from '@mui/material'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
@@ -24,73 +25,20 @@ import InboxIcon from '@mui/icons-material/Inbox'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
-
-// Dummy data for table
-const initialData = [
-  {
-    id: 3434,
-    title: 'Item One',
-    count: 10,
-    date: '2025-04-10',
-    type: 'open',
-    status: 'active',
-  },
-  {
-    id: 2323,
-    title: 'Item Two',
-    count: 20,
-    date: '2025-04-09',
-    type: 'open',
-    status: 'inactive',
-  },
-  {
-    id: 323233,
-    title: 'Item Three',
-    count: 15,
-    date: '2025-04-08',
-    type: 'open',
-    status: 'active',
-  },
-  {
-    id: 43233,
-    title: 'Item Four',
-    count: 8,
-    date: '2025-04-07',
-    type: 'close',
-    status: 'inactive',
-  },
-  {
-    id: 52323,
-    title: 'Item Five',
-    count: 12,
-    date: '2025-04-06',
-    type: 'close',
-    status: 'active',
-  },
-  {
-    id: 63233,
-    title: 'Item Six',
-    count: 18,
-    date: '2025-04-05',
-    type: 'close',
-    status: 'inactive',
-  },
-  {
-    id: 73232,
-    title: 'Item Seven',
-    count: 5,
-    date: '2025-04-04',
-    type: 'open',
-    status: 'active',
-  },
-]
+import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
+import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
+import { SentimentDissatisfied } from '@mui/icons-material'
 
 export default function Page({ filter }) {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
-  const [data, setData] = useState(initialData)
+  // const [data, setData] = useState(initialData)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+
+  const { data, isLoading: loadPost } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_A_POST,
+  )
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -205,10 +153,10 @@ export default function Page({ filter }) {
               {[
                 'Job ID',
                 'Job Title',
-                'Numbe of Applicant',
-                'Date Created',
+                'Numbe of Applicant/Positions',
+                'Start - End Date ',
                 'Status',
-              ].map((head, i) => (
+              ]?.map((head, i) => (
                 <TableCell
                   key={i}
                   sx={{
@@ -223,82 +171,140 @@ export default function Page({ filter }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data
-              .filter((item) => item.type === filter)
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((item) => (
-                <TableRow
-                  key={item.id}
-                  onClick={() => handleRowClick(item)}
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover': { backgroundColor: '#f5f5f5' },
-                  }}
-                >
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    IT-{item.id}
+            {loadPost ? (
+              Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    <Skeleton variant="text" width="40%" />
                   </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.title}
+                  <TableCell>
+                    <Skeleton variant="text" width="50%" />
                   </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.count}
+                  <TableCell>
+                    <Skeleton variant="text" width="30%" />
                   </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.date}
+                  <TableCell>
+                    <Skeleton variant="text" width="40%" />
                   </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                      color:
-                        item.type == 'open' && item.status === 'active'
-                          ? '#1BA847'
-                          : item.type == 'open' && item.status === 'inactive'
-                            ? 'red'
-                            : 'inherit',
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {item.type == 'open' && item.status === 'active'
-                      ? 'Open - Active'
-                      : item.type == 'open' && item.status === 'inactive'
-                        ? 'Open - Inactive'
-                        : 'Closed'}
+                  <TableCell>
+                    <Skeleton variant="text" width="20%" />
                   </TableCell>
                 </TableRow>
-              ))}
+              ))
+            ) : // Render actual data when isLoading is false
+            data?.filter(
+                (item) => item.status === filter && item.is_approved === true,
+              )?.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={10} // Adjust column span based on the number of columns
+                  sx={{ textAlign: 'center', padding: '2em' }}
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    <SentimentDissatisfied
+                      sx={{ fontSize: 50, color: 'gray' }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: 400,
+                        fontSize: '1em',
+                        color: 'gray',
+                      }}
+                    >
+                      Empty
+                    </Typography>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ) : (
+              data
+                ?.filter(
+                  (item) => item.status === filter && item.is_approved === true,
+                )
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.map((item) => (
+                  <TableRow
+                    key={item?.post_number}
+                    onClick={() => handleRowClick(item)}
+                    sx={{
+                      cursor: 'pointer',
+                      '&:hover': { backgroundColor: '#f5f5f5' },
+                    }}
+                  >
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item?.post_number}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item?.job_title}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item?.total_applicant || 0}/{item?.available_positions}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item?.start_date} - {item?.end_date}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                        color:
+                          item.status === 'open'
+                            ? '#1BA847'
+                            : item.status === 'closed'
+                              ? 'red'
+                              : 'inherit',
+                        textTransform: 'capitalize',
+                      }}
+                    >
+                      {item.status === 'open'
+                        ? 'Open - Active'
+                        : item.status === 'closed'
+                          ? 'Open - Inactive'
+                          : 'Closed'}
+                    </TableCell>
+                  </TableRow>
+                ))
+            )}
           </TableBody>
         </Table>
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={data.length}
+          count={
+            data?.filter(
+              (item) => item.status === filter && item.is_approved === true,
+            )?.length
+          }
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -312,16 +318,18 @@ export default function Page({ filter }) {
 
       {/* Action Button */}
       <Box sx={{ textAlign: 'right', mt: 3 }}>
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: '5px',
-            backgroundColor: theme.primary_color || '#115093',
-            color: '#fff',
-          }}
-        >
-          Add New Item
-        </Button>
+        <Link href="/dashboard/resourcing/create">
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: '5px',
+              backgroundColor: theme.primary_color || '#115093',
+              color: '#fff',
+            }}
+          >
+            Add New Item
+          </Button>
+        </Link>
       </Box>
     </Box>
   )

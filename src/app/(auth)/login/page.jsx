@@ -63,6 +63,7 @@ export default function LoginPage() {
           secure: true,
           sameSite: 'Strict',
         })
+
         window.location.href = '/dashboard'
       },
       onError: () => toast.error('Failed to log in. Check credentials.'),

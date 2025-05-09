@@ -24,6 +24,8 @@ import InboxIcon from '@mui/icons-material/Inbox'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
+import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
+import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
 
 // Dummy data for table
 const initialData = [
@@ -91,6 +93,10 @@ export default function Page({ id }) {
   const [data, setData] = useState(initialData)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+
+  const { data: ticket, isLoading } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_A_POST_DETAILS(id),
+  )
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)

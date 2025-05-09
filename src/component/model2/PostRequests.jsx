@@ -17,6 +17,7 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Skeleton,
 } from '@mui/material'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
@@ -24,6 +25,9 @@ import InboxIcon from '@mui/icons-material/Inbox'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
+import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
+import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
+import { SentimentDissatisfied } from '@mui/icons-material'
 
 // Dummy data for table
 const initialData = [
@@ -120,12 +124,19 @@ const initialData = [
   },
 ]
 
-export default function Page() {
+export default function Page({ filter }) {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
-  const [data, setData] = useState(initialData)
+  // const [data, setData] = useState(initialData)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+
+  const { data, isLoading: loadPost } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_A_POST,
+  )
+  const { data: log, isLoading: loadLog } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_AUDIT_LOG,
+  )
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -263,174 +274,243 @@ export default function Page() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data
-
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((item) => (
-                <TableRow
-                  key={item.id}
-                  onClick={() => handleRowClick(item)}
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover': { backgroundColor: '#f5f5f5' },
-                  }}
-                >
-                  {/* Job Type */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.jobType}
+            {/* Check if data is loading */}
+            {loadPost ? (
+              // Show loading skeleton rows when isLoading is true
+              Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
-
-                  {/* Job Title */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.jobTitle}
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
-
-                  {/* Company */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.company}
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
-
-                  {/* Available Positions */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.availablePositions}
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
-
-                  {/* Working Hours */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.workingHours}
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
-
-                  {/* Experience Level */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.experienceLevel}
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
-
-                  {/* Project Location */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.projectLocation}
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
-
-                  {/* Selected Categories */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.selectedCategories.join(', ')}
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
-
-                  {/* Date Created */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.dateCreated}
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
-
-                  {/* Status with Approve and Decline Buttons */}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                      textTransform: 'capitalize',
-                      display: 'flex',
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      size="small"
-                      sx={{
-                        backgroundColor: '#1BA847',
-                        color: '#fff',
-                        textTransform: 'none',
-                        mr: 1,
-                        fontSize: '0.7em',
-                        fontWeight: 500,
-                        fontFamily: 'Inter, sans-serif',
-                        '&:hover': {
-                          backgroundColor: '#15963b',
-                        },
-                      }}
-                      // onClick={() => handleApprove(item)}
-                    >
-                      Approve
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      size="small"
-                      sx={{
-                        backgroundColor: 'red',
-                        color: '#fff',
-                        textTransform: 'none',
-                        fontSize: '0.7em',
-                        fontWeight: 500,
-                        fontFamily: 'Inter, sans-serif',
-                        '&:hover': {
-                          backgroundColor: '#cc0000',
-                        },
-                      }}
-                      // onClick={() => handleDecline(item)}
-                    >
-                      Decline
-                    </Button>
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
                   </TableCell>
                 </TableRow>
-              ))}
+              ))
+            ) : // Render actual data when isLoading is false
+            data?.filter((item) => item.is_approved === false)?.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={10} // Adjust column span based on the number of columns
+                  sx={{ textAlign: 'center', padding: '2em' }}
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    <SentimentDissatisfied
+                      sx={{ fontSize: 50, color: 'gray' }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: 400,
+                        fontSize: '1em',
+                        color: 'gray',
+                      }}
+                    >
+                      Empty
+                    </Typography>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ) : (
+              // If data exists, map through the filtered items
+              data
+                ?.filter((item) => item.is_approved === false)
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.map((item) => (
+                  <TableRow
+                    key={item.id}
+                    onClick={() => handleRowClick(item)}
+                    sx={{
+                      cursor: 'pointer',
+                      '&:hover': { backgroundColor: '#f5f5f5' },
+                      textTransform: 'capitalize',
+                    }}
+                  >
+                    {/* Job Type */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item.work_type}
+                    </TableCell>
+
+                    {/* Job Title */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item.job_title}
+                    </TableCell>
+
+                    {/* Company */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item.company_name}
+                    </TableCell>
+
+                    {/* Available Positions */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item.available_positions}
+                    </TableCell>
+
+                    {/* Working Hours */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item.work_hours}
+                    </TableCell>
+
+                    {/* Experience Level */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item.experience_level}
+                    </TableCell>
+
+                    {/* Project Location */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item.location}
+                    </TableCell>
+
+                    {/* Selected Categories */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item.desired_skill_set.map((cat) => cat.name).join(', ')}
+                    </TableCell>
+
+                    {/* Date Created */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {new Date(item.created_at).toLocaleDateString()}
+                    </TableCell>
+
+                    {/* Status with Approve and Decline Buttons */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                        textTransform: 'capitalize',
+                        display: 'flex',
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        size="small"
+                        sx={{
+                          backgroundColor: '#1BA847',
+                          color: '#fff',
+                          textTransform: 'none',
+                          mr: 1,
+                          fontSize: '0.7em',
+                          fontWeight: 500,
+                          fontFamily: 'Inter, sans-serif',
+                          '&:hover': {
+                            backgroundColor: '#15963b',
+                          },
+                        }}
+                        // onClick={() => handleApprove(item)}
+                      >
+                        Update
+                      </Button>
+
+                      <Button
+                        variant="contained"
+                        size="small"
+                        sx={{
+                          backgroundColor: 'red',
+                          color: '#fff',
+                          textTransform: 'none',
+                          fontSize: '0.7em',
+                          fontWeight: 500,
+                          fontFamily: 'Inter, sans-serif',
+                          '&:hover': {
+                            backgroundColor: '#cc0000',
+                          },
+                        }}
+                        // onClick={() => handleDecline(item)}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+            )}
           </TableBody>
         </Table>
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={data.length}
+          count={data?.filter((item) => item.is_approved === false)?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

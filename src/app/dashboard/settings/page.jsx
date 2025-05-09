@@ -7,6 +7,7 @@ import BusinessProfile from './business-profile/page'
 import BusinessCustomization from './business-customization/page'
 import { ThemeContext } from '@/context/ThemeContext'
 import { useSearchParams } from 'next/navigation'
+import AuditLogTable from './audit-log/page'
 
 const SettingsLayoutContent = ({ activeSection = 0 }) => {
   const { theme } = useContext(ThemeContext)
@@ -23,6 +24,7 @@ const SettingsLayoutContent = ({ activeSection = 0 }) => {
     { label: 'Personal Details' },
     { label: 'Business Profile' },
     { label: 'Business Customization' },
+    { label: 'Activity Log' },
   ]
 
   const renderContent = () => {
@@ -33,6 +35,8 @@ const SettingsLayoutContent = ({ activeSection = 0 }) => {
         return <BusinessProfile />
       case 2:
         return <BusinessCustomization />
+      case 3:
+        return <AuditLogTable />
       default:
         return <PersonalDetails />
     }
