@@ -57,7 +57,7 @@ export default function ResetPassword() {
     if (!uid) return toast.error('Invalid or missing reset uid.')
 
     reset.mutate(
-      { token, uid, password },
+      { token, uid, new_password: password },
       {
         onSuccess: () => {
           toast.success('Password reset successfully!')
