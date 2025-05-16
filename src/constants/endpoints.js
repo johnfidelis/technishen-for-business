@@ -39,6 +39,7 @@ export const AUTH_ENDPOINTS = {
   SIGNUP: '/auth/register/',
   ACCESS_CODE_LOGIN: '/auth/privileged-login/',
   PASSWORD_RECOVERY: '/auth/password-recovery/',
+  PASSWORD_RESET: '/auth/reset-password/',
 }
 export const DELETE_ENDPOINTS = {
   DELETE_CATALOG: (serviceId) => `/delete-category/${serviceId}/`,
