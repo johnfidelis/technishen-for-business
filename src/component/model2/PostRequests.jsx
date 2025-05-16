@@ -29,8 +29,6 @@ import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
 import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
 import { SentimentDissatisfied } from '@mui/icons-material'
 
-
-
 export default function Page({ filter }) {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
