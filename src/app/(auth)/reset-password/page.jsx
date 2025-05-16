@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import Image from 'next/image'
 import { Box, Button, Typography } from '@mui/material'
 import { toast } from 'react-toastify'
@@ -70,61 +70,63 @@ export default function ResetPassword() {
   }
 
   return (
-    <BackgroundBox>
-      <Box component="form" onSubmit={handleSubmit} sx={{ width: 360 }}>
-        <Box sx={{ mt: -4, textAlign: 'center' }}>
-          <Image
-            src={logo}
-            alt="Technishen Logo"
-            width={250}
-            height={200}
-            style={{ margin: 'auto' }}
+    <Suspense fallback={<div></div>}>
+      <BackgroundBox>
+        <Box component="form" onSubmit={handleSubmit} sx={{ width: 360 }}>
+          <Box sx={{ mt: -4, textAlign: 'center' }}>
+            <Image
+              src={logo}
+              alt="Technishen Logo"
+              width={250}
+              height={200}
+              style={{ margin: 'auto' }}
+            />
+          </Box>
+
+          <Typography
+            style={{ fontSize: 25, fontWeight: 400, marginBottom: 20 }}
+            align="center"
+            color="white"
+          >
+            Reset Your Password
+          </Typography>
+
+          <CustomTextField
+            label="New Password"
+            name="password"
+            type="password"
+            placeholder="Enter new password"
+            value={formData.password}
+            onChange={handleChange}
           />
+
+          <CustomTextField
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm new password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            sx={{
+              backgroundColor: '#3BAB46',
+              color: 'white',
+              fontWeight: 300,
+              borderRadius: '8px',
+              padding: '12px',
+              fontSize: '0.80em',
+              '&:hover': { backgroundColor: '#2E8B57' },
+            }}
+            disabled={reset.isPending}
+          >
+            {reset.isPending ? 'Resetting...' : 'Reset Password'}
+          </Button>
         </Box>
-
-        <Typography
-          style={{ fontSize: 25, fontWeight: 400, marginBottom: 20 }}
-          align="center"
-          color="white"
-        >
-          Reset Your Password
-        </Typography>
-
-        <CustomTextField
-          label="New Password"
-          name="password"
-          type="password"
-          placeholder="Enter new password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-
-        <CustomTextField
-          label="Confirm Password"
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirm new password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-        />
-
-        <Button
-          type="submit"
-          fullWidth
-          sx={{
-            backgroundColor: '#3BAB46',
-            color: 'white',
-            fontWeight: 300,
-            borderRadius: '8px',
-            padding: '12px',
-            fontSize: '0.80em',
-            '&:hover': { backgroundColor: '#2E8B57' },
-          }}
-          disabled={reset.isPending}
-        >
-          {reset.isPending ? 'Resetting...' : 'Reset Password'}
-        </Button>
-      </Box>
-    </BackgroundBox>
+      </BackgroundBox>
+    </Suspense>
   )
 }
