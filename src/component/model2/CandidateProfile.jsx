@@ -29,7 +29,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { styled } from '@mui/system'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { ThemeContext } from '@/context/ThemeContext'
-import { CheckCircleOutline } from '@mui/icons-material'
+import { CheckCircleOutline, SentimentDissatisfied } from '@mui/icons-material'
 import UserProfile from './modals/UserProfile'
 import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
 import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
@@ -132,19 +132,19 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
       setSupportingDocuments([
         {
           nameOfDocument: 'CV',
-          document: applicant?.cv,
+          document: applicant?.applicant_profile?.cv,
         },
         {
           nameOfDocument: 'Certificate',
-          document: applicant?.certificate,
+          document: applicant?.applicant_profile?.certificate,
         },
         {
           nameOfDocument: 'ID Document',
-          document: applicant?.id_document,
+          document: applicant?.applicant_profile?.id_document,
         },
         {
           nameOfDocument: 'Proof of Address',
-          document: applicant?.proof_of_address,
+          document: applicant?.applicant_profile?.proof_of_address,
         },
       ])
     }
@@ -187,8 +187,8 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
             />
           ) : (
             <Avatar
-              alt="Candidate"
-              src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D"
+              alt={`${applicant?.applicant_profile?.first_name} ${applicant?.applicant_profile?.last_name}`}
+              src={applicant?.applicant_profile?.profile_picture}
               sx={{
                 width: 400,
                 height: 300,
@@ -216,8 +216,9 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                     gap: 1,
                   }}
                 >
-                  <strong>Candidate Name:</strong> {applicant?.first_name}{' '}
-                  {applicant?.last_name}
+                  <strong>Candidate Name:</strong>{' '}
+                  {applicant?.applicant_profile?.first_name}{' '}
+                  {applicant?.applicant_profile?.last_name}
                   <VisibilityIcon
                     sx={{ fontSize: '18px', cursor: 'pointer', color: 'gray' }}
                     onClick={handleModalOpen} // Show modal on click
@@ -225,10 +226,16 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                 </Typography>
 
                 <Typography
-                  sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
+                  sx={{
+                    fontSize: '14px',
+                    mb: 0.5,
+                    letterSpacing: '0.5px',
+                    textTransform: 'capitalize',
+                  }}
                 >
                   <strong>Current Role:</strong>{' '}
-                  {applicant?.currentRole || 'Not specified'}
+                  {applicant?.applicant_profile?.employment_status ||
+                    'Not specified'}
                 </Typography>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
@@ -236,13 +243,14 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                     <strong>Rating:</strong>
                   </Typography>
                   <Rating
-                    value={applicant?.rating || 0}
+                    value={applicant?.applicant_profile?.rating || 0}
                     precision={0.1}
                     readOnly
                     sx={{ mx: 1 }}
                   />
                   <Typography sx={{ fontSize: '14px', letterSpacing: '0.5px' }}>
-                    ({applicant?.rating?.toFixed(1) || '0.0'}/5)
+                    ({applicant?.applicant_profile?.rating?.toFixed(1) || '0.0'}
+                    /5)
                   </Typography>
                 </Box>
               </Box>
@@ -253,14 +261,19 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                   sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
                 >
                   <strong>Applied For:</strong>{' '}
-                  {applicant?.appliedRole || 'N/A'}
+                  {applicant?.applicant_profile?.appliedRole || 'N/A'}
                 </Typography>
 
                 <Typography
-                  sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
+                  sx={{
+                    fontSize: '14px',
+                    mb: 0.5,
+                    letterSpacing: '0.5px',
+                    textTransform: 'capitalize',
+                  }}
                 >
                   <strong>Availability:</strong>{' '}
-                  {applicant?.availability || 'Not provided'}
+                  {applicant?.application_info?.availability || 'Not provided'}
                 </Typography>
 
                 <Typography
@@ -268,7 +281,7 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                 >
                   <strong>Current Match:</strong>{' '}
                   <span style={{ color: 'green' }}>
-                    {applicant?.match || 0}%
+                    {applicant?.application_info?.match_rate || 0}%
                   </span>
                 </Typography>
               </Box>
@@ -279,7 +292,7 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
               <Select
                 displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
-                value={applicant?.status || ''}
+                // value={applicant?.applicant_profile?.status || ''}
               >
                 <MenuItem value="">
                   <em>Schedule Interview</em>
@@ -291,10 +304,10 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
             </FormControl>
 
             {/* Show Scheduled Time */}
-            {applicant?.interviewTime && (
+            {applicant?.applicant_profile?.interviewTime && (
               <Typography sx={{ fontSize: '14px', mt: 2 }}>
                 <strong>Scheduled Meeting Time:</strong>{' '}
-                {applicant.interviewTime}
+                {applicant?.applicant_profile?.interviewTime}
               </Typography>
             )}
             {/* <Typography sx={{ fontSize: '14px', mt: 2 }}>
@@ -404,7 +417,7 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
               multiline
               disabled
               minRows={4}
-              value={applicant?.professional_summary || ''}
+              value={applicant?.applicant_profile?.professional_summary || ''}
             />
           )}
         </StyledAccordionDetails>
@@ -433,8 +446,8 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
             <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
               <Skeleton variant="text" width={'100%'} height={100} />
             </Box>
-          ) : applicant?.work_experiences?.length > 0 ? (
-            applicant.work_experiences.map((exp, index) => (
+          ) : applicant?.applicant_profile?.work_experiences?.length > 0 ? (
+            applicant?.applicant_profile?.work_experiences.map((exp, index) => (
               <React.Fragment key={exp.id}>
                 <StyledDetailBox>
                   <StyledDetailSection>
@@ -494,7 +507,8 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                   </StyledDetailSection>
                 </StyledDetailBox>
 
-                {index !== applicant.work_experiences.length - 1 && (
+                {index !==
+                  applicant?.applicant_profile?.work_experiences.length - 1 && (
                   <hr style={{ margin: '10px 0px' }} />
                 )}
               </React.Fragment>
@@ -573,8 +587,8 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
             <Skeleton variant="text" width={'100%'} height={100} />
           ) : (
             <Box className="flex flex-wrap gap-2" style={{ gap: '10px' }}>
-              {applicant?.technical_skills?.length > 0 ? (
-                applicant?.technical_skills?.map((skill) => (
+              {applicant?.applicant_profile?.technical_skills?.length > 0 ? (
+                applicant?.applicant_profile?.technical_skills?.map((skill) => (
                   <SkillChip
                     key={skill.id}
                     label={
@@ -617,100 +631,134 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
           </Box>
         </StyledAccordionSummary>
         <StyledAccordionDetails>
-          <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
+          <TableContainer
+            component={Paper}
+            sx={{ borderRadius: '0.5em', mt: 2 }}
+          >
             <Table>
-              <TableHead>
+              <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
                 <TableRow>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.80em',
-                      fontWeight: 300,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    Verified By
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.80em',
-                      fontWeight: 300,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    Watermark Number
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.80em',
-                      fontWeight: 300,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    Date Issued
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.80em',
-                      fontWeight: 300,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    Action
-                  </TableCell>
+                  <TableCell>Verifier By</TableCell>
+                  <TableCell>ID Verified</TableCell>
+                  <TableCell>Address Verified</TableCell>
+                  <TableCell>Education Verified</TableCell>
+                  <TableCell>Criminal Record Passed</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Verified At</TableCell>
+                  <TableCell>Remarks</TableCell>
+                  <TableCell>Report</TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
-                {[
-                  {
-                    documentType: 'Lexis Ref',
-                    name: '71247417897',
-                    dateIssued: 'May 2023',
-                  },
-                  {
-                    documentType: 'Verify ID',
-                    name: '0258737923',
-                    dateIssued: 'May 2023',
-                  },
-                ].map((verification, index) => (
-                  <TableRow key={index}>
-                    <TableCell sx={{ minWidth: 180 }}>
-                      {verification.documentType}
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 180 }}>
-                      {verification.name}
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 180 }}>
-                      {verification.dateIssued}
-                    </TableCell>
+                {isLoading ? (
+                  <TableRow>
                     <TableCell
-                      sx={{
-                        fontSize: '0.75em',
-                        fontWeight: 500,
-                        fontFamily: 'Inter, sans-serif',
-                        color: theme.primary_color,
-                        textDecoration: 'underline',
-                        cursor: 'pointer',
-                      }}
+                      colSpan={9}
+                      sx={{ textAlign: 'center', padding: '2em' }}
                     >
-                      View
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        <Skeleton width={'100%'} height={40} />
+                      </Box>
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : applicant?.applicant_profile?.verification != null ? (
+                  <TableRow hover>
+                    <TableCell>
+                      {applicant?.applicant_profile?.verification.verifier_name}
+                    </TableCell>
+                    <TableCell>
+                      {applicant?.applicant_profile?.verification.id_verified
+                        ? 'Yes'
+                        : 'No'}
+                    </TableCell>
+                    <TableCell>
+                      {applicant?.applicant_profile?.verification
+                        .address_verified
+                        ? 'Yes'
+                        : 'No'}
+                    </TableCell>
+                    <TableCell>
+                      {applicant?.applicant_profile?.verification
+                        .education_verified
+                        ? 'Yes'
+                        : 'No'}
+                    </TableCell>
+                    <TableCell>
+                      {applicant?.applicant_profile?.verification
+                        .criminal_record_check_passed
+                        ? 'Yes'
+                        : 'No'}
+                    </TableCell>
+                    <TableCell>
+                      {applicant?.applicant_profile?.verification.status}
+                    </TableCell>
+                    <TableCell>
+                      {applicant?.applicant_profile?.verification.verified_at
+                        ? new Date(
+                            applicant?.applicant_profile?.verification.verified_at,
+                          ).toLocaleString()
+                        : 'N/A'}
+                    </TableCell>
+                    <TableCell>
+                      {applicant?.applicant_profile?.verification.remarks ||
+                        '—'}
+                    </TableCell>
+                    <TableCell>
+                      {applicant?.applicant_profile?.verification
+                        .verification_report ? (
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          component="a"
+                          href={
+                            applicant?.applicant_profile?.verification
+                              .verification_report
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View File
+                        </Button>
+                      ) : (
+                        'N/A'
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={9}
+                      sx={{ textAlign: 'center', padding: '2em' }}
+                    >
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <SentimentDissatisfied
+                          sx={{ fontSize: 50, color: 'gray' }}
+                        />
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            fontWeight: 400,
+                            fontSize: '1em',
+                            color: 'gray',
+                          }}
+                        >
+                          No Verification Record Available
+                        </Typography>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 15]}
-              component="div"
-              count={4}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              sx={{
-                fontSize: '0.80em',
-                fontFamily: 'Inter, sans-serif',
-              }}
-            />
           </TableContainer>
         </StyledAccordionDetails>
       </StyledAccordion>
@@ -783,7 +831,8 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                           {doc.nameOfDocument}
                         </TableCell>
                         <TableCell sx={{ minWidth: 180 }}>
-                          {applicant?.first_name} {applicant?.last_name}
+                          {applicant?.applicant_profile?.first_name}{' '}
+                          {applicant?.applicant_profile?.last_name}
                         </TableCell>
 
                         <TableCell
@@ -900,46 +949,50 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                       Loading certifications...
                     </TableCell>
                   </TableRow>
-                ) : applicant?.certifications?.length > 0 ? (
-                  applicant.certifications.map((cert, index) => (
-                    <TableRow key={cert.id || index}>
-                      <TableCell sx={{ minWidth: 180 }}>
-                        {cert.title || 'N/A'}
-                      </TableCell>
-                      <TableCell sx={{ minWidth: 180 }}>
-                        {cert.issuer || 'N/A'}
-                      </TableCell>
-                      <TableCell sx={{ minWidth: 180 }}>
-                        {cert.issue_date
-                          ? new Date(cert.issue_date).toLocaleDateString()
-                          : 'N/A'}
-                      </TableCell>
-                      <TableCell sx={{ minWidth: 180 }}>
-                        {cert.expiration_date
-                          ? new Date(cert.expiration_date).toLocaleDateString()
-                          : 'N/A'}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          fontSize: '0.75em',
-                          fontWeight: 500,
-                          fontFamily: 'Inter, sans-serif',
-                          color: theme.primary_color,
-                          textDecoration: 'underline',
-                          cursor: cert.credential_url
-                            ? 'pointer'
-                            : 'not-allowed',
-                          opacity: cert.credential_url ? 1 : 0.5,
-                        }}
-                        onClick={() =>
-                          cert.credential_url &&
-                          window.open(cert.credential_url, '_blank')
-                        }
-                      >
-                        View
-                      </TableCell>
-                    </TableRow>
-                  ))
+                ) : applicant?.applicant_profile?.certifications?.length > 0 ? (
+                  applicant?.applicant_profile?.certifications.map(
+                    (cert, index) => (
+                      <TableRow key={cert.id || index}>
+                        <TableCell sx={{ minWidth: 180 }}>
+                          {cert.title || 'N/A'}
+                        </TableCell>
+                        <TableCell sx={{ minWidth: 180 }}>
+                          {cert.issuer || 'N/A'}
+                        </TableCell>
+                        <TableCell sx={{ minWidth: 180 }}>
+                          {cert.issue_date
+                            ? new Date(cert.issue_date).toLocaleDateString()
+                            : 'N/A'}
+                        </TableCell>
+                        <TableCell sx={{ minWidth: 180 }}>
+                          {cert.expiration_date
+                            ? new Date(
+                                cert.expiration_date,
+                              ).toLocaleDateString()
+                            : 'N/A'}
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            fontSize: '0.75em',
+                            fontWeight: 500,
+                            fontFamily: 'Inter, sans-serif',
+                            color: theme.primary_color,
+                            textDecoration: 'underline',
+                            cursor: cert.credential_url
+                              ? 'pointer'
+                              : 'not-allowed',
+                            opacity: cert.credential_url ? 1 : 0.5,
+                          }}
+                          onClick={() =>
+                            cert.credential_url &&
+                            window.open(cert.credential_url, '_blank')
+                          }
+                        >
+                          View
+                        </TableCell>
+                      </TableRow>
+                    ),
+                  )
                 ) : (
                   <TableRow>
                     <TableCell colSpan={5} align="center">
@@ -953,7 +1006,7 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 15]}
               component="div"
-              count={applicant?.certifications?.length || 0}
+              count={applicant?.applicant_profile?.certifications?.length || 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
