@@ -10,11 +10,11 @@ import { useCreateData } from '@/hooks/useApiService'
 import { AUTH_ENDPOINTS } from '@/constants/endpoints'
 import logo from '../../../assets/images/Technisen.png'
 import { validate } from '@/component/utils/validate'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export default function ResetPassword() {
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const searchParams = new URLSearchParams(window.location.search)
   const uid = searchParams.get('uid')
   const token = searchParams.get('token')
 
