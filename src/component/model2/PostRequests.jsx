@@ -29,101 +29,6 @@ import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
 import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
 import { SentimentDissatisfied } from '@mui/icons-material'
 
-// Dummy data for table
-const initialData = [
-  {
-    id: 3434,
-    jobType: 'Full-Time',
-    jobTitle: 'Software Engineer',
-    company: 'TechCorp',
-    availablePositions: 10,
-    workingHours: '9am - 5pm',
-    experienceLevel: 'Mid-level',
-    projectLocation: 'Lagos, Nigeria',
-    selectedCategories: ['Engineering', 'Development'],
-    dateCreated: '2025-04-10',
-    status: 'active',
-  },
-  {
-    id: 2323,
-    jobType: 'Part-Time',
-    jobTitle: 'UI/UX Designer',
-    company: 'Designify',
-    availablePositions: 3,
-    workingHours: 'Flexible',
-    experienceLevel: 'Entry-level',
-    projectLocation: 'Remote',
-    selectedCategories: ['Design', 'Creatives'],
-    dateCreated: '2025-04-09',
-    status: 'inactive',
-  },
-  {
-    id: 323233,
-    jobType: 'Contract',
-    jobTitle: 'Project Manager',
-    company: 'BuildIt',
-    availablePositions: 2,
-    workingHours: '8am - 4pm',
-    experienceLevel: 'Senior',
-    projectLocation: 'Abuja, Nigeria',
-    selectedCategories: ['Management'],
-    dateCreated: '2025-04-08',
-    status: 'active',
-  },
-  {
-    id: 43233,
-    jobType: 'Remote',
-    jobTitle: 'Content Writer',
-    company: 'WordSmiths',
-    availablePositions: 5,
-    workingHours: 'Flexible',
-    experienceLevel: 'Entry-level',
-    projectLocation: 'Remote',
-    selectedCategories: ['Writing', 'Marketing'],
-    dateCreated: '2025-04-07',
-    status: 'inactive',
-  },
-  {
-    id: 52323,
-    jobType: 'Full-Time',
-    jobTitle: 'Business Analyst',
-    company: 'MarketMinds',
-    availablePositions: 4,
-    workingHours: '9am - 6pm',
-    experienceLevel: 'Mid-level',
-    projectLocation: 'Port Harcourt, Nigeria',
-    selectedCategories: ['Business', 'Finance'],
-    dateCreated: '2025-04-06',
-    status: 'active',
-  },
-  {
-    id: 63233,
-    jobType: 'Internship',
-    jobTitle: 'Marketing Intern',
-    company: 'AdSpace',
-    availablePositions: 6,
-    workingHours: '10am - 4pm',
-    experienceLevel: 'Intern',
-    projectLocation: 'Lagos, Nigeria',
-    selectedCategories: ['Marketing', 'Sales'],
-    dateCreated: '2025-04-05',
-    status: 'inactive',
-  },
-  {
-    id: 73232,
-    jobType: 'Contract',
-    jobTitle: 'Data Analyst',
-    company: 'DataDive',
-    availablePositions: 2,
-    workingHours: '9am - 3pm',
-    experienceLevel: 'Junior',
-    projectLocation: 'Remote',
-    selectedCategories: ['Data', 'Analytics'],
-    dateCreated: '2025-04-04',
-    status: 'active',
-  },
-]
-
 export default function Page({ filter }) {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
@@ -148,7 +53,7 @@ export default function Page({ filter }) {
   }
 
   const handleRowClick = (item) => {
-    // router.push(`/dashboard/resourcing/posts/open/${item.id}`)
+    router.push(`/dashboard/resourcing/posts/requests/${item.id}`)
   }
 
   return (
@@ -483,7 +388,7 @@ export default function Page({ filter }) {
                         Update
                       </Button>
 
-                      <Button
+                      {/* <Button
                         variant="contained"
                         size="small"
                         sx={{
@@ -500,7 +405,7 @@ export default function Page({ filter }) {
                         // onClick={() => handleDecline(item)}
                       >
                         Delete
-                      </Button>
+                      </Button> */}
                     </TableCell>
                   </TableRow>
                 ))

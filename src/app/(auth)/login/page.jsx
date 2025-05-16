@@ -134,8 +134,32 @@ export default function LoginPage() {
         >
           {login.isPending ? 'Logging in...' : 'Login'}
         </Button>
+        <Box
+          sx={{
+            mt: 2,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="caption" color="white">
+            New User?{' '}
+            <Link href="/signup" style={{ color: 'white', fontWeight: 300 }}>
+              Signup
+            </Link>
+          </Typography>
 
-        <Typography
+          <Typography variant="caption" color="white">
+            <Link
+              href="/forgot-password"
+              style={{ color: 'white', fontWeight: 300 }}
+            >
+              Forgot Password?
+            </Link>
+          </Typography>
+        </Box>
+
+        {/* <Typography
           variant="caption"
           color="white"
           align="center"
@@ -145,7 +169,7 @@ export default function LoginPage() {
           <Link href="/signup" style={{ color: 'white', fontWeight: 300 }}>
             Signup
           </Link>
-        </Typography>
+        </Typography> */}
       </Box>
     </BackgroundBox>
   )

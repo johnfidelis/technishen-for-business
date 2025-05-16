@@ -15,7 +15,7 @@ export default function CustomTextField({ label, ...props }) {
           borderRadius: '8px',
           '& .MuiOutlinedInput-root': {
             fontSize: '0.80em',
-            padding: '8px',
+            padding: '6px',
             '& fieldset': {
               borderColor: 'transparent', // Remove default outline
             },

@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Box,
   Typography,
@@ -23,6 +23,7 @@ import {
   Chip,
   TextField,
   TablePagination,
+  Skeleton,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { styled } from '@mui/system'
@@ -30,6 +31,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import { ThemeContext } from '@/context/ThemeContext'
 import { CheckCircleOutline } from '@mui/icons-material'
 import UserProfile from './modals/UserProfile'
+import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
+import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
 
 // Styled Components
 const StyledBox = styled(Box)({
@@ -114,9 +117,38 @@ const SkillChip = styled(Chip)({
   },
 })
 
-const CandidateProfile = () => {
+const CandidateProfile = ({ jobPostId, applicantId }) => {
   const [expanded, setExpanded] = useState(false)
   const [open, setOpen] = useState(false)
+
+  const { data: applicant, isLoading } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_APPLICANT_DETAILS(jobPostId, applicantId),
+  )
+
+  const [supportingDocuments, setSupportingDocuments] = useState([])
+
+  useEffect(() => {
+    if (applicant) {
+      setSupportingDocuments([
+        {
+          nameOfDocument: 'CV',
+          document: applicant?.cv,
+        },
+        {
+          nameOfDocument: 'Certificate',
+          document: applicant?.certificate,
+        },
+        {
+          nameOfDocument: 'ID Document',
+          document: applicant?.id_document,
+        },
+        {
+          nameOfDocument: 'Proof of Address',
+          document: applicant?.proof_of_address,
+        },
+      ])
+    }
+  }, [applicant])
 
   // Toggle modal visibility
   const handleModalOpen = () => setOpen(true)
@@ -146,133 +178,162 @@ const CandidateProfile = () => {
       <Box className="mb-8 text-left flex flex-wrap">
         {/* Avatar */}
         <Box className="flex items-center">
-          <Avatar
-            alt="Candidate"
-            src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D"
-            sx={{
-              width: 400,
-              height: 300,
-              borderRadius: '12px',
-              marginRight: '16px',
-            }}
-          />
+          {isLoading ? (
+            <Skeleton
+              variant="rectangular"
+              width={400}
+              height={300}
+              sx={{ borderRadius: '12px', marginRight: '16px' }}
+            />
+          ) : (
+            <Avatar
+              alt="Candidate"
+              src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG1hbnxlbnwwfHwwfHx8MA%3D%3D"
+              sx={{
+                width: 400,
+                height: 300,
+                borderRadius: '12px',
+                marginRight: '16px',
+              }}
+            />
+          )}
         </Box>
 
         {/* Content */}
-        <Box>
-          {/* First Candidate Info */}
-          <Box className="flex flex-col" style={{ gap: '10%' }}>
-            <Box>
-              <Typography
-                sx={{
-                  mb: 1,
-                  letterSpacing: '0.5px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                }}
-              >
-                <strong>Candidate Name:</strong> David Willie
-                <VisibilityIcon
-                  sx={{ fontSize: '18px', cursor: 'pointer', color: 'gray' }}
-                  onClick={handleModalOpen} // Show modal on click
-                />
-              </Typography>
-
-              <Typography
-                sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
-              >
-                <strong>Current Role:</strong> Full Stack Engineer
-              </Typography>
-
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-                <Typography sx={{ fontSize: '14px', letterSpacing: '0.5px' }}>
-                  <strong>Rating:</strong>
+        {isLoading ? (
+          <Skeleton variant="text" width={600} height={100} />
+        ) : (
+          <Box>
+            {/* First Candidate Info */}
+            <Box className="flex flex-col" style={{ gap: '10%' }}>
+              <Box>
+                <Typography
+                  sx={{
+                    mb: 1,
+                    letterSpacing: '0.5px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                  }}
+                >
+                  <strong>Candidate Name:</strong> {applicant?.first_name}{' '}
+                  {applicant?.last_name}
+                  <VisibilityIcon
+                    sx={{ fontSize: '18px', cursor: 'pointer', color: 'gray' }}
+                    onClick={handleModalOpen} // Show modal on click
+                  />
                 </Typography>
-                <Rating value={4.9} precision={0.1} readOnly sx={{ mx: 1 }} />
-                <Typography sx={{ fontSize: '14px', letterSpacing: '0.5px' }}>
-                  (4.9/5)
+
+                <Typography
+                  sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
+                >
+                  <strong>Current Role:</strong>{' '}
+                  {applicant?.currentRole || 'Not specified'}
+                </Typography>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
+                  <Typography sx={{ fontSize: '14px', letterSpacing: '0.5px' }}>
+                    <strong>Rating:</strong>
+                  </Typography>
+                  <Rating
+                    value={applicant?.rating || 0}
+                    precision={0.1}
+                    readOnly
+                    sx={{ mx: 1 }}
+                  />
+                  <Typography sx={{ fontSize: '14px', letterSpacing: '0.5px' }}>
+                    ({applicant?.rating?.toFixed(1) || '0.0'}/5)
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* Second Candidate Info */}
+              <Box>
+                <Typography
+                  sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
+                >
+                  <strong>Applied For:</strong>{' '}
+                  {applicant?.appliedRole || 'N/A'}
+                </Typography>
+
+                <Typography
+                  sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
+                >
+                  <strong>Availability:</strong>{' '}
+                  {applicant?.availability || 'Not provided'}
+                </Typography>
+
+                <Typography
+                  sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
+                >
+                  <strong>Current Match:</strong>{' '}
+                  <span style={{ color: 'green' }}>
+                    {applicant?.match || 0}%
+                  </span>
                 </Typography>
               </Box>
+
+              {/* Select Dropdown */}
             </Box>
-
-            {/* Second Candidate Info */}
-            <Box>
-              <Typography
-                sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
+            <FormControl sx={{ mt: 2, minWidth: '600px' }}>
+              <Select
+                displayEmpty
+                inputProps={{ 'aria-label': 'Without label' }}
+                value={applicant?.status || ''}
               >
-                <strong>Applied For:</strong> Full Stack Engineer
+                <MenuItem value="">
+                  <em>Schedule Interview</em>
+                </MenuItem>
+                <MenuItem value={10}>Interview Scheduled</MenuItem>
+                <MenuItem value={20}>Shortlisted</MenuItem>
+                <MenuItem value={30}>Offer Extended</MenuItem>
+              </Select>
+            </FormControl>
+
+            {/* Show Scheduled Time */}
+            {applicant?.interviewTime && (
+              <Typography sx={{ fontSize: '14px', mt: 2 }}>
+                <strong>Scheduled Meeting Time:</strong>{' '}
+                {applicant.interviewTime}
               </Typography>
+            )}
+            {/* <Typography sx={{ fontSize: '14px', mt: 2 }}>
+              <strong> Scheduled Meeting Time: </strong> 29 Sept 2023, 09:00AM -
+              29 Sept 2023, 09:30AM
+            </Typography> */}
 
-              <Typography
-                sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
-              >
-                <strong>Availability:</strong> Calendar Month
-              </Typography>
+            {/* Buttons: Join Interview & Reschedule */}
 
-              <Typography
-                sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
-              >
-                <strong>Current Match:</strong>{' '}
-                <span style={{ color: 'green' }}>95%</span>
-              </Typography>
-            </Box>
-
-            {/* Select Dropdown */}
-          </Box>
-          <FormControl sx={{ mt: 2, minWidth: '600px' }}>
-            <Select
-              displayEmpty
-              inputProps={{ 'aria-label': 'Without label' }}
-              value=""
-            >
-              <MenuItem value="">
-                <em>Schedule Interview</em>
-              </MenuItem>
-              <MenuItem value={10}>Interview Scheduled</MenuItem>
-              <MenuItem value={20}>Shortlisted</MenuItem>
-              <MenuItem value={30}>Offer Extended</MenuItem>
-            </Select>
-          </FormControl>
-
-          {/* Show Scheduled Time */}
-
-          <Typography sx={{ fontSize: '14px', mt: 2 }}>
-            <strong> Scheduled Meeting Time: </strong> 29 Sept 2023, 09:00AM -
-            29 Sept 2023, 09:30AM
-          </Typography>
-
-          {/* Buttons: Join Interview & Reschedule */}
-
-          <Box sx={{ display: 'flex', gap: '1em', mt: 2 }}>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: theme.primary_color,
-                color: '#fff',
-                '&:hover': {
-                  backgroundColor: theme.primary_color,
-                },
-              }}
-            >
-              Join Interview
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: theme.primary_color,
-                color: theme.primary_color,
-                '&:hover': {
-                  borderColor: theme.primary_color,
+            <Box sx={{ display: 'flex', gap: '1em', mt: 2 }}>
+              <Button
+                variant="contained"
+                sx={{
                   backgroundColor: theme.primary_color,
                   color: '#fff',
-                },
-              }}
-            >
-              Reschedule
-            </Button>
+                  '&:hover': {
+                    backgroundColor: theme.primary_color,
+                  },
+                }}
+              >
+                Join Interview
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderColor: theme.primary_color,
+                  color: theme.primary_color,
+                  '&:hover': {
+                    borderColor: theme.primary_color,
+                    backgroundColor: theme.primary_color,
+                    color: '#fff',
+                  },
+                }}
+              >
+                Reschedule
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        )}
       </Box>
 
       {/* Actions */}
@@ -335,13 +396,17 @@ const CandidateProfile = () => {
         </StyledAccordionSummary>
 
         <StyledAccordionDetails>
-          <TextField
-            fullWidth
-            multiline
-            disabled
-            minRows={4}
-            value="David is an experienced Software Developer and UI/UX Designer who bridges design and development..."
-          />
+          {isLoading ? (
+            <Skeleton variant="text" width={'100%'} height={100} />
+          ) : (
+            <TextField
+              fullWidth
+              multiline
+              disabled
+              minRows={4}
+              value={applicant?.professional_summary || ''}
+            />
+          )}
         </StyledAccordionDetails>
       </StyledAccordion>
 
@@ -364,88 +429,84 @@ const CandidateProfile = () => {
         </StyledAccordionSummary>
 
         <StyledAccordionDetails>
-          {/* Experience 1 */}
-          <StyledDetailBox>
-            <StyledDetailSection>
-              <StyledDetailTypography>Job Position</StyledDetailTypography>
-              <TextField fullWidth disabled value="Lead Developer" />
-            </StyledDetailSection>
+          {isLoading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+              <Skeleton variant="text" width={'100%'} height={100} />
+            </Box>
+          ) : applicant?.work_experiences?.length > 0 ? (
+            applicant.work_experiences.map((exp, index) => (
+              <React.Fragment key={exp.id}>
+                <StyledDetailBox>
+                  <StyledDetailSection>
+                    <StyledDetailTypography>
+                      Job Position
+                    </StyledDetailTypography>
+                    <TextField fullWidth disabled value={exp.job_title} />
+                  </StyledDetailSection>
 
-            <StyledDetailSection>
-              <StyledDetailTypography>Company</StyledDetailTypography>
-              <TextField fullWidth disabled value="Tsogolo Technologies" />
-            </StyledDetailSection>
+                  <StyledDetailSection>
+                    <StyledDetailTypography>Company</StyledDetailTypography>
+                    <TextField fullWidth disabled value={exp.company_name} />
+                  </StyledDetailSection>
 
-            <StyledDetailSection>
-              <StyledDetailTypography>Start Date</StyledDetailTypography>
-              <TextField fullWidth disabled value="January 2017" />
-            </StyledDetailSection>
+                  <StyledDetailSection>
+                    <StyledDetailTypography>Start Date</StyledDetailTypography>
+                    <TextField
+                      fullWidth
+                      disabled
+                      value={new Date(exp.start_date).toLocaleDateString(
+                        'en-US',
+                        {
+                          year: 'numeric',
+                          month: 'long',
+                        },
+                      )}
+                    />
+                  </StyledDetailSection>
 
-            <StyledDetailSection>
-              <StyledDetailTypography>End Date</StyledDetailTypography>
-              <TextField fullWidth disabled value="Present" />
-            </StyledDetailSection>
+                  <StyledDetailSection>
+                    <StyledDetailTypography>End Date</StyledDetailTypography>
+                    <TextField
+                      fullWidth
+                      disabled
+                      value={
+                        exp.is_current
+                          ? 'Present'
+                          : new Date(exp.end_date).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                            })
+                      }
+                    />
+                  </StyledDetailSection>
 
-            <StyledDetailSection sx={{ width: '100%' }}>
-              <StyledDetailTypography>Job Description</StyledDetailTypography>
-              <TextField
-                fullWidth
-                multiline
-                disabled
-                minRows={4}
-                value={`David led a team, built features, handled version control.
+                  <StyledDetailSection sx={{ width: '100%' }}>
+                    <StyledDetailTypography>
+                      Job Description
+                    </StyledDetailTypography>
+                    <TextField
+                      fullWidth
+                      multiline
+                      disabled
+                      minRows={4}
+                      value={exp.description || 'No description provided.'}
+                    />
+                  </StyledDetailSection>
+                </StyledDetailBox>
 
-Core Duties include:
-- Daily software development and updates
-- Version control management
-- UI designs implementation`}
-              />
-            </StyledDetailSection>
-          </StyledDetailBox>
-          <hr style={{ margin: '10px 0px' }} />
-          {/* Experience 2 */}
-          <StyledDetailBox>
-            <StyledDetailSection>
-              <StyledDetailTypography>Job Position</StyledDetailTypography>
-              <TextField fullWidth disabled value="Software Engineer" />
-            </StyledDetailSection>
-
-            <StyledDetailSection>
-              <StyledDetailTypography>Company</StyledDetailTypography>
-              <TextField fullWidth disabled value="The Black Ones" />
-            </StyledDetailSection>
-
-            <StyledDetailSection>
-              <StyledDetailTypography>Start Date</StyledDetailTypography>
-              <TextField fullWidth disabled value="January 2013" />
-            </StyledDetailSection>
-
-            <StyledDetailSection>
-              <StyledDetailTypography>End Date</StyledDetailTypography>
-              <TextField fullWidth disabled value="December 2016" />
-            </StyledDetailSection>
-
-            <StyledDetailSection sx={{ width: '100%' }}>
-              <StyledDetailTypography>Job Description</StyledDetailTypography>
-              <TextField
-                fullWidth
-                multiline
-                disabled
-                minRows={4}
-                value={`Developed scalable apps, version management, UI implementation.
-
-Core Duties include:
-- Daily app updates
-- Source control and deployments
-- UI design to code conversion`}
-              />
-            </StyledDetailSection>
-          </StyledDetailBox>
+                {index !== applicant.work_experiences.length - 1 && (
+                  <hr style={{ margin: '10px 0px' }} />
+                )}
+              </React.Fragment>
+            ))
+          ) : (
+            <Typography>No experience provided by this candidate.</Typography>
+          )}
         </StyledAccordionDetails>
       </StyledAccordion>
 
       {/* Skillset */}
-      <StyledAccordion
+      {/* <StyledAccordion
         expanded={expanded === 'panel3'}
         onChange={handleAccordionChange('panel3')}
       >
@@ -489,6 +550,52 @@ Core Duties include:
               />
             ))}
           </Box>
+        </StyledAccordionDetails>
+      </StyledAccordion> */}
+
+      <StyledAccordion
+        expanded={expanded === 'panel3'}
+        onChange={handleAccordionChange('panel3')}
+      >
+        <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Box>
+            <Typography sx={{ fontWeight: 'bold' }}>Skillset</Typography>
+          </Box>
+          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+            <Typography sx={{ fontSize: '14px', color: 'gray' }}>
+              Technical Skills
+            </Typography>
+          </Box>
+        </StyledAccordionSummary>
+
+        <StyledAccordionDetails>
+          {isLoading ? (
+            <Skeleton variant="text" width={'100%'} height={100} />
+          ) : (
+            <Box className="flex flex-wrap gap-2" style={{ gap: '10px' }}>
+              {applicant?.technical_skills?.length > 0 ? (
+                applicant?.technical_skills?.map((skill) => (
+                  <SkillChip
+                    key={skill.id}
+                    label={
+                      <Box
+                        sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                      >
+                        {`${skill.skill_name} (${skill.proficiency})`}
+                        <CheckCircleOutline fontSize="small" />
+                      </Box>
+                    }
+                    style={{
+                      color: 'white',
+                      backgroundColor: theme.primary_color || '#115093',
+                    }}
+                  />
+                ))
+              ) : (
+                <Typography>No technical skills provided.</Typography>
+              )}
+            </Box>
+          )}
         </StyledAccordionDetails>
       </StyledAccordion>
 
@@ -580,7 +687,7 @@ Core Duties include:
                         fontSize: '0.75em',
                         fontWeight: 500,
                         fontFamily: 'Inter, sans-serif',
-                        color: '#1976d2',
+                        color: theme.primary_color,
                         textDecoration: 'underline',
                         cursor: 'pointer',
                       }}
@@ -648,6 +755,114 @@ Core Duties include:
                   >
                     Name
                   </TableCell>
+
+                  <TableCell
+                    sx={{
+                      fontSize: '0.80em',
+                      fontWeight: 300,
+                      fontFamily: 'Inter, sans-serif',
+                    }}
+                  >
+                    Action
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {isLoading ? (
+                  <TableRow>
+                    <TableCell colSpan={3} align="center">
+                      <Skeleton variant="text" width={'100%'} height={40} />
+                    </TableCell>
+                  </TableRow>
+                ) : supportingDocuments?.length > 0 ? (
+                  supportingDocuments
+                    // .filter(doc => doc.document) // Only show available documents
+                    .map((doc, index) => (
+                      <TableRow key={index}>
+                        <TableCell sx={{ minWidth: 180 }}>
+                          {doc.nameOfDocument}
+                        </TableCell>
+                        <TableCell sx={{ minWidth: 180 }}>
+                          {applicant?.first_name} {applicant?.last_name}
+                        </TableCell>
+
+                        <TableCell
+                          sx={{
+                            fontSize: '0.75em',
+                            fontWeight: 500,
+                            fontFamily: 'Inter, sans-serif',
+                            color: theme.primary_color,
+                            textDecoration: 'underline',
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => window.open(doc.document, '_blank')}
+                        >
+                          View
+                        </TableCell>
+                      </TableRow>
+                    ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={3} align="center">
+                      No supporting documents found.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 15]}
+              component="div"
+              count={supportingDocuments?.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{ fontSize: '0.80em', fontFamily: 'Inter, sans-serif' }}
+            />
+          </TableContainer>
+        </StyledAccordionDetails>
+      </StyledAccordion>
+      {/* Supporting Documents */}
+
+      <StyledAccordion
+        expanded={expanded === 'panel6'}
+        onChange={handleAccordionChange('panel6')}
+      >
+        <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Box>
+            <Typography sx={{ fontWeight: 'bold' }}>Certificates</Typography>
+          </Box>
+          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+            <Typography sx={{ fontSize: '14px', color: 'gray' }}>
+              Attachments
+            </Typography>
+          </Box>
+        </StyledAccordionSummary>
+        <StyledAccordionDetails>
+          <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      fontSize: '0.80em',
+                      fontWeight: 300,
+                      fontFamily: 'Inter, sans-serif',
+                    }}
+                  >
+                    Document Type
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontSize: '0.80em',
+                      fontWeight: 300,
+                      fontFamily: 'Inter, sans-serif',
+                    }}
+                  >
+                    Issuer
+                  </TableCell>
                   <TableCell
                     sx={{
                       fontSize: '0.80em',
@@ -677,80 +892,73 @@ Core Duties include:
                   </TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
-                {[
-                  {
-                    documentType: 'ID',
-                    name: 'Jay Fidelis',
-                    dateIssued: 'May 2023',
-                    expiryDate: 'May 2025',
-                  },
-                  {
-                    documentType: 'Passport',
-                    name: 'Jay Fidelis',
-                    dateIssued: 'May 2023',
-                    expiryDate: 'May 2025',
-                  },
-                  {
-                    documentType: 'Degree',
-                    name: 'Jay Fidelis',
-                    dateIssued: 'May 2023',
-                    expiryDate: 'May 2025',
-                  },
-                  {
-                    documentType: 'Certificate',
-                    name: 'Jay Fidelis',
-                    dateIssued: 'May 2023',
-                    expiryDate: 'May 2025',
-                  },
-                  {
-                    documentType: `Driver's Liences`,
-                    name: 'Jay Fidelis',
-                    dateIssued: 'May 2023',
-                    expiryDate: 'May 2025',
-                  },
-                ].map((verification, index) => (
-                  <TableRow key={index}>
-                    <TableCell sx={{ minWidth: 180 }}>
-                      {verification.documentType}
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 180 }}>
-                      {verification.name}
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 180 }}>
-                      {verification.dateIssued}
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 180 }}>
-                      {verification.expiryDate}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        fontSize: '0.75em',
-                        fontWeight: 500,
-                        fontFamily: 'Inter, sans-serif',
-                        color: '#1976d2',
-                        textDecoration: 'underline',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      View
+                {isLoading ? (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      Loading certifications...
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : applicant?.certifications?.length > 0 ? (
+                  applicant.certifications.map((cert, index) => (
+                    <TableRow key={cert.id || index}>
+                      <TableCell sx={{ minWidth: 180 }}>
+                        {cert.title || 'N/A'}
+                      </TableCell>
+                      <TableCell sx={{ minWidth: 180 }}>
+                        {cert.issuer || 'N/A'}
+                      </TableCell>
+                      <TableCell sx={{ minWidth: 180 }}>
+                        {cert.issue_date
+                          ? new Date(cert.issue_date).toLocaleDateString()
+                          : 'N/A'}
+                      </TableCell>
+                      <TableCell sx={{ minWidth: 180 }}>
+                        {cert.expiration_date
+                          ? new Date(cert.expiration_date).toLocaleDateString()
+                          : 'N/A'}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          fontSize: '0.75em',
+                          fontWeight: 500,
+                          fontFamily: 'Inter, sans-serif',
+                          color: theme.primary_color,
+                          textDecoration: 'underline',
+                          cursor: cert.credential_url
+                            ? 'pointer'
+                            : 'not-allowed',
+                          opacity: cert.credential_url ? 1 : 0.5,
+                        }}
+                        onClick={() =>
+                          cert.credential_url &&
+                          window.open(cert.credential_url, '_blank')
+                        }
+                      >
+                        View
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      No certifications available.
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
+
             <TablePagination
               rowsPerPageOptions={[5, 10, 15]}
               component="div"
-              count={4}
+              count={applicant?.certifications?.length || 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-              sx={{
-                fontSize: '0.80em',
-                fontFamily: 'Inter, sans-serif',
-              }}
+              sx={{ fontSize: '0.80em', fontFamily: 'Inter, sans-serif' }}
             />
           </TableContainer>
         </StyledAccordionDetails>

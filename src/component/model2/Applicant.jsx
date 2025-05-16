@@ -17,6 +17,7 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Skeleton,
 } from '@mui/material'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
@@ -26,76 +27,18 @@ import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
 import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
 import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
-
-// Dummy data for table
-const initialData = [
-  {
-    id: 3434,
-    candidateName: 'Item One',
-    currentMatch: 93,
-    availability: 'Immediately',
-    dateApplied: '2025-04-10',
-    action: 'View',
-  },
-  {
-    id: 2323,
-    candidateName: 'Item Two',
-    currentMatch: 60,
-    availability: 'Immediately',
-    dateApplied: '2025-04-09',
-    action: 'View',
-  },
-  {
-    id: 323233,
-    candidateName: 'Item Three',
-    currentMatch: 45,
-    availability: 'In 30 days',
-    dateApplied: '2025-04-08',
-    action: 'View',
-  },
-  {
-    id: 43233,
-    candidateName: 'Item Four',
-    currentMatch: 81,
-    availability: 'Calendar Month',
-    dateApplied: '2025-04-07',
-    action: 'View',
-  },
-  {
-    id: 52323,
-    candidateName: 'Item Five',
-    currentMatch: 32,
-    availability: 'Immediately',
-    dateApplied: '2025-04-06',
-    action: 'View',
-  },
-  {
-    id: 63233,
-    candidateName: 'Item Six',
-    currentMatch: 68,
-    availability: 'Calendar Month',
-    dateApplied: '2025-04-05',
-    action: 'View',
-  },
-  {
-    id: 73232,
-    candidateName: 'Item Seven',
-    currentMatch: 55,
-    availability: 'Immediately',
-    dateApplied: '2025-04-04',
-    action: 'View',
-  },
-]
+import { formatDateTime } from '../utils/formatDateTime'
+import { SentimentDissatisfied } from '@mui/icons-material'
 
 export default function Page({ id }) {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
-  const [data, setData] = useState(initialData)
+
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
-  const { data: ticket, isLoading } = useFetchResourcingData(
-    GET_RESOURCING_ENDPOINTS.GET_A_POST_DETAILS(id),
+  const { data: applicant, isLoading } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_A_POST_APPLICANT(id),
   )
 
   const handleChangePage = (event, newPage) => {
@@ -108,7 +51,10 @@ export default function Page({ id }) {
   }
 
   const handleRowClick = (item) => {
-    router.push(`/dashboard/resourcing/posts/open/candidate/${item.id}`)
+    router.push(
+      // `/dashboard/resourcing/posts/open/candidate/${item.applicant_id}`,
+      `/dashboard/resourcing/posts/open/${id}/${item.applicant_id}`,
+    )
   }
 
   return (
@@ -229,82 +175,122 @@ export default function Page({ id }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((item) => (
-                <TableRow
-                  key={item.id}
-                  onClick={() => handleRowClick(item)}
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover': { backgroundColor: '#f5f5f5' },
-                  }}
-                >
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.candidateName}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                      color:
-                        item.currentMatch < 50
-                          ? 'red'
-                          : item.currentMatch <= 80
-                            ? '#F5A623' // Yellow-ish
-                            : '#1BA847', // Green
-                    }}
-                  >
-                    {item.currentMatch}%
-                  </TableCell>
-
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.availability}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.dateApplied}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                      color: '#1976d2',
-                      textDecoration: 'underline',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => console.log('Clicked Action for', item)}
-                  >
-                    {item.action}
-                  </TableCell>
+            {isLoading ? (
+              // Show 5 skeleton rows to simulate loading
+              Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  {Array.from({ length: 5 }).map((_, cellIndex) => (
+                    <TableCell key={cellIndex}>
+                      <Skeleton variant="text" height={24} />
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
+              ))
+            ) : applicant?.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={5}
+                  sx={{ textAlign: 'center', padding: '2em' }}
+                >
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    <SentimentDissatisfied
+                      sx={{ fontSize: 50, color: 'gray' }}
+                    />
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: 400,
+                        fontSize: '1em',
+                        color: 'gray',
+                      }}
+                    >
+                      Empty
+                    </Typography>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ) : (
+              applicant
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.map((item) => (
+                  <TableRow
+                    key={item.id}
+                    sx={{
+                      cursor: 'pointer',
+                      '&:hover': { backgroundColor: '#f5f5f5' },
+                    }}
+                  >
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item?.applicant_name || 'N/A'}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                        color:
+                          item.match_rate < 50
+                            ? 'red'
+                            : item.match_rate <= 80
+                              ? '#F5A623' // Yellow-ish
+                              : '#1BA847', // Green
+                      }}
+                    >
+                      {item.match_rate || 0}%
+                    </TableCell>
+
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                        textTransform: 'capitalize',
+                      }}
+                    >
+                      {item.availability}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {formatDateTime(item.applied_at)}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                        color: '#1976d2',
+                        textDecoration: 'underline',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => handleRowClick(item)}
+                    >
+                      View
+                    </TableCell>
+                  </TableRow>
+                ))
+            )}
           </TableBody>
         </Table>
 
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={data.length}
+          count={applicant?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

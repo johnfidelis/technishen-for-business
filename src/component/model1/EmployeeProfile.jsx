@@ -46,6 +46,8 @@ const EmployeeProfile = ({ employeeId }) => {
 
   const patchEmployeeRoleEndpoint =
     PATCH_ENDPOINTS.UPDATE_EMPLOYEE_ROLE(employeeId)
+  const patchRole = usePatchData(patchEmployeeRoleEndpoint)
+
   // const blockandUnblockEndpoint = PATCH_ENDPOINTS.BLOCK_UNBLOCK_USER
 
   const patchBlockAndUnblock = usePatchData(
@@ -102,7 +104,7 @@ const EmployeeProfile = ({ employeeId }) => {
       setModalOpenToFulfillerGroup(true)
     } else {
       const payload = { role }
-      usePatchData(patchEmployeeRoleEndpoint, payload)
+      patchRole.mutate(payload)
     }
   }
 

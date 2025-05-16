@@ -1,23 +1,16 @@
 'use client'
 
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import { MdInfoOutline } from 'react-icons/md'
+import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
+import UpdateCreatedJob from '@/component/model2/UpdateCreatedJob'
 import { useRouter, useParams } from 'next/navigation'
-import { Box, Button, Typography } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
-import Applicant from '@/component/model2/Applicant'
 
-const Page = ({ onBack }) => {
+const Page = () => {
   const { theme } = useContext(ThemeContext)
-  const [number, setNumber] = useState(0)
   const router = useRouter()
   const { id } = useParams()
-  const [serviceName, setServiceName] = useState('')
-  const [openModal, setOpenModal] = useState(false)
-
-  const handleCreateSubCategory = () => {
-    setOpenModal(true)
-  }
-
   return (
     <Box
       sx={{
@@ -44,7 +37,6 @@ const Page = ({ onBack }) => {
         >
           &larr; Back
         </Button>
-
         <Typography
           variant="h5"
           sx={{
@@ -55,12 +47,21 @@ const Page = ({ onBack }) => {
             fontWeight: '500',
           }}
         >
-          Applicants
-          {/* : Frontend Engineer */}
+          Update Job Post
+          <Tooltip
+            title="This page allows for creating and managing all service catalogues for customers, as well as managing fulfillers in the service catalogue."
+            arrow
+          >
+            <IconButton size="small">
+              <MdInfoOutline style={{ fontSize: '1.2em', color: '#666' }} />
+            </IconButton>
+          </Tooltip>
         </Typography>
+
         <hr />
       </Box>
-      <Applicant id={id} />
+
+      <UpdateCreatedJob id={id} />
     </Box>
   )
 }

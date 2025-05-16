@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { Box, Button, Typography } from '@mui/material'
 import { ThemeContext } from '@/context/ThemeContext'
@@ -10,7 +10,18 @@ const Page = ({ onBack }) => {
   const { theme } = useContext(ThemeContext)
   const [number, setNumber] = useState(0)
   const router = useRouter()
-  const { id } = useParams()
+
+  // Get both IDs from the dynamic route
+  const params = useParams()
+  const jobPostId = params.id
+  const applicantId = params.applicant_id
+
+  useEffect(() => {
+    console.log('params', params)
+    console.log('Job Post ID:', jobPostId)
+    console.log('Applicant ID:', applicantId)
+  }, [jobPostId, applicantId])
+
   const [serviceName, setServiceName] = useState('')
   const [openModal, setOpenModal] = useState(false)
 
@@ -30,6 +41,20 @@ const Page = ({ onBack }) => {
       }}
     >
       <Box sx={{ mb: 4, textAlign: 'left' }}>
+        <Button
+          variant="contained"
+          onClick={() => router.back()}
+          sx={{
+            backgroundColor: theme.primary_color || '#115093',
+            color: '#FFF',
+            textTransform: 'none',
+            fontSize: '0.7em',
+            fontWeight: 300,
+            padding: '0.375rem 0.75em',
+          }}
+        >
+          &larr; Back
+        </Button>
         <Typography
           variant="h5"
           sx={{
@@ -40,11 +65,13 @@ const Page = ({ onBack }) => {
             fontWeight: '500',
           }}
         >
-          Candidate: John Fidelis
+          Applicants
         </Typography>
         <hr />
       </Box>
-      <CandidateProfile />
+
+      {/* Pass both IDs if needed */}
+      <CandidateProfile jobPostId={jobPostId} applicantId={applicantId} />
     </Box>
   )
 }

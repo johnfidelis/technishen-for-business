@@ -37,6 +37,8 @@ export const PATCH_ENDPOINTS = {
 export const AUTH_ENDPOINTS = {
   LOGIN: '/auth/login/',
   SIGNUP: '/auth/register/',
+  ACCESS_CODE_LOGIN: '/auth/privileged-login/',
+  PASSWORD_RECOVERY: '/auth/password-recovery/',
 }
 export const DELETE_ENDPOINTS = {
   DELETE_CATALOG: (serviceId) => `/delete-category/${serviceId}/`,

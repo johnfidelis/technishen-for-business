@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Box,
   Grid,
@@ -17,9 +17,11 @@ import { ThemeContext } from '@/context/ThemeContext'
 import {
   useCreateResourcingData,
   useFetchResourcingData,
+  usePatchResourcingData,
 } from '@/hooks/useResourcingApiService'
 import {
   GET_RESOURCING_ENDPOINTS,
+  PATCH_ENDPOINTS,
   POST_ENDPOINTS,
 } from '@/constants/resouringEndpoints'
 import { toast } from 'react-toastify'
@@ -27,11 +29,42 @@ import countryList from '../utils/countryList'
 import { Cookies } from 'react-cookie'
 import AddressAutocomplete from '../utils/GoogleInputAddress'
 
-const CreateJob = () => {
+const UpdateCreatedJob = ({ id }) => {
   const [reloadKey, setReloadKey] = useState(Date.now())
   const { theme } = useContext(ThemeContext)
   const cookies = new Cookies()
   const businessName = cookies.get('businessName')
+
+  const [fetchKey, setFetchKey] = useState(0)
+  const { data: jobPost, isLoading: loadPost } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_A_POST_DETAILS(id, 'jobPost'),
+  )
+
+  useEffect(() => {
+    if (jobPost) {
+      setJobTitle(jobPost?.job_title || '')
+      setCompany(jobPost?.company_name || '')
+      setProjectLocation(jobPost?.location || '')
+      setCandidateCountry(jobPost?.applicant_country || 'Any')
+      setWorkingConditions(jobPost?.work_type || '')
+      setJobTypes(jobPost?.employment_type || '')
+      setCustomTime({
+        start: jobPost?.start_date || '',
+        end: jobPost?.end_date || '',
+      })
+      setWorkingHours(jobPost?.work_hours || '8:00 - 17:00 Hrs')
+      setCustomWorkTime(
+        jobPost?.work_hours !== '8:00 - 17:00 Hrs' ? jobPost?.work_hours : '',
+      )
+      setAvailablePositions(jobPost?.available_positions || '')
+      setHourlyRate(jobPost?.hourly_rate || '')
+      setCurrency(jobPost?.currency || '')
+      setExperienceLevel(jobPost?.experience_level || '')
+      setJobDescription(jobPost?.job_description || '')
+      setSelectedCategories(jobPost?.desired_skill_set || [])
+    }
+  }, [jobPost])
+
   const { data: suggestedCategories, isLoading: loadSkill } =
     useFetchResourcingData(GET_RESOURCING_ENDPOINTS.GET_A_SKILL)
   const [isLoading, setIsLoading] = useState(false)
@@ -85,27 +118,27 @@ const CreateJob = () => {
     setCurrency('')
   }
 
-  const [jobTitle, setJobTitle] = useState()
-  const [company, setCompany] = useState()
-  const [projectLocation, setProjectLocation] = useState()
+  const [jobTitle, setJobTitle] = useState('')
+  const [company, setCompany] = useState('')
+  const [projectLocation, setProjectLocation] = useState('')
   const [candidateCountry, setCandidateCountry] = useState('Any')
-  const [workingConditions, setWorkingConditions] = useState()
-  const [jobTypes, setJobTypes] = useState()
+  const [workingConditions, setWorkingConditions] = useState('')
+  const [jobTypes, setJobTypes] = useState('')
   const [customTime, setCustomTime] = useState({
     start: '',
     end: '',
   })
-  const [workingHours, setWorkingHours] = useState()
+  const [workingHours, setWorkingHours] = useState('')
   const [customWorkTime, setCustomWorkTime] = useState('')
-  const [availablePositions, setAvailablePositions] = useState()
-  const [currency, setCurrency] = useState()
-  const [hourlyRate, setHourlyRate] = useState()
-  const [experienceLevel, setExperienceLevel] = useState()
-  const [jobDescription, setJobDescription] = useState()
+  const [availablePositions, setAvailablePositions] = useState('')
+  const [currency, setCurrency] = useState('')
+  const [hourlyRate, setHourlyRate] = useState('')
+  const [experienceLevel, setExperienceLevel] = useState('')
+  const [jobDescription, setJobDescription] = useState('')
   const [selectedCategories, setSelectedCategories] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [long, setLong] = useState()
-  const [lat, setLat] = useState()
+  const [long, setLong] = useState('')
+  const [lat, setLat] = useState('')
 
   const handleAddressUpdate = (parsedAddress) => {
     console.log(parsedAddress)
@@ -155,7 +188,10 @@ const CreateJob = () => {
     setWorkingHours(e.target.value)
   }
 
-  const createPost = useCreateResourcingData(POST_ENDPOINTS.POST_A_JOB, 'posts')
+  const updatePost = usePatchResourcingData(
+    PATCH_ENDPOINTS.UPDATE_A_JOB(id),
+    'update',
+  )
 
   const handleSubmit = async () => {
     if (!validateForm()) {
@@ -185,10 +221,10 @@ const CreateJob = () => {
       latitude: lat,
     }
 
-    createPost.mutate(payload, {
+    updatePost.mutate(payload, {
       onSuccess: () => {
-        toast.success('Created successfully!')
-        resetForm()
+        toast.success('Updated successfully!')
+        // resetForm()
         setIsLoading(false)
       },
       onError: (error) => {
@@ -196,6 +232,10 @@ const CreateJob = () => {
         setIsLoading(false)
       },
     })
+  }
+
+  if (loadPost) {
+    return <Typography>Loading...</Typography>
   }
 
   return (
@@ -252,6 +292,8 @@ const CreateJob = () => {
             value={projectLocation}
             handleAddressUpdate={handleAddressUpdate}
           />
+          <small sx={{ fontSize: '2px' }}>{projectLocation}</small>
+          <br />
 
           <FormControl component="fieldset" sx={{ mb: 3 }}>
             <Typography sx={{ mb: 1, mt: 3 }}>
@@ -642,6 +684,7 @@ const CreateJob = () => {
           }}
           onClick={handleSubmit}
           loading={isLoading}
+          disabled={jobPost?.is_approved != false}
         >
           Create Post
         </Button>
@@ -650,4 +693,4 @@ const CreateJob = () => {
   )
 }
 
-export default CreateJob
+export default UpdateCreatedJob

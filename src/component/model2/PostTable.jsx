@@ -261,7 +261,8 @@ export default function Page({ filter }) {
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
-                      {item?.total_applicant || 0}/{item?.available_positions}
+                      {item?.total_applications || 0}(applicants) -{' '}
+                      {item?.available_positions}(positions)
                     </TableCell>
                     <TableCell
                       sx={{
