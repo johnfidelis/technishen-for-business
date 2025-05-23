@@ -18,12 +18,16 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Skeleton,
 } from '@mui/material'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import InboxIcon from '@mui/icons-material/Inbox'
 import Link from 'next/link'
 import { ThemeContext } from '@/context/ThemeContext'
+import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
+import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
+import { SentimentDissatisfied } from '@mui/icons-material'
 
 // Dummy data for table
 const initialData = [
@@ -88,9 +92,17 @@ const initialData = [
 export default function Page({ filter }) {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
-  const [data, setData] = useState(initialData)
+
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+  const { data, isLoading } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_INTERVIEWS,
+  )
+
+  // Filter only 'invited' interviews
+  const interviews = data?.filter(
+    (datum) => datum?.interview?.status?.toLowerCase() === 'passed',
+  )
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -102,15 +114,9 @@ export default function Page({ filter }) {
   }
 
   const handleRowClick = (item) => {
-    router.push(`/dashboard/resourcing/offers/candidate/${item.id}`)
+    router.push(`/dashboard/resourcing/posts/open/${item.job_post_id}/${item.applicant.id}`)
   }
 
-  const filteredData =
-    filter === 'All'
-      ? data
-      : data.filter(
-          (item) => item.status.toLowerCase() === filter.toLowerCase(),
-        )
 
   return (
     <Box>
@@ -210,7 +216,7 @@ export default function Page({ filter }) {
           <TableHead>
             <TableRow>
               {[
-                'Job ID',
+          
                 'Job Title',
                 'Candidates',
                 'Effective Date',
@@ -230,87 +236,99 @@ export default function Page({ filter }) {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {filteredData
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((item) => (
-                <TableRow
-                  key={item.id}
-                  onClick={() => handleRowClick(item)}
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover': { backgroundColor: '#f5f5f5' },
-                  }}
-                >
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.id}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.title}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.candidate}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.date}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.endDate}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                      color:
-                        item.status === 'Pending'
-                          ? '#FFC107'
-                          : item.status === 'Approved'
-                            ? '#1BA847'
-                            : 'inherit',
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {item.status}
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
+        <TableBody>
+  {isLoading ? (
+    <TableRow>
+      <TableCell colSpan={5} align="center">
+      
+        <Skeleton width={"100%"} height={40}/>
+      </TableCell>
+    </TableRow>
+  ) : (
+    interviews
+      ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      ?.map((item) => {
+        const fullName = `${item?.applicant?.first_name || ''} ${item?.applicant?.last_name || ''}`
+        const date = new Date(item?.scheduled_datetime).toLocaleString()
+        const endDate = new Date(item?.updated_at).toLocaleString()
+
+        return (
+          <TableRow
+            key={item.id}
+            onClick={() => handleRowClick(item)}
+            sx={{
+              cursor: 'pointer',
+              '&:hover': { backgroundColor: '#f5f5f5' },
+            }}
+          >
+            <TableCell
+              sx={{
+                fontSize: '0.75em',
+                fontWeight: 500,
+                fontFamily: 'Inter, sans-serif',
+              }}
+            >
+              {item.job_post_title}
+            </TableCell>
+            <TableCell
+              sx={{
+                fontSize: '0.75em',
+                fontWeight: 500,
+                fontFamily: 'Inter, sans-serif',
+              }}
+            >
+              {fullName}
+            </TableCell>
+            <TableCell
+              sx={{
+                fontSize: '0.75em',
+                fontWeight: 500,
+                fontFamily: 'Inter, sans-serif',
+              }}
+            >
+              {date}
+            </TableCell>
+            <TableCell
+              sx={{
+                fontSize: '0.75em',
+                fontWeight: 500,
+                fontFamily: 'Inter, sans-serif',
+              }}
+            >
+              {endDate}
+            </TableCell>
+            <TableCell
+              sx={{
+                fontSize: '0.75em',
+                fontWeight: 500,
+                fontFamily: 'Inter, sans-serif',
+                color: '#FFC107',
+                textTransform: 'capitalize',
+              }}
+            >
+              {item.interview?.status}
+            </TableCell>
+          </TableRow>
+        )
+      })
+  )}
+
+  {!isLoading &&
+    interviews?.length === 0 && (
+      <TableRow>
+        <TableCell colSpan={5} align="center">
+          No invited interviews found.
+          <SentimentDissatisfied/>
+        </TableCell>
+      </TableRow>
+    )}
+</TableBody>
+
         </Table>
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={filteredData.length}
+          count={interviews?.length || 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

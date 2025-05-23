@@ -231,7 +231,7 @@ export default function Page({ id }) {
                         fontFamily: 'Inter, sans-serif',
                       }}
                     >
-                      {item?.applicant_name || 'N/A'}
+                      {item?.applicant_name || '-'}
                     </TableCell>
                     <TableCell
                       sx={{

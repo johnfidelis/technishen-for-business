@@ -24,15 +24,29 @@ import {
   TextField,
   TablePagination,
   Skeleton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  CircularProgress,
+  Modal,
+  IconButton,
 } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { styled } from '@mui/system'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { ThemeContext } from '@/context/ThemeContext'
 import { CheckCircleOutline, SentimentDissatisfied } from '@mui/icons-material'
 import UserProfile from './modals/UserProfile'
-import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
-import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
+import {
+  useCreateResourcingData,
+  useFetchResourcingData,
+} from '@/hooks/useResourcingApiService'
+import {
+  GET_RESOURCING_ENDPOINTS,
+  POST_ENDPOINTS,
+} from '@/constants/resouringEndpoints'
 
 // Styled Components
 const StyledBox = styled(Box)({
@@ -117,13 +131,74 @@ const SkillChip = styled(Chip)({
   },
 })
 
+ const modalStyle = {
+    position: 'absolute',
+    right: '2px',
+    transform: 'translate(0, 0)',
+    width: '450px',
+    height: '100%',
+    backgroundColor: '#FFFFFF',
+    boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
+    color: 'black',
+    display: 'flex',
+    flexDirection: 'column',
+    fontFamily: 'Inter, sans-serif',
+  }
+
 const CandidateProfile = ({ jobPostId, applicantId }) => {
   const [expanded, setExpanded] = useState(false)
+  const [openOfferModal, setOpenOfferModal] = useState(false)
   const [open, setOpen] = useState(false)
+  const [contractFile, setContractFile] = useState(null)
+  const [message, setMessage] = useState('')
+  // const [isLoading, setIsLoading] = useState(false)
 
   const { data: applicant, isLoading } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_APPLICANT_DETAILS(jobPostId, applicantId),
   )
+
+  const sendJobOffer = useCreateResourcingData(
+    POST_ENDPOINTS.SEND_JOB_OFFER(applicant?.application_info?.application_id),
+    'sendJobOffer',
+  )
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    if (file && file.type !== 'application/pdf') {
+      toast.error('Only PDF files are allowed!')
+      return
+    }
+    setContractFile(file)
+  }
+
+  const handleSubmit = async () => {
+    if (!contractFile) {
+      toast.error('Please upload a PDF contract file.')
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('contract_file', contractFile)
+    if (message) {
+      formData.append('message', message)
+    }
+
+    // setIsLoading(true)
+
+    sendJobOffer.mutate(formData, {
+      onSuccess: () => {
+        toast.success('Job Offer Sent!')
+        setContractFile(null)
+        setMessage('')
+        // setIsLoading(false)
+        onClose()
+      },
+      onError: (error) => {
+        toast.error(error?.response?.data?.detail || 'Something went wrong')
+        // setIsLoading(false)
+      },
+    })
+  }
 
   const [supportingDocuments, setSupportingDocuments] = useState([])
 
@@ -219,10 +294,10 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                   <strong>Candidate Name:</strong>{' '}
                   {applicant?.applicant_profile?.first_name}{' '}
                   {applicant?.applicant_profile?.last_name}
-                  <VisibilityIcon
+                  {/* <VisibilityIcon
                     sx={{ fontSize: '18px', cursor: 'pointer', color: 'gray' }}
                     onClick={handleModalOpen} // Show modal on click
-                  />
+                  /> */}
                 </Typography>
 
                 <Typography
@@ -234,8 +309,8 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                   }}
                 >
                   <strong>Current Role:</strong>{' '}
-                  {applicant?.applicant_profile?.employment_status ||
-                    'Not specified'}
+                  {applicant?.applicant_profile?.work_experiences?.[0]
+                    ?.company_name || 'Not specified'}
                 </Typography>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
@@ -261,7 +336,7 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                   sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
                 >
                   <strong>Applied For:</strong>{' '}
-                  {applicant?.applicant_profile?.appliedRole || 'N/A'}
+                  {applicant?.application_info?.job_title || '-'}
                 </Typography>
 
                 <Typography
@@ -288,20 +363,6 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
 
               {/* Select Dropdown */}
             </Box>
-            <FormControl sx={{ mt: 2, minWidth: '600px' }}>
-              <Select
-                displayEmpty
-                inputProps={{ 'aria-label': 'Without label' }}
-                // value={applicant?.applicant_profile?.status || ''}
-              >
-                <MenuItem value="">
-                  <em>Schedule Interview</em>
-                </MenuItem>
-                <MenuItem value={10}>Interview Scheduled</MenuItem>
-                <MenuItem value={20}>Shortlisted</MenuItem>
-                <MenuItem value={30}>Offer Extended</MenuItem>
-              </Select>
-            </FormControl>
 
             {/* Show Scheduled Time */}
             {applicant?.applicant_profile?.interviewTime && (
@@ -310,72 +371,77 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                 {applicant?.applicant_profile?.interviewTime}
               </Typography>
             )}
-            {/* <Typography sx={{ fontSize: '14px', mt: 2 }}>
-              <strong> Scheduled Meeting Time: </strong> 29 Sept 2023, 09:00AM -
-              29 Sept 2023, 09:30AM
-            </Typography> */}
 
-            {/* Buttons: Join Interview & Reschedule */}
-
-            <Box sx={{ display: 'flex', gap: '1em', mt: 2 }}>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: theme.primary_color,
-                  color: '#fff',
-                  '&:hover': {
-                    backgroundColor: theme.primary_color,
-                  },
-                }}
-              >
-                Join Interview
-              </Button>
-              <Button
-                variant="outlined"
-                sx={{
-                  borderColor: theme.primary_color,
-                  color: theme.primary_color,
-                  '&:hover': {
-                    borderColor: theme.primary_color,
+            {applicant?.application_info?.interview_status == null && (
+              <Box sx={{ display: 'flex', mt: 2 }}>
+                <Button
+                  variant="contained"
+                  sx={{
                     backgroundColor: theme.primary_color,
                     color: '#fff',
-                  },
-                }}
-              >
-                Reschedule
-              </Button>
-            </Box>
+                    '&:hover': {
+                      backgroundColor: theme.primary_color,
+                    },
+                  }}
+                  onClick={handleModalOpen}
+                >
+                  Schedule Interview
+                </Button>
+              </Box>
+            )}
+
+            {applicant?.application_info?.interview_status == 'invited' && (
+              <Box sx={{ display: 'flex', gap: '1em', mt: 2 }}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: theme.primary_color,
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: theme.primary_color,
+                    },
+                  }}
+                >
+                  Join Interview
+                </Button>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    borderColor: theme.primary_color,
+                    color: theme.primary_color,
+                    '&:hover': {
+                      borderColor: theme.primary_color,
+                      backgroundColor: theme.primary_color,
+                      color: '#fff',
+                    },
+                  }}
+                >
+                  Reschedule
+                </Button>
+              </Box>
+            )}
+
+            {applicant?.application_info?.interview_status == 'passed' && (
+              <Box sx={{ display: 'flex', gap: '1em', mt: 2 }}>
+                <Button
+                  variant="contained"
+                  onClick={() => setOpenOfferModal(true)}
+                  sx={{
+                    backgroundColor: theme.primary_color,
+                    color: '#fff',
+                    '&:hover': {
+                      backgroundColor: theme.primary_color,
+                    },
+                  }}
+                >
+                  Send Job Offer
+                </Button>
+              </Box>
+            )}
           </Box>
         )}
       </Box>
 
-      {/* Actions */}
-      {/* <Box className="flex flex-col items-end">
-          <FormControl sx={{ mb: 2, minWidth: '200px' }}>
-            <Select displayEmpty inputProps={{ 'aria-label': 'Without label' }} value="">
-              <MenuItem value="">
-                <em>Schedule Interview</em>
-              </MenuItem>
-              <MenuItem value={10}>Interview Scheduled</MenuItem>
-              <MenuItem value={20}>Shortlisted</MenuItem>
-              <MenuItem value={30}>Offer Extended</MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#0056B3',
-              '&:hover': { backgroundColor: '#004299' },
-            }}
-            onClick={() => setModalOpen(true)}
-          >
-            Setup Interview Date & Time
-          </Button>
-        </Box> */}
-      {/* </Box> */}
-
-      {/* Accordion Sections */}
-      {/* Professional Summary */}
       <Box sx={{ mt: 4, textAlign: 'left', mb: 4 }}>
         <Typography
           variant="h6"
@@ -519,54 +585,6 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
         </StyledAccordionDetails>
       </StyledAccordion>
 
-      {/* Skillset */}
-      {/* <StyledAccordion
-        expanded={expanded === 'panel3'}
-        onChange={handleAccordionChange('panel3')}
-      >
-        <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Box>
-            <Typography sx={{ fontWeight: 'bold' }}>Skillset</Typography>
-          </Box>
-          <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
-            <Typography sx={{ fontSize: '14px', color: 'gray' }}>
-              Technical Skills
-            </Typography>
-          </Box>
-        </StyledAccordionSummary>
-        <StyledAccordionDetails>
-          <Box className="flex flex-wrap gap-2" style={{ gap: '10px' }}>
-            {[
-              'Javascript',
-              'Angular',
-              'React',
-              'Vue',
-              'Node JS',
-              'Version Control',
-              'Next JS',
-              'HTML5',
-              'CSS',
-              'Bootstrap CSS',
-              'Tailwind CSS',
-            ].map((skill, index) => (
-              <SkillChip
-                key={index}
-                label={
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                    {skill}
-                    <CheckCircleOutline fontSize="small" />
-                  </Box>
-                }
-                style={{
-                  color: 'white',
-                  backgroundColor: theme.primary_color || '#115093',
-                }}
-              />
-            ))}
-          </Box>
-        </StyledAccordionDetails>
-      </StyledAccordion> */}
-
       <StyledAccordion
         expanded={expanded === 'panel3'}
         onChange={handleAccordionChange('panel3')}
@@ -702,7 +720,7 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                         ? new Date(
                             applicant?.applicant_profile?.verification.verified_at,
                           ).toLocaleString()
-                        : 'N/A'}
+                        : '-'}
                     </TableCell>
                     <TableCell>
                       {applicant?.applicant_profile?.verification.remarks ||
@@ -725,7 +743,7 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                           View File
                         </Button>
                       ) : (
-                        'N/A'
+                        '-'
                       )}
                     </TableCell>
                   </TableRow>
@@ -954,22 +972,22 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
                     (cert, index) => (
                       <TableRow key={cert.id || index}>
                         <TableCell sx={{ minWidth: 180 }}>
-                          {cert.title || 'N/A'}
+                          {cert.title || '-'}
                         </TableCell>
                         <TableCell sx={{ minWidth: 180 }}>
-                          {cert.issuer || 'N/A'}
+                          {cert.issuer || '-'}
                         </TableCell>
                         <TableCell sx={{ minWidth: 180 }}>
                           {cert.issue_date
                             ? new Date(cert.issue_date).toLocaleDateString()
-                            : 'N/A'}
+                            : '-'}
                         </TableCell>
                         <TableCell sx={{ minWidth: 180 }}>
                           {cert.expiration_date
                             ? new Date(
                                 cert.expiration_date,
                               ).toLocaleDateString()
-                            : 'N/A'}
+                            : '-'}
                         </TableCell>
                         <TableCell
                           sx={{
@@ -1016,7 +1034,90 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
           </TableContainer>
         </StyledAccordionDetails>
       </StyledAccordion>
-      <UserProfile open={open} onClose={handleModalClose} />
+      <UserProfile
+        open={open}
+        onClose={handleModalClose}
+        user={applicant}
+        applicationId={applicant?.application_info?.application_id}
+      />
+
+    <Modal open={openOfferModal} onClose={() => setOpenOfferModal(false)}>
+      <Box sx={modalStyle}>
+        {/* Header */}
+        <Box
+          display="flex"
+          justifyContent="right"
+          alignItems="center"
+          sx={{ backgroundColor: theme.primary_color }}
+        >
+          <IconButton
+            onClick={() => setOpenOfferModal(false)}
+            sx={{ color: 'white', fontSize: '1em' }}
+          >
+            Close <CloseIcon />
+          </IconButton>
+        </Box>
+
+        {/* Profile Info */}
+        <Box sx={{ p: '1em' }}>
+          <Box display="flex" alignItems="center" gap="1em">
+            <Avatar
+              sx={{ width: '3.75em', height: '3.75em' }}
+              src={applicant?.applicant_profile?.profile_picture}
+            />
+            <Box>
+              <Typography sx={{ fontWeight: 400, fontSize: '1.125em' }}>
+                {applicant?.applicant_profile?.first_name +
+                  ' ' +
+                  applicant?.applicant_profile?.last_name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Send job offer with optional message and contract file
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+
+        {/* Form Section */}
+        <Box sx={{ overflowY: 'auto', flexGrow: 1, p: '1em' }}>
+          <TextField
+            fullWidth
+            type="file"
+            onChange={handleFileChange}
+            inputProps={{ accept: 'application/pdf' }}
+            sx={{ mb: 3 }}
+          />
+          <TextField
+            fullWidth
+            multiline
+            minRows={4}
+            label="Optional Message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            sx={{ mb: 3 }}
+          />
+
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              disabled={isLoading}
+              sx={{
+                backgroundColor: theme?.primary_color,
+                color: '#fff',
+                '&:hover': { backgroundColor: theme?.primary_color },
+              }}
+            >
+              {isLoading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                'Send Offer'
+              )}
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Modal>
     </Box>
   )
 }

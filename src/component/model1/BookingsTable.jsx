@@ -161,7 +161,7 @@ const BookingsTable = ({ customerId, ticketType }) => {
                     <TableCell>{ticket.service}</TableCell>
                     <TableCell>{ticket.sub_service}</TableCell>
                     <TableCell>{ticket.address}</TableCell>
-                    <TableCell>{ticket.assigned_to?.name || 'N/A'}</TableCell>
+                    <TableCell>{ticket.assigned_to?.name || '-'}</TableCell>
                     <TableCell>{ticket.status}</TableCell>
                   </TableRow>
                 ))

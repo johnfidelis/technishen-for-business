@@ -18,12 +18,16 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Skeleton,
 } from '@mui/material'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import InboxIcon from '@mui/icons-material/Inbox'
 import Link from 'next/link'
 import { ThemeContext } from '@/context/ThemeContext'
+import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
+import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
+import { SentimentDissatisfied } from '@mui/icons-material'
 
 // Dummy data for table
 const initialData = [
@@ -81,9 +85,18 @@ const initialData = [
 export default function Page() {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
-  const [data, setData] = useState(initialData)
+ 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+  const { data, isLoading } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_INTERVIEWS,
+  )
+
+
+// Filter only 'invited' interviews
+const interviews = data?.filter(
+  (datum) => datum?.interview?.status?.toLowerCase() === 'invited'
+)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -95,7 +108,7 @@ export default function Page() {
   }
 
   const handleRowClick = (item) => {
-    router.push(`/dashboard/resourcing/interviews/${item.id}`)
+    router.push(`/dashboard/resourcing/interviews/${item.interview.application}`)
   }
 
   return (
@@ -196,7 +209,7 @@ export default function Page() {
           <TableHead>
             <TableRow>
               {[
-                'Job ID',
+          
                 'Job Title',
                 'Candidates',
                 'Date and Time',
@@ -216,72 +229,66 @@ export default function Page() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((item) => (
-                <TableRow
-                  key={item.id}
-                  onClick={() => handleRowClick(item)}
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover': { backgroundColor: '#f5f5f5' },
-                  }}
-                >
-                  <TableCell
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  <Skeleton width={"100%"} height={40} />
+                </TableCell>
+              </TableRow>
+            ) : interviews?.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  <SentimentDissatisfied/>
+                  No interviews found.
+                </TableCell>
+              </TableRow>
+            ) : (
+              interviews?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((item) => (
+                  <TableRow
+                    key={item.id}
+                    // onClick={() => handleRowClick(item)}
                     sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
+                      cursor: 'pointer',
+                      '&:hover': { backgroundColor: '#f5f5f5' },
                     }}
                   >
-                    {item.id}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.title}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.candidate}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.date}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                      color: theme.primary_color || '#115093',
-                      textDecoration: 'underline',
-                    }}
-                  >
-                    Join Interview
-                  </TableCell>
-                </TableRow>
-              ))}
+                
+                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 500 }}>
+                      {item.job_post_title}
+                    </TableCell>
+                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 500 }}>
+                      {item.applicant?.first_name} {item.applicant?.last_name}
+                    </TableCell>
+                    <TableCell sx={{ fontSize: '0.75em', fontWeight: 500 }}>
+                      {new Date(item?.interview?.scheduled_datetime).toLocaleString()}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        color: theme.primary_color || '#115093',
+                        textDecoration: 'underline',
+                      }}
+                       onClick={() => handleRowClick(item)}
+                    >
+                      <a
+                        // href={item.meeting_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Join Interview
+                      </a>
+                    </TableCell>
+                  </TableRow>
+                ))
+            )}
           </TableBody>
         </Table>
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={data.length}
+          count={interviews?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

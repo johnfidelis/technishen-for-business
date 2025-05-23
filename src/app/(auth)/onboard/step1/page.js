@@ -267,14 +267,23 @@ const Page = ({ handleNext }) => {
           </FormControl>
         </Grid>
       </Grid>
-      <Button
-        variant="contained"
-        sx={{ mt: 3, backgroundColor: '#115093' }}
-        onClick={handleSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? 'Saving...' : 'Save & Continue'}
-      </Button>
+      <Box sx={{  textAlign: 'start', display: 'flex', gap: 2 }}>
+        <Button
+          variant="contained"
+           sx={{ mt: 3, backgroundColor: '#115093' }}
+           href='/login'
+        >
+          {'Back to Login'}
+        </Button>
+        <Button
+          variant="contained"
+          sx={{ mt: 3, backgroundColor: '#115093' }}
+          onClick={handleSubmit}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Saving...' : 'Save & Continue'}
+        </Button>
+      </Box>
     </Box>
   )
 }

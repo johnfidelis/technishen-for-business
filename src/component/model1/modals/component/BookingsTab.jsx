@@ -248,7 +248,7 @@ const BookingsTab = ({ customerId, ticketType }) => {
                   }}
                 >
                   {' '}
-                  {ticket?.assigned_to?.name || 'N/A'}
+                  {ticket?.assigned_to?.name || '-'}
                 </span>
               </Typography>
               <Typography

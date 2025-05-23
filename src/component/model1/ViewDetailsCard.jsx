@@ -250,7 +250,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
             }}
           >
             <MdLocationOn style={{ color: theme.primary_color || '#115093' }} />{' '}
-            Ticket Location: {ticket?.ticket_details?.address || 'N/A'}
+            Ticket Location: {ticket?.ticket_details?.address || '-'}
           </Typography>
           <Typography
             variant="body2"
@@ -262,7 +262,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
             }}
           >
             <MdPhone style={{ color: theme.primary_color || '#115093' }} />{' '}
-            Phone Number: {ticket?.customer_details?.phone_number || 'N/A'}
+            Phone Number: {ticket?.customer_details?.phone_number || '-'}
           </Typography>
           <Typography
             variant="body2"
@@ -274,7 +274,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
             }}
           >
             <MdMail style={{ color: theme.primary_color || '#115093' }} />{' '}
-            Email: {ticket?.customer_details?.email || 'N/A'}
+            Email: {ticket?.customer_details?.email || '-'}
           </Typography>
         </Box>
       )}
@@ -373,7 +373,7 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
                   }}
                 >
                   {' '}
-                  {ticket?.employee_details?.first_name || 'N/A'}
+                  {ticket?.employee_details?.first_name || '-'}
                   {ticket?.employee_details?.last_name || ''}
                 </span>
               </Typography>

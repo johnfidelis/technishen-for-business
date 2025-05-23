@@ -133,7 +133,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                 }}
               >
                 <MdLocationOn /> Ticket Address:{' '}
-                {ticket?.ticket_details?.address || 'N/A'}
+                {ticket?.ticket_details?.address || '-'}
               </Typography>
               <Typography
                 variant="body2"
@@ -147,7 +147,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                 }}
               >
                 <MdPhone /> Phone Number:{' '}
-                {ticket?.customer_details?.phone_number || 'N/A'}
+                {ticket?.customer_details?.phone_number || '-'}
               </Typography>
               <Typography
                 variant="body2"

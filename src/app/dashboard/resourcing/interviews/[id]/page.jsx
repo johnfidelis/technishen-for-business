@@ -44,7 +44,7 @@ const Page = ({ onBack }) => {
         </Typography>
         <hr />
       </Box>
-      <InteviewCall />
+      <InteviewCall id={id}/>
     </Box>
   )
 }

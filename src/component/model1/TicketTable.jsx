@@ -436,7 +436,7 @@ const TicketTable = ({ filterType, setNumber }) => {
                       <TableCell>
                         {ticket?.assigned_to_first_name
                           ? `${ticket?.assigned_to_first_name} ${ticket?.assigned_to_last_name}`
-                          : 'N/A'}
+                          : '-'}
                       </TableCell>
                       <TableCell>{ticket.service_name}</TableCell>
                       <TableCell>{ticket.sub_service_name}</TableCell>

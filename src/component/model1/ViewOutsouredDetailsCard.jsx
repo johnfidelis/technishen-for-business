@@ -200,7 +200,7 @@ const ViewOutsouredDetailsCard = ({ ticket, ticketId }) => {
             }}
           >
             <MdLocationOn style={{ color: theme.primary_color || '#115093' }} />{' '}
-            Ticket Location: {ticket?.ticket_details?.address || 'N/A'}
+            Ticket Location: {ticket?.ticket_details?.address || '-'}
           </Typography>
           <Typography
             variant="body2"
@@ -213,7 +213,7 @@ const ViewOutsouredDetailsCard = ({ ticket, ticketId }) => {
           >
             <MdPhone style={{ color: theme.primary_color || '#115093' }} />{' '}
             Phone Number:{' '}
-            {ticket?.assigned_employee_profile?.phone_number || 'N/A'}
+            {ticket?.assigned_employee_profile?.phone_number || '-'}
           </Typography>
           <Typography
             variant="body2"
@@ -225,7 +225,7 @@ const ViewOutsouredDetailsCard = ({ ticket, ticketId }) => {
             }}
           >
             <MdMail style={{ color: theme.primary_color || '#115093' }} />{' '}
-            Email: {ticket?.assigned_employee_profile?.email || 'N/A'}
+            Email: {ticket?.assigned_employee_profile?.email || '-'}
           </Typography>
         </Box>
       )}

@@ -27,7 +27,7 @@ const Page = () => {
             fontWeight: '500',
           }}
         >
-          Offer to Approve
+          Awaiting Start Date
         </Typography>
         <hr />
       </Box>
