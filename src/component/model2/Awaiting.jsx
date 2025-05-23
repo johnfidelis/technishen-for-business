@@ -46,8 +46,8 @@ export default function Page({ filter }) {
   // Filter only 'invited' interviews
   const interviews = data?.filter(
     (datum) =>
-      ['passed', 'failed'].includes(datum?.interview?.status?.toLowerCase()) &&
-      (datum?.job_offer_status === null || datum?.job_offer_status === 'sent'),
+      ['passed'].includes(datum?.interview?.status?.toLowerCase()) &&
+      datum?.job_offer_status === 'accepted',
   )
 
   const handleChangePage = (event, newPage) => {

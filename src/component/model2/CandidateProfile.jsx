@@ -47,6 +47,7 @@ import {
   GET_RESOURCING_ENDPOINTS,
   POST_ENDPOINTS,
 } from '@/constants/resouringEndpoints'
+import { toast } from 'react-toastify'
 
 // Styled Components
 const StyledBox = styled(Box)({
@@ -151,6 +152,9 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
   const [open, setOpen] = useState(false)
   const [contractFile, setContractFile] = useState(null)
   const [message, setMessage] = useState('')
+  const [effectiveDate, setEffectiveDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+
   // const [isLoading, setIsLoading] = useState(false)
 
   const { data: applicant, isLoading } = useFetchResourcingData(
@@ -171,31 +175,69 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
     setContractFile(file)
   }
 
+  // const handleSubmit = async () => {
+  //   if (!contractFile) {
+  //     toast.error('Please upload a PDF contract file.')
+  //     return
+  //   }
+
+  //   const formData = new FormData()
+  //   formData.append('contract_file', contractFile)
+  //   if (message) {
+  //     formData.append('message', message)
+  //   }
+
+  //   // setIsLoading(true)
+
+  //   sendJobOffer.mutate(formData, {
+  //     onSuccess: () => {
+  //       toast.success('Job Offer Sent!')
+  //       setContractFile(null)
+  //       setMessage('')
+  //       // setIsLoading(false)
+  //       onClose()
+  //     },
+  //     onError: (error) => {
+  //       toast.error(error?.response?.data?.detail || 'Something went wrong')
+  //       // setIsLoading(false)
+  //     },
+  //   })
+  // }
+
   const handleSubmit = async () => {
     if (!contractFile) {
       toast.error('Please upload a PDF contract file.')
       return
     }
 
+    if (!effectiveDate) {
+      toast.error('Please select an effective date.')
+      return
+    }
+
     const formData = new FormData()
     formData.append('contract_file', contractFile)
+    formData.append('effective_date', effectiveDate)
+
+    if (endDate) {
+      formData.append('end_date', endDate)
+    }
+
     if (message) {
       formData.append('message', message)
     }
-
-    // setIsLoading(true)
 
     sendJobOffer.mutate(formData, {
       onSuccess: () => {
         toast.success('Job Offer Sent!')
         setContractFile(null)
         setMessage('')
-        // setIsLoading(false)
+        setEffectiveDate('')
+        setEndDate('')
         onClose()
       },
       onError: (error) => {
         toast.error(error?.response?.data?.detail || 'Something went wrong')
-        // setIsLoading(false)
       },
     })
   }
@@ -421,23 +463,24 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
               </Box>
             )}
 
-            {applicant?.application_info?.interview_status == 'passed' && (
-              <Box sx={{ display: 'flex', gap: '1em', mt: 2 }}>
-                <Button
-                  variant="contained"
-                  onClick={() => setOpenOfferModal(true)}
-                  sx={{
-                    backgroundColor: theme.primary_color,
-                    color: '#fff',
-                    '&:hover': {
+            {applicant?.application_info?.interview_status == 'passed' &&
+              applicant?.application_info?.status == null && (
+                <Box sx={{ display: 'flex', gap: '1em', mt: 2 }}>
+                  <Button
+                    variant="contained"
+                    onClick={() => setOpenOfferModal(true)}
+                    sx={{
                       backgroundColor: theme.primary_color,
-                    },
-                  }}
-                >
-                  Send Job Offer
-                </Button>
-              </Box>
-            )}
+                      color: '#fff',
+                      '&:hover': {
+                        backgroundColor: theme.primary_color,
+                      },
+                    }}
+                  >
+                    Send Job Offer
+                  </Button>
+                </Box>
+              )}
           </Box>
         )}
       </Box>
@@ -1080,6 +1123,26 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
 
           {/* Form Section */}
           <Box sx={{ overflowY: 'auto', flexGrow: 1, p: '1em' }}>
+            <TextField
+              fullWidth
+              required
+              type="date"
+              label="Effective Date"
+              InputLabelProps={{ shrink: true }}
+              value={effectiveDate}
+              onChange={(e) => setEffectiveDate(e.target.value)}
+              sx={{ mb: 3 }}
+            />
+
+            <TextField
+              fullWidth
+              type="date"
+              label="End Date (Optional)"
+              InputLabelProps={{ shrink: true }}
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              sx={{ mb: 3 }}
+            />
             <TextField
               fullWidth
               type="file"

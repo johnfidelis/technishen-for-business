@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { Box, Typography } from '@mui/material'
-import OffersToApprove from '@/component/model2/OffersToApprove'
+import Awaiting from '@/component/model2/Awaiting'
 
 const Page = () => {
   return (
@@ -31,7 +31,7 @@ const Page = () => {
         </Typography>
         <hr />
       </Box>
-      <OffersToApprove filter={'Approved'} />
+      <Awaiting filter={'Approved'} />
     </Box>
   )
 }
