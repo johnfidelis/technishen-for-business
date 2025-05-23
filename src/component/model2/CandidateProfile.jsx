@@ -131,19 +131,19 @@ const SkillChip = styled(Chip)({
   },
 })
 
- const modalStyle = {
-    position: 'absolute',
-    right: '2px',
-    transform: 'translate(0, 0)',
-    width: '450px',
-    height: '100%',
-    backgroundColor: '#FFFFFF',
-    boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
-    color: 'black',
-    display: 'flex',
-    flexDirection: 'column',
-    fontFamily: 'Inter, sans-serif',
-  }
+const modalStyle = {
+  position: 'absolute',
+  right: '2px',
+  transform: 'translate(0, 0)',
+  width: '450px',
+  height: '100%',
+  backgroundColor: '#FFFFFF',
+  boxShadow: '0 0.25rem 0.5rem rgba(0, 0, 0, 0.1)',
+  color: 'black',
+  display: 'flex',
+  flexDirection: 'column',
+  fontFamily: 'Inter, sans-serif',
+}
 
 const CandidateProfile = ({ jobPostId, applicantId }) => {
   const [expanded, setExpanded] = useState(false)
@@ -1041,83 +1041,83 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
         applicationId={applicant?.application_info?.application_id}
       />
 
-    <Modal open={openOfferModal} onClose={() => setOpenOfferModal(false)}>
-      <Box sx={modalStyle}>
-        {/* Header */}
-        <Box
-          display="flex"
-          justifyContent="right"
-          alignItems="center"
-          sx={{ backgroundColor: theme.primary_color }}
-        >
-          <IconButton
-            onClick={() => setOpenOfferModal(false)}
-            sx={{ color: 'white', fontSize: '1em' }}
+      <Modal open={openOfferModal} onClose={() => setOpenOfferModal(false)}>
+        <Box sx={modalStyle}>
+          {/* Header */}
+          <Box
+            display="flex"
+            justifyContent="right"
+            alignItems="center"
+            sx={{ backgroundColor: theme.primary_color }}
           >
-            Close <CloseIcon />
-          </IconButton>
-        </Box>
+            <IconButton
+              onClick={() => setOpenOfferModal(false)}
+              sx={{ color: 'white', fontSize: '1em' }}
+            >
+              Close <CloseIcon />
+            </IconButton>
+          </Box>
 
-        {/* Profile Info */}
-        <Box sx={{ p: '1em' }}>
-          <Box display="flex" alignItems="center" gap="1em">
-            <Avatar
-              sx={{ width: '3.75em', height: '3.75em' }}
-              src={applicant?.applicant_profile?.profile_picture}
+          {/* Profile Info */}
+          <Box sx={{ p: '1em' }}>
+            <Box display="flex" alignItems="center" gap="1em">
+              <Avatar
+                sx={{ width: '3.75em', height: '3.75em' }}
+                src={applicant?.applicant_profile?.profile_picture}
+              />
+              <Box>
+                <Typography sx={{ fontWeight: 400, fontSize: '1.125em' }}>
+                  {applicant?.applicant_profile?.first_name +
+                    ' ' +
+                    applicant?.applicant_profile?.last_name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Send job offer with optional message and contract file
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Form Section */}
+          <Box sx={{ overflowY: 'auto', flexGrow: 1, p: '1em' }}>
+            <TextField
+              fullWidth
+              type="file"
+              onChange={handleFileChange}
+              inputProps={{ accept: 'application/pdf' }}
+              sx={{ mb: 3 }}
             />
-            <Box>
-              <Typography sx={{ fontWeight: 400, fontSize: '1.125em' }}>
-                {applicant?.applicant_profile?.first_name +
-                  ' ' +
-                  applicant?.applicant_profile?.last_name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Send job offer with optional message and contract file
-              </Typography>
+            <TextField
+              fullWidth
+              multiline
+              minRows={4}
+              label="Optional Message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              sx={{ mb: 3 }}
+            />
+
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button
+                onClick={handleSubmit}
+                variant="contained"
+                disabled={isLoading}
+                sx={{
+                  backgroundColor: theme?.primary_color,
+                  color: '#fff',
+                  '&:hover': { backgroundColor: theme?.primary_color },
+                }}
+              >
+                {isLoading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  'Send Offer'
+                )}
+              </Button>
             </Box>
           </Box>
         </Box>
-
-        {/* Form Section */}
-        <Box sx={{ overflowY: 'auto', flexGrow: 1, p: '1em' }}>
-          <TextField
-            fullWidth
-            type="file"
-            onChange={handleFileChange}
-            inputProps={{ accept: 'application/pdf' }}
-            sx={{ mb: 3 }}
-          />
-          <TextField
-            fullWidth
-            multiline
-            minRows={4}
-            label="Optional Message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            sx={{ mb: 3 }}
-          />
-
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
-              onClick={handleSubmit}
-              variant="contained"
-              disabled={isLoading}
-              sx={{
-                backgroundColor: theme?.primary_color,
-                color: '#fff',
-                '&:hover': { backgroundColor: theme?.primary_color },
-              }}
-            >
-              {isLoading ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                'Send Offer'
-              )}
-            </Button>
-          </Box>
-        </Box>
-      </Box>
-    </Modal>
+      </Modal>
     </Box>
   )
 }

@@ -22,18 +22,18 @@
 //   }
 
 //    const handleSubmit = async () => {
-     
+
 //       const payload = {
 //        remarks:"" , //  (Write the remark on the applicant here)
 //        status:" passed or failed."
 
 //       }
-  
+
 //       remarkInterview.mutate(payload, {
 //         onSuccess: () => {
 //           toast.success('Updated successfully!')
 //           // resetForm()
-      
+
 //         },
 //         onError: (error) => {
 //           toast.error(error?.response?.data?.detail || 'Something went wrong')
@@ -102,7 +102,6 @@
 
 // export default InteviewCall
 
-
 import {
   Box,
   Typography,
@@ -126,7 +125,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 
 const InterviewCall = ({ id }) => {
   const router = useRouter()
- const { theme } = useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext)
   const [openModal, setOpenModal] = useState(false)
   const [remarks, setRemarks] = useState('')
   const [status, setStatus] = useState('')

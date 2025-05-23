@@ -7,7 +7,6 @@ import { ThemeContext } from '@/context/ThemeContext'
 import CandidateProfile from '@/component/model2/CandidateProfile'
 
 const Page = ({ onBack }) => {
-  
   const { theme } = useContext(ThemeContext)
   const [number, setNumber] = useState(0)
   const router = useRouter()
@@ -29,7 +28,6 @@ const Page = ({ onBack }) => {
   const handleCreateSubCategory = () => {
     setOpenModal(true)
   }
-
 
   return (
     <Box

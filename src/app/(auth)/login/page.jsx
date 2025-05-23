@@ -63,7 +63,7 @@ export default function LoginPage() {
           secure: true,
           sameSite: 'Strict',
         })
-         cookies.set('your-id', user.profile_id, {
+        cookies.set('your-id', user.profile_id, {
           path: '/',
           secure: true,
           sameSite: 'Strict',

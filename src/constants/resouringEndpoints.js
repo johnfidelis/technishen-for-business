@@ -6,7 +6,8 @@ export const POST_ENDPOINTS = {
   POST_A_JOB: `/resourcing/post-job/${getBusinessId()}/`,
   SCHEDULE_INTERVIEW: (jobId) =>
     `/resourcing/schedule-interview/${jobId}/${getBusinessId()}/`,
-  SEND_JOB_OFFER: (applicationId) => `/resourcing/send-job-offer/${applicationId}/`,
+  SEND_JOB_OFFER: (applicationId) =>
+    `/resourcing/send-job-offer/${applicationId}/`,
 }
 export const PATCH_ENDPOINTS = {
   UPDATE_A_JOB: (postId) =>

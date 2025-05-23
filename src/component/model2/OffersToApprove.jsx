@@ -114,9 +114,10 @@ export default function Page({ filter }) {
   }
 
   const handleRowClick = (item) => {
-    router.push(`/dashboard/resourcing/posts/open/${item.job_post_id}/${item.applicant.id}`)
+    router.push(
+      `/dashboard/resourcing/posts/open/${item.job_post_id}/${item.applicant.id}`,
+    )
   }
-
 
   return (
     <Box>
@@ -216,7 +217,6 @@ export default function Page({ filter }) {
           <TableHead>
             <TableRow>
               {[
-          
                 'Job Title',
                 'Candidates',
                 'Effective Date',
@@ -236,94 +236,93 @@ export default function Page({ filter }) {
               ))}
             </TableRow>
           </TableHead>
-        <TableBody>
-  {isLoading ? (
-    <TableRow>
-      <TableCell colSpan={5} align="center">
-      
-        <Skeleton width={"100%"} height={40}/>
-      </TableCell>
-    </TableRow>
-  ) : (
-    interviews
-      ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      ?.map((item) => {
-        const fullName = `${item?.applicant?.first_name || ''} ${item?.applicant?.last_name || ''}`
-        const date = new Date(item?.scheduled_datetime).toLocaleString()
-        const endDate = new Date(item?.updated_at).toLocaleString()
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={5} align="center">
+                  <Skeleton width={'100%'} height={40} />
+                </TableCell>
+              </TableRow>
+            ) : (
+              interviews
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.map((item) => {
+                  const fullName = `${item?.applicant?.first_name || ''} ${item?.applicant?.last_name || ''}`
+                  const date = new Date(
+                    item?.scheduled_datetime,
+                  ).toLocaleString()
+                  const endDate = new Date(item?.updated_at).toLocaleString()
 
-        return (
-          <TableRow
-            key={item.id}
-            onClick={() => handleRowClick(item)}
-            sx={{
-              cursor: 'pointer',
-              '&:hover': { backgroundColor: '#f5f5f5' },
-            }}
-          >
-            <TableCell
-              sx={{
-                fontSize: '0.75em',
-                fontWeight: 500,
-                fontFamily: 'Inter, sans-serif',
-              }}
-            >
-              {item.job_post_title}
-            </TableCell>
-            <TableCell
-              sx={{
-                fontSize: '0.75em',
-                fontWeight: 500,
-                fontFamily: 'Inter, sans-serif',
-              }}
-            >
-              {fullName}
-            </TableCell>
-            <TableCell
-              sx={{
-                fontSize: '0.75em',
-                fontWeight: 500,
-                fontFamily: 'Inter, sans-serif',
-              }}
-            >
-              {date}
-            </TableCell>
-            <TableCell
-              sx={{
-                fontSize: '0.75em',
-                fontWeight: 500,
-                fontFamily: 'Inter, sans-serif',
-              }}
-            >
-              {endDate}
-            </TableCell>
-            <TableCell
-              sx={{
-                fontSize: '0.75em',
-                fontWeight: 500,
-                fontFamily: 'Inter, sans-serif',
-                color: '#FFC107',
-                textTransform: 'capitalize',
-              }}
-            >
-              {item.interview?.status}
-            </TableCell>
-          </TableRow>
-        )
-      })
-  )}
+                  return (
+                    <TableRow
+                      key={item.id}
+                      onClick={() => handleRowClick(item)}
+                      sx={{
+                        cursor: 'pointer',
+                        '&:hover': { backgroundColor: '#f5f5f5' },
+                      }}
+                    >
+                      <TableCell
+                        sx={{
+                          fontSize: '0.75em',
+                          fontWeight: 500,
+                          fontFamily: 'Inter, sans-serif',
+                        }}
+                      >
+                        {item.job_post_title}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          fontSize: '0.75em',
+                          fontWeight: 500,
+                          fontFamily: 'Inter, sans-serif',
+                        }}
+                      >
+                        {fullName}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          fontSize: '0.75em',
+                          fontWeight: 500,
+                          fontFamily: 'Inter, sans-serif',
+                        }}
+                      >
+                        {date}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          fontSize: '0.75em',
+                          fontWeight: 500,
+                          fontFamily: 'Inter, sans-serif',
+                        }}
+                      >
+                        {endDate}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          fontSize: '0.75em',
+                          fontWeight: 500,
+                          fontFamily: 'Inter, sans-serif',
+                          color: '#FFC107',
+                          textTransform: 'capitalize',
+                        }}
+                      >
+                        {item.interview?.status}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
+            )}
 
-  {!isLoading &&
-    interviews?.length === 0 && (
-      <TableRow>
-        <TableCell colSpan={5} align="center">
-          No invited interviews found.
-          <SentimentDissatisfied/>
-        </TableCell>
-      </TableRow>
-    )}
-</TableBody>
-
+            {!isLoading && interviews?.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={5} align="center">
+                  No invited interviews found.
+                  <SentimentDissatisfied />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}

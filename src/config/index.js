@@ -174,8 +174,6 @@
 // // Attach auth headers to resourcingAPI with userID
 // attachAuthHeader(resourcingAPI, true)
 
-
-
 // utils/apiClients.ts
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
@@ -225,7 +223,7 @@ const attachAuthHeader = (instance, includeUserID) => {
         }
       }
       return Promise.reject(error?.response || error)
-    }
+    },
   )
 }
 
