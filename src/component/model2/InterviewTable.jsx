@@ -28,59 +28,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
 import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
 import { SentimentDissatisfied } from '@mui/icons-material'
-
-// Dummy data for table
-const initialData = [
-  {
-    id: 1,
-    title: 'Item One',
-    candidate: 'John Fidelis',
-    date: '2025-04-10',
-    status: 'Active',
-  },
-  {
-    id: 2,
-    title: 'Item Two',
-    candidate: 'Jame Brown',
-    date: '2025-04-09',
-    status: 'Inactive',
-  },
-  {
-    id: 3,
-    title: 'Item Three',
-    candidate: ' Anna Smith',
-    date: '2025-04-08',
-    status: 'Active',
-  },
-  {
-    id: 4,
-    title: 'Item Four',
-    candidate: 'John Doe',
-    date: '2025-04-07',
-    status: 'Inactive',
-  },
-  {
-    id: 5,
-    title: 'Item Five',
-    candidate: 'Jane Doe',
-    date: '2025-04-06',
-    status: 'Active',
-  },
-  {
-    id: 6,
-    title: 'Item Six',
-    candidate: 'Mark Smith',
-    date: '2025-04-05',
-    status: 'Inactive',
-  },
-  {
-    id: 7,
-    title: 'Item Seven',
-    candidate: 'Sarah Johnson',
-    date: '2025-04-04',
-    status: 'Active',
-  },
-]
+import DateRangeInput from '../model1/DateRangeInput'
 
 export default function Page() {
   const router = useRouter()
@@ -91,6 +39,17 @@ export default function Page() {
   const { data, isLoading } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_INTERVIEWS,
   )
+
+  const [searchText, setSearchText] = useState('')
+  const [sortOption, setSortOption] = useState('Newest')
+  const [statusFilter, setStatusFilter] = useState('All')
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+
+  const handleDateChange = (start, end) => {
+    setStartDate(start)
+    setEndDate(end)
+  }
 
   // Filter only 'invited' interviews
   const interviews = data?.filter(
@@ -111,6 +70,39 @@ export default function Page() {
       `/dashboard/resourcing/interviews/${item.interview.application}`,
     )
   }
+
+  const filteredInterviews = data
+    ?.filter((datum) => datum?.interview?.status?.toLowerCase() === 'invited')
+    ?.filter((datum) => {
+      const nameMatch =
+        `${datum.applicant?.first_name} ${datum.applicant?.last_name}`
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      const jobMatch = datum.job_post_title
+        ?.toLowerCase()
+        .includes(searchText.toLowerCase())
+      return nameMatch || jobMatch
+    })
+    ?.filter((datum) => {
+      if (statusFilter === 'All') return true
+      return (
+        datum.interview?.interview_status?.toLowerCase() ===
+        statusFilter.toLowerCase()
+      )
+    })
+    ?.filter((datum) => {
+      if (!startDate || !endDate) return true
+      const interviewDate = new Date(datum.interview?.scheduled_datetime)
+      return (
+        interviewDate >= new Date(startDate) &&
+        interviewDate <= new Date(endDate)
+      )
+    })
+    ?.sort((a, b) => {
+      const aDate = new Date(a.interview?.scheduled_datetime)
+      const bDate = new Date(b.interview?.scheduled_datetime)
+      return sortOption === 'Newest' ? bDate - aDate : aDate - bDate
+    })
 
   return (
     <Box>
@@ -175,28 +167,36 @@ export default function Page() {
         <TextField
           label="Search"
           variant="outlined"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
           sx={{ flex: 1, minWidth: '200px' }}
         />
 
         <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
           <InputLabel>Sort</InputLabel>
-          <Select defaultValue="Newest" label="Sort">
+          <Select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            label="Sort"
+          >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
           </Select>
         </FormControl>
 
-        <TextField
-          label="Search by dates"
-          variant="outlined"
-          value="Date Range"
-          sx={{ flex: 1, minWidth: '250px' }}
-          InputProps={{ readOnly: true }}
+        <DateRangeInput
+          startDate={startDate}
+          endDate={endDate}
+          onDateChange={handleDateChange}
         />
 
         <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
           <InputLabel>Status</InputLabel>
-          <Select defaultValue="All" label="Status">
+          <Select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            label="Status"
+          >
             <MenuItem value="All">All</MenuItem>
             <MenuItem value="Active">Active</MenuItem>
             <MenuItem value="Inactive">Inactive</MenuItem>
@@ -240,7 +240,7 @@ export default function Page() {
                 </TableCell>
               </TableRow>
             ) : (
-              interviews
+              filteredInterviews
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((item) => (
                   <TableRow
@@ -287,7 +287,7 @@ export default function Page() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={interviews?.length}
+          count={filteredInterviews?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -298,13 +298,6 @@ export default function Page() {
           }}
         />
       </TableContainer>
-
-      {/* Action Button */}
-      {/* <Box sx={{ textAlign: 'right', mt: 3 }}>
-        <Button variant="contained" color="primary">
-          Add New Item
-        </Button>
-      </Box> */}
     </Box>
   )
 }

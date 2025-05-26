@@ -28,6 +28,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
 import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
 import { SentimentDissatisfied } from '@mui/icons-material'
+import DateRangeInput from '../model1/DateRangeInput'
 
 export default function Page({ filter }) {
   const router = useRouter()
@@ -35,6 +36,18 @@ export default function Page({ filter }) {
   // const [data, setData] = useState(initialData)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+
+  const [searchTerm, setSearchTerm] = useState('')
+  const [sortOrder, setSortOrder] = useState('Newest')
+  const [statusFilter, setStatusFilter] = useState('All')
+
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+
+  const handleDateChange = (start, end) => {
+    setStartDate(start)
+    setEndDate(end)
+  }
 
   const { data, isLoading: loadPost } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_A_POST,
@@ -52,6 +65,33 @@ export default function Page({ filter }) {
   const handleRowClick = (item) => {
     router.push(`/dashboard/resourcing/posts/open/${item.id}`)
   }
+
+  const filteredData = (data || [])
+    .filter((item) => {
+      const isApproved = item?.is_approved === true
+      const isFilter = item?.status === filter
+      const matchesSearch = item?.job_title
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase())
+      const matchesStatus =
+        statusFilter === 'All'
+          ? true
+          : item.status === statusFilter.toLowerCase()
+
+      const jobDate = new Date(item.created_at || item.start_date)
+      const matchesDate =
+        (!startDate || jobDate >= new Date(startDate)) &&
+        (!endDate || jobDate <= new Date(endDate))
+
+      return (
+        isApproved && isFilter && matchesSearch && matchesStatus && matchesDate
+      )
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.created_at || a.start_date)
+      const dateB = new Date(b.created_at || b.start_date)
+      return sortOrder === 'Newest' ? dateB - dateA : dateA - dateB
+    })
 
   return (
     <Box>
@@ -117,27 +157,35 @@ export default function Page({ filter }) {
           label="Search"
           variant="outlined"
           sx={{ flex: 1, minWidth: '200px' }}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
 
         <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
           <InputLabel>Sort</InputLabel>
-          <Select defaultValue="Newest" label="Sort">
+          <Select
+            value={sortOrder}
+            label="Sort"
+            onChange={(e) => setSortOrder(e.target.value)}
+          >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
           </Select>
         </FormControl>
 
-        <TextField
-          label="Search by dates"
-          variant="outlined"
-          value="Date Range"
-          sx={{ flex: 1, minWidth: '250px' }}
-          InputProps={{ readOnly: true }}
+        <DateRangeInput
+          startDate={startDate}
+          endDate={endDate}
+          onDateChange={handleDateChange}
         />
 
         <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
           <InputLabel>Status</InputLabel>
-          <Select defaultValue="All" label="Status">
+          <Select
+            value={statusFilter}
+            label="Status"
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
             <MenuItem value="All">All</MenuItem>
             <MenuItem value="Active">Active</MenuItem>
             <MenuItem value="Inactive">Inactive</MenuItem>
@@ -192,9 +240,7 @@ export default function Page({ filter }) {
                 </TableRow>
               ))
             ) : // Render actual data when isLoading is false
-            data?.filter(
-                (item) => item.status === filter && item.is_approved === true,
-              )?.length === 0 ? (
+            filteredData.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={10} // Adjust column span based on the number of columns
@@ -222,10 +268,7 @@ export default function Page({ filter }) {
                 </TableCell>
               </TableRow>
             ) : (
-              data
-                ?.filter(
-                  (item) => item.status === filter && item.is_approved === true,
-                )
+              filteredData
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 ?.map((item) => (
                   <TableRow
@@ -301,11 +344,7 @@ export default function Page({ filter }) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={
-            data?.filter(
-              (item) => item.status === filter && item.is_approved === true,
-            )?.length
-          }
+          count={filteredData?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

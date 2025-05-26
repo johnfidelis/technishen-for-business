@@ -28,6 +28,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
 import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
 import { SentimentDissatisfied } from '@mui/icons-material'
+import DateRangeInput from '../model1/DateRangeInput'
 
 export default function Page({ filter }) {
   const router = useRouter()
@@ -36,11 +37,44 @@ export default function Page({ filter }) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortOrder, setSortOrder] = useState('Newest')
+  const [status, setStatus] = useState('All')
+
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+
+  const handleDateChange = (start, end) => {
+    setStartDate(start)
+    setEndDate(end)
+  }
+
   const { data, isLoading: loadPost } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_A_POST,
   )
-  const { data: log, isLoading: loadLog } = useFetchResourcingData(
-    GET_RESOURCING_ENDPOINTS.GET_AUDIT_LOG,
+  const filteredData = data
+    ?.filter((item) => {
+      const matchesStatus = status === 'All' || item.status === status
+      const matchesSearch =
+        item.job_title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.company?.toLowerCase().includes(searchQuery.toLowerCase())
+      const isUnapproved = item.is_approved === false
+
+      const jobDate = new Date(item.created_at || item.start_date)
+      const matchesDate =
+        (!startDate || jobDate >= new Date(startDate)) &&
+        (!endDate || jobDate <= new Date(endDate))
+      return matchesStatus && matchesSearch && isUnapproved & matchesDate
+    })
+    ?.sort((a, b) => {
+      const dateA = new Date(a.created_at)
+      const dateB = new Date(b.created_at)
+      return sortOrder === 'Newest' ? dateB - dateA : dateA - dateB
+    })
+
+  const paginatedData = filteredData?.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage,
   )
 
   const handleChangePage = (event, newPage) => {
@@ -120,30 +154,40 @@ export default function Page({ filter }) {
           label="Search"
           variant="outlined"
           sx={{ flex: 1, minWidth: '200px' }}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
 
         <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
           <InputLabel>Sort</InputLabel>
-          <Select defaultValue="Newest" label="Sort">
+          <Select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            label="Sort"
+          >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
           </Select>
         </FormControl>
 
-        <TextField
-          label="Search by dates"
-          variant="outlined"
-          value="Date Range"
-          sx={{ flex: 1, minWidth: '250px' }}
-          InputProps={{ readOnly: true }}
-        />
+        <Box sx={{ flex: 1, minWidth: '250px' }}>
+          <DateRangeInput
+            startDate={startDate}
+            endDate={endDate}
+            onDateChange={handleDateChange}
+          />
+        </Box>
 
         <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
           <InputLabel>Status</InputLabel>
-          <Select defaultValue="All" label="Status">
+          <Select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            label="Status"
+          >
             <MenuItem value="All">All</MenuItem>
-            <MenuItem value="Active">Active</MenuItem>
-            <MenuItem value="Inactive">Inactive</MenuItem>
+            {/* <MenuItem value="Open">Open</MenuItem>
+            <MenuItem value="Closed">Closed</MenuItem> */}
           </Select>
         </FormControl>
       </Box>
@@ -217,7 +261,7 @@ export default function Page({ filter }) {
                 </TableRow>
               ))
             ) : // Render actual data when isLoading is false
-            data?.filter((item) => item.is_approved === false)?.length === 0 ? (
+            paginatedData.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={10} // Adjust column span based on the number of columns
@@ -246,8 +290,7 @@ export default function Page({ filter }) {
               </TableRow>
             ) : (
               // If data exists, map through the filtered items
-              data
-                ?.filter((item) => item.is_approved === false)
+              paginatedData
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 ?.map((item) => (
                   <TableRow
@@ -415,7 +458,7 @@ export default function Page({ filter }) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={data?.filter((item) => item.is_approved === false)?.length}
+          count={paginatedData?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

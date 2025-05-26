@@ -25,10 +25,17 @@ import InboxIcon from '@mui/icons-material/Inbox'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ThemeContext } from '@/context/ThemeContext'
-import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
-import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
+import {
+  GET_RESOURCING_ENDPOINTS,
+  PATCH_ENDPOINTS,
+} from '@/constants/resouringEndpoints'
+import {
+  useFetchResourcingData,
+  usePatchResourcingData,
+} from '@/hooks/useResourcingApiService'
 import { formatDateTime } from '../utils/formatDateTime'
 import { SentimentDissatisfied } from '@mui/icons-material'
+import { toast } from 'react-toastify'
 
 export default function Page({ id }) {
   const router = useRouter()
@@ -40,6 +47,33 @@ export default function Page({ id }) {
   const { data: applicant, isLoading } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_A_POST_APPLICANT(id),
   )
+
+  const [closeLoading, setCloseLoading] = useState(false)
+
+  const closeJob = usePatchResourcingData(
+    PATCH_ENDPOINTS.CLOSE_JOB(id),
+    'closeJob',
+  )
+
+  const handleSubmit = async () => {
+    const payload = {
+      status: 'close',
+    }
+    setCloseLoading(true)
+    closeJob.mutate(payload, {
+      onSuccess: () => {
+        toast.success('Job closed successfully!')
+        setOpenModal(false)
+        setRemarks('')
+        setStatus('')
+        setCloseLoading(false)
+      },
+      onError: (error) => {
+        setCloseLoading(false)
+        toast.error(error?.response?.data?.detail || 'Something went wrong')
+      },
+    })
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -311,8 +345,12 @@ export default function Page({ id }) {
             backgroundColor: theme.primary_color || '#115093',
             color: '#fff',
           }}
+          onClick={() => {
+            handleSubmit()
+          }}
+          disabled={closeLoading}
         >
-          Add New Item
+          Close Post
         </Button>
       </Box>
     </Box>

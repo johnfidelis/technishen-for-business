@@ -16,6 +16,8 @@ export const PATCH_ENDPOINTS = {
     `/resourcing/update-interview-result/${applicationId}/`,
   SCHEDULE_INTERVIEW: (jobId) =>
     `/resourcing/schedule-interview/${jobId}/${getBusinessId()}/`,
+  CLOSE_JOB: (jobId) =>
+    `/resourcing/close-job-post/${jobId}/${getBusinessId()}/`,
 }
 export const GET_RESOURCING_ENDPOINTS = {
   GET_A_SKILL: `/resourcing/skills/`,
