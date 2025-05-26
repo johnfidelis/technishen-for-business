@@ -46,8 +46,9 @@ export default function Page({ filter }) {
   // Filter only 'invited' interviews
   const interviews = data?.filter(
     (datum) =>
-      ['passed'].includes(datum?.interview?.status?.toLowerCase()) &&
-      datum?.job_offer_status === 'accepted',
+      ['passed', 'confirmed'].includes(
+        datum?.interview?.status?.toLowerCase(),
+      ) && datum?.job_offer_status === 'accepted',
   )
 
   const handleChangePage = (event, newPage) => {
@@ -270,7 +271,8 @@ export default function Page({ filter }) {
                           textTransform: 'capitalize',
                         }}
                       >
-                        {item.interview?.status}
+                        {/* {item.interview?.status} */}
+                        Passed
                       </TableCell>
                     </TableRow>
                   )

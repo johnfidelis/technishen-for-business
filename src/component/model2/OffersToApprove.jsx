@@ -73,7 +73,7 @@ export default function Page({ filter }) {
     )
   }
 
-  const filteredData = data
+  const filteredData = interviews
     ?.filter((item) => {
       // Status filter
       if (
@@ -243,7 +243,7 @@ export default function Page({ filter }) {
               {[
                 'Job Title',
                 'Candidates',
-                'Job Post Date',
+                'Date Applied',
                 'Interview Date',
                 'Offer',
                 'Status',
@@ -355,7 +355,7 @@ export default function Page({ filter }) {
                 })
             )}
 
-            {!isLoading && interviews?.length === 0 && (
+            {!isLoading && filteredData?.length === 0 && (
               <TableRow>
                 <TableCell colSpan={5} align="center">
                   No invited interviews found.
