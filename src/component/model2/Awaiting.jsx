@@ -28,6 +28,7 @@ import { ThemeContext } from '@/context/ThemeContext'
 import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
 import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
 import { SentimentDissatisfied } from '@mui/icons-material'
+import DateRangeInput from '../model1/DateRangeInput'
 
 export default function Page({ filter }) {
   const router = useRouter()
@@ -35,6 +36,18 @@ export default function Page({ filter }) {
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+
+  const [searchText, setSearchText] = useState('')
+  const [sortOption, setSortOption] = useState('Newest')
+  const [statusFilter, setStatusFilter] = useState('All')
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+
+  const handleDateChange = (start, end) => {
+    setStartDate(start)
+    setEndDate(end)
+  }
+
   const { data, isLoading } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_INTERVIEWS,
   )
@@ -43,6 +56,7 @@ export default function Page({ filter }) {
   // const interviews = data?.filter(
   //   (datum) => datum?.interview?.status?.toLowerCase() === 'passed',
   // )
+
   // Filter only 'invited' interviews
   const interviews = data?.filter(
     (datum) =>
@@ -65,6 +79,47 @@ export default function Page({ filter }) {
       `/dashboard/resourcing/posts/open/${item.job_post_id}/${item.applicant.id}`,
     )
   }
+
+  const filteredData = interviews
+    ?.filter((item) => {
+      // Status filter
+      if (
+        statusFilter !== 'All' &&
+        item?.interview?.interview_status?.toLowerCase() !==
+          statusFilter.toLowerCase()
+      ) {
+        return false
+      }
+
+      // Search filter (name or job title)
+      const name =
+        `${item.applicant?.first_name} ${item.applicant?.last_name}`.toLowerCase()
+      const job = item.job_post_title?.toLowerCase()
+      if (
+        searchText &&
+        !name.includes(searchText.toLowerCase()) &&
+        !job.includes(searchText.toLowerCase())
+      ) {
+        return false
+      }
+
+      // Date range filter
+      if (startDate && endDate) {
+        const interviewDate = new Date(item.interview?.scheduled_datetime)
+        const start = new Date(startDate)
+        const end = new Date(endDate)
+        if (interviewDate < start || interviewDate > end) {
+          return false
+        }
+      }
+
+      return true
+    })
+    ?.sort((a, b) => {
+      const dateA = new Date(a.interview?.scheduled_datetime)
+      const dateB = new Date(b.interview?.scheduled_datetime)
+      return sortOption === 'Newest' ? dateB - dateA : dateA - dateB
+    })
 
   return (
     <Box>
@@ -129,31 +184,58 @@ export default function Page({ filter }) {
         <TextField
           label="Search"
           variant="outlined"
-          sx={{ flex: 1, minWidth: '200px' }}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          sx={{
+            flex: 1,
+            minWidth: '200px',
+            fontFamily: 'Inter, sans-serif',
+            '& .MuiInputBase-root': { borderRadius: 1 },
+          }}
         />
 
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+        <FormControl
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: '150px',
+            fontFamily: 'Inter, sans-serif',
+            '& .MuiOutlinedInput-root': { borderRadius: 1 },
+          }}
+        >
           <InputLabel>Sort</InputLabel>
-          <Select defaultValue="Newest" label="Sort">
+          <Select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            label="Sort"
+          >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
           </Select>
         </FormControl>
 
-        <TextField
-          label="Search by dates"
-          variant="outlined"
-          value="Date Range"
-          sx={{ flex: 1, minWidth: '250px' }}
-          InputProps={{ readOnly: true }}
+        <DateRangeInput
+          startDate={startDate}
+          endDate={endDate}
+          onDateChange={handleDateChange}
         />
 
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+        <FormControl
+          variant="outlined"
+          sx={{
+            flex: 1,
+            minWidth: '150px',
+            fontFamily: 'Inter, sans-serif',
+            '& .MuiOutlinedInput-root': { borderRadius: 1 },
+          }}
+        >
           <InputLabel>Status</InputLabel>
-          <Select defaultValue="All" label="Status">
+          <Select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            label="Status"
+          >
             <MenuItem value="All">All</MenuItem>
-            <MenuItem value="Pending">Pending</MenuItem>
-            <MenuItem value="Approved">Approved</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -192,7 +274,7 @@ export default function Page({ filter }) {
                 </TableCell>
               </TableRow>
             ) : (
-              interviews
+              filteredData
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 ?.map((item) => {
                   const fullName = `${item?.applicant?.first_name || ''} ${item?.applicant?.last_name || ''}`
@@ -267,7 +349,7 @@ export default function Page({ filter }) {
                           fontSize: '0.75em',
                           fontWeight: 500,
                           fontFamily: 'Inter, sans-serif',
-                          color: '#FFC107',
+                          color: 'goldenrod',
                           textTransform: 'capitalize',
                         }}
                       >
@@ -279,7 +361,7 @@ export default function Page({ filter }) {
                 })
             )}
 
-            {!isLoading && interviews?.length === 0 && (
+            {!isLoading && filteredData?.length === 0 && (
               <TableRow>
                 <TableCell colSpan={5} align="center">
                   No invited interviews found.
@@ -292,7 +374,7 @@ export default function Page({ filter }) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={interviews?.length || 0}
+          count={filteredData?.length || 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

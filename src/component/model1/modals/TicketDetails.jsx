@@ -416,7 +416,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                               backgroundColor: isCompleted
                                 ? '#4CAF50' // Green for completed steps
                                 : isActive
-                                  ? '#FFC107' // Yellow for current step
+                                  ? 'goldenrod' // Yellow for current step
                                   : '#E0E0E0', // Grey for remaining steps
                             },
                           }}
@@ -427,7 +427,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                               color: isCompleted
                                 ? '#4CAF50' // Green for completed
                                 : isActive
-                                  ? '#FFC107' // Yellow for current
+                                  ? 'goldenrod' // Yellow for current
                                   : '#E0E0E0', // Grey for remaining
                               fontSize: '1.5em',
                             }}

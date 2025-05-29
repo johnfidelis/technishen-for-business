@@ -27,6 +27,7 @@ import { toast } from 'react-toastify'
 
 const UserProfile = ({ open, onClose, user, applicationId }) => {
   const { theme } = useContext(ThemeContext)
+  const [reloadKey, setReloadKey] = useState(Date.now())
   const sheduleInterview = useCreateResourcingData(
     POST_ENDPOINTS.SCHEDULE_INTERVIEW(applicationId),
     'sheduleInterview',
@@ -95,7 +96,7 @@ const UserProfile = ({ open, onClose, user, applicationId }) => {
     sheduleInterview.mutate(payload, {
       onSuccess: () => {
         toast.success('Scheduled successfully!')
-        resetForm()
+        setReloadKey(Date.now())
         setIsLoading(false)
       },
       onError: (error) => {
@@ -205,6 +206,7 @@ const UserProfile = ({ open, onClose, user, applicationId }) => {
             {interviewMode === 'in-person' && (
               <Box sx={{ mb: 3 }}>
                 <AddressAutocomplete
+                  key={reloadKey}
                   label="Interview Location"
                   value={location}
                   handleAddressUpdate={handleAddressUpdate}
@@ -231,19 +233,6 @@ const UserProfile = ({ open, onClose, user, applicationId }) => {
                 justifyContent: 'flex-end',
               }}
             >
-              {/* <Button
-                variant="contained"
-                onClick={handleSubmit}
-                sx={{
-                  backgroundColor: theme.primary_color,
-                  color: '#fff',
-                  '&:hover': {
-                    backgroundColor: theme.primary_color,
-                  },
-                }}
-              >
-                Schedule & Notify
-              </Button> */}
               <Button
                 variant="contained"
                 onClick={handleSubmit}

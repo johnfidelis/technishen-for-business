@@ -47,7 +47,7 @@ const Page = () => {
             fontWeight: '500',
           }}
         >
-          Update Job Post
+          Edit Job Post
           <Tooltip
             title="This page allows for creating and managing all service catalogues for customers, as well as managing fulfillers in the service catalogue."
             arrow

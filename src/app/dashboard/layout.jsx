@@ -23,6 +23,11 @@ export default function Layout({ children }) {
     if (!isLoading) {
       const hasBusinesses = data?.businesses?.length > 0
 
+      // if (data?.businesses == null || data?.businesses == undefined) {
+      //   router.replace('/login')
+      // } else if (!hasBusinesses && data?.businesses !== null || data?.businesses !== undefined) {
+      //   router.replace('/onboard')
+      // }
       if (!hasBusinesses) {
         router.replace('/onboard')
       }

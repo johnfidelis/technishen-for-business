@@ -352,7 +352,7 @@ export default function Page({ filteJobCompleted }) {
                         fontFamily: 'Inter, sans-serif',
                         color:
                           item.status === 'Pending'
-                            ? '#FFC107'
+                            ? 'goldenrod'
                             : item.status === 'Approved'
                               ? '#1BA847'
                               : 'inherit',

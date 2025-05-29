@@ -312,7 +312,7 @@ export default function Page() {
                       fontFamily: 'Inter, sans-serif',
                       color:
                         item.status === 'Pending'
-                          ? '#FFC107'
+                          ? 'goldenrod'
                           : item.status === 'Paid'
                             ? '#1BA847'
                             : 'inherit',

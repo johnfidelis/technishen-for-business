@@ -68,24 +68,27 @@ export default function Page({ filter }) {
 
   const filteredData = (data || [])
     .filter((item) => {
-      const isApproved = item?.is_approved === true
+      // const isApproved = item?.is_approved === true
       const isFilter = item?.status === filter
+      const matchesStatus =
+        statusFilter === 'All'
+          ? ['approved'].includes(item.is_approved)
+          : item.is_approved === statusFilter.toLowerCase()
+
       const matchesSearch = item?.job_title
         ?.toLowerCase()
         .includes(searchTerm.toLowerCase())
-      const matchesStatus =
-        statusFilter === 'All'
-          ? true
-          : item.status === statusFilter.toLowerCase()
+      // const matchesStatus =
+      //   statusFilter === 'All'
+      //     ? true
+      //     : item.status === statusFilter.toLowerCase()
 
       const jobDate = new Date(item.created_at || item.start_date)
       const matchesDate =
         (!startDate || jobDate >= new Date(startDate)) &&
         (!endDate || jobDate <= new Date(endDate))
 
-      return (
-        isApproved && isFilter && matchesSearch && matchesStatus && matchesDate
-      )
+      return isFilter && matchesSearch && matchesStatus && matchesDate
     })
     .sort((a, b) => {
       const dateA = new Date(a.created_at || a.start_date)
@@ -187,8 +190,8 @@ export default function Page({ filter }) {
             onChange={(e) => setStatusFilter(e.target.value)}
           >
             <MenuItem value="All">All</MenuItem>
-            <MenuItem value="Active">Active</MenuItem>
-            <MenuItem value="Inactive">Inactive</MenuItem>
+            <MenuItem value="approved">Approved</MenuItem>
+            {/* <MenuItem value="Inactive">Inactive</MenuItem> */}
           </Select>
         </FormControl>
       </Box>

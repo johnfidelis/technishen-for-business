@@ -322,7 +322,7 @@ const ViewOutsouredDetailsCard = ({ ticket, ticketId }) => {
                   color: isCompleted
                     ? '#115093' // Blue for completed
                     : isActive
-                      ? '#FFC107' // Yellow for current
+                      ? 'goldenrod' // Yellow for current
                       : '#E0E0E0', // Grey for remaining
                   fontSize: '1.5em',
                 }}

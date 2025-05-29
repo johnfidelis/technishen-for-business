@@ -72,7 +72,13 @@ export default function Page() {
   }
 
   const filteredInterviews = data
-    ?.filter((datum) => datum?.interview?.status?.toLowerCase() === 'invited')
+    ?.filter(
+      (datum) =>
+        datum?.interview?.status?.toLowerCase() === 'invited' ||
+        datum?.interview?.status?.toLowerCase() === 'confirmed' ||
+        datum?.interview?.status?.toLowerCase() === 'declined',
+    )
+    ?.filter((datum) => datum?.job_offer_status === null)
     ?.filter((datum) => {
       const nameMatch =
         `${datum.applicant?.first_name} ${datum.applicant?.last_name}`
@@ -86,8 +92,7 @@ export default function Page() {
     ?.filter((datum) => {
       if (statusFilter === 'All') return true
       return (
-        datum.interview?.interview_status?.toLowerCase() ===
-        statusFilter.toLowerCase()
+        datum.interview?.status?.toLowerCase() === statusFilter.toLowerCase()
       )
     })
     ?.filter((datum) => {
@@ -198,8 +203,9 @@ export default function Page() {
             label="Status"
           >
             <MenuItem value="All">All</MenuItem>
-            <MenuItem value="Active">Active</MenuItem>
-            <MenuItem value="Inactive">Inactive</MenuItem>
+            <MenuItem value="invited">Invited</MenuItem>
+            <MenuItem value="confirmed">Confirmed</MenuItem>
+            <MenuItem value="declined">Declined</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -209,7 +215,7 @@ export default function Page() {
         <Table>
           <TableHead>
             <TableRow>
-              {['Job Title', 'Candidates', 'Date and Time', 'Status'].map(
+              {['Job Title', 'Candidates', 'Date and Time', 'Status', ''].map(
                 (head, i) => (
                   <TableCell
                     key={i}
@@ -228,13 +234,13 @@ export default function Page() {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={4} align="center">
+                <TableCell colSpan={5} align="center">
                   <Skeleton width={'100%'} height={40} />
                 </TableCell>
               </TableRow>
-            ) : interviews?.length === 0 ? (
+            ) : filteredInterviews?.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4} align="center">
+                <TableCell colSpan={5} align="center">
                   <SentimentDissatisfied />
                   No interviews found.
                 </TableCell>
@@ -266,18 +272,49 @@ export default function Page() {
                       sx={{
                         fontSize: '0.75em',
                         fontWeight: 500,
-                        color: theme.primary_color || '#115093',
-                        textDecoration: 'underline',
+                        textTransform: 'capitalize',
+                        color:
+                          item.interview?.status?.toLowerCase() === 'confirmed'
+                            ? 'green'
+                            : item.interview?.status?.toLowerCase() ===
+                                'declined'
+                              ? 'red'
+                              : '',
                       }}
-                      onClick={() => handleRowClick(item)}
                     >
-                      <a
-                        // href={item.meeting_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Join Interview
-                      </a>
+                      {item.interview?.status}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        color:
+                          item.interview?.status?.toLowerCase() === 'confirmed'
+                            ? theme.primary_color || '#115093'
+                            : '',
+                        textDecoration:
+                          item.interview?.status?.toLowerCase() === 'confirmed'
+                            ? 'underline'
+                            : '',
+                      }}
+                      onClick={
+                        item.interview?.status?.toLowerCase() === 'confirmed'
+                          ? () => handleRowClick(item)
+                          : ''
+                      }
+                    >
+                      {item.interview?.status?.toLowerCase() === 'invited' &&
+                        '  Awaiting Confirmation'}
+                      {item.interview?.status?.toLowerCase() ===
+                        'confirmed' && (
+                        <a
+                          // href={item.meeting_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Join Interview
+                        </a>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))

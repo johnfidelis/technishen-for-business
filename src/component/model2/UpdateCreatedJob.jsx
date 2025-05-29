@@ -62,6 +62,8 @@ const UpdateCreatedJob = ({ id }) => {
       setExperienceLevel(jobPost?.experience_level || '')
       setJobDescription(jobPost?.job_description || '')
       setSelectedCategories(jobPost?.desired_skill_set || [])
+      setLong(jobPost?.longitude || '')
+      setLat(jobPost?.latitude || '')
     }
   }, [jobPost])
 
@@ -240,6 +242,30 @@ const UpdateCreatedJob = ({ id }) => {
 
   return (
     <Box>
+      {jobPost?.decline_reason && (
+        <Box
+          sx={{
+            backgroundColor: '#f9f9f9',
+            border: '1px solid #ccc',
+            borderRadius: 2,
+            p: 2,
+            mb: 3,
+          }}
+        >
+          <Typography
+            variant="subtitle2"
+            fontWeight={600}
+            sx={{ color: 'red' }}
+            gutterBottom
+          >
+            Previous Decline Reason:
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {jobPost.decline_reason}
+          </Typography>
+        </Box>
+      )}
+
       <Grid container spacing={4}>
         {/* Left Column */}
         <Grid item xs={12} md={6}>
@@ -674,20 +700,36 @@ const UpdateCreatedJob = ({ id }) => {
       </Grid>
 
       <Box sx={{ textAlign: 'end' }}>
-        <Button
-          variant="contained"
-          sx={{
-            mt: 4,
-            backgroundColor: theme.primary_color || '#115093',
-            color: 'white',
-            '&:hover': { backgroundColor: theme.primary_color || '#115093' },
-          }}
-          onClick={handleSubmit}
-          loading={isLoading}
-          disabled={jobPost?.is_approved != false}
-        >
-          Create Post
-        </Button>
+        {jobPost?.is_approved == 'pending' && (
+          <Button
+            variant="contained"
+            sx={{
+              mt: 4,
+              backgroundColor: theme.primary_color || '#115093',
+              color: 'white',
+              '&:hover': { backgroundColor: theme.primary_color || '#115093' },
+            }}
+            onClick={handleSubmit}
+            loading={isLoading}
+          >
+            Update Post
+          </Button>
+        )}
+        {jobPost?.is_approved == 'declined' && (
+          <Button
+            variant="contained"
+            sx={{
+              mt: 4,
+              backgroundColor: theme.primary_color || '#115093',
+              color: 'white',
+              '&:hover': { backgroundColor: theme.primary_color || '#115093' },
+            }}
+            onClick={handleSubmit}
+            loading={isLoading}
+          >
+            Re-submit Post
+          </Button>
+        )}
       </Box>
     </Box>
   )

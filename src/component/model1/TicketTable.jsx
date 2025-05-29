@@ -237,7 +237,7 @@ const TicketTable = ({ filterType, setNumber }) => {
                 color: theme?.primary_color,
               },
               // '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-              //   backgroundColor: 'yellow',
+              //   backgroundColor: 'goldenrod',
               // },
             }}
           />

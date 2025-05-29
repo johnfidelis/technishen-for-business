@@ -52,19 +52,41 @@ export default function Page({ filter }) {
   const { data, isLoading: loadPost } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_A_POST,
   )
+  // const filteredData = data
+  //   ?.filter((item) => {
+  //     const matchesStatus = status === 'All' || item.status === status
+  //     const matchesSearch =
+  //       item.job_title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       item.company?.toLowerCase().includes(searchQuery.toLowerCase())
+
+  //     const jobDate = new Date(item.created_at || item.start_date)
+  //     const matchesDate =
+  //       (!startDate || jobDate >= new Date(startDate)) &&
+  //       (!endDate || jobDate <= new Date(endDate))
+  //     return matchesStatus && matchesSearch && matchesDate
+  //   })
+  //   ?.sort((a, b) => {
+  //     const dateA = new Date(a.created_at)
+  //     const dateB = new Date(b.created_at)
+  //     return sortOrder === 'Newest' ? dateB - dateA : dateA - dateB
+  //   })
+
   const filteredData = data
     ?.filter((item) => {
-      const matchesStatus = status === 'All' || item.status === status
+      const matchesStatus =
+        status === 'All'
+          ? ['declined', 'pending'].includes(item.is_approved)
+          : item.is_approved === status
       const matchesSearch =
         item.job_title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.company?.toLowerCase().includes(searchQuery.toLowerCase())
-      const isUnapproved = item.is_approved === false
 
       const jobDate = new Date(item.created_at || item.start_date)
       const matchesDate =
         (!startDate || jobDate >= new Date(startDate)) &&
         (!endDate || jobDate <= new Date(endDate))
-      return matchesStatus && matchesSearch && isUnapproved & matchesDate
+
+      return matchesStatus && matchesSearch && matchesDate
     })
     ?.sort((a, b) => {
       const dateA = new Date(a.created_at)
@@ -170,13 +192,11 @@ export default function Page({ filter }) {
           </Select>
         </FormControl>
 
-        <Box sx={{ flex: 1, minWidth: '250px' }}>
-          <DateRangeInput
-            startDate={startDate}
-            endDate={endDate}
-            onDateChange={handleDateChange}
-          />
-        </Box>
+        <DateRangeInput
+          startDate={startDate}
+          endDate={endDate}
+          onDateChange={handleDateChange}
+        />
 
         <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
           <InputLabel>Status</InputLabel>
@@ -186,8 +206,8 @@ export default function Page({ filter }) {
             label="Status"
           >
             <MenuItem value="All">All</MenuItem>
-            {/* <MenuItem value="Open">Open</MenuItem>
-            <MenuItem value="Closed">Closed</MenuItem> */}
+            <MenuItem value="pending">Job Requests</MenuItem>
+            <MenuItem value="declined">Decline Jobs</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -198,6 +218,7 @@ export default function Page({ filter }) {
           <TableHead>
             <TableRow>
               {[
+                'Job ID',
                 'Job Type',
                 'Job Title',
                 'Company',
@@ -258,13 +279,16 @@ export default function Page({ filter }) {
                   <TableCell>
                     <Skeleton variant="text" width="80%" />
                   </TableCell>
+                  <TableCell>
+                    <Skeleton variant="text" width="80%" />
+                  </TableCell>
                 </TableRow>
               ))
             ) : // Render actual data when isLoading is false
-            paginatedData.length === 0 ? (
+            paginatedData?.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={10} // Adjust column span based on the number of columns
+                  colSpan={11} // Adjust column span based on the number of columns
                   sx={{ textAlign: 'center', padding: '2em' }}
                 >
                   <Box
@@ -303,6 +327,15 @@ export default function Page({ filter }) {
                     }}
                   >
                     {/* Job Type */}
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        fontFamily: 'Inter, sans-serif',
+                      }}
+                    >
+                      {item.post_number}
+                    </TableCell>
                     <TableCell
                       sx={{
                         fontSize: '0.75em',
@@ -411,25 +444,46 @@ export default function Page({ filter }) {
                         display: 'flex',
                       }}
                     >
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{
-                          backgroundColor: '#1BA847',
-                          color: '#fff',
-                          textTransform: 'none',
-                          mr: 1,
-                          fontSize: '0.7em',
-                          fontWeight: 500,
-                          fontFamily: 'Inter, sans-serif',
-                          '&:hover': {
-                            backgroundColor: '#15963b',
-                          },
-                        }}
-                        // onClick={() => handleApprove(item)}
-                      >
-                        Update
-                      </Button>
+                      {item.is_approved === 'pending' ? (
+                        <Button
+                          variant="contained"
+                          size="small"
+                          sx={{
+                            backgroundColor: '#1BA847',
+                            color: '#fff',
+                            textTransform: 'none',
+                            mr: 1,
+                            fontSize: '0.7em',
+                            fontWeight: 500,
+                            fontFamily: 'Inter, sans-serif',
+                            '&:hover': {
+                              backgroundColor: '#15963b',
+                            },
+                          }}
+                          // onClick={() => handleApprove(item)}
+                        >
+                          Update
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          size="small"
+                          sx={{
+                            backgroundColor: 'red',
+                            color: '#fff',
+                            textTransform: 'none',
+                            mr: 1,
+                            fontSize: '0.7em',
+                            fontWeight: 500,
+                            fontFamily: 'Inter, sans-serif',
+                            '&:hover': {
+                              backgroundColor: 'red',
+                            },
+                          }}
+                        >
+                          Reapply
+                        </Button>
+                      )}
 
                       {/* <Button
                         variant="contained"

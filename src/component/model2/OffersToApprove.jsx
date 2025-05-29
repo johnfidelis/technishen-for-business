@@ -39,7 +39,7 @@ export default function Page({ filter }) {
 
   const [searchText, setSearchText] = useState('')
   const [sortOption, setSortOption] = useState('Newest')
-  const [statusFilter, setStatusFilter] = useState('All')
+  const [statusFilter, setStatusFilter] = useState('passed')
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
 
@@ -54,7 +54,9 @@ export default function Page({ filter }) {
 
   const interviews = data?.filter(
     (datum) =>
-      ['passed', 'failed'].includes(datum?.interview?.status?.toLowerCase()) &&
+      ['passed', 'failed', 'declined'].includes(
+        datum?.interview?.status?.toLowerCase(),
+      ) &&
       (datum?.job_offer_status === null || datum?.job_offer_status === 'sent'),
   )
 
@@ -78,8 +80,7 @@ export default function Page({ filter }) {
       // Status filter
       if (
         statusFilter !== 'All' &&
-        item?.interview?.interview_status?.toLowerCase() !==
-          statusFilter.toLowerCase()
+        item?.interview?.status?.toLowerCase() !== statusFilter.toLowerCase()
       ) {
         return false
       }
@@ -229,8 +230,9 @@ export default function Page({ filter }) {
             label="Status"
           >
             <MenuItem value="All">All</MenuItem>
-            <MenuItem value="Pending">Pending</MenuItem>
-            <MenuItem value="Approved">Approved</MenuItem>
+            <MenuItem value="passed">Passed</MenuItem>
+            <MenuItem value="failed">Failed</MenuItem>
+            <MenuItem value="declined">Rejected</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -331,21 +333,35 @@ export default function Page({ filter }) {
                           fontWeight: 500,
                           fontFamily: 'Inter, sans-serif',
                           color:
-                            item?.job_offer_status == 'sent'
-                              ? 'green'
-                              : 'black',
+                            item.interview?.status?.toLowerCase() === 'declined'
+                              ? 'red'
+                              : item?.job_offer_status?.toLowerCase() === 'sent'
+                                ? 'green'
+                                : 'goldenrod',
                           textTransform: 'capitalize',
                         }}
                       >
-                        {item?.job_offer_status || 'Not sent'}
+                        {item.interview?.status === 'declined'
+                          ? `${item?.applicant?.first_name} Declined the Offer`
+                          : item?.job_offer_status || 'Not sent'}
                       </TableCell>
                       <TableCell
                         sx={{
                           fontSize: '0.75em',
                           fontWeight: 500,
                           fontFamily: 'Inter, sans-serif',
-                          color: '#FFC107',
+                          color: 'goldenrod',
                           textTransform: 'capitalize',
+                          color:
+                            item.interview?.status?.toLowerCase() === 'passed'
+                              ? 'green'
+                              : item.interview?.status?.toLowerCase() ===
+                                  'declined'
+                                ? 'red'
+                                : item.interview?.status?.toLowerCase() ===
+                                    'failed'
+                                  ? 'red'
+                                  : '',
                         }}
                       >
                         {item.interview?.status}

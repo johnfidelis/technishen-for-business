@@ -214,7 +214,7 @@ const EmployeeProfile = ({ open, onClose, user }) => {
                       <Box
                         key={index}
                         component="span"
-                        sx={{ color: '#FFC107', fontSize: '1.25em' }}
+                        sx={{ color: 'goldenrod', fontSize: '1.25em' }}
                       >
                         {index + 1 <= rating ? (
                           <StarIcon fontSize="inherit" />

@@ -242,7 +242,7 @@ const EmployeeTable = ({ role, setNumber }) => {
                         color:
                           employee.status === 'Accepted'
                             ? '#1BA847'
-                            : '#FFC107',
+                            : 'goldenrod',
                         textDecoration: 'underline',
                       }}
                     >

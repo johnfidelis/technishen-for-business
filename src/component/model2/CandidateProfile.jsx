@@ -155,7 +155,7 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
   const [effectiveDate, setEffectiveDate] = useState('')
   const [endDate, setEndDate] = useState('')
 
-  // const [isLoading, setIsLoading] = useState(false)
+  const [isSending, setIsSending] = useState(false)
 
   const { data: applicant, isLoading } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_APPLICANT_DETAILS(jobPostId, applicantId),
@@ -174,35 +174,6 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
     }
     setContractFile(file)
   }
-
-  // const handleSubmit = async () => {
-  //   if (!contractFile) {
-  //     toast.error('Please upload a PDF contract file.')
-  //     return
-  //   }
-
-  //   const formData = new FormData()
-  //   formData.append('contract_file', contractFile)
-  //   if (message) {
-  //     formData.append('message', message)
-  //   }
-
-  //   // setIsLoading(true)
-
-  //   sendJobOffer.mutate(formData, {
-  //     onSuccess: () => {
-  //       toast.success('Job Offer Sent!')
-  //       setContractFile(null)
-  //       setMessage('')
-  //       // setIsLoading(false)
-  //       onClose()
-  //     },
-  //     onError: (error) => {
-  //       toast.error(error?.response?.data?.detail || 'Something went wrong')
-  //       // setIsLoading(false)
-  //     },
-  //   })
-  // }
 
   const handleSubmit = async () => {
     if (!contractFile) {
@@ -226,17 +197,20 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
     if (message) {
       formData.append('message', message)
     }
+    setIsSending(true)
 
     sendJobOffer.mutate(formData, {
       onSuccess: () => {
+        setIsSending(false)
         toast.success('Job Offer Sent!')
         setContractFile(null)
         setMessage('')
         setEffectiveDate('')
         setEndDate('')
-        onClose()
       },
       onError: (error) => {
+        setIsSending(false)
+        console.error('Error sending job offer:', error)
         toast.error(error?.response?.data?.detail || 'Something went wrong')
       },
     })
@@ -1164,14 +1138,14 @@ const CandidateProfile = ({ jobPostId, applicantId }) => {
               <Button
                 onClick={handleSubmit}
                 variant="contained"
-                disabled={isLoading}
+                disabled={isSending}
                 sx={{
                   backgroundColor: theme?.primary_color,
                   color: '#fff',
                   '&:hover': { backgroundColor: theme?.primary_color },
                 }}
               >
-                {isLoading ? (
+                {isSending ? (
                   <CircularProgress size={24} color="inherit" />
                 ) : (
                   'Send Offer'

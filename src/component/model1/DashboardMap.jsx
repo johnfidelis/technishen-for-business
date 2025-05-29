@@ -361,7 +361,7 @@ const DashboardMap = () => {
                       style={{
                         width: '10px',
                         height: '10px',
-                        backgroundColor: 'yellow',
+                        backgroundColor: 'goldenrod',
                         borderRadius: '50%',
                         marginTop: '-5px',
                       }}

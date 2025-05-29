@@ -168,7 +168,7 @@ const CustomerProfile = ({ open, onClose, user, type }) => {
                       component="span"
                       sx={{
                         fontSize: '1.25em',
-                        color: '#FFC107', // Yellow for stars
+                        color: 'goldenrod', // Yellow for stars
                       }}
                     >
                       ★
