@@ -734,7 +734,7 @@ export default function Page({ id }) {
               </TableRow>
             ) : (
               filteredData
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((item) => (
                   <TableRow
                     key={item.id}

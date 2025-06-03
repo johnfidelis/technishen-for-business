@@ -40,11 +40,11 @@ const Page = ({ onBack }) => {
             fontWeight: '500',
           }}
         >
-          View Timecard
+          View Timecard/Expense
         </Typography>
         <hr />
       </Box>
-      <ViewTimeCard />
+      <ViewTimeCard timecardId={id} />
     </Box>
   )
 }

@@ -851,7 +851,7 @@ const InternalTicketForm = () => {
     // }
 
     images.forEach((image) => {
-      formData.append('images', image.file)
+      formData.append('files', image.file)
     })
 
     // Submit the formData directly
@@ -1215,14 +1215,15 @@ const InternalTicketForm = () => {
           variant="h6"
           sx={{ mb: 2, fontFamily: 'Inter, sans-serif', fontWeight: 300 }}
         >
-          Upload Images
+          Upload Ticket Attachment
         </Typography>
         <Button variant="outlined" component="label" sx={{ mb: 2 }}>
           Choose Files
           <input
             type="file"
             hidden
-            accept="image/*"
+            accept="*"
+            // accept="image/*"
             multiple
             onChange={handleImageUpload}
           />

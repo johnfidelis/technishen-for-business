@@ -14,9 +14,15 @@ import { styled } from '@mui/system'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { ThemeContext } from '@/context/ThemeContext'
 import UserProfile from './modals/UserProfile'
+import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
+import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
 
-const ViewTimeCard = () => {
+const ViewTimeCard = ({ timecardId }) => {
   const [open, setOpen] = useState(false)
+
+  const { data: applicant, isLoading } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_INDIVIDUAL_TIMECARD_AND_EXPENSES(timecardId),
+  )
 
   // Toggle modal visibility
   const handleModalOpen = () => setOpen(true)

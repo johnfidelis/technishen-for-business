@@ -52,6 +52,7 @@ export default function Page({ filter }) {
   const { data, isLoading: loadPost } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_A_POST,
   )
+
   // const filteredData = data
   //   ?.filter((item) => {
   //     const matchesStatus = status === 'All' || item.status === status

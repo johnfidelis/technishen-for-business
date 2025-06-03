@@ -114,33 +114,6 @@ const ViewDetailsCard = ({ ticket, ticketId }) => {
     // console.log(`Searching for employee: ${value}`)
   }
 
-  // const handleAssignTicket = async () => {
-  //   setLoadingEmployees(true)
-  //   const formData = new FormData()
-  //   formData.append('fulfiller_group_id', assignmentGroup)
-  //   formData.append('employee_id', assignTo.id)
-  //   patchData(formData)
-  //   setLoadingEmployees(false)
-  // }
-
-  // const handleAssignTicket = async () => {
-  //   try {
-  //     setLoadingEmployees(true)
-  //     const formData = new FormData()
-  //     formData.append('fulfiller_group_id', assignmentGroup)
-  //     formData.append('employee_id', assignTo.id)
-
-  //     const response = await patchData(formData)
-
-  //     toast.success('Ticket assigned successfully!')
-  //   } catch (error) {
-  //     console.error("ss",{error})
-  //     toast.error('Failed to assign ticket. Please try again.')
-  //   } finally {
-  //     setLoadingEmployees(false)
-  //   }
-  // }
-
   const handleAssignTicket = () => {
     setLoadingEmployees(true)
 

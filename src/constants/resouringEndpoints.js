@@ -31,5 +31,8 @@ export const GET_RESOURCING_ENDPOINTS = {
     `/resourcing/applicant-details/${jobId}/${applicantId}/`,
   GET_INTERVIEWS: `/resourcing/all-interviews/${getBusinessId()}/`,
 
+  GET_TIMECARD_AND_EXPENSES: `/resourcing/all-time-cards/${getBusinessId()}/`,
+  GET_INDIVIDUAL_TIMECARD_AND_EXPENSES: (timeCardId) =>
+    `/resourcing/get-a-time-card/${timeCardId}/`,
   // VIEW_A_SKILL: (skillId) => `/resourcing/skill-details/${skillId}/`,
 }

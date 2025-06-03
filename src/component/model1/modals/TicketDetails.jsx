@@ -330,7 +330,7 @@ const TicketDetails = ({ open, onClose, ticketData }) => {
                 <Box display="flex" flexWrap="wrap" gap={2}>
                   {isLoading
                     ? ''
-                    : ticket?.images?.map((image, index) => (
+                    : ticket?.uploads?.map((image, index) => (
                         <Box
                           key={index}
                           sx={{

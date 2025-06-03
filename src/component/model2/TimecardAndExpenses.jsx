@@ -17,6 +17,7 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Skeleton,
 } from '@mui/material'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import ListAltIcon from '@mui/icons-material/ListAlt'
@@ -24,6 +25,9 @@ import InboxIcon from '@mui/icons-material/Inbox'
 import Link from 'next/link'
 import { ThemeContext } from '@/context/ThemeContext'
 import { useRouter } from 'next/navigation'
+import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
+import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
+import { SentimentDissatisfied } from '@mui/icons-material'
 
 // Dummy data for table
 const initialData = [
@@ -130,9 +134,13 @@ const initialData = [
 export default function Page({ filteJobCompleted }) {
   const router = useRouter()
   const { theme } = useContext(ThemeContext)
-  const [data, setData] = useState(initialData)
+
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+
+  const { data, isLoading } = useFetchResourcingData(
+    GET_RESOURCING_ENDPOINTS.GET_TIMECARD_AND_EXPENSES,
+  )
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -241,7 +249,7 @@ export default function Page({ filteJobCompleted }) {
 
       {/* Table */}
       <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
-        <Table>
+        {/* <Table>
           <TableHead>
             <TableRow>
               {[
@@ -389,11 +397,101 @@ export default function Page({ filteJobCompleted }) {
                 </TableRow>
               ))}
           </TableBody>
+        </Table> */}
+
+        <Table>
+          <TableHead>
+            <TableRow>
+              {[
+                'Timecard No',
+                'Job Title',
+                'Start Date',
+                'End Date',
+                'Notes',
+                'Total Hours',
+                'Overtime Hours',
+                'Status',
+                'Action',
+              ].map((head, i) => (
+                <TableCell
+                  key={i}
+                  sx={{
+                    fontSize: '0.80em',
+                    fontWeight: 300,
+                    fontFamily: 'Inter, sans-serif',
+                  }}
+                >
+                  {head}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={9} align="center">
+                  <Skeleton width={'100%'} height={40} />
+                </TableCell>
+              </TableRow>
+            ) : data?.length > 0 ? (
+              data
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((item) => (
+                  <TableRow
+                    key={item.id}
+                    onClick={() => handleRowClick(item)}
+                    sx={{
+                      cursor: 'pointer',
+                      '&:hover': { backgroundColor: '#f5f5f5' },
+                    }}
+                  >
+                    <TableCell>{item.timecard_number}</TableCell>
+                    <TableCell>{item.job_title || '-'}</TableCell>
+                    <TableCell>{item.job_offer_start}</TableCell>
+                    <TableCell>{item.job_offer_end}</TableCell>
+                    <TableCell>{item.notes || '-'}</TableCell>
+                    <TableCell>{item.total_hours}</TableCell>
+                    <TableCell>{item.overtime_hours || '0.00'}</TableCell>
+                    <TableCell
+                      sx={{
+                        color:
+                          item.status === 'submitted'
+                            ? 'goldenrod'
+                            : item.status === 'approved'
+                              ? '#1BA847'
+                              : 'inherit',
+                        textTransform: 'capitalize',
+                      }}
+                    >
+                      {item.status}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: theme.primary_color || '#115093',
+                        textDecoration: 'underline',
+                      }}
+                    >
+                      View
+                    </TableCell>
+                  </TableRow>
+                ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={9} align="center">
+                  No timecards found.
+                  <SentimentDissatisfied
+                    sx={{ ml: 1, verticalAlign: 'middle' }}
+                  />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
+
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={data.length}
+          count={data?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
