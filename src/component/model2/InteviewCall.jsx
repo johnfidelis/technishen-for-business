@@ -6,6 +6,7 @@ import {
   Modal,
   TextField,
   MenuItem,
+  Avatar,
 } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import VideoCallIcon from '@mui/icons-material/VideoCall'
@@ -54,6 +55,12 @@ const InterviewCall = ({ id }) => {
     })
   }
 
+  const handleRowClick = (item) => {
+    router.push(
+      `/dashboard/resourcing/posts/open/${item.job_post_id}/${item.applicant.id}`,
+    )
+  }
+
   return (
     <Box sx={{ display: 'flex', flex: 1, mt: 2 }}>
       {/* Video Section */}
@@ -78,7 +85,6 @@ const InterviewCall = ({ id }) => {
             objectFit: 'cover',
           }}
         />
-
         {/* Video Call Buttons */}
         <Box
           sx={{
@@ -104,8 +110,15 @@ const InterviewCall = ({ id }) => {
           <IconButton sx={{ backgroundColor: '#0056B3', color: '#FFFFFF' }}>
             <RepeatIcon />
           </IconButton>
-        </Box>
+          {/* <IconButton sx={{ backgroundColor: '#0056B3', color: '#FFFFFF' }}> */}
+          <Avatar
+            onClick={() => handleRowClick(item)}
+            sx={{ backgroundColor: '#0056B3', color: '#FFFFFF' }}
+          />
 
+          {/* </IconButton> */}
+        </Box>
+        this last button will lead to the applicant's profile(Mr Ofentse)
         {/* Remarks Button */}
         <Button
           variant="contained"

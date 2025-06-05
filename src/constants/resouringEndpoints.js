@@ -18,6 +18,8 @@ export const PATCH_ENDPOINTS = {
     `/resourcing/schedule-interview/${jobId}/${getBusinessId()}/`,
   CLOSE_JOB: (jobId) =>
     `/resourcing/close-job-post/${jobId}/${getBusinessId()}/`,
+  APPROVE_OR_DECLINE_TIMECARD: (cardId) =>
+    `/resourcing/approve-or-decline-time-card/${getBusinessId()}/${cardId}/`,
 }
 export const GET_RESOURCING_ENDPOINTS = {
   GET_A_SKILL: `/resourcing/skills/`,

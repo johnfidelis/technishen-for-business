@@ -104,10 +104,26 @@ export default function Page() {
       )
     })
     ?.sort((a, b) => {
-      const aDate = new Date(a.interview?.scheduled_datetime)
-      const bDate = new Date(b.interview?.scheduled_datetime)
-      return sortOption === 'Newest' ? bDate - aDate : aDate - bDate
+      if (sortOption === 'Newest' || sortOption === 'Oldest') {
+        const aDate = new Date(a.interview?.scheduled_datetime)
+        const bDate = new Date(b.interview?.scheduled_datetime)
+        return sortOption === 'Newest' ? bDate - aDate : aDate - bDate
+      } else if (sortOption === 'online' || sortOption === 'in-person') {
+        // Sort by interview mode: bring selected mode first
+        const aMode = a.interview?.interview_mode?.toLowerCase() || ''
+        const bMode = b.interview?.interview_mode?.toLowerCase() || ''
+        if (aMode === sortOption && bMode !== sortOption) return -1
+        if (aMode !== sortOption && bMode === sortOption) return 1
+        return 0 // keep relative order if both match or don't match
+      }
+      return 0 // fallback no sorting
     })
+
+  // ?.sort((a, b) => {
+  //   const aDate = new Date(a.interview?.scheduled_datetime)
+  //   const bDate = new Date(b.interview?.scheduled_datetime)
+  //   return sortOption === 'Newest' ? bDate - aDate : aDate - bDate
+  // })
 
   return (
     <Box>
@@ -186,6 +202,8 @@ export default function Page() {
           >
             <MenuItem value="Newest">Newest</MenuItem>
             <MenuItem value="Oldest">Oldest</MenuItem>
+            <MenuItem value="online">Online Interview</MenuItem>
+            <MenuItem value="in-person">In-Person Interview</MenuItem>
           </Select>
         </FormControl>
 
@@ -215,32 +233,37 @@ export default function Page() {
         <Table>
           <TableHead>
             <TableRow>
-              {['Job Title', 'Candidates', 'Date and Time', 'Status', ''].map(
-                (head, i) => (
-                  <TableCell
-                    key={i}
-                    sx={{
-                      fontSize: '0.80em',
-                      fontWeight: 300,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {head}
-                  </TableCell>
-                ),
-              )}
+              {[
+                'Job Title',
+                'Candidates',
+                'Mode',
+                'Date and Time',
+                'Status',
+                '',
+              ].map((head, i) => (
+                <TableCell
+                  key={i}
+                  sx={{
+                    fontSize: '0.80em',
+                    fontWeight: 300,
+                    fontFamily: 'Inter, sans-serif',
+                  }}
+                >
+                  {head}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={5} align="center">
+                <TableCell colSpan={6} align="center">
                   <Skeleton width={'100%'} height={40} />
                 </TableCell>
               </TableRow>
             ) : filteredInterviews?.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} align="center">
+                <TableCell colSpan={6} align="center">
                   <SentimentDissatisfied />
                   No interviews found.
                 </TableCell>
@@ -262,6 +285,15 @@ export default function Page() {
                     </TableCell>
                     <TableCell sx={{ fontSize: '0.75em', fontWeight: 500 }}>
                       {item.applicant?.first_name} {item.applicant?.last_name}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        fontSize: '0.75em',
+                        fontWeight: 500,
+                        textTransform: 'capitalize',
+                      }}
+                    >
+                      {item?.interview?.interview_mode}
                     </TableCell>
                     <TableCell sx={{ fontSize: '0.75em', fontWeight: 500 }}>
                       {new Date(
@@ -312,7 +344,10 @@ export default function Page() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          Join Interview
+                          {item.interview?.interview_mode?.toLowerCase() ===
+                          'online'
+                            ? 'Join Online Interview'
+                            : 'Start In-Person Interview'}
                         </a>
                       )}
                     </TableCell>

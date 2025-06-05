@@ -106,3 +106,8 @@ tr:hover {
   font-weight: 400 !important;
   cursor: pointer;
 }
+
+/*  */
+.pac-container {
+  z-index: 1300 !important; /* MUI modal z-index is around 1300 */
+}

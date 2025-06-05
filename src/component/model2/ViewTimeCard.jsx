@@ -9,19 +9,83 @@ import {
   Chip,
   TextField,
   Divider,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
 } from '@mui/material'
 import { styled } from '@mui/system'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { ThemeContext } from '@/context/ThemeContext'
 import UserProfile from './modals/UserProfile'
-import { GET_RESOURCING_ENDPOINTS } from '@/constants/resouringEndpoints'
-import { useFetchResourcingData } from '@/hooks/useResourcingApiService'
+
+import {
+  GET_RESOURCING_ENDPOINTS,
+  POST_ENDPOINTS,
+  PATCH_ENDPOINTS,
+} from '@/constants/resouringEndpoints'
+import {
+  useCreateResourcingData,
+  useFetchResourcingData,
+  usePatchResourcingData,
+} from '@/hooks/useResourcingApiService'
+import { toast } from 'react-toastify'
+import ApproveRejectSection from './modals/ApproveRejectSection'
 
 const ViewTimeCard = ({ timecardId }) => {
   const [open, setOpen] = useState(false)
 
-  const { data: applicant, isLoading } = useFetchResourcingData(
+  const [openModal, setOpenModal] = useState(false)
+  const [selectedEntry, setSelectedEntry] = useState(null)
+
+  const handleOpenModal = (entry) => {
+    setSelectedEntry(entry)
+    setOpenModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setOpenModal(false)
+    setSelectedEntry(null)
+  }
+
+  const { data, isLoading } = useFetchResourcingData(
     GET_RESOURCING_ENDPOINTS.GET_INDIVIDUAL_TIMECARD_AND_EXPENSES(timecardId),
+  )
+
+  const approveOrDeclineTimeCard = usePatchResourcingData(
+    PATCH_ENDPOINTS.APPROVE_OR_DECLINE_TIMECARD(timecardId),
+    'approveOrDeclineTimeCard',
+  )
+
+  const handleSubmit = async (stat) => {
+    approveOrDeclineTimeCard.mutate(
+      { status: stat, reason: 'yyg' },
+      {
+        onSuccess: () => {
+          toast.success(`Timecard ${stat} successfully`)
+        },
+        onError: (error) => {
+          toast.error(`Failed to ${stat} timecard`)
+        },
+      },
+    )
+  }
+  const formattedEntries = data?.daily_entries?.map((entry) => {
+    const hours = parseFloat(entry.hours_worked)
+    return {
+      date: new Date(entry.date).toDateString(),
+      billable: Math.min(8, hours),
+      overtime: Math.max(0, hours - 8),
+    }
+  })
+
+  const totalBillable = formattedEntries?.reduce(
+    (sum, e) => sum + e.billable,
+    0,
+  )
+  const totalOvertime = formattedEntries?.reduce(
+    (sum, e) => sum + e.overtime,
+    0,
   )
 
   // Toggle modal visibility
@@ -84,43 +148,22 @@ const ViewTimeCard = ({ timecardId }) => {
                   gap: 1,
                 }}
               >
-                <strong>Resource:</strong> David Willie
-                <VisibilityIcon
+                <strong>Resource:</strong> {data?.applicant_name}
+                {/* <VisibilityIcon
                   sx={{ fontSize: '18px', cursor: 'pointer', color: 'gray' }}
                   onClick={handleModalOpen} // Show modal on click
-                />
+                /> */}
               </Typography>
 
               <Typography
                 sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
               >
-                <strong>Job Title:</strong> Devops Engineer
+                <strong>Job Title:</strong> {data?.job_title}
               </Typography>
               <Typography
                 sx={{ fontSize: '14px', mb: 0.5, letterSpacing: '0.5px' }}
               >
-                <strong>Resource Supplier:</strong> Tsogolo Technologies (Pty)
-                Ltd
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: '14px',
-                  mb: 0.5,
-                  letterSpacing: '0.5px',
-                  mt: 4,
-                }}
-              >
-                <strong>Document Attachments:</strong> <br />
-                <Box
-                  component="ul"
-                  sx={{
-                    color: theme.primary_color,
-                    textDecoration: 'underline',
-                  }}
-                >
-                  <li>server-upgrades.pdf</li>
-                  <li>server-downgrades.pdf</li>
-                </Box>
+                <strong>Resource Supplier:</strong> Technishen
               </Typography>
             </Box>
           </Box>
@@ -151,7 +194,7 @@ const ViewTimeCard = ({ timecardId }) => {
                   backgroundColor: '#1E56A0',
                   color: '#fff',
                   height: 30,
-                  fontSize: '14px',
+                  fontSize: 14,
                 }}
               />
               <Box
@@ -162,20 +205,32 @@ const ViewTimeCard = ({ timecardId }) => {
                   ml: 2,
                 }}
               >
-                {/* Dates */}
-                {[
-                  'Mon 07/08/2023',
-                  'Tue 08/08/2023',
-                  'Wed 09/08/2023',
-                  'Thu 10/08/2023',
-                  'Fri 11/08/2023',
-                ].map((date, index) => (
+                {formattedEntries?.map((entry, index) => (
                   <Box key={index} sx={{ textAlign: 'center' }}>
-                    <Typography sx={{ fontSize: '12px', fontWeight: 'bold' }}>
-                      {date}
-                    </Typography>
+                    {/* <Typography sx={{ fontSize: 12, fontWeight: 'bold' }}>
+                      {entry.date}
+                    </Typography> */}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 0.5,
+                      }}
+                    >
+                      <Typography sx={{ fontSize: 12, fontWeight: 'bold' }}>
+                        {entry.date}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        onClick={() => handleOpenModal(entry)}
+                      >
+                        <VisibilityIcon sx={{ fontSize: 16 }} />
+                      </IconButton>
+                    </Box>
+
                     <TextField
-                      value="8"
+                      value={entry.billable}
                       disabled
                       sx={{
                         width: 60,
@@ -185,17 +240,15 @@ const ViewTimeCard = ({ timecardId }) => {
                     />
                   </Box>
                 ))}
-                {/* Total */}
                 <Box sx={{ textAlign: 'center' }}>
                   <Typography>
                     <strong>TOTAL</strong>
                   </Typography>
-                  <Typography sx={{ mt: 2 }}>40</Typography>
+                  <Typography sx={{ mt: 2 }}>{totalBillable}</Typography>
                 </Box>
               </Box>
             </Box>
 
-            {/* Overtime Hours */}
             <Box sx={{ display: 'flex', alignItems: 'center', mt: 4 }}>
               <Chip
                 label="Overtime Hours"
@@ -203,7 +256,7 @@ const ViewTimeCard = ({ timecardId }) => {
                   backgroundColor: '#FF3B30',
                   color: '#fff',
                   height: 30,
-                  fontSize: '14px',
+                  fontSize: 14,
                 }}
               />
               <Box
@@ -214,37 +267,29 @@ const ViewTimeCard = ({ timecardId }) => {
                   ml: 2,
                 }}
               >
-                {/* Dates */}
-                {[
-                  'Mon 07/08/2023',
-                  'Tue 08/08/2023',
-                  'Wed 09/08/2023',
-                  'Thu 10/08/2023',
-                  'Fri 11/08/2023',
-                ].map((date, index) => (
+                {formattedEntries?.map((entry, index) => (
                   <Box key={index} sx={{ textAlign: 'center' }}>
-                    <Typography sx={{ fontSize: '12px', fontWeight: 'bold' }}>
-                      {date}
+                    <Typography sx={{ fontSize: 12, fontWeight: 'bold' }}>
+                      {entry.date}
                     </Typography>
                     <TextField
-                      value={index === 1 ? '2' : index === 3 ? '3' : 'Hours'}
+                      value={entry.overtime}
                       disabled
                       sx={{ width: 80, mt: 1 }}
                       inputProps={{
                         style: {
                           textAlign: 'center',
-                          color: index === 1 || index === 3 ? '#000' : '#999',
+                          color: entry.overtime > 0 ? '#000' : '#999',
                         },
                       }}
                     />
                   </Box>
                 ))}
-                {/* Total */}
                 <Box sx={{ textAlign: 'center' }}>
                   <Typography>
                     <strong>TOTAL</strong>
                   </Typography>
-                  <Typography sx={{ mt: 2 }}>5</Typography>
+                  <Typography sx={{ mt: 2 }}>{totalOvertime}</Typography>
                 </Box>
               </Box>
             </Box>
@@ -252,7 +297,8 @@ const ViewTimeCard = ({ timecardId }) => {
             {/* Total Billable Hours */}
             <Box sx={{ textAlign: 'right', mt: 3 }}>
               <Typography sx={{ fontWeight: 'bold' }}>
-                <strong>Total Billable Hours:</strong> 45
+                <strong>Total Billable Hours:</strong>{' '}
+                {totalBillable + totalOvertime}
               </Typography>
             </Box>
           </Box>
@@ -280,7 +326,7 @@ const ViewTimeCard = ({ timecardId }) => {
             rows={4}
             label="Comments"
             disabled
-            value="Comments"
+            value={data?.notes || ''}
           />
         </Box>
       </Box>
@@ -395,75 +441,121 @@ const ViewTimeCard = ({ timecardId }) => {
         </Typography>
         <Divider sx={{ mb: 4 }} />
 
-        <TextField
-          fullWidth
-          label="Expense Claim Title"
-          variant="outlined"
-          sx={{ mb: 4 }}
-        />
+        {(data?.expense_claims || lines).map((line, index) => (
+          <>
+            <Box
+              key={index}
+              display="flex"
+              alignItems="center"
+              gap={1.5}
+              flexWrap="wrap"
+              mb={2}
+            >
+              <TextField
+                fullWidth
+                label="Expense Claim Title"
+                variant="outlined"
+                value={line.item_name || ''}
+                disabled
+              />
 
-        {lines.map((line, index) => (
-          <Box key={index} display="flex" alignItems="center" gap={2} mb={2}>
+              <TextField
+                label="Cost Per Unit"
+                value={line?.cost_per_unit || ''}
+                variant="outlined"
+                sx={{ width: 100 }}
+                disabled
+              />
+              <TextField
+                label="Unit Bought"
+                value={line?.quantity || ''}
+                variant="outlined"
+                sx={{ width: 100 }}
+                disabled
+              />
+            </Box>
+
             <TextField
               label="Description"
-              value={line.description}
-              onChange={(e) =>
-                handleLineChange(index, 'description', e.target.value)
-              }
+              value={line?.description || ''}
+              disabled
               variant="outlined"
-              fullWidth
+              multiline
+              rows={3}
+              sx={{ flexGrow: 1, width: '600px' }}
             />
-            <TextField
-              label="Cost"
-              value={line.cost}
-              onChange={(e) => handleLineChange(index, 'cost', e.target.value)}
-              variant="outlined"
-              sx={{ width: 150 }}
-            />
-            <Button
-              variant="contained"
-              component="label"
-              sx={{
-                whiteSpace: 'nowrap',
-                backgroundColor: theme.primary_color,
-              }}
-            >
-              Choose File
-              <input
-                type="file"
-                hidden
-                onChange={(e) => handleFileChange(index, e.target.files[0])}
-              />
-            </Button>
-            {line.fileName && (
-              <Typography variant="body2" color="primary">
-                {line.fileName}
-              </Typography>
-            )}
-          </Box>
+
+            <br />
+
+            <a href={line?.receipt || '#'} target="_blank">
+              <Button
+                variant="contained"
+                component="label"
+                sx={{
+                  whiteSpace: 'nowrap',
+                  backgroundColor: theme.primary_color,
+                  minWidth: 110,
+                  mt: 2,
+                }}
+              >
+                View Receipt
+              </Button>
+            </a>
+          </>
         ))}
 
-        <Button
-          variant="contained"
-          onClick={addLine}
-          sx={{ mt: 2, backgroundColor: theme.primary_color }}
-        >
-          Add Line +
-        </Button>
-
         <Divider sx={{ my: 4 }} />
-
-        <Box display="flex" justifyContent="flex-end" gap={2}>
-          <Button variant="contained" color="success">
-            Approve
-          </Button>
-          <Button variant="contained" color="error">
-            Decline
-          </Button>
-        </Box>
+        {isLoading ? (
+          <></>
+        ) : (
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            gap={2}
+            alignItems="center"
+          >
+            {['rejected', 'approved'].includes(data?.status) ? (
+              <Button
+                sx={{ textTransform: 'capitalize', fontWeight: 600 }}
+                variant="contained"
+                color="success"
+                disabled
+              >
+                Timecard {data?.status}
+              </Button>
+            ) : (
+              <ApproveRejectSection
+                approveOrDeclineTimeCard={approveOrDeclineTimeCard}
+              />
+            )}
+          </Box>
+        )}
       </Box>
 
       <UserProfile open={open} onClose={handleModalClose} />
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Details for {selectedEntry?.date}</DialogTitle>
+        <DialogContent dividers>
+          <Typography variant="subtitle1" gutterBottom>
+            <strong>Regular Task:</strong>
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            {selectedEntry?.task || 'No task recorded.'}
+          </Typography>
+
+          <Typography variant="subtitle1" gutterBottom>
+            <strong>Overtime Task:</strong>
+          </Typography>
+          <Typography variant="body2">
+            {selectedEntry?.overtimeTask || 'No overtime task recorded.'}
+          </Typography>
+        </DialogContent>
+      </Dialog>
     </Box>
   )
 }
