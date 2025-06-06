@@ -36,8 +36,28 @@ export default function Page({ filteJobCompleted }) {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
+  // const { data, isLoading } = useFetchResourcingData(
+  //   GET_RESOURCING_ENDPOINTS.GET_TIMECARD_AND_EXPENSES,
+  // )
+
+  const [search, setSearch] = useState('')
+  const [status, setStatus] = useState('All')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+
+  // Build query string
+  const queryParams = new URLSearchParams()
+
+  if (search) queryParams.append('search', search)
+  if (status !== 'All') queryParams.append('status', status)
+  if (startDate) queryParams.append('start_date', startDate)
+  if (endDate) queryParams.append('end_date', endDate)
+
+  const queryString = queryParams.toString()
+
+  // API call with dynamic query
   const { data, isLoading } = useFetchResourcingData(
-    GET_RESOURCING_ENDPOINTS.GET_TIMECARD_AND_EXPENSES,
+    `${GET_RESOURCING_ENDPOINTS.GET_TIMECARD_AND_EXPENSES}?${queryString}`,
   )
 
   const handleChangePage = (event, newPage) => {
@@ -104,204 +124,68 @@ export default function Page({ filteJobCompleted }) {
       </Grid>
 
       {/* Filters */}
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: 2,
-          mb: 4,
-          flexWrap: 'wrap',
-        }}
-      >
-        <TextField
-          label="Search"
-          variant="outlined"
-          sx={{ flex: 1, minWidth: '200px' }}
-        />
+      <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: 2,
+            mb: 4,
+            flexWrap: 'wrap',
+          }}
+        >
+          <TextField
+            label="Search"
+            variant="outlined"
+            sx={{ flex: 1, minWidth: '200px' }}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
-          <InputLabel>Sort</InputLabel>
-          <Select defaultValue="Newest" label="Sort">
-            <MenuItem value="Newest">Newest</MenuItem>
-            <MenuItem value="Oldest">Oldest</MenuItem>
-          </Select>
-        </FormControl>
+          <TextField
+            type="date"
+            label="Start Date"
+            variant="outlined"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            sx={{ flex: 1, minWidth: '200px' }}
+            InputLabelProps={{ shrink: true }}
+          />
 
-        <TextField
-          label="Search by dates"
-          variant="outlined"
-          value="Date Range"
-          sx={{ flex: 1, minWidth: '250px' }}
-          InputProps={{ readOnly: true }}
-        />
+          <TextField
+            type="date"
+            label="End Date"
+            variant="outlined"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            sx={{ flex: 1, minWidth: '200px' }}
+            InputLabelProps={{ shrink: true }}
+          />
 
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
-          <InputLabel>Status</InputLabel>
-          <Select defaultValue="All" label="Status">
-            <MenuItem value="All">All</MenuItem>
-            <MenuItem value="Pending">Pending</MenuItem>
-            <MenuItem value="Approved">Approved</MenuItem>
-          </Select>
-        </FormControl>
+          <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+              value={status}
+              label="Status"
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="submitted">Pending</MenuItem>
+              <MenuItem value="approved">Approved</MenuItem>
+              <MenuItem value="rejected">Declined</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
       </Box>
 
       {/* Table */}
       <TableContainer component={Paper} sx={{ borderRadius: '0.1em' }}>
-        {/* <Table>
-          <TableHead>
-            <TableRow>
-              {[
-                'Timecard No',
-                'Name',
-                'Start Date',
-                'End Date',
-                'Total Amount',
-                'Total Hours',
-                'Approver',
-                'Status',
-                'Action',
-              ].map((head, i) => (
-                <TableCell
-                  key={i}
-                  sx={{
-                    fontSize: '0.80em',
-                    fontWeight: 300,
-                    fontFamily: 'Inter, sans-serif',
-                  }}
-                >
-                  {head}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((item) => (
-                <TableRow
-                  key={item.id}
-                  onClick={() => handleRowClick(item)}
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover': { backgroundColor: '#f5f5f5' },
-                  }}
-                >
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.timecardNo}
-                  </TableCell>
-
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.name}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.date}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.endDate}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.rate}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.totalHours}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {item.approver}
-                  </TableCell>
-                  {item.isJobCompleted == false ? (
-                    <TableCell
-                      sx={{
-                        fontSize: '0.75em',
-                        fontWeight: 500,
-                        fontFamily: 'Inter, sans-serif',
-                        color:
-                          item.status === 'Pending'
-                            ? 'goldenrod'
-                            : item.status === 'Approved'
-                              ? '#1BA847'
-                              : 'inherit',
-                        textTransform: 'capitalize',
-                      }}
-                    >
-                      {item.status}
-                    </TableCell>
-                  ) : (
-                    <TableCell
-                      sx={{
-                        fontSize: '0.75em',
-                        fontWeight: 500,
-                        fontFamily: 'Inter, sans-serif',
-                        color: '#1BA847',
-
-                        textTransform: 'capitalize',
-                      }}
-                    >
-                      Completed
-                    </TableCell>
-                  )}
-                  <TableCell
-                    sx={{
-                      fontSize: '0.75em',
-                      fontWeight: 500,
-                      fontFamily: 'Inter, sans-serif',
-                      color: theme.primary_color || '#115093',
-                      textDecoration: 'underline',
-                    }}
-                  >
-                    View
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table> */}
-
         <Table>
           <TableHead>
             <TableRow>
               {[
                 'Timecard No',
+                'Timecard Owner',
                 'Job Title',
                 'Start Date',
                 'End Date',
@@ -327,7 +211,7 @@ export default function Page({ filteJobCompleted }) {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={9} align="center">
+                <TableCell colSpan={10} align="center">
                   <Skeleton width={'100%'} height={40} />
                 </TableCell>
               </TableRow>
@@ -344,11 +228,18 @@ export default function Page({ filteJobCompleted }) {
                     }}
                   >
                     <TableCell>{item.timecard_number}</TableCell>
+                    <TableCell>
+                      {item?.creator_first_name || item?.creator_last_name
+                        ? `${item?.creator_first_name || ''} ${item?.creator_last_name || ''}`.trim()
+                        : '-'}
+                    </TableCell>
                     <TableCell>{item.job_title || '-'}</TableCell>
                     <TableCell>{item.job_offer_start}</TableCell>
                     <TableCell>{item.job_offer_end}</TableCell>
                     <TableCell>{item.notes || '-'}</TableCell>
-                    <TableCell>{item.total_hours}</TableCell>
+                    <TableCell>
+                      {item.total_hours - item.overtime_hours}
+                    </TableCell>
                     <TableCell>{item.overtime_hours || '0.00'}</TableCell>
                     <TableCell
                       sx={{

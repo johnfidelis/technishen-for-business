@@ -56,7 +56,7 @@ const ApproveRejectSection = ({ approveOrDeclineTimeCard }) => {
       toast.error('Please provide a reason.')
       return
     }
-    handleSubmit('rejected', reason)
+    handleSubmit(action, reason)
   }
 
   const modalStyle = {
