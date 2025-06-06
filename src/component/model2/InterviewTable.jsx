@@ -103,18 +103,18 @@ export default function Page() {
         interviewDate <= new Date(endDate)
       )
     })
+    // 🔁 NEW: filter for interview mode
+    ?.filter((datum) => {
+      if (sortOption === 'online' || sortOption === 'in-person') {
+        return datum.interview?.interview_mode?.toLowerCase() === sortOption
+      }
+      return true
+    })
     ?.sort((a, b) => {
       if (sortOption === 'Newest' || sortOption === 'Oldest') {
         const aDate = new Date(a.interview?.scheduled_datetime)
         const bDate = new Date(b.interview?.scheduled_datetime)
         return sortOption === 'Newest' ? bDate - aDate : aDate - bDate
-      } else if (sortOption === 'online' || sortOption === 'in-person') {
-        // Sort by interview mode: bring selected mode first
-        const aMode = a.interview?.interview_mode?.toLowerCase() || ''
-        const bMode = b.interview?.interview_mode?.toLowerCase() || ''
-        if (aMode === sortOption && bMode !== sortOption) return -1
-        if (aMode !== sortOption && bMode === sortOption) return 1
-        return 0 // keep relative order if both match or don't match
       }
       return 0 // fallback no sorting
     })

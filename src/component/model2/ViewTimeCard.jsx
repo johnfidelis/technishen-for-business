@@ -316,7 +316,7 @@ const ViewTimeCard = ({ timecardId }) => {
                 fontWeight: '500',
               }}
             >
-              <strong>Cost Allocation</strong>
+              <strong>Summary Comments</strong>
             </Typography>
           </Box>
 
@@ -332,7 +332,7 @@ const ViewTimeCard = ({ timecardId }) => {
       </Box>
 
       {/* Non Billable Hours */}
-      <Box>
+      {/* <Box>
         <Box>
           <Box sx={{ mt: 4, textAlign: 'left', mb: 2 }}>
             <Typography
@@ -366,7 +366,7 @@ const ViewTimeCard = ({ timecardId }) => {
                   ml: 2,
                 }}
               >
-                {/* Dates */}
+              
                 {[
                   'Mon 07/08/2023',
                   'Tue 08/08/2023',
@@ -389,7 +389,7 @@ const ViewTimeCard = ({ timecardId }) => {
                     />
                   </Box>
                 ))}
-                {/* Total */}
+       
                 <Box sx={{ textAlign: 'center' }}>
                   <Typography>
                     <strong>TOTAL</strong>
@@ -399,7 +399,7 @@ const ViewTimeCard = ({ timecardId }) => {
               </Box>
             </Box>
 
-            {/* Total Billable Hours */}
+      
             <Box sx={{ textAlign: 'right', mt: 3 }}>
               <Typography sx={{ fontWeight: 'bold' }}>
                 <strong>Total Billable Hours:</strong> 45
@@ -433,7 +433,7 @@ const ViewTimeCard = ({ timecardId }) => {
             value="Comments"
           />
         </Box>
-      </Box>
+      </Box> */}
 
       <Box mt={4}>
         <Typography variant="h5" gutterBottom>
@@ -539,20 +539,10 @@ const ViewTimeCard = ({ timecardId }) => {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>Details for {selectedEntry?.date}</DialogTitle>
+        <DialogTitle>Daily Report for {selectedEntry?.date}</DialogTitle>
         <DialogContent dividers>
-          <Typography variant="subtitle1" gutterBottom>
-            <strong>Regular Task:</strong>
-          </Typography>
           <Typography variant="body2" sx={{ mb: 2 }}>
-            {selectedEntry?.task || 'No task recorded.'}
-          </Typography>
-
-          <Typography variant="subtitle1" gutterBottom>
-            <strong>Overtime Task:</strong>
-          </Typography>
-          <Typography variant="body2">
-            {selectedEntry?.overtimeTask || 'No overtime task recorded.'}
+            {selectedEntry?.task || 'No report recorded.'}
           </Typography>
         </DialogContent>
       </Dialog>
