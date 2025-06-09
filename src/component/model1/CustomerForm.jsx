@@ -353,7 +353,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Date of Birth (MM-DD-YYYY)"
+                    label="Date of Birth (MM-DD-YYYY) *"
                     name="date_of_birth"
                     type="date"
                     InputLabelProps={{ shrink: true }}
@@ -374,7 +374,7 @@ const CustomerForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <AddressAutocomplete
-                    label="Address"
+                    label="Address *"
                     key={reloadKey}
                     fullWidth
                     InputLabelProps={{
@@ -392,7 +392,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Gender"
+                    label="Gender *"
                     name="gender"
                     select
                     value={formData.gender}
@@ -405,7 +405,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     name="nationality"
-                    label="Nationality"
+                    label="Nationality *"
                     select
                     fullWidth
                     value={formData.nationality}
@@ -478,7 +478,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Identity Type"
+                    label="Identity Type *"
                     name="identity_type"
                     select
                     value={formData.identity_type}
@@ -507,7 +507,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label={formData.identity_type + ' Number'}
+                    label={formData.identity_type + ' Number *'}
                     name="id_number"
                     value={formData.id_number}
                     onChange={handleInputChange}
@@ -531,7 +531,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Business Name"
+                    label="Business Name *"
                     name="business_name"
                     value={formData.business_name}
                     onChange={handleInputChange}
@@ -567,7 +567,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Gender"
+                    label="Gender *"
                     name="gender"
                     select
                     value={formData.gender}
@@ -612,7 +612,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Industry"
+                    label="Industry *"
                     name="industry"
                     value={formData.industry}
                     onChange={handleInputChange}
@@ -656,7 +656,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Company Registration Number"
+                    label="Company Registration Number *"
                     name="reg_number"
                     value={formData.reg_number}
                     onChange={handleInputChange}
@@ -678,7 +678,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Identity Type"
+                    label="Identity Type *"
                     name="identity_type"
                     select
                     value={formData.identity_type}
@@ -696,7 +696,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     name="nationality"
-                    label="Nationality"
+                    label="Nationality *"
                     select
                     fullWidth
                     value={formData.nationality}
@@ -714,7 +714,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label={formData.identity_type + ' Number'}
+                    label={formData.identity_type + ' Number *'}
                     name="id_number"
                     value={formData.id_number}
                     onChange={handleInputChange}
@@ -724,7 +724,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Staff Size"
+                    label="Staff Size *"
                     name="staff_size"
                     value={formData.staff_size}
                     onChange={handleInputChange}
@@ -776,7 +776,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Support Email"
+                    label="Support Email *"
                     name="support_email"
                     value={formData.support_email}
                     onChange={handleInputChange}

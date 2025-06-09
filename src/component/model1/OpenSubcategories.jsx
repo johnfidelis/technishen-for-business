@@ -15,7 +15,7 @@ import {
   Skeleton,
 } from '@mui/material'
 import { SentimentDissatisfied, Edit as EditIcon } from '@mui/icons-material'
-import DeleteWithConfirmation from './DeleteWithConfirmation'
+// import DeleteWithConfirmation from './DeleteWithConfirmation'
 import { useFetchData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS } from '@/constants/endpoints'
 import EditSubCategoryModal from './modals/EditSubCategoryModal'
@@ -155,7 +155,7 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange, setNumber }) => {
                       {subCategory.price_visibility ? 'On' : 'Off'}
                     </TableCell>
                     <TableCell sx={{ color: '#1BA847' }}>
-                      {subCategory.cost}
+                      ({subCategory.currency}){subCategory.cost}
                     </TableCell>
                     <TableCell
                       sx={{ color: subCategory.status ? '#1BA847' : '#FF4C3B' }}
@@ -168,10 +168,10 @@ const OpenSubcategories = ({ categoryId, onServiceNameChange, setNumber }) => {
                       >
                         <EditIcon />
                       </IconButton>
-                      <DeleteWithConfirmation
+                      {/* <DeleteWithConfirmation
                         id={subCategory.id}
                         handleDeleteCategory={handleDeleteSubCategory}
-                      />
+                      /> */}
                     </TableCell>
                   </TableRow>
                 ))}

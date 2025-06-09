@@ -36,6 +36,7 @@ const ServiceCatalog = () => {
   const [subCategory, setSubCategory] = useState({
     sub_service_name: '',
     cost: '',
+    currency: '',
     allow_remote_work: '',
     price_type: '',
     price_visibility: '',
@@ -93,6 +94,7 @@ const ServiceCatalog = () => {
       if (
         !subCategory.sub_service_name ||
         !subCategory.cost ||
+        !subCategory.currency ||
         !subCategory.allow_remote_work ||
         !subCategory.status ||
         !subCategory.price_type ||
@@ -117,6 +119,7 @@ const ServiceCatalog = () => {
         'sub_service[sub_service_name]',
         subCategory.sub_service_name,
       )
+      categoryFormData.append('sub_service[currency]', subCategory.currency)
       categoryFormData.append('sub_service[cost]', subCategory.cost)
       categoryFormData.append(
         'sub_service[allow_remote_work]',
@@ -160,6 +163,7 @@ const ServiceCatalog = () => {
         setSubCategory({
           sub_service_name: '',
           cost: '',
+          currency: '',
           allow_remote_work: false,
           status: '',
           price_type: '',
@@ -305,6 +309,21 @@ const ServiceCatalog = () => {
             onChange={handleSubCategoryChange}
             sx={{ mb: 2 }}
           />
+
+          <TextField
+            select
+            fullWidth
+            name="currency"
+            label="Currency *"
+            variant="outlined"
+            value={subCategory.currency}
+            onChange={handleSubCategoryChange}
+            sx={{ mb: 2 }}
+          >
+            <MenuItem value="USD">US-Dollar</MenuItem>
+            <MenuItem value="EUR">EURO</MenuItem>
+            <MenuItem value="R">Rand</MenuItem>
+          </TextField>
           <TextField
             fullWidth
             name="cost"
@@ -326,19 +345,6 @@ const ServiceCatalog = () => {
           >
             <MenuItem value="Yes">Yes</MenuItem>
             <MenuItem value="No">No</MenuItem>
-          </TextField>
-          <TextField
-            fullWidth
-            name="price_type"
-            label="Price Type *"
-            variant="outlined"
-            select
-            value={subCategory.price_type}
-            onChange={handleSubCategoryChange}
-            sx={{ mb: 2 }}
-          >
-            <MenuItem value="Fixed">Fixed</MenuItem>
-            <MenuItem value="Hourly">Hourly</MenuItem>
           </TextField>
 
           <Box
@@ -415,6 +421,19 @@ const ServiceCatalog = () => {
             marginTop: '3em',
           }}
         >
+          <TextField
+            fullWidth
+            name="price_type"
+            label="Price Type *"
+            variant="outlined"
+            select
+            value={subCategory.price_type}
+            onChange={handleSubCategoryChange}
+            sx={{ mb: 2 }}
+          >
+            <MenuItem value="Fixed">Fixed</MenuItem>
+            <MenuItem value="Hourly">Hourly</MenuItem>
+          </TextField>
           <TextField
             fullWidth
             name="price_visibility"

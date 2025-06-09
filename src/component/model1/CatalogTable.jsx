@@ -22,7 +22,7 @@ import {
 } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
-import DeleteWithConfirmation from './DeleteWithConfirmation'
+// import DeleteWithConfirmation from './DeleteWithConfirmation'
 import InfoIcon from '@mui/icons-material/Info'
 import { useFetchData, useDeleteData } from '@/hooks/useApiService'
 import { GET_ENDPOINTS, DELETE_ENDPOINTS } from '@/constants/endpoints'
@@ -278,10 +278,10 @@ const CatalogTable = ({ catalogType, setNumber }) => {
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
-                      <DeleteWithConfirmation
+                      {/* <DeleteWithConfirmation
                         id={category.id}
                         handleDeleteCategory={handleDelete}
-                      />
+                      /> */}
                     </TableCell>
                   </TableRow>
                 ))

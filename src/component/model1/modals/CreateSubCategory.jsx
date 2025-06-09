@@ -22,6 +22,7 @@ const CreateSubCategory = ({ open, onClose, serviceId }) => {
   const [subCategoryData, setSubCategoryData] = useState({
     sub_service_name: '',
     cost: '',
+    currency: 'USD',
     allow_remote_work: '',
     status: 'Active',
     price_type: 'Fixed',
@@ -170,6 +171,11 @@ const CreateSubCategory = ({ open, onClose, serviceId }) => {
           ))}
 
           {[
+            {
+              name: 'currency',
+              label: 'Currency *',
+              options: ['USD', 'EUR', 'R'],
+            },
             {
               name: 'price_visibility',
               label: 'Price Visibility *',
