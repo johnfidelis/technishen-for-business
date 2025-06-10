@@ -479,56 +479,43 @@ const EmployeeProfile = ({ employeeId }) => {
                     <Button
                       variant="contained"
                       onClick={() =>
-                        employeeData?.user?.is_blocked
-                          ? handleOpenReasonModal(
-                              'unblock',
-                              employeeData?.user?.id,
-                            )
-                          : handleOpenReasonModal(
-                              'block',
-                              employeeData?.user?.id,
-                            )
+                        employeeData?.is_blocked
+                          ? handleOpenReasonModal('unblock', employeeData?.id)
+                          : handleOpenReasonModal('block', employeeData?.id)
                       }
                       sx={{
-                        backgroundColor: employeeData?.user?.is_blocked
+                        backgroundColor: employeeData?.is_blocked
                           ? 'darkgreen'
                           : 'darkred',
                         '&:hover': {
-                          backgroundColor: employeeData?.user?.is_blocked
+                          backgroundColor: employeeData?.is_blocked
                             ? '#1BA847'
                             : 'red',
                         },
                       }}
                     >
-                      {employeeData?.user?.is_blocked ? 'Unblock' : 'Block'}{' '}
-                      Employee
+                      {employeeData?.is_blocked ? 'Unblock' : 'Block'} Employee
                     </Button>
 
                     <Button
                       variant="contained"
                       onClick={() =>
-                        employeeData?.user?.is_disabled
-                          ? handleOpenReasonModal(
-                              'enable',
-                              employeeData?.user?.id,
-                            )
-                          : handleOpenReasonModal(
-                              'disable',
-                              employeeData?.user?.id,
-                            )
+                        employeeData?.is_disabled
+                          ? handleOpenReasonModal('enable', employeeData?.id)
+                          : handleOpenReasonModal('disable', employeeData?.id)
                       }
                       sx={{
-                        backgroundColor: employeeData?.user?.is_disabled
+                        backgroundColor: employeeData?.is_disabled
                           ? 'darkgreen'
                           : 'darkred',
                         '&:hover': {
-                          backgroundColor: employeeData?.user?.is_disabled
+                          backgroundColor: employeeData?.is_disabled
                             ? '#1BA847'
                             : 'red',
                         },
                       }}
                     >
-                      {employeeData?.user?.is_disabled ? 'Enable' : 'Disable'}{' '}
+                      {employeeData?.is_disabled ? 'Enable' : 'Disable'}{' '}
                       Employee
                     </Button>
                   </Box>

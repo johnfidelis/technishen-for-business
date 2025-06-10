@@ -36,15 +36,46 @@ export default function Page() {
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
-  const { data, isLoading } = useFetchResourcingData(
-    GET_RESOURCING_ENDPOINTS.GET_INTERVIEWS,
-  )
+  // const { data, isLoading } = useFetchResourcingData(
+  //   GET_RESOURCING_ENDPOINTS.GET_INTERVIEWS,
+  // )
 
-  const [searchText, setSearchText] = useState('')
-  const [sortOption, setSortOption] = useState('Newest')
-  const [statusFilter, setStatusFilter] = useState('All')
-  const [startDate, setStartDate] = useState(null)
-  const [endDate, setEndDate] = useState(null)
+  // const [searchText, setSearchText] = useState('')
+  // const [sortOption, setSortOption] = useState('Newest')
+  // const [statusFilter, setStatusFilter] = useState('All')
+  // const [startDate, setStartDate] = useState(null)
+  // const [endDate, setEndDate] = useState(null)
+
+  const [status, setStatus] = useState('All')
+  const [interviewMode, setInterviewMode] = useState('All')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+
+  // Build query string
+  const queryParams = new URLSearchParams()
+
+  // if (status !== 'All') queryParams.append('status', status)
+  if (status !== 'All') {
+    queryParams.append('status', status)
+  } else {
+    queryParams.append('status', 'invited')
+    queryParams.append('status', 'confirmed')
+    queryParams.append('status', 'declined')
+  }
+  if (interviewMode !== 'All')
+    queryParams.append('interview_mode', interviewMode)
+  if (firstName) queryParams.append('search', firstName)
+
+  if (startDate) queryParams.append('start_date', startDate)
+  if (endDate) queryParams.append('end_date', endDate)
+
+  const queryString = queryParams.toString()
+
+  const { data, isLoading } = useFetchResourcingData(
+    `${GET_RESOURCING_ENDPOINTS.GET_INTERVIEWS}?${queryString}`,
+  )
 
   const handleDateChange = (start, end) => {
     setStartDate(start)
@@ -52,9 +83,9 @@ export default function Page() {
   }
 
   // Filter only 'invited' interviews
-  const interviews = data?.filter(
-    (datum) => datum?.interview?.status?.toLowerCase() === 'invited',
-  )
+  // const interviews = data?.filter(
+  //   (datum) => datum?.interview?.status?.toLowerCase() === 'invited',
+  // )
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -70,60 +101,6 @@ export default function Page() {
       `/dashboard/resourcing/interviews/${item.interview.application}`,
     )
   }
-
-  const filteredInterviews = data
-    ?.filter(
-      (datum) =>
-        datum?.interview?.status?.toLowerCase() === 'invited' ||
-        datum?.interview?.status?.toLowerCase() === 'confirmed' ||
-        datum?.interview?.status?.toLowerCase() === 'declined',
-    )
-    ?.filter((datum) => datum?.job_offer_status === null)
-    ?.filter((datum) => {
-      const nameMatch =
-        `${datum.applicant?.first_name} ${datum.applicant?.last_name}`
-          .toLowerCase()
-          .includes(searchText.toLowerCase())
-      const jobMatch = datum.job_post_title
-        ?.toLowerCase()
-        .includes(searchText.toLowerCase())
-      return nameMatch || jobMatch
-    })
-    ?.filter((datum) => {
-      if (statusFilter === 'All') return true
-      return (
-        datum.interview?.status?.toLowerCase() === statusFilter.toLowerCase()
-      )
-    })
-    ?.filter((datum) => {
-      if (!startDate || !endDate) return true
-      const interviewDate = new Date(datum.interview?.scheduled_datetime)
-      return (
-        interviewDate >= new Date(startDate) &&
-        interviewDate <= new Date(endDate)
-      )
-    })
-    // 🔁 NEW: filter for interview mode
-    ?.filter((datum) => {
-      if (sortOption === 'online' || sortOption === 'in-person') {
-        return datum.interview?.interview_mode?.toLowerCase() === sortOption
-      }
-      return true
-    })
-    ?.sort((a, b) => {
-      if (sortOption === 'Newest' || sortOption === 'Oldest') {
-        const aDate = new Date(a.interview?.scheduled_datetime)
-        const bDate = new Date(b.interview?.scheduled_datetime)
-        return sortOption === 'Newest' ? bDate - aDate : aDate - bDate
-      }
-      return 0 // fallback no sorting
-    })
-
-  // ?.sort((a, b) => {
-  //   const aDate = new Date(a.interview?.scheduled_datetime)
-  //   const bDate = new Date(b.interview?.scheduled_datetime)
-  //   return sortOption === 'Newest' ? bDate - aDate : aDate - bDate
-  // })
 
   return (
     <Box>
@@ -188,42 +165,55 @@ export default function Page() {
         <TextField
           label="Search"
           variant="outlined"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          sx={{ flex: 1, minWidth: '200px' }}
+          sx={{ flex: 1, minWidth: '150px' }}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
         />
 
-        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
-          <InputLabel>Sort</InputLabel>
-          <Select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            label="Sort"
-          >
-            <MenuItem value="Newest">Newest</MenuItem>
-            <MenuItem value="Oldest">Oldest</MenuItem>
-            <MenuItem value="online">Online Interview</MenuItem>
-            <MenuItem value="in-person">In-Person Interview</MenuItem>
-          </Select>
-        </FormControl>
+        <TextField
+          type="date"
+          label="Start Date"
+          variant="outlined"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          sx={{ flex: 1, minWidth: '200px' }}
+          InputLabelProps={{ shrink: true }}
+        />
 
-        <DateRangeInput
-          startDate={startDate}
-          endDate={endDate}
-          onDateChange={handleDateChange}
+        <TextField
+          type="date"
+          label="End Date"
+          variant="outlined"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          sx={{ flex: 1, minWidth: '200px' }}
+          InputLabelProps={{ shrink: true }}
         />
 
         <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
           <InputLabel>Status</InputLabel>
           <Select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
+            value={status}
             label="Status"
+            onChange={(e) => setStatus(e.target.value)}
           >
             <MenuItem value="All">All</MenuItem>
-            <MenuItem value="invited">Invited</MenuItem>
-            <MenuItem value="confirmed">Confirmed</MenuItem>
-            <MenuItem value="declined">Declined</MenuItem>
+            <MenuItem value="invited">Pending</MenuItem>
+            <MenuItem value="confirmed">Approved</MenuItem>
+            <MenuItem value="declined">Rejected</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl variant="outlined" sx={{ flex: 1, minWidth: '150px' }}>
+          <InputLabel>Interview Mode</InputLabel>
+          <Select
+            value={interviewMode}
+            label="Interview Mode"
+            onChange={(e) => setInterviewMode(e.target.value)}
+          >
+            <MenuItem value="All">All</MenuItem>
+            <MenuItem value="in-person">In Person</MenuItem>
+            <MenuItem value="online">Online</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -261,7 +251,7 @@ export default function Page() {
                   <Skeleton width={'100%'} height={40} />
                 </TableCell>
               </TableRow>
-            ) : filteredInterviews?.length === 0 ? (
+            ) : data?.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} align="center">
                   <SentimentDissatisfied />
@@ -269,7 +259,7 @@ export default function Page() {
                 </TableCell>
               </TableRow>
             ) : (
-              filteredInterviews
+              data
                 ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((item) => (
                   <TableRow
@@ -359,7 +349,7 @@ export default function Page() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 15]}
           component="div"
-          count={filteredInterviews?.length}
+          count={data?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

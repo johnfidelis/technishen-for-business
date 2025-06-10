@@ -405,7 +405,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     name="nationality"
-                    label="Nationality *"
+                    label="Nationality "
                     select
                     fullWidth
                     value={formData.nationality}
@@ -696,7 +696,7 @@ const CustomerForm = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     name="nationality"
-                    label="Nationality *"
+                    label="Nationality "
                     select
                     fullWidth
                     value={formData.nationality}
