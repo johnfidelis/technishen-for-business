@@ -31,7 +31,7 @@
 // }
 
 import './globals.css'
-// import './typography.css'
+import './typography.css'
 import QueryClientLayout from '@/queryClientLayout'
 import 'react-phone-number-input/style.css'
 import { Inter } from 'next/font/google'
