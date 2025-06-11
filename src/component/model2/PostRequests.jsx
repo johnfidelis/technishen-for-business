@@ -53,25 +53,6 @@ export default function Page({ filter }) {
     GET_RESOURCING_ENDPOINTS.GET_A_POST,
   )
 
-  // const filteredData = data
-  //   ?.filter((item) => {
-  //     const matchesStatus = status === 'All' || item.status === status
-  //     const matchesSearch =
-  //       item.job_title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //       item.company?.toLowerCase().includes(searchQuery.toLowerCase())
-
-  //     const jobDate = new Date(item.created_at || item.start_date)
-  //     const matchesDate =
-  //       (!startDate || jobDate >= new Date(startDate)) &&
-  //       (!endDate || jobDate <= new Date(endDate))
-  //     return matchesStatus && matchesSearch && matchesDate
-  //   })
-  //   ?.sort((a, b) => {
-  //     const dateA = new Date(a.created_at)
-  //     const dateB = new Date(b.created_at)
-  //     return sortOrder === 'Newest' ? dateB - dateA : dateA - dateB
-  //   })
-
   const filteredData = data
     ?.filter((item) => {
       const matchesStatus =
