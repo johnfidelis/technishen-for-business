@@ -1049,11 +1049,11 @@ const InternalTicketForm = () => {
               ) : (
                 <>
                   <MenuItem disabled>No category available</MenuItem>
-                  <MenuItem
+                  {/* <MenuItem
                     onClick={() => router.push(`/dashboard/catalog/create`)}
                   >
                     Create Category Now
-                  </MenuItem>
+                  </MenuItem> */}
                 </>
               )}
             </TextField>
