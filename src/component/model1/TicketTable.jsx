@@ -51,12 +51,16 @@ const TicketTable = ({ filterType, setNumber }) => {
 
   useEffect(() => {
     if (ticketsData) {
+      const unassignedTickets = ticketsData.unassigned_tickets || []
+      const assignedTickets = ticketsData.assigned_tickets || []
+      const allTickets = [...unassignedTickets, ...assignedTickets]
       setTicketCounts({
         unassigned: ticketsData.unassigned_tickets?.length || 0,
         assigned: ticketsData.assigned_tickets?.length || 0,
-        open: (ticketsData.assigned_tickets || []).filter(
-          (ticket) => ticket.status === 'Open',
-        )?.length,
+        // open: (ticketsData.assigned_tickets || []).filter(
+        //   (ticket) => ticket.status === 'Open',
+        // )?.length,
+        open: allTickets.filter((ticket) => ticket.status === 'Open').length,
         resolved: (ticketsData.assigned_tickets || []).filter(
           (ticket) => ticket.status === 'Resolved',
         )?.length,
@@ -89,6 +93,9 @@ const TicketTable = ({ filterType, setNumber }) => {
 
   let ticketList = []
   if (ticketsData) {
+    const unassignedTickets = ticketsData.unassigned_tickets || []
+    const assignedTickets = ticketsData.assigned_tickets || []
+    const allTickets = [...unassignedTickets, ...assignedTickets]
     switch (filterType) {
       case 'unassigned':
         ticketList = ticketsData.unassigned_tickets || []
@@ -97,9 +104,7 @@ const TicketTable = ({ filterType, setNumber }) => {
         ticketList = ticketsData.assigned_tickets || []
         break
       case 'open':
-        ticketList = (ticketsData.assigned_tickets || []).filter(
-          (ticket) => ticket.status === 'Open',
-        )
+        ticketList = allTickets.filter((ticket) => ticket.status === 'Open')
         break
       case 'resolved':
         ticketList = (ticketsData.assigned_tickets || []).filter(
