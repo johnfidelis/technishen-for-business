@@ -77,7 +77,7 @@ export default function Page() {
           },
           {
             title: 'Total Tickets',
-            value: ticketStat?.unassigned_tickets?.total_this_month || 0,
+            value: number || 0,
             icon: <InboxIcon sx={{ color: 'white' }} />,
           },
         ].map((summary, index) => (

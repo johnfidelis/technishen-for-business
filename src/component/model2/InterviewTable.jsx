@@ -36,15 +36,6 @@ export default function Page() {
 
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
-  // const { data, isLoading } = useFetchResourcingData(
-  //   GET_RESOURCING_ENDPOINTS.GET_INTERVIEWS,
-  // )
-
-  // const [searchText, setSearchText] = useState('')
-  // const [sortOption, setSortOption] = useState('Newest')
-  // const [statusFilter, setStatusFilter] = useState('All')
-  // const [startDate, setStartDate] = useState(null)
-  // const [endDate, setEndDate] = useState(null)
 
   const [status, setStatus] = useState('All')
   const [interviewMode, setInterviewMode] = useState('All')
@@ -81,11 +72,6 @@ export default function Page() {
     setStartDate(start)
     setEndDate(end)
   }
-
-  // Filter only 'invited' interviews
-  // const interviews = data?.filter(
-  //   (datum) => datum?.interview?.status?.toLowerCase() === 'invited',
-  // )
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
